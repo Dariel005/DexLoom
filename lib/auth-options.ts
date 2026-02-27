@@ -1,11 +1,10 @@
 import { type NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
-import { normalizeEmailAddress } from "@/lib/auth-validation";
+import { validateCredentialsLogin } from "@/lib/credentials-auth";
 import { isCreatorUserId } from "@/lib/creator-profile";
-import { verifyPassword } from "@/lib/password";
 import { getOrCreateUserProfile } from "@/lib/profile-service";
-import { findUserByEmail, upsertGoogleUser } from "@/lib/user-store";
+import { upsertGoogleUser } from "@/lib/user-store";
 
 const credentialsProvider = Credentials({
   name: "Email & Password",
@@ -14,27 +13,16 @@ const credentialsProvider = Credentials({
     password: { label: "Password", type: "password" }
   },
   async authorize(credentials) {
-    const email = normalizeEmailAddress(String(credentials?.email ?? ""));
-    const password = String(credentials?.password ?? "");
+    const result = await validateCredentialsLogin({
+      email: String(credentials?.email ?? ""),
+      password: String(credentials?.password ?? "")
+    });
 
-    if (!email || !password) {
-      return null;
-    }
-
-    let user = null;
-    try {
-      user = await findUserByEmail(email);
-    } catch {
-      return null;
-    }
-    if (!user?.passwordHash) {
+    if (result.status !== "success") {
       return null;
     }
 
-    const isValid = await verifyPassword(password, user.passwordHash);
-    if (!isValid) {
-      return null;
-    }
+    const user = result.user;
 
     return {
       id: user.id,

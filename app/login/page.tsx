@@ -20,7 +20,10 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [pendingCredentials, setPendingCredentials] = useState(false);
   const [pendingGoogle, setPendingGoogle] = useState(false);
+  const [pendingResend, setPendingResend] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [resendInfo, setResendInfo] = useState<string | null>(null);
+  const [unverifiedEmail, setUnverifiedEmail] = useState<string | null>(null);
 
   useEffect(() => {
     void getProviders()
@@ -38,6 +41,30 @@ export default function LoginPage() {
     event.preventDefault();
     setPendingCredentials(true);
     setError(null);
+    setResendInfo(null);
+    setUnverifiedEmail(null);
+
+    const preflightResponse = await fetch("/api/auth/login/credentials", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ email, password })
+    });
+
+    const preflightPayload = (await preflightResponse.json().catch(() => null)) as {
+      message?: string;
+      code?: string;
+    } | null;
+
+    if (!preflightResponse.ok) {
+      setPendingCredentials(false);
+      setError(preflightPayload?.message ?? "Invalid email or password.");
+      if (preflightPayload?.code === "EMAIL_UNVERIFIED") {
+        setUnverifiedEmail(email);
+      }
+      return;
+    }
 
     const result = await signIn("credentials", {
       email,
@@ -55,6 +82,34 @@ export default function LoginPage() {
 
     router.push(result?.url ?? callbackUrl);
     router.refresh();
+  };
+
+  const handleResendVerification = async () => {
+    if (!unverifiedEmail) {
+      return;
+    }
+
+    setPendingResend(true);
+    setError(null);
+    setResendInfo(null);
+
+    const response = await fetch("/api/auth/verify-email/resend", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ email: unverifiedEmail })
+    });
+
+    const payload = (await response.json().catch(() => null)) as { message?: string } | null;
+    setPendingResend(false);
+
+    if (!response.ok) {
+      setError(payload?.message ?? "Unable to send a new verification email.");
+      return;
+    }
+
+    setResendInfo(payload?.message ?? "A new verification email is on the way.");
   };
 
   const googleEnabled = Boolean(providersLoaded && providers?.google);
@@ -168,6 +223,32 @@ export default function LoginPage() {
                   <p className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700">
                     {error}
                   </p>
+                ) : null}
+
+                {resendInfo ? (
+                  <p className="rounded-lg border border-sky-200 bg-sky-50 px-3 py-2 text-xs text-sky-700">
+                    {resendInfo}
+                  </p>
+                ) : null}
+
+                {unverifiedEmail ? (
+                  <div className="rounded-2xl border border-white/25 bg-white/10 p-3 text-sm text-white/88">
+                    <p className="pixel-font text-[10px] uppercase tracking-[0.12em] text-[#ffe870]">
+                      Email Confirmation Required
+                    </p>
+                    <p className="mt-2 leading-6">
+                      This trainer account still needs email verification. We can send a fresh
+                      DexLoom confirmation link to <strong>{unverifiedEmail}</strong>.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={handleResendVerification}
+                      disabled={pendingResend}
+                      className="auth-action-btn-live pixel-font mt-3 rounded-xl border border-black/30 bg-[#f5f7fa] px-4 py-3 text-[11px] uppercase tracking-[0.12em] text-[#a5282e] shadow-[0_4px_0_rgba(0,0,0,0.18)] transition hover:brightness-105 disabled:opacity-60"
+                    >
+                      {pendingResend ? "Sending Again..." : "Resend Verification Email"}
+                    </button>
+                  </div>
                 ) : null}
               </form>
             </div>

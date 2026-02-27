@@ -23,6 +23,8 @@ export interface StoredUser {
   image: string | null;
   provider: AuthProviderKind;
   passwordHash: string | null;
+  emailVerified: boolean;
+  emailVerifiedAt: string | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -75,6 +77,10 @@ function normalizeIsoDate(value: unknown, fallback: string) {
   return Number.isNaN(parsed) ? fallback : new Date(parsed).toISOString();
 }
 
+function normalizeEmailVerified(value: unknown) {
+  return typeof value === "boolean" ? value : true;
+}
+
 function normalizeStoredUser(value: unknown): StoredUser | null {
   if (!value || typeof value !== "object") {
     return null;
@@ -90,6 +96,14 @@ function normalizeStoredUser(value: unknown): StoredUser | null {
   const createdAtFallback = new Date().toISOString();
   const createdAt = normalizeIsoDate(row.createdAt, createdAtFallback);
   const updatedAt = normalizeIsoDate(row.updatedAt, createdAt);
+  const emailVerified = normalizeEmailVerified((row as { emailVerified?: unknown }).emailVerified);
+  const emailVerifiedAtRaw = (row as { emailVerifiedAt?: unknown }).emailVerifiedAt;
+  const emailVerifiedAt =
+    typeof emailVerifiedAtRaw === "string" && emailVerifiedAtRaw.trim().length > 0
+      ? normalizeIsoDate(emailVerifiedAtRaw, updatedAt)
+      : emailVerified
+        ? createdAt
+        : null;
 
   return {
     id,
@@ -98,6 +112,8 @@ function normalizeStoredUser(value: unknown): StoredUser | null {
     image: typeof row.image === "string" ? row.image : row.image === null ? null : null,
     provider: isValidProvider(row.provider) ? row.provider : "credentials",
     passwordHash: typeof row.passwordHash === "string" ? row.passwordHash : null,
+    emailVerified,
+    emailVerifiedAt,
     createdAt,
     updatedAt
   };
@@ -426,9 +442,28 @@ export async function registerCredentialsUser(input: {
 
     if (existingUser) {
       if (existingUser.passwordHash) {
-        upsertUserInList(users, existingUser);
-        await writeLocalUsers(users);
-        return { status: "exists" as const, user: existingUser };
+        if (existingUser.emailVerified !== false) {
+          upsertUserInList(users, existingUser);
+          await writeLocalUsers(users);
+          return { status: "exists" as const, user: existingUser };
+        }
+
+        const refreshedUser: StoredUser = {
+          ...existingUser,
+          passwordHash: input.passwordHash,
+          name: existingUser.name || resolvedName,
+          updatedAt: now
+        };
+
+        try {
+          wroteCloudUser = await writeCloudUser(refreshedUser);
+        } catch {
+          // Keep local write as source of truth when cloud sync fails.
+        }
+
+        upsertUserInList(users, refreshedUser);
+        await writeLocalUsers(users, { skipUnsafeLocalWrite: wroteCloudUser });
+        return { status: "verification_pending" as const, user: refreshedUser };
       }
 
       const updatedUser: StoredUser = {
@@ -436,6 +471,8 @@ export async function registerCredentialsUser(input: {
         passwordHash: input.passwordHash,
         provider: mergeProvider(existingUser.provider, "credentials"),
         name: existingUser.name || resolvedName,
+        emailVerified: existingUser.emailVerified,
+        emailVerifiedAt: existingUser.emailVerifiedAt,
         updatedAt: now
       };
 
@@ -457,6 +494,8 @@ export async function registerCredentialsUser(input: {
       image: null,
       provider: "credentials",
       passwordHash: input.passwordHash,
+      emailVerified: false,
+      emailVerifiedAt: null,
       createdAt: now,
       updatedAt: now
     };
@@ -495,6 +534,8 @@ export async function upsertGoogleUser(input: {
         // Keep trainer-edited local identity stable; only backfill if missing.
         name: existingUser.name.trim().length > 0 ? existingUser.name : resolvedName,
         image: resolveGoogleSignInImage(existingUser.image),
+        emailVerified: true,
+        emailVerifiedAt: existingUser.emailVerifiedAt ?? now,
         updatedAt: now
       };
 
@@ -516,6 +557,8 @@ export async function upsertGoogleUser(input: {
       image: DEFAULT_TRAINER_AVATAR_URL,
       provider: "google",
       passwordHash: null,
+      emailVerified: true,
+      emailVerifiedAt: now,
       createdAt: now,
       updatedAt: now
     };
@@ -574,5 +617,55 @@ export async function updateStoredUserProfile(
     upsertUserInList(users, nextUser);
     await writeLocalUsers(users, { skipUnsafeLocalWrite: wroteCloudUser });
     return nextUser;
+  });
+}
+
+export async function markUserEmailVerified(input: {
+  userId: string;
+  email: string;
+}) {
+  const normalizedId = String(input.userId ?? "").trim();
+  const normalizedEmail = normalizeEmailAddress(input.email);
+
+  if (!normalizedId || !normalizedEmail) {
+    return { status: "invalid" as const, user: null };
+  }
+
+  return runExclusive(async () => {
+    const users = await readLocalUsers();
+    const cloudUser = await readCloudUserById(normalizedId);
+    let wroteCloudUser = false;
+    const user =
+      cloudUser ??
+      users.find((entry) => entry.id === normalizedId || entry.email === normalizedEmail) ??
+      null;
+
+    if (!user || user.email !== normalizedEmail) {
+      return { status: "not_found" as const, user: null };
+    }
+
+    if (user.emailVerified) {
+      upsertUserInList(users, user);
+      await writeLocalUsers(users, { skipUnsafeLocalWrite: true });
+      return { status: "already_verified" as const, user };
+    }
+
+    const now = new Date().toISOString();
+    const nextUser: StoredUser = {
+      ...user,
+      emailVerified: true,
+      emailVerifiedAt: now,
+      updatedAt: now
+    };
+
+    try {
+      wroteCloudUser = await writeCloudUser(nextUser);
+    } catch {
+      // Keep local write as source of truth when cloud sync fails.
+    }
+
+    upsertUserInList(users, nextUser);
+    await writeLocalUsers(users, { skipUnsafeLocalWrite: wroteCloudUser });
+    return { status: "verified" as const, user: nextUser };
   });
 }

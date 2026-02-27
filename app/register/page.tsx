@@ -18,14 +18,18 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [pending, setPending] = useState(false);
+  const [pendingResend, setPendingResend] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [verificationEmail, setVerificationEmail] = useState<string | null>(null);
+  const [resendInfo, setResendInfo] = useState<string | null>(null);
 
   const handleRegister = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setPending(true);
     setError(null);
     setSuccess(null);
+    setResendInfo(null);
 
     if (password !== confirmPassword) {
       setPending(false);
@@ -41,7 +45,11 @@ export default function RegisterPage() {
       body: JSON.stringify({ name, email, password })
     });
 
-    const payload = (await response.json().catch(() => null)) as { message?: string } | null;
+    const payload = (await response.json().catch(() => null)) as {
+      message?: string;
+      requiresEmailVerification?: boolean;
+      email?: string;
+    } | null;
 
     if (!response.ok) {
       setPending(false);
@@ -50,6 +58,16 @@ export default function RegisterPage() {
     }
 
     setSuccess(payload?.message ?? "Account created successfully.");
+    setVerificationEmail(
+      payload?.requiresEmailVerification === true ? payload.email ?? email : null
+    );
+
+    if (payload?.requiresEmailVerification === true) {
+      setPending(false);
+      setPassword("");
+      setConfirmPassword("");
+      return;
+    }
 
     const signInResult = await signIn("credentials", {
       email,
@@ -67,6 +85,34 @@ export default function RegisterPage() {
 
     router.push(signInResult?.url ?? callbackUrl);
     router.refresh();
+  };
+
+  const handleResendVerification = async () => {
+    if (!verificationEmail) {
+      return;
+    }
+
+    setPendingResend(true);
+    setError(null);
+    setResendInfo(null);
+
+    const response = await fetch("/api/auth/verify-email/resend", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ email: verificationEmail })
+    });
+
+    const payload = (await response.json().catch(() => null)) as { message?: string } | null;
+    setPendingResend(false);
+
+    if (!response.ok) {
+      setError(payload?.message ?? "Could not send a new verification email.");
+      return;
+    }
+
+    setResendInfo(payload?.message ?? "A new verification email is on the way.");
   };
 
   return (
@@ -161,6 +207,12 @@ export default function RegisterPage() {
                   </p>
                 ) : null}
 
+                {resendInfo ? (
+                  <p className="rounded-lg border border-sky-200 bg-sky-50 px-3 py-2 text-xs text-sky-700">
+                    {resendInfo}
+                  </p>
+                ) : null}
+
                 <div className="grid items-end gap-4 sm:grid-cols-[1fr_auto_1fr]">
                   <div className="auth-pokemon-frame-live mx-auto flex h-[116px] w-[116px] items-end justify-center rounded-2xl border border-white/35 bg-white/10 p-2 sm:h-[140px] sm:w-[140px] [animation-delay:100ms]">
                     <Image
@@ -192,6 +244,26 @@ export default function RegisterPage() {
                     />
                   </div>
                 </div>
+
+                {verificationEmail ? (
+                  <div className="rounded-2xl border border-white/25 bg-white/10 p-3 text-sm text-white/88">
+                    <p className="pixel-font text-[10px] uppercase tracking-[0.12em] text-[#ffe870]">
+                      Confirmation Required
+                    </p>
+                    <p className="mt-2 leading-6">
+                      We sent a DexLoom verification email to <strong>{verificationEmail}</strong>.
+                      Open that message to unlock password sign-in.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={handleResendVerification}
+                      disabled={pendingResend}
+                      className="auth-action-btn-live pixel-font mt-3 rounded-xl border border-black/30 bg-[#f5f7fa] px-4 py-3 text-[11px] uppercase tracking-[0.12em] text-[#a5282e] shadow-[0_4px_0_rgba(0,0,0,0.18)] transition hover:brightness-105 disabled:opacity-60"
+                    >
+                      {pendingResend ? "Sending Again..." : "Resend Verification Email"}
+                    </button>
+                  </div>
+                ) : null}
               </form>
             </div>
 

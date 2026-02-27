@@ -5,8 +5,9 @@ import {
   normalizeEmailAddress,
   sanitizeDisplayName
 } from "@/lib/auth-validation";
+import { canSendVerificationEmails, sendVerificationEmail } from "@/lib/email-verification";
 import { hashPassword } from "@/lib/password";
-import { registerCredentialsUser } from "@/lib/user-store";
+import { findUserByEmail, registerCredentialsUser } from "@/lib/user-store";
 
 export const runtime = "nodejs";
 
@@ -43,6 +44,26 @@ export async function POST(request: Request) {
     );
   }
 
+  let existingUser = null;
+  try {
+    existingUser = await findUserByEmail(email);
+  } catch {
+    existingUser = null;
+  }
+
+  const requiresConfiguredVerificationEmail =
+    !existingUser || existingUser.emailVerified === false;
+
+  if (requiresConfiguredVerificationEmail && !canSendVerificationEmails()) {
+    return NextResponse.json(
+      {
+        message:
+          "Email verification is not configured yet. Add SMTP settings before creating password accounts."
+      },
+      { status: 503 }
+    );
+  }
+
   const passwordHash = await hashPassword(password);
   let result;
   try {
@@ -70,12 +91,41 @@ export async function POST(request: Request) {
     );
   }
 
+  if (result.status === "created" || result.status === "verification_pending") {
+    try {
+      await sendVerificationEmail(result.user);
+    } catch (error) {
+      return NextResponse.json(
+        {
+          message:
+            error instanceof Error
+              ? error.message
+              : "Account created, but the verification email could not be sent."
+        },
+        { status: 503 }
+      );
+    }
+
+    return NextResponse.json(
+      {
+        message:
+          result.status === "verification_pending"
+            ? "Verification email sent again. Confirm your inbox to unlock password login."
+            : "Account created. Check your email to verify your DexLoom account before signing in.",
+        requiresEmailVerification: true,
+        email: result.user.email
+      },
+      { status: result.status === "created" ? 201 : 200 }
+    );
+  }
+
   return NextResponse.json(
     {
       message:
         result.status === "updated"
           ? "Account upgraded with password credentials."
-          : "Account created successfully."
+          : "Account created successfully.",
+      requiresEmailVerification: false
     },
     { status: 201 }
   );
