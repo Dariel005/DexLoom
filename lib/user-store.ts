@@ -29,13 +29,6 @@ const USER_STORE_FILE = path.join(DATA_STORE_DIR, "users.json");
 const USER_COLLECTION = "pokedexUsers";
 let writeQueue: Promise<unknown> = Promise.resolve();
 
-function shouldRequireCloudUserPersistence() {
-  return (
-    process.env.NODE_ENV === "production" &&
-    (isFirebaseAuthSyncEnabled() || isFirebaseProfileSyncEnabled() || isFirebaseSocialSyncEnabled())
-  );
-}
-
 function runExclusive<T>(task: () => Promise<T>) {
   const next = writeQueue.then(task, task);
   writeQueue = next.then(
@@ -219,9 +212,6 @@ async function readCloudUserById(userId: string) {
 async function writeCloudUser(user: StoredUser) {
   const collection = getUserCollection();
   if (!collection) {
-    if (shouldRequireCloudUserPersistence()) {
-      throw new Error("User cloud store is unavailable in production.");
-    }
     return;
   }
 
@@ -290,9 +280,7 @@ async function readUsers() {
     try {
       await Promise.all(localUsers.map((user) => writeCloudUser(user)));
     } catch {
-      if (shouldRequireCloudUserPersistence()) {
-        throw new Error("Unable to backfill users to cloud store.");
-      }
+      // Keep serving local users if cloud backfill fails.
     }
   }
 
@@ -328,9 +316,7 @@ export async function findUserByEmail(email: string) {
     try {
       await writeCloudUser(localUser);
     } catch {
-      if (shouldRequireCloudUserPersistence()) {
-        throw new Error("Unable to sync user record with cloud store.");
-      }
+      // Keep local user available for login when cloud sync fails.
     }
   }
   return localUser;
@@ -359,9 +345,7 @@ export async function findUserById(userId: string) {
     try {
       await writeCloudUser(localUser);
     } catch {
-      if (shouldRequireCloudUserPersistence()) {
-        throw new Error("Unable to sync user record with cloud store.");
-      }
+      // Keep local user available for login when cloud sync fails.
     }
   }
   return localUser;
@@ -399,9 +383,7 @@ export async function registerCredentialsUser(input: {
       try {
         await writeCloudUser(updatedUser);
       } catch {
-        if (shouldRequireCloudUserPersistence()) {
-          throw new Error("Unable to persist credential user update in cloud store.");
-        }
+        // Keep local write as source of truth when cloud sync fails.
       }
 
       upsertUserInList(users, updatedUser);
@@ -423,9 +405,7 @@ export async function registerCredentialsUser(input: {
     try {
       await writeCloudUser(user);
     } catch {
-      if (shouldRequireCloudUserPersistence()) {
-        throw new Error("Unable to persist credential user in cloud store.");
-      }
+      // Keep local write as source of truth when cloud sync fails.
     }
 
     users.push(user);
@@ -461,9 +441,7 @@ export async function upsertGoogleUser(input: {
       try {
         await writeCloudUser(updatedUser);
       } catch {
-        if (shouldRequireCloudUserPersistence()) {
-          throw new Error("Unable to persist Google user in cloud store.");
-        }
+        // Keep local write as source of truth when cloud sync fails.
       }
 
       upsertUserInList(users, updatedUser);
@@ -485,9 +463,7 @@ export async function upsertGoogleUser(input: {
     try {
       await writeCloudUser(user);
     } catch {
-      if (shouldRequireCloudUserPersistence()) {
-        throw new Error("Unable to persist Google user in cloud store.");
-      }
+      // Keep local write as source of truth when cloud sync fails.
     }
 
     users.push(user);
@@ -531,9 +507,7 @@ export async function updateStoredUserProfile(
     try {
       await writeCloudUser(nextUser);
     } catch {
-      if (shouldRequireCloudUserPersistence()) {
-        throw new Error("Unable to persist user profile update in cloud store.");
-      }
+      // Keep local write as source of truth when cloud sync fails.
     }
 
     upsertUserInList(users, nextUser);
