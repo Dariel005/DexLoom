@@ -83,7 +83,7 @@ type ModuleNavTone =
   | "sources";
 
 const MODULE_NAV_BASE_CLASS =
-  "explorer-nav-btn module-nav-btn pixel-font w-full justify-center rounded-lg border px-2.5 py-2 text-[10px] uppercase tracking-[0.14em] transition";
+  "explorer-nav-btn module-nav-btn pixel-font rounded-lg border px-2.5 py-2 text-[10px] uppercase tracking-[0.14em] transition";
 
 const MODULE_NAV_THEME_CLASS: Record<ModuleNavTone, string> = {
   tools: "module-nav-tools",
@@ -711,13 +711,14 @@ export function PokemonExplorer() {
             <span className="search-deck-gloss" aria-hidden />
           </label>
 
-          <div className="pokemon-module-nav-grid">
+          <div className="flex flex-wrap items-center gap-2">
             <RouteTransitionLink
               href="/tools"
               style={{ "--pulse-delay": "0s" } as CSSProperties}
               className={cn(
                 MODULE_NAV_BASE_CLASS,
                 MODULE_NAV_THEME_CLASS.tools,
+                "sm:min-w-[88px]",
                 "border-black/20 bg-white/65 text-black/70"
               )}
             >
@@ -731,6 +732,7 @@ export function PokemonExplorer() {
               className={cn(
                 MODULE_NAV_BASE_CLASS,
                 MODULE_NAV_THEME_CLASS.audio,
+                "sm:min-w-[88px]",
                 activeAuxPanel === "sound"
                   ? "explorer-nav-btn-active"
                   : "border-black/20 bg-white/65 text-black/70"
@@ -745,7 +747,7 @@ export function PokemonExplorer() {
               className={cn(
                 MODULE_NAV_BASE_CLASS,
                 MODULE_NAV_THEME_CLASS.items,
-                "border-black/20 bg-white/65 text-black/70"
+                "border-black/20 bg-white/65 text-black/70 sm:min-w-[88px]"
               )}
             >
               <ModuleNavContent tone="items" label="Items" />
@@ -757,7 +759,7 @@ export function PokemonExplorer() {
               className={cn(
                 MODULE_NAV_BASE_CLASS,
                 MODULE_NAV_THEME_CLASS.moves,
-                "border-black/20 bg-white/65 text-black/70"
+                "border-black/20 bg-white/65 text-black/70 sm:min-w-[88px]"
               )}
             >
               <ModuleNavContent tone="moves" label="Moves" />
@@ -769,7 +771,7 @@ export function PokemonExplorer() {
               className={cn(
                 MODULE_NAV_BASE_CLASS,
                 MODULE_NAV_THEME_CLASS.abilities,
-                "border-black/20 bg-white/65 text-black/70"
+                "border-black/20 bg-white/65 text-black/70 sm:min-w-[88px]"
               )}
             >
               <ModuleNavContent tone="abilities" label="Abilities" />
@@ -781,7 +783,7 @@ export function PokemonExplorer() {
               className={cn(
                 MODULE_NAV_BASE_CLASS,
                 MODULE_NAV_THEME_CLASS.types,
-                "border-black/20 bg-white/65 text-black/70"
+                "border-black/20 bg-white/65 text-black/70 sm:min-w-[88px]"
               )}
             >
               <ModuleNavContent tone="types" label="Types" />
@@ -793,7 +795,7 @@ export function PokemonExplorer() {
               className={cn(
                 MODULE_NAV_BASE_CLASS,
                 MODULE_NAV_THEME_CLASS.cards,
-                "border-black/20 bg-white/65 text-black/70"
+                "border-black/20 bg-white/65 text-black/70 sm:min-w-[88px]"
               )}
             >
               <ModuleNavContent tone="cards" label="Cards" />
@@ -805,7 +807,7 @@ export function PokemonExplorer() {
               className={cn(
                 MODULE_NAV_BASE_CLASS,
                 MODULE_NAV_THEME_CLASS.maps,
-                "border-black/20 bg-white/65 text-black/70"
+                "border-black/20 bg-white/65 text-black/70 sm:min-w-[88px]"
               )}
             >
               <ModuleNavContent tone="maps" label="Maps" />
@@ -817,7 +819,7 @@ export function PokemonExplorer() {
               className={cn(
                 MODULE_NAV_BASE_CLASS,
                 MODULE_NAV_THEME_CLASS.games,
-                "border-black/20 bg-white/65 text-black/70"
+                "border-black/20 bg-white/65 text-black/70 sm:min-w-[92px]"
               )}
             >
               <ModuleNavContent tone="games" label="Games" />
@@ -829,7 +831,7 @@ export function PokemonExplorer() {
               className={cn(
                 MODULE_NAV_BASE_CLASS,
                 MODULE_NAV_THEME_CLASS.romhacks,
-                "rom-hacks-nav-btn rom-hacks-nav-btn-highlight border-black/20 bg-white/65 text-black/70"
+                "rom-hacks-nav-btn rom-hacks-nav-btn-highlight border-black/20 bg-white/65 text-black/70 sm:min-w-[122px]"
               )}
             >
               <span className="rom-hacks-nav-core" aria-hidden />
@@ -842,7 +844,7 @@ export function PokemonExplorer() {
               className={cn(
                 MODULE_NAV_BASE_CLASS,
                 MODULE_NAV_THEME_CLASS.go,
-                "border-black/20 bg-white/65 text-black/70"
+                "border-black/20 bg-white/65 text-black/70 sm:min-w-[104px]"
               )}
             >
               <ModuleNavContent tone="go" label="Pokemon GO" />
@@ -854,7 +856,7 @@ export function PokemonExplorer() {
               className={cn(
                 MODULE_NAV_BASE_CLASS,
                 MODULE_NAV_THEME_CLASS.mechanics,
-                "border-black/20 bg-white/65 text-black/70"
+                "border-black/20 bg-white/65 text-black/70 sm:min-w-[102px]"
               )}
             >
               <ModuleNavContent tone="mechanics" label="Mechanics" />
@@ -866,7 +868,7 @@ export function PokemonExplorer() {
               onFocus={prewarmMegaRoute}
               onTouchStart={prewarmMegaRoute}
               style={{ "--pulse-delay": "2.52s" } as CSSProperties}
-              className="explorer-nav-btn mega-nav-btn pixel-font w-full justify-center rounded-lg border border-black/20 bg-white/65 px-2.5 py-2 text-[10px] uppercase tracking-[0.14em] text-black/70 transition hover:bg-white/85"
+              className="explorer-nav-btn mega-nav-btn pixel-font rounded-lg border border-black/20 bg-white/65 px-2.5 py-2 text-[10px] uppercase tracking-[0.14em] text-black/70 transition hover:bg-white/85 sm:min-w-[146px]"
             >
               <MegaEvolutionNavLabel />
             </RouteTransitionLink>
@@ -880,7 +882,7 @@ export function PokemonExplorer() {
               className={cn(
                 MODULE_NAV_BASE_CLASS,
                 MODULE_NAV_THEME_CLASS.characters,
-                "border-black/20 bg-white/65 text-black/70"
+                "border-black/20 bg-white/65 text-black/70 sm:min-w-[104px]"
               )}
             >
               <ModuleNavContent tone="characters" label="Characters" />
@@ -892,7 +894,7 @@ export function PokemonExplorer() {
               className={cn(
                 MODULE_NAV_BASE_CLASS,
                 MODULE_NAV_THEME_CLASS.favorites,
-                "border-black/20 bg-white/65 text-black/70"
+                "border-black/20 bg-white/65 text-black/70 sm:min-w-[102px]"
               )}
             >
               <ModuleNavContent tone="favorites" label="Favorites" />
@@ -904,7 +906,7 @@ export function PokemonExplorer() {
               className={cn(
                 MODULE_NAV_BASE_CLASS,
                 MODULE_NAV_THEME_CLASS.social,
-                "module-nav-with-notification border-black/20 bg-white/65 text-black/70"
+                "module-nav-with-notification border-black/20 bg-white/65 text-black/70 sm:min-w-[90px]"
               )}
               aria-label={
                 socialBadgeCount > 0
@@ -931,7 +933,7 @@ export function PokemonExplorer() {
               className={cn(
                 MODULE_NAV_BASE_CLASS,
                 MODULE_NAV_THEME_CLASS.profile,
-                "border-black/20 bg-white/65 text-black/70"
+                "border-black/20 bg-white/65 text-black/70 sm:min-w-[94px]"
               )}
             >
               <ModuleNavContent tone="profile" label="Profile" />
@@ -943,7 +945,7 @@ export function PokemonExplorer() {
               className={cn(
                 MODULE_NAV_BASE_CLASS,
                 MODULE_NAV_THEME_CLASS.sources,
-                "border-black/20 bg-white/65 text-black/70"
+                "border-black/20 bg-white/65 text-black/70 sm:min-w-[88px]"
               )}
             >
               <ModuleNavContent tone="sources" label="Sources" />

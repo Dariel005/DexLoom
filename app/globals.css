@@ -1928,31 +1928,6 @@ button:not(.search-deck-clear-btn):not(.region-scroll-dot-button):not(.no-gbc-bt
   }
 }
 
-.pokemon-module-nav-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-items: stretch;
-  gap: 0.5rem;
-}
-
-@media (min-width: 640px) {
-  .pokemon-module-nav-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 768px) {
-  .pokemon-module-nav-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 1024px) {
-  .pokemon-module-nav-grid {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-  }
-}
-
 .module-nav-btn {
   --module-shell-top: #f8faf7;
   --module-shell-bottom: #c2c9c1;
