@@ -6,6 +6,7 @@ import {
   isFirebaseSocialSyncEnabled,
   isSocialDatabaseEnabled
 } from "@/lib/firebase-admin";
+import { resolveDataStoreDir } from "@/lib/runtime-storage";
 import {
   type FriendshipRecord,
   type SocialActivityKind,
@@ -20,7 +21,7 @@ import {
   type SocialReportRecord
 } from "@/lib/social-types";
 
-const DATA_STORE_DIR = path.resolve(process.cwd(), process.env.POKEDEX_DATA_DIR?.trim() || ".data");
+const DATA_STORE_DIR = resolveDataStoreDir();
 const FRIENDSHIP_STORE_FILE = path.join(DATA_STORE_DIR, "friendships.json");
 const SOCIAL_PRESENCE_STORE_FILE = path.join(DATA_STORE_DIR, "social-presence.json");
 const SOCIAL_SETTINGS_STORE_FILE = path.join(DATA_STORE_DIR, "social-settings.json");
@@ -260,11 +261,22 @@ function isValidActivityRecord(value: unknown): value is SocialActivityRecord {
 }
 
 async function ensureStoreFile(filePath: string) {
-  await mkdir(path.dirname(filePath), { recursive: true });
+  try {
+    await mkdir(path.dirname(filePath), { recursive: true });
+  } catch {
+    return false;
+  }
+
   try {
     await readFile(filePath, "utf-8");
+    return true;
   } catch {
-    await writeFile(filePath, "[]", "utf-8");
+    try {
+      await writeFile(filePath, "[]", "utf-8");
+      return true;
+    } catch {
+      return false;
+    }
   }
 }
 
@@ -306,8 +318,17 @@ async function writeArrayToDatabase<T>(storeName: SocialStoreName, rows: T[]) {
 }
 
 async function readArrayFromLocalFile(filePath: string) {
-  await ensureStoreFile(filePath);
-  const raw = await readFile(filePath, "utf-8");
+  const available = await ensureStoreFile(filePath);
+  if (!available) {
+    return [] as unknown[];
+  }
+
+  let raw = "";
+  try {
+    raw = await readFile(filePath, "utf-8");
+  } catch {
+    return [] as unknown[];
+  }
 
   try {
     const parsed = JSON.parse(raw) as unknown;
@@ -318,8 +339,16 @@ async function readArrayFromLocalFile(filePath: string) {
 }
 
 async function writeArrayToLocalFile<T>(filePath: string, rows: T[]) {
-  await ensureStoreFile(filePath);
-  await writeFile(filePath, JSON.stringify(rows, null, 2), "utf-8");
+  const available = await ensureStoreFile(filePath);
+  if (!available) {
+    return;
+  }
+
+  try {
+    await writeFile(filePath, JSON.stringify(rows, null, 2), "utf-8");
+  } catch {
+    // Local fallback should not fail requests in serverless.
+  }
 }
 
 async function readArrayFile(filePath: string, storeName: SocialStoreName) {

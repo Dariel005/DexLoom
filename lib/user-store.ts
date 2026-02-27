@@ -10,6 +10,7 @@ import {
 } from "@/lib/firebase-admin";
 import { normalizeEmailAddress, sanitizeDisplayName } from "@/lib/auth-validation";
 import { DEFAULT_TRAINER_AVATAR_URL, isGoogleProfileImageUrl } from "@/lib/default-avatar";
+import { resolveDataStoreDir } from "@/lib/runtime-storage";
 
 export type AuthProviderKind = "credentials" | "google" | "hybrid";
 
@@ -24,7 +25,7 @@ export interface StoredUser {
   updatedAt: string;
 }
 
-const DATA_STORE_DIR = path.resolve(process.cwd(), process.env.POKEDEX_DATA_DIR?.trim() || ".data");
+const DATA_STORE_DIR = resolveDataStoreDir();
 const USER_STORE_FILE = path.join(DATA_STORE_DIR, "users.json");
 const USER_COLLECTION = "pokedexUsers";
 let writeQueue: Promise<unknown> = Promise.resolve();
@@ -101,17 +102,37 @@ function normalizeStoredUser(value: unknown): StoredUser | null {
 }
 
 async function ensureStoreFile() {
-  await mkdir(path.dirname(USER_STORE_FILE), { recursive: true });
+  try {
+    await mkdir(path.dirname(USER_STORE_FILE), { recursive: true });
+  } catch {
+    return false;
+  }
+
   try {
     await readFile(USER_STORE_FILE, "utf-8");
+    return true;
   } catch {
-    await writeFile(USER_STORE_FILE, "[]", "utf-8");
+    try {
+      await writeFile(USER_STORE_FILE, "[]", "utf-8");
+      return true;
+    } catch {
+      return false;
+    }
   }
 }
 
 async function readLocalUsers() {
-  await ensureStoreFile();
-  const raw = await readFile(USER_STORE_FILE, "utf-8");
+  const available = await ensureStoreFile();
+  if (!available) {
+    return [] as StoredUser[];
+  }
+
+  let raw = "";
+  try {
+    raw = await readFile(USER_STORE_FILE, "utf-8");
+  } catch {
+    return [] as StoredUser[];
+  }
 
   try {
     const parsed = JSON.parse(raw) as unknown;
@@ -150,8 +171,16 @@ function sortUsersByCreatedAt(users: StoredUser[]) {
 }
 
 async function writeLocalUsers(users: StoredUser[]) {
-  await ensureStoreFile();
-  await writeFile(USER_STORE_FILE, JSON.stringify(sortUsersByCreatedAt(users), null, 2), "utf-8");
+  const available = await ensureStoreFile();
+  if (!available) {
+    return;
+  }
+
+  try {
+    await writeFile(USER_STORE_FILE, JSON.stringify(sortUsersByCreatedAt(users), null, 2), "utf-8");
+  } catch {
+    // Local mirror writes are best-effort only.
+  }
 }
 
 async function readCloudUsers() {

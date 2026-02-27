@@ -165,6 +165,13 @@ function getFavoriteEntityRoute(entityType: FavoriteEntityType) {
   }
 }
 
+function resolveFavoriteEntryHref(entry: FavoriteRecord) {
+  if (typeof entry.href === "string" && entry.href.startsWith("/")) {
+    return entry.href;
+  }
+  return getFavoriteEntityRoute(entry.entityType);
+}
+
 function getFavoriteFallbackCode(entityType: FavoriteEntityType) {
   switch (entityType) {
     case "game":
@@ -1037,13 +1044,13 @@ export function ProfileMeClient() {
         <div className="profile-side-capture-list mt-2 space-y-2">
           {recentFavorites.length === 0 ? <p className="profile-side-empty px-3 py-3 text-sm">No captures yet.</p> : recentFavorites.slice(0, activeConsoleTab === "overview" ? 3 : 5).map((entry) => {
             const previewImage = resolveFavoritePreviewImage(entry);
-            const moduleHref = getFavoriteEntityRoute(entry.entityType);
+            const entryHref = resolveFavoriteEntryHref(entry);
             return (
               <RouteTransitionLink
                 key={`profile-recent-${entry.id}`}
-                href={moduleHref}
+                href={entryHref}
                 className="profile-side-capture-card"
-                aria-label={`Open ${formatFavoriteEntityLabel(entry.entityType)} module`}
+                aria-label={`Open ${entry.title}`}
               >
                 <div className="profile-side-capture-thumb">
                   {previewImage ? (

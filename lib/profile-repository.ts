@@ -11,9 +11,10 @@ import {
   type FavoriteUpsertInput,
   type UserProfileRecord
 } from "@/lib/profile-types";
+import { resolveDataStoreDir } from "@/lib/runtime-storage";
 import { buildFavoriteId, decodeCursor, encodeCursor } from "@/lib/profile-validation";
 
-const DATA_STORE_DIR = path.resolve(process.cwd(), process.env.POKEDEX_DATA_DIR?.trim() || ".data");
+const DATA_STORE_DIR = resolveDataStoreDir();
 const PROFILE_STORE_FILE = path.join(DATA_STORE_DIR, "profiles.json");
 const FAVORITES_STORE_FILE = path.join(DATA_STORE_DIR, "favorites.json");
 const PROFILE_COLLECTION = "pokedexProfiles";
@@ -31,17 +32,38 @@ function runExclusive<T>(task: () => Promise<T>) {
 }
 
 async function ensureStoreFile(filePath: string, initialValue: string) {
-  await mkdir(path.dirname(filePath), { recursive: true });
+  try {
+    await mkdir(path.dirname(filePath), { recursive: true });
+  } catch {
+    return false;
+  }
+
   try {
     await readFile(filePath, "utf-8");
+    return true;
   } catch {
-    await writeFile(filePath, initialValue, "utf-8");
+    try {
+      await writeFile(filePath, initialValue, "utf-8");
+      return true;
+    } catch {
+      return false;
+    }
   }
 }
 
 async function readArrayFile<T>(filePath: string) {
-  await ensureStoreFile(filePath, "[]");
-  const raw = await readFile(filePath, "utf-8");
+  const available = await ensureStoreFile(filePath, "[]");
+  if (!available) {
+    return [] as T[];
+  }
+
+  let raw = "";
+  try {
+    raw = await readFile(filePath, "utf-8");
+  } catch {
+    return [] as T[];
+  }
+
   try {
     const parsed = JSON.parse(raw) as unknown;
     return Array.isArray(parsed) ? (parsed as T[]) : ([] as T[]);
@@ -51,8 +73,16 @@ async function readArrayFile<T>(filePath: string) {
 }
 
 async function writeArrayFile<T>(filePath: string, rows: T[]) {
-  await ensureStoreFile(filePath, "[]");
-  await writeFile(filePath, JSON.stringify(rows, null, 2), "utf-8");
+  const available = await ensureStoreFile(filePath, "[]");
+  if (!available) {
+    return;
+  }
+
+  try {
+    await writeFile(filePath, JSON.stringify(rows, null, 2), "utf-8");
+  } catch {
+    // Local fallback should never crash request handling in serverless.
+  }
 }
 
 function sortFavoritesByCreatedAtDesc(rows: FavoriteRecord[]) {

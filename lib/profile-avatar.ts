@@ -3,8 +3,9 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
 import { getFirebaseStorageBucket, isFirebaseProfileSyncEnabled } from "@/lib/firebase-admin";
+import { resolveAvatarStoreDir } from "@/lib/runtime-storage";
 
-const AVATAR_DIR = path.join(process.cwd(), "public", "images", "avatars");
+const AVATAR_DIR = resolveAvatarStoreDir();
 const AVATAR_BASE_PATH = "/images/avatars";
 const MAX_AVATAR_FILE_SIZE = 2 * 1024 * 1024;
 const ALLOWED_MIME_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
@@ -46,6 +47,7 @@ export async function processAvatarUpload(input: {
     .toBuffer();
 
   const remotePath = `avatars/${sanitizedUserId}/${fileName}`;
+  let hasCloudCopy = false;
 
   if (isFirebaseProfileSyncEnabled()) {
     const bucket = getFirebaseStorageBucket();
@@ -59,6 +61,7 @@ export async function processAvatarUpload(input: {
             cacheControl: "public, max-age=31536000, immutable"
           }
         });
+        hasCloudCopy = true;
       } catch {
         // Cloud avatar upload failed; continue with local mirror fallback.
       }
@@ -66,9 +69,19 @@ export async function processAvatarUpload(input: {
   }
 
   // Keep a best-effort local mirror for local development and optional hot caching.
-  await mkdir(AVATAR_DIR, { recursive: true });
-  const outputPath = path.join(AVATAR_DIR, fileName);
-  await writeFile(outputPath, outputBuffer);
+  let hasLocalCopy = false;
+  try {
+    await mkdir(AVATAR_DIR, { recursive: true });
+    const outputPath = path.join(AVATAR_DIR, fileName);
+    await writeFile(outputPath, outputBuffer);
+    hasLocalCopy = true;
+  } catch {
+    // Ignore local mirror failures in serverless runtimes.
+  }
+
+  if (!hasCloudCopy && !hasLocalCopy) {
+    throw new Error("Unable to persist avatar file.");
+  }
 
   return {
     avatarUrl: `${AVATAR_BASE_PATH}/${fileName}`

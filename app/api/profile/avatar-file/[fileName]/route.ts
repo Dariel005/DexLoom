@@ -2,10 +2,11 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { NextResponse } from "next/server";
 import { getFirebaseStorageBucket, isFirebaseProfileSyncEnabled } from "@/lib/firebase-admin";
+import { resolveAvatarStoreDir } from "@/lib/runtime-storage";
 
 export const runtime = "nodejs";
 
-const AVATAR_DIR = path.resolve(process.cwd(), "public", "images", "avatars");
+const AVATAR_DIR = resolveAvatarStoreDir();
 const SAFE_FILE_NAME_REGEX = /^[a-zA-Z0-9._-]+$/;
 const CONTENT_TYPES: Record<string, string> = {
   ".webp": "image/webp",
