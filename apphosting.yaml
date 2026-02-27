@@ -1,0 +1,15 @@
+env:
+  - variable: NEXTAUTH_URL
+    value: https://dexloom.net
+
+  - variable: AUTH_TRUST_HOST
+    value: "true"
+
+  - variable: NEXTAUTH_SECRET
+    secret: NEXTAUTH_SECRET
+
+  - variable: GOOGLE_CLIENT_ID
+    secret: GOOGLE_CLIENT_ID
+
+  - variable: GOOGLE_CLIENT_SECRET
+    secret: GOOGLE_CLIENT_SECRET
