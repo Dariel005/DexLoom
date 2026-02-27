@@ -21,6 +21,10 @@ const FAVORITES_COLLECTION = "pokedexFavorites";
 
 let writeQueue: Promise<unknown> = Promise.resolve();
 
+function shouldRequireCloudProfilePersistence() {
+  return process.env.NODE_ENV === "production" && isFirebaseProfileSyncEnabled();
+}
+
 function runExclusive<T>(task: () => Promise<T>) {
   const next = writeQueue.then(task, task);
   writeQueue = next.then(
@@ -77,8 +81,15 @@ async function readLocalFavorites() {
 }
 
 async function getCloudProfile(userId: string) {
+  if (!isFirebaseProfileSyncEnabled()) {
+    return null;
+  }
+
   const db = getFirebaseFirestoreDb();
-  if (!db || !isFirebaseProfileSyncEnabled()) {
+  if (!db) {
+    if (shouldRequireCloudProfilePersistence()) {
+      throw new Error("Profile cloud store is unavailable in production.");
+    }
     return null;
   }
 
@@ -95,16 +106,30 @@ async function getCloudProfile(userId: string) {
 }
 
 async function upsertCloudProfile(record: UserProfileRecord) {
+  if (!isFirebaseProfileSyncEnabled()) {
+    return;
+  }
+
   const db = getFirebaseFirestoreDb();
-  if (!db || !isFirebaseProfileSyncEnabled()) {
+  if (!db) {
+    if (shouldRequireCloudProfilePersistence()) {
+      throw new Error("Profile cloud store is unavailable in production.");
+    }
     return;
   }
   await db.collection(PROFILE_COLLECTION).doc(record.userId).set(record, { merge: true });
 }
 
 async function getCloudFavorites(userId: string) {
+  if (!isFirebaseProfileSyncEnabled()) {
+    return null;
+  }
+
   const db = getFirebaseFirestoreDb();
-  if (!db || !isFirebaseProfileSyncEnabled()) {
+  if (!db) {
+    if (shouldRequireCloudProfilePersistence()) {
+      throw new Error("Favorites cloud store is unavailable in production.");
+    }
     return null;
   }
 
@@ -123,8 +148,15 @@ async function getCloudFavorites(userId: string) {
 }
 
 async function upsertCloudFavorite(record: FavoriteRecord) {
+  if (!isFirebaseProfileSyncEnabled()) {
+    return;
+  }
+
   const db = getFirebaseFirestoreDb();
-  if (!db || !isFirebaseProfileSyncEnabled()) {
+  if (!db) {
+    if (shouldRequireCloudProfilePersistence()) {
+      throw new Error("Favorites cloud store is unavailable in production.");
+    }
     return;
   }
   const cloudDocId = `${record.userId}__${record.id}`;
@@ -136,8 +168,15 @@ async function deleteCloudFavorite(
   entityType: FavoriteEntityType,
   entityId: string
 ) {
+  if (!isFirebaseProfileSyncEnabled()) {
+    return;
+  }
+
   const db = getFirebaseFirestoreDb();
-  if (!db || !isFirebaseProfileSyncEnabled()) {
+  if (!db) {
+    if (shouldRequireCloudProfilePersistence()) {
+      throw new Error("Favorites cloud store is unavailable in production.");
+    }
     return;
   }
   const cloudDocId = `${userId}__${buildFavoriteId(entityType, entityId)}`;
@@ -220,7 +259,9 @@ export async function upsertProfileRecord(record: UserProfileRecord) {
   try {
     await upsertCloudProfile(record);
   } catch {
-    // Ignore cloud write failure and keep local mirror.
+    if (shouldRequireCloudProfilePersistence()) {
+      throw new Error("Unable to persist profile in cloud store.");
+    }
   }
 
   await mirrorLocalProfile(record);
@@ -296,7 +337,9 @@ export async function upsertFavoriteRecord(
   try {
     await upsertCloudFavorite(record);
   } catch {
-    // Ignore cloud write failure and keep local copy.
+    if (shouldRequireCloudProfilePersistence()) {
+      throw new Error("Unable to persist favorite in cloud store.");
+    }
   }
 
   await runExclusive(async () => {
@@ -325,7 +368,9 @@ export async function deleteFavoriteRecord(
   try {
     await deleteCloudFavorite(userId, entityType, entityId);
   } catch {
-    // Ignore cloud deletion failure and keep local write attempt.
+    if (shouldRequireCloudProfilePersistence()) {
+      throw new Error("Unable to delete favorite in cloud store.");
+    }
   }
 
   return runExclusive(async () => {

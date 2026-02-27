@@ -9,6 +9,7 @@ import {
   isFirebaseSocialSyncEnabled
 } from "@/lib/firebase-admin";
 import { normalizeEmailAddress, sanitizeDisplayName } from "@/lib/auth-validation";
+import { DEFAULT_TRAINER_AVATAR_URL, isGoogleProfileImageUrl } from "@/lib/default-avatar";
 
 export type AuthProviderKind = "credentials" | "google" | "hybrid";
 
@@ -27,6 +28,13 @@ const DATA_STORE_DIR = path.resolve(process.cwd(), process.env.POKEDEX_DATA_DIR?
 const USER_STORE_FILE = path.join(DATA_STORE_DIR, "users.json");
 const USER_COLLECTION = "pokedexUsers";
 let writeQueue: Promise<unknown> = Promise.resolve();
+
+function shouldRequireCloudUserPersistence() {
+  return (
+    process.env.NODE_ENV === "production" &&
+    (isFirebaseAuthSyncEnabled() || isFirebaseProfileSyncEnabled() || isFirebaseSocialSyncEnabled())
+  );
+}
 
 function runExclusive<T>(task: () => Promise<T>) {
   const next = writeQueue.then(task, task);
@@ -211,10 +219,20 @@ async function readCloudUserById(userId: string) {
 async function writeCloudUser(user: StoredUser) {
   const collection = getUserCollection();
   if (!collection) {
+    if (shouldRequireCloudUserPersistence()) {
+      throw new Error("User cloud store is unavailable in production.");
+    }
     return;
   }
 
   await collection.doc(user.id).set(user, { merge: true });
+}
+
+function resolveGoogleSignInImage(existingImage: string | null | undefined) {
+  if (!existingImage) {
+    return DEFAULT_TRAINER_AVATAR_URL;
+  }
+  return isGoogleProfileImageUrl(existingImage) ? DEFAULT_TRAINER_AVATAR_URL : existingImage;
 }
 
 function upsertUserInList(users: StoredUser[], user: StoredUser) {
@@ -272,7 +290,9 @@ async function readUsers() {
     try {
       await Promise.all(localUsers.map((user) => writeCloudUser(user)));
     } catch {
-      // Ignore cloud backfill failures and keep local store.
+      if (shouldRequireCloudUserPersistence()) {
+        throw new Error("Unable to backfill users to cloud store.");
+      }
     }
   }
 
@@ -308,7 +328,9 @@ export async function findUserByEmail(email: string) {
     try {
       await writeCloudUser(localUser);
     } catch {
-      // Keep local fallback when cloud is unavailable.
+      if (shouldRequireCloudUserPersistence()) {
+        throw new Error("Unable to sync user record with cloud store.");
+      }
     }
   }
   return localUser;
@@ -337,7 +359,9 @@ export async function findUserById(userId: string) {
     try {
       await writeCloudUser(localUser);
     } catch {
-      // Keep local fallback when cloud is unavailable.
+      if (shouldRequireCloudUserPersistence()) {
+        throw new Error("Unable to sync user record with cloud store.");
+      }
     }
   }
   return localUser;
@@ -375,7 +399,9 @@ export async function registerCredentialsUser(input: {
       try {
         await writeCloudUser(updatedUser);
       } catch {
-        // Keep local persistence even if cloud write fails.
+        if (shouldRequireCloudUserPersistence()) {
+          throw new Error("Unable to persist credential user update in cloud store.");
+        }
       }
 
       upsertUserInList(users, updatedUser);
@@ -397,7 +423,9 @@ export async function registerCredentialsUser(input: {
     try {
       await writeCloudUser(user);
     } catch {
-      // Keep local persistence even if cloud write fails.
+      if (shouldRequireCloudUserPersistence()) {
+        throw new Error("Unable to persist credential user in cloud store.");
+      }
     }
 
     users.push(user);
@@ -413,7 +441,6 @@ export async function upsertGoogleUser(input: {
 }) {
   const normalizedEmail = normalizeEmailAddress(input.email);
   const resolvedName = sanitizeDisplayName(input.name ?? "", normalizedEmail);
-  const image = input.image ?? null;
 
   return runExclusive(async () => {
     const users = await readLocalUsers();
@@ -425,15 +452,18 @@ export async function upsertGoogleUser(input: {
       const updatedUser: StoredUser = {
         ...existingUser,
         provider: mergeProvider(existingUser.provider, "google"),
-        name: resolvedName || existingUser.name,
-        image: image ?? existingUser.image,
+        // Keep trainer-edited local identity stable; only backfill if missing.
+        name: existingUser.name.trim().length > 0 ? existingUser.name : resolvedName,
+        image: resolveGoogleSignInImage(existingUser.image),
         updatedAt: now
       };
 
       try {
         await writeCloudUser(updatedUser);
       } catch {
-        // Keep local persistence even if cloud write fails.
+        if (shouldRequireCloudUserPersistence()) {
+          throw new Error("Unable to persist Google user in cloud store.");
+        }
       }
 
       upsertUserInList(users, updatedUser);
@@ -445,7 +475,7 @@ export async function upsertGoogleUser(input: {
       id: randomUUID(),
       email: normalizedEmail,
       name: resolvedName,
-      image,
+      image: DEFAULT_TRAINER_AVATAR_URL,
       provider: "google",
       passwordHash: null,
       createdAt: now,
@@ -455,7 +485,9 @@ export async function upsertGoogleUser(input: {
     try {
       await writeCloudUser(user);
     } catch {
-      // Keep local persistence even if cloud write fails.
+      if (shouldRequireCloudUserPersistence()) {
+        throw new Error("Unable to persist Google user in cloud store.");
+      }
     }
 
     users.push(user);
@@ -499,7 +531,9 @@ export async function updateStoredUserProfile(
     try {
       await writeCloudUser(nextUser);
     } catch {
-      // Keep local persistence even if cloud write fails.
+      if (shouldRequireCloudUserPersistence()) {
+        throw new Error("Unable to persist user profile update in cloud store.");
+      }
     }
 
     upsertUserInList(users, nextUser);

@@ -21,11 +21,18 @@ export async function GET() {
     return forbiddenResponse();
   }
 
-  const profile = await getOrCreateUserProfile(user.id);
-  return NextResponse.json({
-    ...profile,
-    isCreator: await isCreatorUserId(profile.userId)
-  });
+  try {
+    const profile = await getOrCreateUserProfile(user.id);
+    return NextResponse.json({
+      ...profile,
+      isCreator: await isCreatorUserId(profile.userId)
+    });
+  } catch (error) {
+    return NextResponse.json(
+      { message: error instanceof Error ? error.message : "Unable to load profile." },
+      { status: 500 }
+    );
+  }
 }
 
 export async function PUT(request: Request) {
@@ -45,10 +52,17 @@ export async function PUT(request: Request) {
     return NextResponse.json({ message: "Invalid JSON payload." }, { status: 400 });
   }
 
-  const parsed = parseProfileUpdatePayload(payload);
-  const profile = await updateUserProfile(user.id, parsed);
-  return NextResponse.json({
-    ...profile,
-    isCreator: await isCreatorUserId(profile.userId)
-  });
+  try {
+    const parsed = parseProfileUpdatePayload(payload);
+    const profile = await updateUserProfile(user.id, parsed);
+    return NextResponse.json({
+      ...profile,
+      isCreator: await isCreatorUserId(profile.userId)
+    });
+  } catch (error) {
+    return NextResponse.json(
+      { message: error instanceof Error ? error.message : "Unable to update profile." },
+      { status: 500 }
+    );
+  }
 }

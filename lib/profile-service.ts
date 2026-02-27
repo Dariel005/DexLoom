@@ -16,6 +16,7 @@ import {
   type ProfileUpdateInput,
   type UserProfileRecord
 } from "@/lib/profile-types";
+import { DEFAULT_TRAINER_AVATAR_URL, isGoogleProfileImageUrl } from "@/lib/default-avatar";
 import { findUserById, updateStoredUserProfile } from "@/lib/user-store";
 
 const DEFAULT_PROFILE_BIO = "";
@@ -63,6 +64,10 @@ export async function getOrCreateUserProfile(userId: string) {
       next.avatarUrl = user.image;
       didPatch = true;
     }
+    if (isGoogleProfileImageUrl(next.avatarUrl)) {
+      next.avatarUrl = DEFAULT_TRAINER_AVATAR_URL;
+      didPatch = true;
+    }
 
     if (didPatch) {
       next.updatedAt = new Date().toISOString();
@@ -75,7 +80,7 @@ export async function getOrCreateUserProfile(userId: string) {
   const profile = createDefaultProfile({
     userId,
     displayName: fallbackDisplayName(userId, user?.name),
-    avatarUrl: user?.image ?? null
+    avatarUrl: user?.image ?? DEFAULT_TRAINER_AVATAR_URL
   });
   return upsertProfileRecord(profile);
 }
