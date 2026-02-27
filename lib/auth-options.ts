@@ -21,7 +21,12 @@ const credentialsProvider = Credentials({
       return null;
     }
 
-    const user = await findUserByEmail(email);
+    let user = null;
+    try {
+      user = await findUserByEmail(email);
+    } catch {
+      return null;
+    }
     if (!user?.passwordHash) {
       return null;
     }

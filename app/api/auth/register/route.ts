@@ -44,11 +44,24 @@ export async function POST(request: Request) {
   }
 
   const passwordHash = await hashPassword(password);
-  const result = await registerCredentialsUser({
-    email,
-    passwordHash,
-    name
-  });
+  let result;
+  try {
+    result = await registerCredentialsUser({
+      email,
+      passwordHash,
+      name
+    });
+  } catch (error) {
+    return NextResponse.json(
+      {
+        message:
+          error instanceof Error
+            ? error.message
+            : "Unable to create account right now. Try again in a moment."
+      },
+      { status: 503 }
+    );
+  }
 
   if (result.status === "exists") {
     return NextResponse.json(
