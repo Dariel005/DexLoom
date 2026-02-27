@@ -197,8 +197,8 @@ export default function LoginPage() {
 
               {showGoogleConfigHint ? (
                 <p className="mt-2 text-xs text-black/60">
-                  Add `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` in `.env.local`, then restart
-                  the server.
+                  Add `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` as server environment
+                  variables, then restart/redeploy.
                 </p>
               ) : null}
 

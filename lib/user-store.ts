@@ -1,6 +1,12 @@
 import { randomUUID } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import {
+  getFirebaseFirestoreDb,
+  isFirebaseAdminConfigured,
+  isFirebaseProfileSyncEnabled,
+  isFirebaseSocialSyncEnabled
+} from "@/lib/firebase-admin";
 import { normalizeEmailAddress, sanitizeDisplayName } from "@/lib/auth-validation";
 
 export type AuthProviderKind = "credentials" | "google" | "hybrid";
@@ -18,6 +24,7 @@ export interface StoredUser {
 
 const DATA_STORE_DIR = path.resolve(process.cwd(), process.env.POKEDEX_DATA_DIR?.trim() || ".data");
 const USER_STORE_FILE = path.join(DATA_STORE_DIR, "users.json");
+const USER_COLLECTION = "pokedexUsers";
 let writeQueue: Promise<unknown> = Promise.resolve();
 
 function runExclusive<T>(task: () => Promise<T>) {
@@ -29,6 +36,72 @@ function runExclusive<T>(task: () => Promise<T>) {
   return next;
 }
 
+function isAuthFirebaseSyncEnabled() {
+  return process.env.AUTH_FIREBASE_SYNC_ENABLED === "1";
+}
+
+function canUseUserDatabase() {
+  return (
+    isFirebaseAdminConfigured() &&
+    (isAuthFirebaseSyncEnabled() || isFirebaseProfileSyncEnabled() || isFirebaseSocialSyncEnabled())
+  );
+}
+
+function getUserCollection() {
+  if (!canUseUserDatabase()) {
+    return null;
+  }
+
+  const db = getFirebaseFirestoreDb();
+  if (!db) {
+    return null;
+  }
+
+  return db.collection(USER_COLLECTION);
+}
+
+function isValidProvider(value: unknown): value is AuthProviderKind {
+  return value === "credentials" || value === "google" || value === "hybrid";
+}
+
+function normalizeIsoDate(value: unknown, fallback: string) {
+  const raw = typeof value === "string" ? value.trim() : "";
+  if (!raw) {
+    return fallback;
+  }
+
+  const parsed = Date.parse(raw);
+  return Number.isNaN(parsed) ? fallback : new Date(parsed).toISOString();
+}
+
+function normalizeStoredUser(value: unknown): StoredUser | null {
+  if (!value || typeof value !== "object") {
+    return null;
+  }
+
+  const row = value as Partial<StoredUser>;
+  const id = typeof row.id === "string" ? row.id.trim() : "";
+  const email = normalizeEmailAddress(typeof row.email === "string" ? row.email : "");
+  if (!id || !email) {
+    return null;
+  }
+
+  const createdAtFallback = new Date().toISOString();
+  const createdAt = normalizeIsoDate(row.createdAt, createdAtFallback);
+  const updatedAt = normalizeIsoDate(row.updatedAt, createdAt);
+
+  return {
+    id,
+    email,
+    name: sanitizeDisplayName(typeof row.name === "string" ? row.name : "", email),
+    image: typeof row.image === "string" ? row.image : row.image === null ? null : null,
+    provider: isValidProvider(row.provider) ? row.provider : "credentials",
+    passwordHash: typeof row.passwordHash === "string" ? row.passwordHash : null,
+    createdAt,
+    updatedAt
+  };
+}
+
 async function ensureStoreFile() {
   await mkdir(path.dirname(USER_STORE_FILE), { recursive: true });
   try {
@@ -38,7 +111,7 @@ async function ensureStoreFile() {
   }
 }
 
-async function readUsers() {
+async function readLocalUsers() {
   await ensureStoreFile();
   const raw = await readFile(USER_STORE_FILE, "utf-8");
 
@@ -47,15 +120,162 @@ async function readUsers() {
     if (!Array.isArray(parsed)) {
       return [] as StoredUser[];
     }
-    return parsed as StoredUser[];
+
+    return parsed
+      .map((entry) => normalizeStoredUser(entry))
+      .filter((entry): entry is StoredUser => Boolean(entry));
   } catch {
     return [] as StoredUser[];
   }
 }
 
-async function writeUsers(users: StoredUser[]) {
+function sortUsersByCreatedAt(users: StoredUser[]) {
+  return users
+    .slice()
+    .sort((a, b) => {
+      const left = Date.parse(a.createdAt);
+      const right = Date.parse(b.createdAt);
+      if (Number.isNaN(left) && Number.isNaN(right)) {
+        return a.id.localeCompare(b.id);
+      }
+      if (Number.isNaN(left)) {
+        return 1;
+      }
+      if (Number.isNaN(right)) {
+        return -1;
+      }
+      if (left === right) {
+        return a.id.localeCompare(b.id);
+      }
+      return left - right;
+    });
+}
+
+async function writeLocalUsers(users: StoredUser[]) {
   await ensureStoreFile();
-  await writeFile(USER_STORE_FILE, JSON.stringify(users, null, 2), "utf-8");
+  await writeFile(USER_STORE_FILE, JSON.stringify(sortUsersByCreatedAt(users), null, 2), "utf-8");
+}
+
+async function readCloudUsers() {
+  const collection = getUserCollection();
+  if (!collection) {
+    return null;
+  }
+
+  try {
+    const snapshot = await collection.get();
+    if (snapshot.empty) {
+      return [] as StoredUser[];
+    }
+
+    const users = snapshot.docs
+      .map((doc) => normalizeStoredUser(doc.data()))
+      .filter((entry): entry is StoredUser => Boolean(entry));
+    return sortUsersByCreatedAt(users);
+  } catch {
+    return null;
+  }
+}
+
+async function readCloudUserByEmail(email: string) {
+  const collection = getUserCollection();
+  if (!collection) {
+    return null;
+  }
+
+  try {
+    const snapshot = await collection.where("email", "==", email).limit(1).get();
+    if (snapshot.empty) {
+      return null;
+    }
+    return normalizeStoredUser(snapshot.docs[0]?.data());
+  } catch {
+    return null;
+  }
+}
+
+async function readCloudUserById(userId: string) {
+  const collection = getUserCollection();
+  if (!collection) {
+    return null;
+  }
+
+  try {
+    const snapshot = await collection.doc(userId).get();
+    if (!snapshot.exists) {
+      return null;
+    }
+    return normalizeStoredUser(snapshot.data());
+  } catch {
+    return null;
+  }
+}
+
+async function writeCloudUser(user: StoredUser) {
+  const collection = getUserCollection();
+  if (!collection) {
+    return;
+  }
+
+  await collection.doc(user.id).set(user, { merge: true });
+}
+
+function upsertUserInList(users: StoredUser[], user: StoredUser) {
+  const index = users.findIndex((entry) => entry.id === user.id || entry.email === user.email);
+  if (index >= 0) {
+    users[index] = user;
+  } else {
+    users.push(user);
+  }
+}
+
+async function mirrorLocalUser(user: StoredUser) {
+  await runExclusive(async () => {
+    const users = await readLocalUsers();
+    upsertUserInList(users, user);
+    await writeLocalUsers(users);
+  });
+}
+
+async function mirrorLocalUsers(users: StoredUser[]) {
+  await runExclusive(async () => {
+    await writeLocalUsers(users);
+  });
+}
+
+function hasUserListChanged(current: StoredUser[], next: StoredUser[]) {
+  if (current.length !== next.length) {
+    return true;
+  }
+
+  const byId = new Map(current.map((entry) => [entry.id, entry]));
+  for (const row of next) {
+    const currentRow = byId.get(row.id);
+    if (!currentRow) {
+      return true;
+    }
+    if (currentRow.updatedAt !== row.updatedAt || currentRow.email !== row.email) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+async function readUsers() {
+  const [localUsers, cloudUsers] = await Promise.all([readLocalUsers(), readCloudUsers()]);
+  if (cloudUsers && cloudUsers.length > 0) {
+    if (hasUserListChanged(localUsers, cloudUsers)) {
+      await mirrorLocalUsers(cloudUsers);
+    }
+    return cloudUsers;
+  }
+
+  if (localUsers.length > 0) {
+    return localUsers;
+  }
+
+  return cloudUsers ?? [];
 }
 
 function mergeProvider(current: AuthProviderKind, incoming: AuthProviderKind): AuthProviderKind {
@@ -67,7 +287,17 @@ function mergeProvider(current: AuthProviderKind, incoming: AuthProviderKind): A
 
 export async function findUserByEmail(email: string) {
   const normalizedEmail = normalizeEmailAddress(email);
-  const users = await readUsers();
+  if (!normalizedEmail) {
+    return null;
+  }
+
+  const cloudUser = await readCloudUserByEmail(normalizedEmail);
+  if (cloudUser) {
+    await mirrorLocalUser(cloudUser);
+    return cloudUser;
+  }
+
+  const users = await readLocalUsers();
   return users.find((user) => user.email === normalizedEmail) ?? null;
 }
 
@@ -82,7 +312,13 @@ export async function findUserById(userId: string) {
     return null;
   }
 
-  const users = await readUsers();
+  const cloudUser = await readCloudUserById(normalizedId);
+  if (cloudUser) {
+    await mirrorLocalUser(cloudUser);
+    return cloudUser;
+  }
+
+  const users = await readLocalUsers();
   return users.find((user) => user.id === normalizedId) ?? null;
 }
 
@@ -95,21 +331,35 @@ export async function registerCredentialsUser(input: {
   const resolvedName = sanitizeDisplayName(input.name ?? "", normalizedEmail);
 
   return runExclusive(async () => {
-    const users = await readUsers();
+    const users = await readLocalUsers();
     const now = new Date().toISOString();
-    const existingUser = users.find((user) => user.email === normalizedEmail);
+    const existingUser =
+      (await readCloudUserByEmail(normalizedEmail)) ?? users.find((user) => user.email === normalizedEmail);
 
     if (existingUser) {
       if (existingUser.passwordHash) {
+        upsertUserInList(users, existingUser);
+        await writeLocalUsers(users);
         return { status: "exists" as const, user: existingUser };
       }
 
-      existingUser.passwordHash = input.passwordHash;
-      existingUser.provider = mergeProvider(existingUser.provider, "credentials");
-      existingUser.name = existingUser.name || resolvedName;
-      existingUser.updatedAt = now;
-      await writeUsers(users);
-      return { status: "updated" as const, user: existingUser };
+      const updatedUser: StoredUser = {
+        ...existingUser,
+        passwordHash: input.passwordHash,
+        provider: mergeProvider(existingUser.provider, "credentials"),
+        name: existingUser.name || resolvedName,
+        updatedAt: now
+      };
+
+      try {
+        await writeCloudUser(updatedUser);
+      } catch {
+        // Keep local persistence even if cloud write fails.
+      }
+
+      upsertUserInList(users, updatedUser);
+      await writeLocalUsers(users);
+      return { status: "updated" as const, user: updatedUser };
     }
 
     const user: StoredUser = {
@@ -122,8 +372,15 @@ export async function registerCredentialsUser(input: {
       createdAt: now,
       updatedAt: now
     };
+
+    try {
+      await writeCloudUser(user);
+    } catch {
+      // Keep local persistence even if cloud write fails.
+    }
+
     users.push(user);
-    await writeUsers(users);
+    await writeLocalUsers(users);
     return { status: "created" as const, user };
   });
 }
@@ -138,17 +395,29 @@ export async function upsertGoogleUser(input: {
   const image = input.image ?? null;
 
   return runExclusive(async () => {
-    const users = await readUsers();
+    const users = await readLocalUsers();
     const now = new Date().toISOString();
-    const existingUser = users.find((user) => user.email === normalizedEmail);
+    const existingUser =
+      (await readCloudUserByEmail(normalizedEmail)) ?? users.find((user) => user.email === normalizedEmail);
 
     if (existingUser) {
-      existingUser.provider = mergeProvider(existingUser.provider, "google");
-      existingUser.name = resolvedName || existingUser.name;
-      existingUser.image = image ?? existingUser.image;
-      existingUser.updatedAt = now;
-      await writeUsers(users);
-      return existingUser;
+      const updatedUser: StoredUser = {
+        ...existingUser,
+        provider: mergeProvider(existingUser.provider, "google"),
+        name: resolvedName || existingUser.name,
+        image: image ?? existingUser.image,
+        updatedAt: now
+      };
+
+      try {
+        await writeCloudUser(updatedUser);
+      } catch {
+        // Keep local persistence even if cloud write fails.
+      }
+
+      upsertUserInList(users, updatedUser);
+      await writeLocalUsers(users);
+      return updatedUser;
     }
 
     const user: StoredUser = {
@@ -162,8 +431,14 @@ export async function upsertGoogleUser(input: {
       updatedAt: now
     };
 
+    try {
+      await writeCloudUser(user);
+    } catch {
+      // Keep local persistence even if cloud write fails.
+    }
+
     users.push(user);
-    await writeUsers(users);
+    await writeLocalUsers(users);
     return user;
   });
 }
@@ -181,23 +456,33 @@ export async function updateStoredUserProfile(
   }
 
   return runExclusive(async () => {
-    const users = await readUsers();
-    const user = users.find((entry) => entry.id === normalizedId);
+    const users = await readLocalUsers();
+    const cloudUser = await readCloudUserById(normalizedId);
+    const user = cloudUser ?? users.find((entry) => entry.id === normalizedId);
     if (!user) {
       return null;
     }
 
+    const nextUser: StoredUser = { ...user };
     const nextName = input.name?.trim();
     if (typeof nextName === "string" && nextName.length > 0) {
-      user.name = sanitizeDisplayName(nextName, user.email);
+      nextUser.name = sanitizeDisplayName(nextName, nextUser.email);
     }
 
     if (input.image !== undefined) {
-      user.image = input.image ?? null;
+      nextUser.image = input.image ?? null;
     }
 
-    user.updatedAt = new Date().toISOString();
-    await writeUsers(users);
-    return user;
+    nextUser.updatedAt = new Date().toISOString();
+
+    try {
+      await writeCloudUser(nextUser);
+    } catch {
+      // Keep local persistence even if cloud write fails.
+    }
+
+    upsertUserInList(users, nextUser);
+    await writeLocalUsers(users);
+    return nextUser;
   });
 }
