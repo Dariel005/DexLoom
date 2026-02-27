@@ -49,18 +49,20 @@ export async function processAvatarUpload(input: {
 
   if (isFirebaseProfileSyncEnabled()) {
     const bucket = getFirebaseStorageBucket();
-    if (!bucket) {
-      throw new Error("Avatar storage bucket is not configured.");
-    }
-
-    const file = bucket.file(remotePath);
-    await file.save(outputBuffer, {
-      contentType: "image/webp",
-      resumable: false,
-      metadata: {
-        cacheControl: "public, max-age=31536000, immutable"
+    if (bucket) {
+      try {
+        const file = bucket.file(remotePath);
+        await file.save(outputBuffer, {
+          contentType: "image/webp",
+          resumable: false,
+          metadata: {
+            cacheControl: "public, max-age=31536000, immutable"
+          }
+        });
+      } catch {
+        // Cloud avatar upload failed; continue with local mirror fallback.
       }
-    });
+    }
   }
 
   // Keep a best-effort local mirror for local development and optional hot caching.

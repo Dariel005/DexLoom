@@ -50,10 +50,6 @@ const NOTIFICATION_RETENTION_MS = 60 * 24 * 60 * 60 * 1000;
 
 let writeQueue: Promise<unknown> = Promise.resolve();
 
-function shouldRequireSocialCloudPersistence() {
-  return process.env.NODE_ENV === "production" && isFirebaseSocialSyncEnabled();
-}
-
 function runExclusive<T>(task: () => Promise<T>) {
   const next = writeQueue.then(task, task);
   writeQueue = next.then(
@@ -279,9 +275,6 @@ function canUseSocialDatabase() {
 async function readArrayFromDatabase(storeName: SocialStoreName) {
   const db = getFirebaseFirestoreDb();
   if (!db) {
-    if (shouldRequireSocialCloudPersistence()) {
-      throw new Error("Social cloud store is unavailable in production.");
-    }
     return [] as unknown[];
   }
 
@@ -293,9 +286,6 @@ async function readArrayFromDatabase(storeName: SocialStoreName) {
     const data = doc.data() as { rows?: unknown } | undefined;
     return Array.isArray(data?.rows) ? data.rows : [];
   } catch {
-    if (shouldRequireSocialCloudPersistence()) {
-      throw new Error("Unable to read social data from cloud store.");
-    }
     return [] as unknown[];
   }
 }
@@ -344,19 +334,12 @@ async function readArrayFile(filePath: string, storeName: SocialStoreName) {
       try {
         await writeArrayToDatabase(storeName, localRows);
       } catch {
-        if (shouldRequireSocialCloudPersistence()) {
-          throw new Error("Unable to backfill social data to cloud store.");
-        }
         // Keep serving local data if cloud backfill fails in local/dev mode.
       }
       return localRows;
     }
 
     return remoteRows;
-  }
-
-  if (shouldRequireSocialCloudPersistence()) {
-    throw new Error("Social cloud store is unavailable in production.");
   }
 
   return readArrayFromLocalFile(filePath);
@@ -368,14 +351,8 @@ async function writeArrayFile<T>(filePath: string, rows: T[], storeName: SocialS
       await writeArrayToDatabase(storeName, rows);
       return;
     } catch {
-      if (shouldRequireSocialCloudPersistence()) {
-        throw new Error("Unable to persist social data in cloud store.");
-      }
+      // Cloud write failed; continue to local fallback.
     }
-  }
-
-  if (shouldRequireSocialCloudPersistence()) {
-    throw new Error("Social cloud store is unavailable in production.");
   }
 
   await writeArrayToLocalFile(filePath, rows);
