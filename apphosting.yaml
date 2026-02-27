@@ -15,7 +15,7 @@ env:
     value: "1"
 
   - variable: FIREBASE_STORAGE_BUCKET
-    value: dexloom.firebasestorage.app
+    value: dexloom-976538736609-user-assets
 
   - variable: NEXTAUTH_SECRET
     secret: NEXTAUTH_SECRET

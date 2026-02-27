@@ -11,6 +11,7 @@ import {
   type FavoriteUpsertInput,
   type UserProfileRecord
 } from "@/lib/profile-types";
+import { assertCanUseUnsafeLocalPersistence, isDurableStorageError } from "@/lib/durable-storage";
 import { readPostgresJsonArray, writePostgresJsonArray } from "@/lib/postgres-json-store";
 import { resolveDataStoreDir } from "@/lib/runtime-storage";
 import { buildFavoriteId, decodeCursor, encodeCursor } from "@/lib/profile-validation";
@@ -78,11 +79,27 @@ async function readArrayFile<T>(filePath: string, storeKey: "profiles" | "favori
   }
 }
 
-async function writeArrayFile<T>(filePath: string, rows: T[], storeKey: "profiles" | "favorites") {
+async function writeArrayFile<T>(
+  filePath: string,
+  rows: T[],
+  storeKey: "profiles" | "favorites",
+  options?: {
+    skipUnsafeLocalWrite?: boolean;
+    errorMessage?: string;
+  }
+) {
   const wroteToPg = await writePostgresJsonArray(storeKey, rows as unknown[]);
   if (wroteToPg) {
     return;
   }
+
+  if (options?.skipUnsafeLocalWrite) {
+    return;
+  }
+
+  assertCanUseUnsafeLocalPersistence(
+    options?.errorMessage ?? "Persistent profile storage is unavailable. Your changes were not saved."
+  );
 
   const available = await ensureStoreFile(filePath, "[]");
   if (!available) {
@@ -141,14 +158,15 @@ async function getCloudProfile(userId: string) {
 
 async function upsertCloudProfile(record: UserProfileRecord) {
   if (!isFirebaseProfileSyncEnabled()) {
-    return;
+    return false;
   }
 
   const db = getFirebaseFirestoreDb();
   if (!db) {
-    return;
+    return false;
   }
   await db.collection(PROFILE_COLLECTION).doc(record.userId).set(record, { merge: true });
+  return true;
 }
 
 async function getCloudFavorites(userId: string) {
@@ -177,15 +195,16 @@ async function getCloudFavorites(userId: string) {
 
 async function upsertCloudFavorite(record: FavoriteRecord) {
   if (!isFirebaseProfileSyncEnabled()) {
-    return;
+    return false;
   }
 
   const db = getFirebaseFirestoreDb();
   if (!db) {
-    return;
+    return false;
   }
   const cloudDocId = `${record.userId}__${record.id}`;
   await db.collection(FAVORITES_COLLECTION).doc(cloudDocId).set(record, { merge: true });
+  return true;
 }
 
 async function deleteCloudFavorite(
@@ -194,18 +213,24 @@ async function deleteCloudFavorite(
   entityId: string
 ) {
   if (!isFirebaseProfileSyncEnabled()) {
-    return;
+    return false;
   }
 
   const db = getFirebaseFirestoreDb();
   if (!db) {
-    return;
+    return false;
   }
   const cloudDocId = `${userId}__${buildFavoriteId(entityType, entityId)}`;
   await db.collection(FAVORITES_COLLECTION).doc(cloudDocId).delete();
+  return true;
 }
 
-async function mirrorLocalProfile(record: UserProfileRecord) {
+async function mirrorLocalProfile(
+  record: UserProfileRecord,
+  options?: {
+    skipUnsafeLocalWrite?: boolean;
+  }
+) {
   return runExclusive(async () => {
     const profiles = await readLocalProfiles();
     const index = profiles.findIndex((entry) => entry.userId === record.userId);
@@ -214,16 +239,28 @@ async function mirrorLocalProfile(record: UserProfileRecord) {
     } else {
       profiles.push(record);
     }
-    await writeArrayFile(PROFILE_STORE_FILE, profiles, "profiles");
+    await writeArrayFile(PROFILE_STORE_FILE, profiles, "profiles", {
+      skipUnsafeLocalWrite: options?.skipUnsafeLocalWrite,
+      errorMessage: "Persistent profile storage is unavailable. Your changes were not saved."
+    });
   });
 }
 
-async function mirrorLocalFavoritesForUser(userId: string, rows: FavoriteRecord[]) {
+async function mirrorLocalFavoritesForUser(
+  userId: string,
+  rows: FavoriteRecord[],
+  options?: {
+    skipUnsafeLocalWrite?: boolean;
+  }
+) {
   return runExclusive(async () => {
     const favorites = await readLocalFavorites();
     const preserved = favorites.filter((entry) => entry.userId !== userId);
     const merged = [...preserved, ...rows];
-    await writeArrayFile(FAVORITES_STORE_FILE, merged, "favorites");
+    await writeArrayFile(FAVORITES_STORE_FILE, merged, "favorites", {
+      skipUnsafeLocalWrite: options?.skipUnsafeLocalWrite,
+      errorMessage: "Persistent favorites storage is unavailable. Your changes were not saved."
+    });
   });
 }
 
@@ -263,7 +300,7 @@ export async function getProfileRecord(userId: string) {
   try {
     const cloud = await getCloudProfile(userId);
     if (cloud) {
-      await mirrorLocalProfile(cloud);
+      await mirrorLocalProfile(cloud, { skipUnsafeLocalWrite: true });
       return cloud;
     }
 
@@ -278,13 +315,14 @@ export async function getProfileRecord(userId: string) {
 }
 
 export async function upsertProfileRecord(record: UserProfileRecord) {
+  let wroteCloudProfile = false;
   try {
-    await upsertCloudProfile(record);
+    wroteCloudProfile = await upsertCloudProfile(record);
   } catch {
     // Cloud write failed; keep local mirror as fallback.
   }
 
-  await mirrorLocalProfile(record);
+  await mirrorLocalProfile(record, { skipUnsafeLocalWrite: wroteCloudProfile });
   return record;
 }
 
@@ -303,7 +341,9 @@ export async function listFavoriteRecords(input: {
     if (cloudFavorites && cloudFavorites.length > 0) {
       favorites = cloudFavorites;
       if (hasFavoriteSetChanged(localFavorites, cloudFavorites)) {
-        await mirrorLocalFavoritesForUser(userId, cloudFavorites);
+        await mirrorLocalFavoritesForUser(userId, cloudFavorites, {
+          skipUnsafeLocalWrite: true
+        });
       }
     } else if (cloudFavorites && localFavorites.length > 0) {
       // Cloud store is empty but local records exist; backfill to prevent data loss on next deploy.
@@ -354,8 +394,9 @@ export async function upsertFavoriteRecord(
     createdAt: existing?.createdAt ?? now
   };
 
+  let wroteCloudFavorite = false;
   try {
-    await upsertCloudFavorite(record);
+    wroteCloudFavorite = await upsertCloudFavorite(record);
   } catch {
     // Cloud write failed; keep local mirror as fallback.
   }
@@ -368,7 +409,10 @@ export async function upsertFavoriteRecord(
     } else {
       all.push(record);
     }
-    await writeArrayFile(FAVORITES_STORE_FILE, all, "favorites");
+    await writeArrayFile(FAVORITES_STORE_FILE, all, "favorites", {
+      skipUnsafeLocalWrite: wroteCloudFavorite,
+      errorMessage: "Persistent favorites storage is unavailable. Your changes were not saved."
+    });
   });
 
   return {
@@ -383,8 +427,9 @@ export async function deleteFavoriteRecord(
   entityId: string
 ) {
   const favoriteId = buildFavoriteId(entityType, entityId);
+  let wroteCloudFavorite = false;
   try {
-    await deleteCloudFavorite(userId, entityType, entityId);
+    wroteCloudFavorite = await deleteCloudFavorite(userId, entityType, entityId);
   } catch {
     // Cloud delete failed; still update local mirror.
   }
@@ -394,7 +439,10 @@ export async function deleteFavoriteRecord(
     const next = all.filter((entry) => !(entry.userId === userId && entry.id === favoriteId));
     const removed = next.length !== all.length;
     if (removed) {
-      await writeArrayFile(FAVORITES_STORE_FILE, next, "favorites");
+      await writeArrayFile(FAVORITES_STORE_FILE, next, "favorites", {
+        skipUnsafeLocalWrite: wroteCloudFavorite,
+        errorMessage: "Persistent favorites storage is unavailable. Your changes were not saved."
+      });
     }
     return removed;
   });
@@ -419,7 +467,10 @@ export async function syncFavoriteRecords(
         await deleteFavoriteRecord(userId, op.entityType, op.entityId);
       }
       applied += 1;
-    } catch {
+    } catch (error) {
+      if (isDurableStorageError(error)) {
+        throw error;
+      }
       failed += 1;
     }
   }

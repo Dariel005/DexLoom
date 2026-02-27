@@ -1,4 +1,5 @@
-﻿import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import { jsonErrorResponse } from "@/lib/api-error-response";
 import { getServerAuthUser } from "@/lib/auth-session";
 import { isProfileFeatureEnabled } from "@/lib/firebase-admin";
 import { reportUser, touchSocialPresence } from "@/lib/social-service";
@@ -39,9 +40,6 @@ export async function POST(request: Request) {
     const report = await reportUser(user.id, parsed);
     return NextResponse.json({ ok: true, reportId: report.id, createdAt: report.createdAt });
   } catch (error) {
-    return NextResponse.json(
-      { message: error instanceof Error ? error.message : "Unable to submit report." },
-      { status: 400 }
-    );
+    return jsonErrorResponse(error, "Unable to submit report.", 400);
   }
 }

@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
+import { assertCanUseUnsafeLocalPersistence } from "@/lib/durable-storage";
 import { getFirebaseStorageBucket, isFirebaseProfileSyncEnabled } from "@/lib/firebase-admin";
 import { resolveAvatarStoreDir } from "@/lib/runtime-storage";
 
@@ -70,6 +71,16 @@ export async function processAvatarUpload(input: {
 
   // Keep a best-effort local mirror for local development and optional hot caching.
   let hasLocalCopy = false;
+  if (hasCloudCopy) {
+    return {
+      avatarUrl: `${AVATAR_BASE_PATH}/${fileName}`
+    };
+  }
+
+  assertCanUseUnsafeLocalPersistence(
+    "Persistent avatar storage is unavailable. Your avatar was not saved."
+  );
+
   try {
     await mkdir(AVATAR_DIR, { recursive: true });
     const outputPath = path.join(AVATAR_DIR, fileName);

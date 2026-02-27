@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { jsonErrorResponse } from "@/lib/api-error-response";
 import { getServerAuthUser } from "@/lib/auth-session";
 import { isProfileFeatureEnabled } from "@/lib/firebase-admin";
 import { processAvatarUpload } from "@/lib/profile-avatar";
@@ -54,9 +55,6 @@ export async function POST(request: Request) {
     await updateUserAvatar(user.id, avatarUrl);
     return NextResponse.json({ avatarUrl });
   } catch (error) {
-    return NextResponse.json(
-      { message: error instanceof Error ? error.message : "Unable to upload avatar." },
-      { status: 500 }
-    );
+    return jsonErrorResponse(error, "Unable to upload avatar.", 500);
   }
 }

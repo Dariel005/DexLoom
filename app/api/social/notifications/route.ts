@@ -1,8 +1,16 @@
 import { NextResponse } from "next/server";
+import { jsonErrorResponse } from "@/lib/api-error-response";
 import { getServerAuthUser } from "@/lib/auth-session";
 import { isProfileFeatureEnabled } from "@/lib/firebase-admin";
-import { getSocialNotificationsForUser, touchSocialPresence, updateSocialNotificationState } from "@/lib/social-service";
-import { parseSocialNotificationListParams, parseSocialNotificationPayload } from "@/lib/social-validation";
+import {
+  getSocialNotificationsForUser,
+  touchSocialPresence,
+  updateSocialNotificationState
+} from "@/lib/social-service";
+import {
+  parseSocialNotificationListParams,
+  parseSocialNotificationPayload
+} from "@/lib/social-validation";
 
 export const runtime = "nodejs";
 
@@ -20,8 +28,13 @@ export async function GET(request: Request) {
 
   const { searchParams } = new URL(request.url);
   const params = parseSocialNotificationListParams(searchParams);
-  const notifications = await getSocialNotificationsForUser(user.id, params);
-  return NextResponse.json(notifications);
+
+  try {
+    const notifications = await getSocialNotificationsForUser(user.id, params);
+    return NextResponse.json(notifications);
+  } catch (error) {
+    return jsonErrorResponse(error, "Unable to load notifications.", 503);
+  }
 }
 
 export async function POST(request: Request) {
@@ -53,6 +66,10 @@ export async function POST(request: Request) {
     );
   }
 
-  const result = await updateSocialNotificationState(user.id, parsed);
-  return NextResponse.json(result);
+  try {
+    const result = await updateSocialNotificationState(user.id, parsed);
+    return NextResponse.json(result);
+  } catch (error) {
+    return jsonErrorResponse(error, "Unable to update notifications.", 400);
+  }
 }

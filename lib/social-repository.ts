@@ -5,6 +5,7 @@ import {
   getFirebaseFirestoreDb,
   isSocialDatabaseEnabled
 } from "@/lib/firebase-admin";
+import { assertCanUseUnsafeLocalPersistence } from "@/lib/durable-storage";
 import { readPostgresJsonArray, writePostgresJsonArray } from "@/lib/postgres-json-store";
 import { resolveDataStoreDir } from "@/lib/runtime-storage";
 import {
@@ -343,11 +344,27 @@ async function readArrayFromLocalFile(filePath: string, storeName: SocialStoreNa
   }
 }
 
-async function writeArrayToLocalFile<T>(filePath: string, rows: T[], storeName: SocialStoreName) {
+async function writeArrayToLocalFile<T>(
+  filePath: string,
+  rows: T[],
+  storeName: SocialStoreName,
+  options?: {
+    skipUnsafeLocalWrite?: boolean;
+    errorMessage?: string;
+  }
+) {
   const wroteToPg = await writePostgresJsonArray(`social:${storeName}`, rows as unknown[]);
   if (wroteToPg) {
     return;
   }
+
+  if (options?.skipUnsafeLocalWrite) {
+    return;
+  }
+
+  assertCanUseUnsafeLocalPersistence(
+    options?.errorMessage ?? "Persistent social storage is unavailable. Your changes were not saved."
+  );
 
   const available = await ensureStoreFile(filePath);
   if (!available) {
@@ -365,7 +382,9 @@ async function readArrayFile(filePath: string, storeName: SocialStoreName) {
   if (canUseSocialDatabase()) {
     const remoteRows = await readArrayFromDatabase(storeName);
     if (remoteRows.length > 0) {
-      await writeArrayToLocalFile(filePath, remoteRows, storeName);
+      await writeArrayToLocalFile(filePath, remoteRows, storeName, {
+        skipUnsafeLocalWrite: true
+      });
       return remoteRows;
     }
 
@@ -385,7 +404,15 @@ async function readArrayFile(filePath: string, storeName: SocialStoreName) {
   return readArrayFromLocalFile(filePath, storeName);
 }
 
-async function writeArrayFile<T>(filePath: string, rows: T[], storeName: SocialStoreName) {
+async function writeArrayFile<T>(
+  filePath: string,
+  rows: T[],
+  storeName: SocialStoreName,
+  options?: {
+    skipUnsafeLocalWrite?: boolean;
+    errorMessage?: string;
+  }
+) {
   let wroteRemote = false;
   if (canUseSocialDatabase()) {
     try {
@@ -396,7 +423,10 @@ async function writeArrayFile<T>(filePath: string, rows: T[], storeName: SocialS
     }
   }
 
-  await writeArrayToLocalFile(filePath, rows, storeName);
+  await writeArrayToLocalFile(filePath, rows, storeName, {
+    skipUnsafeLocalWrite: wroteRemote || options?.skipUnsafeLocalWrite,
+    errorMessage: options?.errorMessage
+  });
 
   if (wroteRemote) {
     return;
@@ -409,7 +439,9 @@ async function readFriendships() {
 }
 
 async function writeFriendships(rows: FriendshipRecord[]) {
-  await writeArrayFile(FRIENDSHIP_STORE_FILE, rows, "friendships");
+  await writeArrayFile(FRIENDSHIP_STORE_FILE, rows, "friendships", {
+    errorMessage: "Persistent friendship storage is unavailable. Your changes were not saved."
+  });
 }
 
 async function readPresenceRecords() {
@@ -418,7 +450,9 @@ async function readPresenceRecords() {
 }
 
 async function writePresenceRecords(rows: SocialPresenceRecord[]) {
-  await writeArrayFile(SOCIAL_PRESENCE_STORE_FILE, rows, "social_presence");
+  await writeArrayFile(SOCIAL_PRESENCE_STORE_FILE, rows, "social_presence", {
+    errorMessage: "Persistent presence storage is unavailable. Your changes were not saved."
+  });
 }
 
 async function readSettingsRecords() {
@@ -427,7 +461,9 @@ async function readSettingsRecords() {
 }
 
 async function writeSettingsRecords(rows: SocialPrivacySettingsRecord[]) {
-  await writeArrayFile(SOCIAL_SETTINGS_STORE_FILE, rows, "social_settings");
+  await writeArrayFile(SOCIAL_SETTINGS_STORE_FILE, rows, "social_settings", {
+    errorMessage: "Persistent social settings storage is unavailable. Your changes were not saved."
+  });
 }
 
 async function readBlockRecords() {
@@ -436,7 +472,9 @@ async function readBlockRecords() {
 }
 
 async function writeBlockRecords(rows: SocialBlockRecord[]) {
-  await writeArrayFile(SOCIAL_BLOCKS_STORE_FILE, rows, "social_blocks");
+  await writeArrayFile(SOCIAL_BLOCKS_STORE_FILE, rows, "social_blocks", {
+    errorMessage: "Persistent block list storage is unavailable. Your changes were not saved."
+  });
 }
 
 async function readReportRecords() {
@@ -447,7 +485,9 @@ async function readReportRecords() {
 }
 
 async function writeReportRecords(rows: SocialReportRecord[]) {
-  await writeArrayFile(SOCIAL_REPORTS_STORE_FILE, rows, "social_reports");
+  await writeArrayFile(SOCIAL_REPORTS_STORE_FILE, rows, "social_reports", {
+    errorMessage: "Persistent moderation report storage is unavailable. Your changes were not saved."
+  });
 }
 
 async function readActivityRecords() {
@@ -456,7 +496,9 @@ async function readActivityRecords() {
 }
 
 async function writeActivityRecords(rows: SocialActivityRecord[]) {
-  await writeArrayFile(SOCIAL_ACTIVITIES_STORE_FILE, rows, "social_activities");
+  await writeArrayFile(SOCIAL_ACTIVITIES_STORE_FILE, rows, "social_activities", {
+    errorMessage: "Persistent social activity storage is unavailable. Your changes were not saved."
+  });
 }
 
 async function readNotificationRecords() {
@@ -465,7 +507,9 @@ async function readNotificationRecords() {
 }
 
 async function writeNotificationRecords(rows: SocialNotificationRecord[]) {
-  await writeArrayFile(SOCIAL_NOTIFICATIONS_STORE_FILE, rows, "social_notifications");
+  await writeArrayFile(SOCIAL_NOTIFICATIONS_STORE_FILE, rows, "social_notifications", {
+    errorMessage: "Persistent notification storage is unavailable. Your changes were not saved."
+  });
 }
 
 function toSafeTime(value: string | null | undefined) {

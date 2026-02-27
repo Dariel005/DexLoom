@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { jsonErrorResponse } from "@/lib/api-error-response";
 import { getServerAuthUser } from "@/lib/auth-session";
 import { isProfileFeatureEnabled } from "@/lib/firebase-admin";
 import {
@@ -33,10 +34,7 @@ export async function GET() {
     const snapshot = await getFriendNetworkSnapshot(user.id);
     return NextResponse.json(snapshot);
   } catch (error) {
-    return NextResponse.json(
-      { message: error instanceof Error ? error.message : "Unable to load friend network." },
-      { status: 503 }
-    );
+    return jsonErrorResponse(error, "Unable to load friend network.", 503);
   }
 }
 
@@ -87,9 +85,6 @@ export async function POST(request: Request) {
     const snapshot = await getFriendNetworkSnapshot(user.id);
     return NextResponse.json({ ok: true, relation, snapshot });
   } catch (error) {
-    return NextResponse.json(
-      { message: error instanceof Error ? error.message : "Unable to process friendship action." },
-      { status: 400 }
-    );
+    return jsonErrorResponse(error, "Unable to process friendship action.", 400);
   }
 }

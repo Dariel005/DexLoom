@@ -1,4 +1,5 @@
-﻿import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import { jsonErrorResponse } from "@/lib/api-error-response";
 import { getServerAuthUser } from "@/lib/auth-session";
 import { isProfileFeatureEnabled } from "@/lib/firebase-admin";
 import { blockUser, getSocialHubPayload, touchSocialPresence, unblockUser } from "@/lib/social-service";
@@ -44,9 +45,6 @@ export async function POST(request: Request) {
     const hub = await getSocialHubPayload(user.id);
     return NextResponse.json({ ok: true, relation, hub });
   } catch (error) {
-    return NextResponse.json(
-      { message: error instanceof Error ? error.message : "Unable to update block list." },
-      { status: 400 }
-    );
+    return jsonErrorResponse(error, "Unable to update block list.", 400);
   }
 }

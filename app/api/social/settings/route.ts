@@ -1,4 +1,5 @@
-﻿import { NextResponse } from "next/server";
+import { NextResponse } from "next/server";
+import { jsonErrorResponse } from "@/lib/api-error-response";
 import { getServerAuthUser } from "@/lib/auth-session";
 import { isProfileFeatureEnabled } from "@/lib/firebase-admin";
 import { touchSocialPresence, updateSocialSettings } from "@/lib/social-service";
@@ -35,6 +36,10 @@ export async function PUT(request: Request) {
     );
   }
 
-  const settings = await updateSocialSettings(user.id, parsed);
-  return NextResponse.json(settings);
+  try {
+    const settings = await updateSocialSettings(user.id, parsed);
+    return NextResponse.json(settings);
+  } catch (error) {
+    return jsonErrorResponse(error, "Unable to update social settings.", 400);
+  }
 }

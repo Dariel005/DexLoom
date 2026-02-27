@@ -8,6 +8,7 @@ import {
   isFirebaseProfileSyncEnabled,
   isFirebaseSocialSyncEnabled
 } from "@/lib/firebase-admin";
+import { assertCanUseUnsafeLocalPersistence } from "@/lib/durable-storage";
 import { normalizeEmailAddress, sanitizeDisplayName } from "@/lib/auth-validation";
 import { DEFAULT_TRAINER_AVATAR_URL, isGoogleProfileImageUrl } from "@/lib/default-avatar";
 import { readPostgresJsonArray, writePostgresJsonArray } from "@/lib/postgres-json-store";
@@ -178,12 +179,25 @@ function sortUsersByCreatedAt(users: StoredUser[]) {
     });
 }
 
-async function writeLocalUsers(users: StoredUser[]) {
+async function writeLocalUsers(
+  users: StoredUser[],
+  options?: {
+    skipUnsafeLocalWrite?: boolean;
+  }
+) {
   const sorted = sortUsersByCreatedAt(users);
   const wroteToPg = await writePostgresJsonArray("users", sorted as unknown[]);
   if (wroteToPg) {
     return;
   }
+
+  if (options?.skipUnsafeLocalWrite) {
+    return;
+  }
+
+  assertCanUseUnsafeLocalPersistence(
+    "Persistent account storage is unavailable. Account changes were not saved."
+  );
 
   const available = await ensureStoreFile();
   if (!available) {
@@ -255,10 +269,11 @@ async function readCloudUserById(userId: string) {
 async function writeCloudUser(user: StoredUser) {
   const collection = getUserCollection();
   if (!collection) {
-    return;
+    return false;
   }
 
   await collection.doc(user.id).set(user, { merge: true });
+  return true;
 }
 
 function resolveGoogleSignInImage(existingImage: string | null | undefined) {
@@ -281,13 +296,13 @@ async function mirrorLocalUser(user: StoredUser) {
   await runExclusive(async () => {
     const users = await readLocalUsers();
     upsertUserInList(users, user);
-    await writeLocalUsers(users);
+    await writeLocalUsers(users, { skipUnsafeLocalWrite: true });
   });
 }
 
 async function mirrorLocalUsers(users: StoredUser[]) {
   await runExclusive(async () => {
-    await writeLocalUsers(users);
+    await writeLocalUsers(users, { skipUnsafeLocalWrite: true });
   });
 }
 
@@ -405,6 +420,7 @@ export async function registerCredentialsUser(input: {
   return runExclusive(async () => {
     const users = await readLocalUsers();
     const now = new Date().toISOString();
+    let wroteCloudUser = false;
     const existingUser =
       (await readCloudUserByEmail(normalizedEmail)) ?? users.find((user) => user.email === normalizedEmail);
 
@@ -424,13 +440,13 @@ export async function registerCredentialsUser(input: {
       };
 
       try {
-        await writeCloudUser(updatedUser);
+        wroteCloudUser = await writeCloudUser(updatedUser);
       } catch {
         // Keep local write as source of truth when cloud sync fails.
       }
 
       upsertUserInList(users, updatedUser);
-      await writeLocalUsers(users);
+      await writeLocalUsers(users, { skipUnsafeLocalWrite: wroteCloudUser });
       return { status: "updated" as const, user: updatedUser };
     }
 
@@ -446,13 +462,13 @@ export async function registerCredentialsUser(input: {
     };
 
     try {
-      await writeCloudUser(user);
+      wroteCloudUser = await writeCloudUser(user);
     } catch {
       // Keep local write as source of truth when cloud sync fails.
     }
 
     users.push(user);
-    await writeLocalUsers(users);
+    await writeLocalUsers(users, { skipUnsafeLocalWrite: wroteCloudUser });
     return { status: "created" as const, user };
   });
 }
@@ -468,6 +484,7 @@ export async function upsertGoogleUser(input: {
   return runExclusive(async () => {
     const users = await readLocalUsers();
     const now = new Date().toISOString();
+    let wroteCloudUser = false;
     const existingUser =
       (await readCloudUserByEmail(normalizedEmail)) ?? users.find((user) => user.email === normalizedEmail);
 
@@ -482,13 +499,13 @@ export async function upsertGoogleUser(input: {
       };
 
       try {
-        await writeCloudUser(updatedUser);
+        wroteCloudUser = await writeCloudUser(updatedUser);
       } catch {
         // Keep local write as source of truth when cloud sync fails.
       }
 
       upsertUserInList(users, updatedUser);
-      await writeLocalUsers(users);
+      await writeLocalUsers(users, { skipUnsafeLocalWrite: wroteCloudUser });
       return updatedUser;
     }
 
@@ -504,13 +521,13 @@ export async function upsertGoogleUser(input: {
     };
 
     try {
-      await writeCloudUser(user);
+      wroteCloudUser = await writeCloudUser(user);
     } catch {
       // Keep local write as source of truth when cloud sync fails.
     }
 
     users.push(user);
-    await writeLocalUsers(users);
+    await writeLocalUsers(users, { skipUnsafeLocalWrite: wroteCloudUser });
     return user;
   });
 }
@@ -530,6 +547,7 @@ export async function updateStoredUserProfile(
   return runExclusive(async () => {
     const users = await readLocalUsers();
     const cloudUser = await readCloudUserById(normalizedId);
+    let wroteCloudUser = false;
     const user = cloudUser ?? users.find((entry) => entry.id === normalizedId);
     if (!user) {
       return null;
@@ -548,13 +566,13 @@ export async function updateStoredUserProfile(
     nextUser.updatedAt = new Date().toISOString();
 
     try {
-      await writeCloudUser(nextUser);
+      wroteCloudUser = await writeCloudUser(nextUser);
     } catch {
       // Keep local write as source of truth when cloud sync fails.
     }
 
     upsertUserInList(users, nextUser);
-    await writeLocalUsers(users);
+    await writeLocalUsers(users, { skipUnsafeLocalWrite: wroteCloudUser });
     return nextUser;
   });
 }

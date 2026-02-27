@@ -30,6 +30,7 @@ import {
   unblockUserRecord,
   upsertSocialPrivacySettingsRecord
 } from "@/lib/social-repository";
+import { isDurableStorageError } from "@/lib/durable-storage";
 import {
   type BlockedUserView,
   type FriendNetworkSnapshot,
@@ -412,7 +413,18 @@ export async function touchSocialPresence(userIdRaw: string) {
   if (!userId) {
     throw new Error("Invalid user id for presence.");
   }
-  return touchSocialPresenceRecord(userId);
+
+  try {
+    return await touchSocialPresenceRecord(userId);
+  } catch (error) {
+    if (isDurableStorageError(error)) {
+      return {
+        userId,
+        lastActiveAt: new Date().toISOString()
+      };
+    }
+    throw error;
+  }
 }
 
 export async function resolveSocialUserSummary(
