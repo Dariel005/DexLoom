@@ -249,6 +249,9 @@ export async function getProfileRecord(userId: string) {
       await upsertCloudProfile(local);
     }
   } catch {
+    if (shouldRequireCloudProfilePersistence()) {
+      throw new Error("Unable to read profile from cloud store.");
+    }
     // Cloud read failed; local fallback is applied below.
   }
 
@@ -293,6 +296,9 @@ export async function listFavoriteRecords(input: {
       favorites = [];
     }
   } catch {
+    if (shouldRequireCloudProfilePersistence()) {
+      throw new Error("Unable to read favorites from cloud store.");
+    }
     favorites = localFavorites;
   }
 

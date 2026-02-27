@@ -29,19 +29,26 @@ export async function POST(request: Request) {
     return NextResponse.json({ applied: 0, failed: 0, createdRecords: [] });
   }
 
-  const result = await syncUserFavorites(user.id, ops);
-  if (result.createdRecords.length > 0) {
-    await Promise.all(
-      result.createdRecords.map((entry) =>
-        recordFavoriteAddedActivity({
-          actorUserId: user.id,
-          entityType: entry.entityType,
-          entityId: entry.entityId,
-          title: entry.title,
-          href: entry.href
-        })
-      )
+  try {
+    const result = await syncUserFavorites(user.id, ops);
+    if (result.createdRecords.length > 0) {
+      await Promise.all(
+        result.createdRecords.map((entry) =>
+          recordFavoriteAddedActivity({
+            actorUserId: user.id,
+            entityType: entry.entityType,
+            entityId: entry.entityId,
+            title: entry.title,
+            href: entry.href
+          })
+        )
+      );
+    }
+    return NextResponse.json(result);
+  } catch (error) {
+    return NextResponse.json(
+      { message: error instanceof Error ? error.message : "Unable to sync favorites." },
+      { status: 503 }
     );
   }
-  return NextResponse.json(result);
 }

@@ -279,6 +279,9 @@ function canUseSocialDatabase() {
 async function readArrayFromDatabase(storeName: SocialStoreName) {
   const db = getFirebaseFirestoreDb();
   if (!db) {
+    if (shouldRequireSocialCloudPersistence()) {
+      throw new Error("Social cloud store is unavailable in production.");
+    }
     return [] as unknown[];
   }
 
@@ -290,6 +293,9 @@ async function readArrayFromDatabase(storeName: SocialStoreName) {
     const data = doc.data() as { rows?: unknown } | undefined;
     return Array.isArray(data?.rows) ? data.rows : [];
   } catch {
+    if (shouldRequireSocialCloudPersistence()) {
+      throw new Error("Unable to read social data from cloud store.");
+    }
     return [] as unknown[];
   }
 }
@@ -338,7 +344,10 @@ async function readArrayFile(filePath: string, storeName: SocialStoreName) {
       try {
         await writeArrayToDatabase(storeName, localRows);
       } catch {
-        // Keep serving local data if cloud backfill fails.
+        if (shouldRequireSocialCloudPersistence()) {
+          throw new Error("Unable to backfill social data to cloud store.");
+        }
+        // Keep serving local data if cloud backfill fails in local/dev mode.
       }
       return localRows;
     }

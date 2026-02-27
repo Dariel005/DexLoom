@@ -31,13 +31,20 @@ export async function GET(request: Request) {
 
   const { searchParams } = new URL(request.url);
   const params = parseFavoritesListParams(searchParams);
-  const favorites = await listUserFavorites({
-    userId: user.id,
-    entityType: params.entityType,
-    cursor: params.cursor,
-    limit: params.limit
-  });
-  return NextResponse.json(favorites);
+  try {
+    const favorites = await listUserFavorites({
+      userId: user.id,
+      entityType: params.entityType,
+      cursor: params.cursor,
+      limit: params.limit
+    });
+    return NextResponse.json(favorites);
+  } catch (error) {
+    return NextResponse.json(
+      { message: error instanceof Error ? error.message : "Unable to load favorites." },
+      { status: 503 }
+    );
+  }
 }
 
 export async function POST(request: Request) {
@@ -67,17 +74,24 @@ export async function POST(request: Request) {
     );
   }
 
-  const result = await upsertUserFavorite(user.id, parsed);
-  if (result.created) {
-    await recordFavoriteAddedActivity({
-      actorUserId: user.id,
-      entityType: result.record.entityType,
-      entityId: result.record.entityId,
-      title: result.record.title,
-      href: result.record.href
-    });
+  try {
+    const result = await upsertUserFavorite(user.id, parsed);
+    if (result.created) {
+      await recordFavoriteAddedActivity({
+        actorUserId: user.id,
+        entityType: result.record.entityType,
+        entityId: result.record.entityId,
+        title: result.record.title,
+        href: result.record.href
+      });
+    }
+    return NextResponse.json(result.record, { status: 201 });
+  } catch (error) {
+    return NextResponse.json(
+      { message: error instanceof Error ? error.message : "Unable to persist favorite." },
+      { status: 503 }
+    );
   }
-  return NextResponse.json(result.record, { status: 201 });
 }
 
 export async function DELETE(request: Request) {
@@ -107,6 +121,13 @@ export async function DELETE(request: Request) {
     );
   }
 
-  const result = await removeUserFavorite(user.id, parsed.entityType, parsed.entityId);
-  return NextResponse.json(result);
+  try {
+    const result = await removeUserFavorite(user.id, parsed.entityType, parsed.entityId);
+    return NextResponse.json(result);
+  } catch (error) {
+    return NextResponse.json(
+      { message: error instanceof Error ? error.message : "Unable to delete favorite." },
+      { status: 503 }
+    );
+  }
 }

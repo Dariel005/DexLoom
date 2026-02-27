@@ -164,6 +164,9 @@ async function writeLocalUsers(users: StoredUser[]) {
 async function readCloudUsers() {
   const collection = getUserCollection();
   if (!collection) {
+    if (shouldRequireCloudUserPersistence()) {
+      throw new Error("User cloud store is unavailable in production.");
+    }
     return null;
   }
 
@@ -178,6 +181,9 @@ async function readCloudUsers() {
       .filter((entry): entry is StoredUser => Boolean(entry));
     return sortUsersByCreatedAt(users);
   } catch {
+    if (shouldRequireCloudUserPersistence()) {
+      throw new Error("Unable to read users from cloud store.");
+    }
     return null;
   }
 }
@@ -185,6 +191,9 @@ async function readCloudUsers() {
 async function readCloudUserByEmail(email: string) {
   const collection = getUserCollection();
   if (!collection) {
+    if (shouldRequireCloudUserPersistence()) {
+      throw new Error("User cloud store is unavailable in production.");
+    }
     return null;
   }
 
@@ -195,6 +204,9 @@ async function readCloudUserByEmail(email: string) {
     }
     return normalizeStoredUser(snapshot.docs[0]?.data());
   } catch {
+    if (shouldRequireCloudUserPersistence()) {
+      throw new Error("Unable to read user from cloud store.");
+    }
     return null;
   }
 }
@@ -202,6 +214,9 @@ async function readCloudUserByEmail(email: string) {
 async function readCloudUserById(userId: string) {
   const collection = getUserCollection();
   if (!collection) {
+    if (shouldRequireCloudUserPersistence()) {
+      throw new Error("User cloud store is unavailable in production.");
+    }
     return null;
   }
 
@@ -212,6 +227,9 @@ async function readCloudUserById(userId: string) {
     }
     return normalizeStoredUser(snapshot.data());
   } catch {
+    if (shouldRequireCloudUserPersistence()) {
+      throw new Error("Unable to read user from cloud store.");
+    }
     return null;
   }
 }

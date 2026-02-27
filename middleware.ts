@@ -18,6 +18,8 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)"
+    // Skip API routes and static assets (files containing a dot) so Next can
+    // serve public files like /manifest.json and /images/* directly.
+    "/((?!api|_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml|.*\\..*).*)"
   ]
 };

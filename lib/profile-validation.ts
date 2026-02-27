@@ -107,12 +107,23 @@ export function sanitizeTags(value: unknown) {
   return Array.from(unique);
 }
 
-export function parseProfileUpdatePayload(payload: unknown): ProfileUpdateInput {
+export function parseProfileUpdatePayload(
+  payload: unknown,
+  fallback?: Partial<ProfileUpdateInput>
+): ProfileUpdateInput {
   const body = (payload ?? {}) as Record<string, unknown>;
-  const displayName = sanitizeDisplayName(body.displayName, "Trainer");
-  const bio = sanitizeBio(body.bio);
-  const visibility = normalizeProfileVisibility(body.visibility, "private");
-  const showFavoritesOnPublic = toBoolean(body.showFavoritesOnPublic, false);
+  const displayNameSource = body.displayName ?? fallback?.displayName ?? "Trainer";
+  const bioSource = body.bio ?? fallback?.bio ?? "";
+  const visibilitySource = body.visibility ?? fallback?.visibility ?? "private";
+  const showFavoritesOnPublicSource = body.showFavoritesOnPublic ?? fallback?.showFavoritesOnPublic ?? false;
+
+  const displayName = sanitizeDisplayName(displayNameSource, fallback?.displayName ?? "Trainer");
+  const bio = sanitizeBio(bioSource);
+  const visibility = normalizeProfileVisibility(visibilitySource, fallback?.visibility ?? "private");
+  const showFavoritesOnPublic = toBoolean(
+    showFavoritesOnPublicSource,
+    fallback?.showFavoritesOnPublic ?? false
+  );
 
   return {
     displayName,

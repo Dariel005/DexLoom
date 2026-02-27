@@ -80,7 +80,10 @@ export async function getOrCreateUserProfile(userId: string) {
   const profile = createDefaultProfile({
     userId,
     displayName: fallbackDisplayName(userId, user?.name),
-    avatarUrl: user?.image ?? DEFAULT_TRAINER_AVATAR_URL
+    avatarUrl:
+      user?.image && !isGoogleProfileImageUrl(user.image)
+        ? user.image
+        : DEFAULT_TRAINER_AVATAR_URL
   });
   return upsertProfileRecord(profile);
 }

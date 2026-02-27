@@ -812,6 +812,8 @@ export function ProfileMeClient() {
           <label className="profile-editor-field block space-y-1">
             <span className="profile-editor-field-label pixel-font text-[10px] uppercase tracking-[0.12em] text-black/66">Display Name</span>
             <input
+              id="profile-display-name"
+              name="displayName"
               value={displayName}
               onChange={(event) => setDisplayName(event.target.value)}
               maxLength={60}

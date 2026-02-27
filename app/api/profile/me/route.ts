@@ -53,7 +53,13 @@ export async function PUT(request: Request) {
   }
 
   try {
-    const parsed = parseProfileUpdatePayload(payload);
+    const current = await getOrCreateUserProfile(user.id);
+    const parsed = parseProfileUpdatePayload(payload, {
+      displayName: current.displayName,
+      bio: current.bio,
+      visibility: current.visibility,
+      showFavoritesOnPublic: current.showFavoritesOnPublic
+    });
     const profile = await updateUserProfile(user.id, parsed);
     return NextResponse.json({
       ...profile,

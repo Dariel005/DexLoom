@@ -28,9 +28,16 @@ export async function GET() {
     return unauthorized();
   }
 
-  await touchSocialPresence(user.id);
-  const snapshot = await getFriendNetworkSnapshot(user.id);
-  return NextResponse.json(snapshot);
+  try {
+    await touchSocialPresence(user.id);
+    const snapshot = await getFriendNetworkSnapshot(user.id);
+    return NextResponse.json(snapshot);
+  } catch (error) {
+    return NextResponse.json(
+      { message: error instanceof Error ? error.message : "Unable to load friend network." },
+      { status: 503 }
+    );
+  }
 }
 
 export async function POST(request: Request) {
