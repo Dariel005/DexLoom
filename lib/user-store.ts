@@ -3,6 +3,7 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import {
   getFirebaseFirestoreDb,
+  isFirebaseAuthSyncEnabled,
   isFirebaseAdminConfigured,
   isFirebaseProfileSyncEnabled,
   isFirebaseSocialSyncEnabled
@@ -36,14 +37,10 @@ function runExclusive<T>(task: () => Promise<T>) {
   return next;
 }
 
-function isAuthFirebaseSyncEnabled() {
-  return process.env.AUTH_FIREBASE_SYNC_ENABLED === "1";
-}
-
 function canUseUserDatabase() {
   return (
     isFirebaseAdminConfigured() &&
-    (isAuthFirebaseSyncEnabled() || isFirebaseProfileSyncEnabled() || isFirebaseSocialSyncEnabled())
+    (isFirebaseAuthSyncEnabled() || isFirebaseProfileSyncEnabled() || isFirebaseSocialSyncEnabled())
   );
 }
 

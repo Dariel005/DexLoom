@@ -31,13 +31,17 @@ export function isFirebaseSocialSyncEnabled() {
   return process.env.SOCIAL_FIREBASE_SYNC_ENABLED === "1";
 }
 
+export function isFirebaseAuthSyncEnabled() {
+  return process.env.AUTH_FIREBASE_SYNC_ENABLED === "1";
+}
+
 export function isProfileFeatureEnabled() {
   return process.env.NEXT_PUBLIC_PROFILE_FEATURE_ENABLED !== "0";
 }
 
 export function isFirebaseAdminConfigured() {
   return Boolean(
-    (isFirebaseProfileSyncEnabled() || isFirebaseSocialSyncEnabled()) &&
+    (isFirebaseProfileSyncEnabled() || isFirebaseSocialSyncEnabled() || isFirebaseAuthSyncEnabled()) &&
       process.env.FIREBASE_PROJECT_ID &&
       process.env.FIREBASE_CLIENT_EMAIL &&
       getPrivateKey() &&
