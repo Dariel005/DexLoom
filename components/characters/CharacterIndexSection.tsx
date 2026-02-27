@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { RouteTransitionLink } from "@/components/RouteTransitionLink";
 import { ViewportRender } from "@/components/ViewportRender";
@@ -24,6 +24,47 @@ function formatCharacterChip(value: string): string {
     .filter((entry) => entry.length > 0)
     .map((entry) => entry.charAt(0).toUpperCase() + entry.slice(1))
     .join(" ");
+}
+
+function CharacterPortraitImage({ character }: { character: CharacterWikiEntry }) {
+  const portraitCandidates = useMemo(() => {
+    const unique = new Set<string>();
+    const fallbackSvg = `/images/characters/${character.slug}.svg`;
+
+    [character.portraitSrc, character.portraitFallbackSrc, fallbackSvg].forEach((value) => {
+      if (typeof value !== "string" || value.trim().length === 0) {
+        return;
+      }
+      unique.add(value);
+    });
+
+    return [...unique];
+  }, [character.slug, character.portraitSrc, character.portraitFallbackSrc]);
+  const [portraitIndex, setPortraitIndex] = useState(0);
+
+  useEffect(() => {
+    setPortraitIndex(0);
+  }, [character.slug, character.portraitSrc, character.portraitFallbackSrc]);
+
+  const safeIndex = Math.min(portraitIndex, portraitCandidates.length - 1);
+  const currentPortraitSrc =
+    portraitCandidates[safeIndex] ?? character.portraitSrc;
+
+  return (
+    <Image
+      src={currentPortraitSrc}
+      alt={character.portraitAlt}
+      fill
+      sizes="(min-width: 640px) 156px, 138px"
+      className="object-contain object-bottom drop-shadow-[0_8px_10px_rgba(0,0,0,0.25)]"
+      unoptimized
+      onError={() => {
+        setPortraitIndex((currentIndex) =>
+          currentIndex < portraitCandidates.length - 1 ? currentIndex + 1 : currentIndex
+        );
+      }}
+    />
+  );
 }
 
 export function CharacterIndexSection({
@@ -93,13 +134,7 @@ export function CharacterIndexSection({
 
             <div className="mt-3 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2.5 sm:gap-3">
               <div className="pokemon-card-sprite relative h-[138px] w-[138px] flex-shrink-0 sm:h-[156px] sm:w-[156px]">
-                <Image
-                  src={character.portraitSrc}
-                  alt={character.portraitAlt}
-                  fill
-                  sizes="(min-width: 640px) 156px, 138px"
-                  className="object-contain object-bottom drop-shadow-[0_8px_10px_rgba(0,0,0,0.25)]"
-                />
+                <CharacterPortraitImage character={character} />
               </div>
 
               <div className="flex min-w-0 flex-col items-end gap-1.5">

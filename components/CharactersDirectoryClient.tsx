@@ -134,7 +134,7 @@ export function CharactersDirectoryClient(): JSX.Element {
         entityId: character.slug,
         title: character.name,
         href: `/characters/${character.slug}`,
-        imageUrl: character.portraitSrc,
+        imageUrl: character.portraitFallbackSrc ?? character.portraitSrc,
         subtitle: character.roleHint,
         tags: ["character", ...character.tags.slice(0, 5)]
       });

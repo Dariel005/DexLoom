@@ -16,6 +16,7 @@ export interface CharacterWikiEntry {
   gameTags: string[];
   regionLabel: string;
   portraitSrc: string;
+  portraitFallbackSrc?: string;
   portraitAlt: string;
   portraitType: "local" | "remote";
   portraitCreditLabel: string;
@@ -64,10 +65,12 @@ type CharacterSeed = {
 
 function toPortrait(seed: LocalPortraitSeed | RemotePortraitSeed) {
   const encodedFile = encodeURIComponent(seed.file);
+  const remotePortraitSrc = `https://archives.bulbagarden.net/wiki/Special:FilePath/${encodedFile}`;
 
   if (seed.type === "local") {
     return {
       portraitSrc: seed.src,
+      portraitFallbackSrc: remotePortraitSrc,
       portraitType: "local" as const,
       portraitCreditLabel: `Bulbagarden Archives - ${seed.creditLabel}`,
       portraitCreditHref: `https://archives.bulbagarden.net/wiki/File:${encodedFile}`,
@@ -76,7 +79,7 @@ function toPortrait(seed: LocalPortraitSeed | RemotePortraitSeed) {
   }
 
   return {
-    portraitSrc: `https://archives.bulbagarden.net/wiki/Special:FilePath/${encodedFile}`,
+    portraitSrc: remotePortraitSrc,
     portraitType: "remote" as const,
     portraitCreditLabel: `Bulbagarden Archives - ${seed.creditLabel}`,
     portraitCreditHref: `https://archives.bulbagarden.net/wiki/File:${encodedFile}`,

@@ -36,6 +36,7 @@ export default function CharacterDetailPage({ params }: CharacterDetailPageProps
   if (!character) {
     notFound();
   }
+  const portraitImageUrl = character.portraitFallbackSrc ?? character.portraitSrc;
 
   const portraitReference = {
     label: character.portraitCreditLabel,
@@ -51,7 +52,7 @@ export default function CharacterDetailPage({ params }: CharacterDetailPageProps
         name: character.name,
         role: character.roleHint,
         regionLabel: character.regionLabel,
-        portraitSrc: character.portraitSrc,
+        portraitSrc: portraitImageUrl,
         portraitAlt: character.portraitAlt,
         overview: character.overview,
         battleStyle: character.battleStyle,
@@ -78,7 +79,7 @@ export default function CharacterDetailPage({ params }: CharacterDetailPageProps
               entityId: character.slug,
               title: character.name,
               href: `/characters/${character.slug}`,
-              imageUrl: character.portraitSrc,
+              imageUrl: portraitImageUrl,
               subtitle: character.roleHint,
               tags: ["character", ...character.tags.slice(0, 5)]
             }}
@@ -153,7 +154,7 @@ export default function CharacterDetailPage({ params }: CharacterDetailPageProps
     "@context": "https://schema.org",
     "@type": "Article",
     headline: `${character.name} Character Entry`,
-    image: character.portraitSrc,
+    image: portraitImageUrl,
     about: ["pokemon character", character.name, character.regionLabel]
   };
 
