@@ -10,6 +10,7 @@ import {
 } from "@/lib/firebase-admin";
 import { normalizeEmailAddress, sanitizeDisplayName } from "@/lib/auth-validation";
 import { DEFAULT_TRAINER_AVATAR_URL, isGoogleProfileImageUrl } from "@/lib/default-avatar";
+import { readPostgresJsonArray, writePostgresJsonArray } from "@/lib/postgres-json-store";
 import { resolveDataStoreDir } from "@/lib/runtime-storage";
 
 export type AuthProviderKind = "credentials" | "google" | "hybrid";
@@ -122,6 +123,13 @@ async function ensureStoreFile() {
 }
 
 async function readLocalUsers() {
+  const pgRows = await readPostgresJsonArray("users");
+  if (pgRows !== null) {
+    return pgRows
+      .map((entry) => normalizeStoredUser(entry))
+      .filter((entry): entry is StoredUser => Boolean(entry));
+  }
+
   const available = await ensureStoreFile();
   if (!available) {
     return [] as StoredUser[];
@@ -171,13 +179,19 @@ function sortUsersByCreatedAt(users: StoredUser[]) {
 }
 
 async function writeLocalUsers(users: StoredUser[]) {
+  const sorted = sortUsersByCreatedAt(users);
+  const wroteToPg = await writePostgresJsonArray("users", sorted as unknown[]);
+  if (wroteToPg) {
+    return;
+  }
+
   const available = await ensureStoreFile();
   if (!available) {
     return;
   }
 
   try {
-    await writeFile(USER_STORE_FILE, JSON.stringify(sortUsersByCreatedAt(users), null, 2), "utf-8");
+    await writeFile(USER_STORE_FILE, JSON.stringify(sorted, null, 2), "utf-8");
   } catch {
     // Local mirror writes are best-effort only.
   }

@@ -3,9 +3,9 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import {
   getFirebaseFirestoreDb,
-  isFirebaseSocialSyncEnabled,
   isSocialDatabaseEnabled
 } from "@/lib/firebase-admin";
+import { readPostgresJsonArray, writePostgresJsonArray } from "@/lib/postgres-json-store";
 import { resolveDataStoreDir } from "@/lib/runtime-storage";
 import {
   type FriendshipRecord,
@@ -317,7 +317,12 @@ async function writeArrayToDatabase<T>(storeName: SocialStoreName, rows: T[]) {
   );
 }
 
-async function readArrayFromLocalFile(filePath: string) {
+async function readArrayFromLocalFile(filePath: string, storeName: SocialStoreName) {
+  const pgRows = await readPostgresJsonArray(`social:${storeName}`);
+  if (pgRows !== null) {
+    return Array.isArray(pgRows) ? pgRows : [];
+  }
+
   const available = await ensureStoreFile(filePath);
   if (!available) {
     return [] as unknown[];
@@ -338,7 +343,12 @@ async function readArrayFromLocalFile(filePath: string) {
   }
 }
 
-async function writeArrayToLocalFile<T>(filePath: string, rows: T[]) {
+async function writeArrayToLocalFile<T>(filePath: string, rows: T[], storeName: SocialStoreName) {
+  const wroteToPg = await writePostgresJsonArray(`social:${storeName}`, rows as unknown[]);
+  if (wroteToPg) {
+    return;
+  }
+
   const available = await ensureStoreFile(filePath);
   if (!available) {
     return;
@@ -355,10 +365,11 @@ async function readArrayFile(filePath: string, storeName: SocialStoreName) {
   if (canUseSocialDatabase()) {
     const remoteRows = await readArrayFromDatabase(storeName);
     if (remoteRows.length > 0) {
+      await writeArrayToLocalFile(filePath, remoteRows, storeName);
       return remoteRows;
     }
 
-    const localRows = await readArrayFromLocalFile(filePath);
+    const localRows = await readArrayFromLocalFile(filePath, storeName);
     if (localRows.length > 0) {
       try {
         await writeArrayToDatabase(storeName, localRows);
@@ -371,20 +382,25 @@ async function readArrayFile(filePath: string, storeName: SocialStoreName) {
     return remoteRows;
   }
 
-  return readArrayFromLocalFile(filePath);
+  return readArrayFromLocalFile(filePath, storeName);
 }
 
 async function writeArrayFile<T>(filePath: string, rows: T[], storeName: SocialStoreName) {
+  let wroteRemote = false;
   if (canUseSocialDatabase()) {
     try {
       await writeArrayToDatabase(storeName, rows);
-      return;
+      wroteRemote = true;
     } catch {
       // Cloud write failed; continue to local fallback.
     }
   }
 
-  await writeArrayToLocalFile(filePath, rows);
+  await writeArrayToLocalFile(filePath, rows, storeName);
+
+  if (wroteRemote) {
+    return;
+  }
 }
 
 async function readFriendships() {

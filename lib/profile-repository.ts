@@ -11,6 +11,7 @@ import {
   type FavoriteUpsertInput,
   type UserProfileRecord
 } from "@/lib/profile-types";
+import { readPostgresJsonArray, writePostgresJsonArray } from "@/lib/postgres-json-store";
 import { resolveDataStoreDir } from "@/lib/runtime-storage";
 import { buildFavoriteId, decodeCursor, encodeCursor } from "@/lib/profile-validation";
 
@@ -51,7 +52,12 @@ async function ensureStoreFile(filePath: string, initialValue: string) {
   }
 }
 
-async function readArrayFile<T>(filePath: string) {
+async function readArrayFile<T>(filePath: string, storeKey: "profiles" | "favorites") {
+  const pgRows = await readPostgresJsonArray(storeKey);
+  if (pgRows !== null) {
+    return Array.isArray(pgRows) ? (pgRows as T[]) : ([] as T[]);
+  }
+
   const available = await ensureStoreFile(filePath, "[]");
   if (!available) {
     return [] as T[];
@@ -72,7 +78,12 @@ async function readArrayFile<T>(filePath: string) {
   }
 }
 
-async function writeArrayFile<T>(filePath: string, rows: T[]) {
+async function writeArrayFile<T>(filePath: string, rows: T[], storeKey: "profiles" | "favorites") {
+  const wroteToPg = await writePostgresJsonArray(storeKey, rows as unknown[]);
+  if (wroteToPg) {
+    return;
+  }
+
   const available = await ensureStoreFile(filePath, "[]");
   if (!available) {
     return;
@@ -99,11 +110,11 @@ function sortFavoritesByCreatedAtDesc(rows: FavoriteRecord[]) {
 }
 
 async function readLocalProfiles() {
-  return readArrayFile<UserProfileRecord>(PROFILE_STORE_FILE);
+  return readArrayFile<UserProfileRecord>(PROFILE_STORE_FILE, "profiles");
 }
 
 async function readLocalFavorites() {
-  return readArrayFile<FavoriteRecord>(FAVORITES_STORE_FILE);
+  return readArrayFile<FavoriteRecord>(FAVORITES_STORE_FILE, "favorites");
 }
 
 async function getCloudProfile(userId: string) {
@@ -203,7 +214,7 @@ async function mirrorLocalProfile(record: UserProfileRecord) {
     } else {
       profiles.push(record);
     }
-    await writeArrayFile(PROFILE_STORE_FILE, profiles);
+    await writeArrayFile(PROFILE_STORE_FILE, profiles, "profiles");
   });
 }
 
@@ -212,7 +223,7 @@ async function mirrorLocalFavoritesForUser(userId: string, rows: FavoriteRecord[
     const favorites = await readLocalFavorites();
     const preserved = favorites.filter((entry) => entry.userId !== userId);
     const merged = [...preserved, ...rows];
-    await writeArrayFile(FAVORITES_STORE_FILE, merged);
+    await writeArrayFile(FAVORITES_STORE_FILE, merged, "favorites");
   });
 }
 
@@ -357,7 +368,7 @@ export async function upsertFavoriteRecord(
     } else {
       all.push(record);
     }
-    await writeArrayFile(FAVORITES_STORE_FILE, all);
+    await writeArrayFile(FAVORITES_STORE_FILE, all, "favorites");
   });
 
   return {
@@ -383,7 +394,7 @@ export async function deleteFavoriteRecord(
     const next = all.filter((entry) => !(entry.userId === userId && entry.id === favoriteId));
     const removed = next.length !== all.length;
     if (removed) {
-      await writeArrayFile(FAVORITES_STORE_FILE, next);
+      await writeArrayFile(FAVORITES_STORE_FILE, next, "favorites");
     }
     return removed;
   });
