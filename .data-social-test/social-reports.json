@@ -1,0 +1,14 @@
+[
+  {
+    "id": "22a4b2ff-1233-44d3-a364-99157d668d62",
+    "reporterUserId": "a053cbbb-f741-475a-940f-b6e38d3b9123",
+    "targetUserId": "fa1cc7b2-fedb-446b-90af-7f631e78092c",
+    "reason": "spam",
+    "notes": "test moderation flow",
+    "status": "resolved",
+    "reviewedAt": "2026-02-19T02:01:04.518Z",
+    "reviewedByUserId": "a053cbbb-f741-475a-940f-b6e38d3b9123",
+    "reviewNotes": "resolved in tests",
+    "createdAt": "2026-02-19T02:01:04.512Z"
+  }
+]

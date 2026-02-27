@@ -1,0 +1,5231 @@
+[
+  {
+    "id": 1001,
+    "slug": "black-kyurem-fusion-energy",
+    "name": "Black Kyurem Fusion Energy",
+    "category": "evolution",
+    "categoryLabel": "Evolution Items",
+    "rarity": "Epic",
+    "availability": "Both",
+    "description": "Black Kyurem Fusion Energy is a Pokemon GO evolution items resource.",
+    "inGameEffect": "Used in progression, events, or account-level systems.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "Dex progression",
+      "Evolution requirements"
+    ],
+    "relatedSystems": [
+      "Core progression"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "High relevance for raid readiness and sustained boss cycles.",
+    "notes": [
+      "This item may bypass standard bag capacity."
+    ],
+    "searchTags": [
+      "black-kyurem-fusion-energy",
+      "black kyurem fusion energy",
+      "fusion_resource_black_kyurem",
+      "evolution items",
+      "black",
+      "kyurem",
+      "fusion",
+      "energy"
+    ]
+  },
+  {
+    "id": 1002,
+    "slug": "dawnwings-necrozma-fusion-energy",
+    "name": "Dawn Wings Fusion Energy",
+    "category": "evolution",
+    "categoryLabel": "Evolution Items",
+    "rarity": "Epic",
+    "availability": "Both",
+    "description": "Dawn Wings Fusion Energy is a Pokemon GO evolution items resource.",
+    "inGameEffect": "Used in progression, events, or account-level systems.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "Dex progression",
+      "Evolution requirements"
+    ],
+    "relatedSystems": [
+      "Core progression"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "High relevance for raid readiness and sustained boss cycles.",
+    "notes": [
+      "This item may bypass standard bag capacity."
+    ],
+    "searchTags": [
+      "dawnwings-necrozma-fusion-energy",
+      "dawn wings fusion energy",
+      "fusion_resource_dawnwings_necrozma",
+      "evolution items",
+      "dawnwings",
+      "necrozma",
+      "fusion",
+      "energy"
+    ]
+  },
+  {
+    "id": 1003,
+    "slug": "duskmane-necrozma-fusion-energy",
+    "name": "Dusk Mane Fusion Energy",
+    "category": "evolution",
+    "categoryLabel": "Evolution Items",
+    "rarity": "Epic",
+    "availability": "Both",
+    "description": "Dusk Mane Fusion Energy is a Pokemon GO evolution items resource.",
+    "inGameEffect": "Used in progression, events, or account-level systems.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "Dex progression",
+      "Evolution requirements"
+    ],
+    "relatedSystems": [
+      "Core progression"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "High relevance for raid readiness and sustained boss cycles.",
+    "notes": [
+      "This item may bypass standard bag capacity."
+    ],
+    "searchTags": [
+      "duskmane-necrozma-fusion-energy",
+      "dusk mane fusion energy",
+      "fusion_resource_duskmane_necrozma",
+      "evolution items",
+      "duskmane",
+      "necrozma",
+      "fusion",
+      "energy"
+    ]
+  },
+  {
+    "id": 1004,
+    "slug": "white-kyurem-fusion-energy",
+    "name": "White Kyurem Fusion Energy",
+    "category": "evolution",
+    "categoryLabel": "Evolution Items",
+    "rarity": "Epic",
+    "availability": "Both",
+    "description": "White Kyurem Fusion Energy is a Pokemon GO evolution items resource.",
+    "inGameEffect": "Used in progression, events, or account-level systems.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "Dex progression",
+      "Evolution requirements"
+    ],
+    "relatedSystems": [
+      "Core progression"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "High relevance for raid readiness and sustained boss cycles.",
+    "notes": [
+      "This item may bypass standard bag capacity."
+    ],
+    "searchTags": [
+      "white-kyurem-fusion-energy",
+      "white kyurem fusion energy",
+      "fusion_resource_white_kyurem",
+      "evolution items",
+      "white",
+      "kyurem",
+      "fusion",
+      "energy"
+    ]
+  },
+  {
+    "id": 1005,
+    "slug": "go-pass-ticket",
+    "name": "GO Pass Ticket",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Common",
+    "availability": "Premium",
+    "description": "GO Pass Ticket is a Pokemon GO special access resource.",
+    "inGameEffect": "Unlocks premium timed event content and event-specific rewards.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Shop",
+      "Premium bundles",
+      "Paid tracks"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "go-pass-ticket",
+      "go pass ticket",
+      "item_battle_pass_ticket",
+      "special access",
+      "go",
+      "pass",
+      "ticket"
+    ]
+  },
+  {
+    "id": 1006,
+    "slug": "beans",
+    "name": "Beans",
+    "category": "evolution",
+    "categoryLabel": "Evolution Items",
+    "rarity": "Uncommon",
+    "availability": "Both",
+    "description": "Beans is a Pokemon GO evolution items resource.",
+    "inGameEffect": "Used in progression, events, or account-level systems.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "Dex progression",
+      "Evolution requirements"
+    ],
+    "relatedSystems": [
+      "Core progression"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity."
+    ],
+    "searchTags": [
+      "beans",
+      "item_beans",
+      "evolution items"
+    ]
+  },
+  {
+    "id": 1007,
+    "slug": "beast-ball",
+    "name": "Beast Ball",
+    "category": "balls",
+    "categoryLabel": "Capture Balls",
+    "rarity": "Epic",
+    "availability": "Both",
+    "description": "Beast Ball is a Pokemon GO capture balls resource.",
+    "inGameEffect": "Used during encounter capture phases.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Pokestops",
+      "Gyms",
+      "Gifts",
+      "Research"
+    ],
+    "bestUseCases": [
+      "Capture pipelines",
+      "Rare encounter securing"
+    ],
+    "relatedSystems": [
+      "Catch flow"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Contextual relevance for event/raid capture phases.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "beast-ball",
+      "beast ball",
+      "item_beast_ball",
+      "capture balls",
+      "beast",
+      "ball"
+    ]
+  },
+  {
+    "id": 1008,
+    "slug": "bluk-berry",
+    "name": "Bluk Berry",
+    "category": "berries",
+    "categoryLabel": "Berries",
+    "rarity": "Common",
+    "availability": "Both",
+    "description": "Bluk Berry is a Pokemon GO berries resource.",
+    "inGameEffect": "Applies berry-style effects for catching, buddies, or gym motivation.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Pokestops",
+      "Gyms",
+      "Gifts",
+      "Research"
+    ],
+    "bestUseCases": [
+      "Catch reliability",
+      "Candy optimization"
+    ],
+    "relatedSystems": [
+      "Catch flow"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "bluk-berry",
+      "bluk berry",
+      "item_bluk_berry",
+      "berries",
+      "bluk",
+      "berry"
+    ]
+  },
+  {
+    "id": 1009,
+    "slug": "breakfast",
+    "name": "Breakfast",
+    "category": "utility",
+    "categoryLabel": "Utility",
+    "rarity": "Common",
+    "availability": "Both",
+    "description": "Breakfast is a Pokemon GO utility resource.",
+    "inGameEffect": "Provides utility or meta-system support in Pokemon GO.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "System progression",
+      "Support loops"
+    ],
+    "relatedSystems": [
+      "Core progression"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity."
+    ],
+    "searchTags": [
+      "breakfast",
+      "item_breakfast",
+      "utility"
+    ]
+  },
+  {
+    "id": 1010,
+    "slug": "dragon-scale",
+    "name": "Dragon Scale",
+    "category": "evolution",
+    "categoryLabel": "Evolution Items",
+    "rarity": "Uncommon",
+    "availability": "Both",
+    "description": "Dragon Scale is a Pokemon GO evolution items resource.",
+    "inGameEffect": "Used in progression, events, or account-level systems.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "Dex progression",
+      "Evolution requirements"
+    ],
+    "relatedSystems": [
+      "Core progression"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "dragon-scale",
+      "dragon scale",
+      "item_dragon_scale",
+      "evolution items",
+      "dragon",
+      "scale"
+    ]
+  },
+  {
+    "id": 1011,
+    "slug": "go-fest-pass-point-01",
+    "name": "Event Pass Point GO Fest 01",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Common",
+    "availability": "Event",
+    "description": "Event Pass Point GO Fest 01 is a Pokemon GO special access resource.",
+    "inGameEffect": "Tracks progression points for live pass systems.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity.",
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "go-fest-pass-point-01",
+      "event pass point go fest 01",
+      "item_event_pass_point_go_fest_01",
+      "special access",
+      "go",
+      "fest",
+      "pass",
+      "point",
+      "01"
+    ]
+  },
+  {
+    "id": 1012,
+    "slug": "go-fest-pass-point-02",
+    "name": "Event Pass Point GO Fest 02",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Common",
+    "availability": "Event",
+    "description": "Event Pass Point GO Fest 02 is a Pokemon GO special access resource.",
+    "inGameEffect": "Tracks progression points for live pass systems.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity.",
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "go-fest-pass-point-02",
+      "event pass point go fest 02",
+      "item_event_pass_point_go_fest_02",
+      "special access",
+      "go",
+      "fest",
+      "pass",
+      "point",
+      "02"
+    ]
+  },
+  {
+    "id": 1013,
+    "slug": "go-tour-pass-point-01",
+    "name": "Event Pass Point GO Tour 01",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Common",
+    "availability": "Event",
+    "description": "Event Pass Point GO Tour 01 is a Pokemon GO special access resource.",
+    "inGameEffect": "Tracks progression points for live pass systems.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity.",
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "go-tour-pass-point-01",
+      "event pass point go tour 01",
+      "item_event_pass_point_go_tour_01",
+      "special access",
+      "go",
+      "tour",
+      "pass",
+      "point",
+      "01"
+    ]
+  },
+  {
+    "id": 1014,
+    "slug": "go-tour-pass-point-02",
+    "name": "Event Pass Point GO Tour 02",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Common",
+    "availability": "Event",
+    "description": "Event Pass Point GO Tour 02 is a Pokemon GO special access resource.",
+    "inGameEffect": "Tracks progression points for live pass systems.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity.",
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "go-tour-pass-point-02",
+      "event pass point go tour 02",
+      "item_event_pass_point_go_tour_02",
+      "special access",
+      "go",
+      "tour",
+      "pass",
+      "point",
+      "02"
+    ]
+  },
+  {
+    "id": 1015,
+    "slug": "go-wild-area-pass-point-01",
+    "name": "Event Pass Point GO Wild Area 01",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Common",
+    "availability": "Event",
+    "description": "Event Pass Point GO Wild Area 01 is a Pokemon GO special access resource.",
+    "inGameEffect": "Tracks progression points for live pass systems.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity.",
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "go-wild-area-pass-point-01",
+      "event pass point go wild area 01",
+      "item_event_pass_point_go_wild_area_01",
+      "special access",
+      "go",
+      "wild",
+      "area",
+      "pass",
+      "point",
+      "01"
+    ]
+  },
+  {
+    "id": 1016,
+    "slug": "event-pass-point-live-ops-01",
+    "name": "Event Pass Point Live Ops 01",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Common",
+    "availability": "Event",
+    "description": "Event Pass Point Live Ops 01 is a Pokemon GO special access resource.",
+    "inGameEffect": "Tracks progression points for live pass systems.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity.",
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "event-pass-point-live-ops-01",
+      "event pass point live ops 01",
+      "item_event_pass_point_live_ops_01",
+      "special access",
+      "event",
+      "pass",
+      "point",
+      "live",
+      "ops",
+      "01"
+    ]
+  },
+  {
+    "id": 1017,
+    "slug": "event-pass-point-live-ops-02",
+    "name": "Event Pass Point Live Ops 02",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Common",
+    "availability": "Event",
+    "description": "Event Pass Point Live Ops 02 is a Pokemon GO special access resource.",
+    "inGameEffect": "Tracks progression points for live pass systems.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity.",
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "event-pass-point-live-ops-02",
+      "event pass point live ops 02",
+      "item_event_pass_point_live_ops_02",
+      "special access",
+      "event",
+      "pass",
+      "point",
+      "live",
+      "ops",
+      "02"
+    ]
+  },
+  {
+    "id": 1018,
+    "slug": "event-pass-point-live-ops-03",
+    "name": "Event Pass Point Live Ops 03",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Common",
+    "availability": "Event",
+    "description": "Event Pass Point Live Ops 03 is a Pokemon GO special access resource.",
+    "inGameEffect": "Tracks progression points for live pass systems.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity.",
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "event-pass-point-live-ops-03",
+      "event pass point live ops 03",
+      "item_event_pass_point_live_ops_03",
+      "special access",
+      "event",
+      "pass",
+      "point",
+      "live",
+      "ops",
+      "03"
+    ]
+  },
+  {
+    "id": 1019,
+    "slug": "event-pass-point-live-ops-04",
+    "name": "Event Pass Point Live Ops 04",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Common",
+    "availability": "Event",
+    "description": "Event Pass Point Live Ops 04 is a Pokemon GO special access resource.",
+    "inGameEffect": "Tracks progression points for live pass systems.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity.",
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "event-pass-point-live-ops-04",
+      "event pass point live ops 04",
+      "item_event_pass_point_live_ops_04",
+      "special access",
+      "event",
+      "pass",
+      "point",
+      "live",
+      "ops",
+      "04"
+    ]
+  },
+  {
+    "id": 1020,
+    "slug": "event-ticket-02",
+    "name": "Event Ticket 02",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Epic",
+    "availability": "Event",
+    "description": "Event Ticket 02 is a Pokemon GO special access resource.",
+    "inGameEffect": "Unlocks premium timed event content and event-specific rewards.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "event-ticket-02",
+      "event ticket 02",
+      "item_event_ticket_02",
+      "special access",
+      "event",
+      "ticket",
+      "02"
+    ]
+  },
+  {
+    "id": 1021,
+    "slug": "event-ticket-02-to-gift",
+    "name": "Event Ticket 02 gift",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Epic",
+    "availability": "Event",
+    "description": "Gift-form variant of Event Ticket 02 gift for trainer gifting flows.",
+    "inGameEffect": "Unlocks premium timed event content and event-specific rewards.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity.",
+      "Gift-form variant used for trainer gifting flows.",
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "event-ticket-02-to-gift",
+      "event ticket 02 gift",
+      "item_event_ticket_02_to_gift",
+      "special access",
+      "event",
+      "ticket",
+      "02",
+      "to",
+      "gift"
+    ]
+  },
+  {
+    "id": 1022,
+    "slug": "event-ticket-03",
+    "name": "Event Ticket 03",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Epic",
+    "availability": "Event",
+    "description": "Event Ticket 03 is a Pokemon GO special access resource.",
+    "inGameEffect": "Unlocks premium timed event content and event-specific rewards.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "event-ticket-03",
+      "event ticket 03",
+      "item_event_ticket_03",
+      "special access",
+      "event",
+      "ticket",
+      "03"
+    ]
+  },
+  {
+    "id": 1023,
+    "slug": "event-ticket-03-to-gift",
+    "name": "Event Ticket 03 gift",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Epic",
+    "availability": "Event",
+    "description": "Gift-form variant of Event Ticket 03 gift for trainer gifting flows.",
+    "inGameEffect": "Unlocks premium timed event content and event-specific rewards.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity.",
+      "Gift-form variant used for trainer gifting flows.",
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "event-ticket-03-to-gift",
+      "event ticket 03 gift",
+      "item_event_ticket_03_to_gift",
+      "special access",
+      "event",
+      "ticket",
+      "03",
+      "to",
+      "gift"
+    ]
+  },
+  {
+    "id": 1024,
+    "slug": "event-ticket-04",
+    "name": "Event Ticket 04",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Epic",
+    "availability": "Event",
+    "description": "Event Ticket 04 is a Pokemon GO special access resource.",
+    "inGameEffect": "Unlocks premium timed event content and event-specific rewards.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "event-ticket-04",
+      "event ticket 04",
+      "item_event_ticket_04",
+      "special access",
+      "event",
+      "ticket",
+      "04"
+    ]
+  },
+  {
+    "id": 1025,
+    "slug": "event-ticket-04-to-gift",
+    "name": "Event Ticket 04 gift",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Epic",
+    "availability": "Event",
+    "description": "Gift-form variant of Event Ticket 04 gift for trainer gifting flows.",
+    "inGameEffect": "Unlocks premium timed event content and event-specific rewards.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity.",
+      "Gift-form variant used for trainer gifting flows.",
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "event-ticket-04-to-gift",
+      "event ticket 04 gift",
+      "item_event_ticket_04_to_gift",
+      "special access",
+      "event",
+      "ticket",
+      "04",
+      "to",
+      "gift"
+    ]
+  },
+  {
+    "id": 1026,
+    "slug": "event-ticket-05",
+    "name": "Event Ticket 05",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Epic",
+    "availability": "Event",
+    "description": "Event Ticket 05 is a Pokemon GO special access resource.",
+    "inGameEffect": "Unlocks premium timed event content and event-specific rewards.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "event-ticket-05",
+      "event ticket 05",
+      "item_event_ticket_05",
+      "special access",
+      "event",
+      "ticket",
+      "05"
+    ]
+  },
+  {
+    "id": 1027,
+    "slug": "event-ticket-05-to-gift",
+    "name": "Event Ticket 05 gift",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Epic",
+    "availability": "Event",
+    "description": "Gift-form variant of Event Ticket 05 gift for trainer gifting flows.",
+    "inGameEffect": "Unlocks premium timed event content and event-specific rewards.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity.",
+      "Gift-form variant used for trainer gifting flows.",
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "event-ticket-05-to-gift",
+      "event ticket 05 gift",
+      "item_event_ticket_05_to_gift",
+      "special access",
+      "event",
+      "ticket",
+      "05",
+      "to",
+      "gift"
+    ]
+  },
+  {
+    "id": 1028,
+    "slug": "event-ticket-06",
+    "name": "Event Ticket 06",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Epic",
+    "availability": "Event",
+    "description": "Event Ticket 06 is a Pokemon GO special access resource.",
+    "inGameEffect": "Unlocks premium timed event content and event-specific rewards.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "event-ticket-06",
+      "event ticket 06",
+      "item_event_ticket_06",
+      "special access",
+      "event",
+      "ticket",
+      "06"
+    ]
+  },
+  {
+    "id": 1029,
+    "slug": "event-ticket-06-to-gift",
+    "name": "Event Ticket 06 gift",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Epic",
+    "availability": "Event",
+    "description": "Gift-form variant of Event Ticket 06 gift for trainer gifting flows.",
+    "inGameEffect": "Unlocks premium timed event content and event-specific rewards.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity.",
+      "Gift-form variant used for trainer gifting flows.",
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "event-ticket-06-to-gift",
+      "event ticket 06 gift",
+      "item_event_ticket_06_to_gift",
+      "special access",
+      "event",
+      "ticket",
+      "06",
+      "to",
+      "gift"
+    ]
+  },
+  {
+    "id": 1030,
+    "slug": "event-ticket-07",
+    "name": "Event Ticket 07",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Epic",
+    "availability": "Event",
+    "description": "Event Ticket 07 is a Pokemon GO special access resource.",
+    "inGameEffect": "Unlocks premium timed event content and event-specific rewards.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "event-ticket-07",
+      "event ticket 07",
+      "item_event_ticket_07",
+      "special access",
+      "event",
+      "ticket",
+      "07"
+    ]
+  },
+  {
+    "id": 1031,
+    "slug": "event-ticket-07-to-gift",
+    "name": "Event Ticket 07 gift",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Epic",
+    "availability": "Event",
+    "description": "Gift-form variant of Event Ticket 07 gift for trainer gifting flows.",
+    "inGameEffect": "Unlocks premium timed event content and event-specific rewards.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity.",
+      "Gift-form variant used for trainer gifting flows.",
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "event-ticket-07-to-gift",
+      "event ticket 07 gift",
+      "item_event_ticket_07_to_gift",
+      "special access",
+      "event",
+      "ticket",
+      "07",
+      "to",
+      "gift"
+    ]
+  },
+  {
+    "id": 1032,
+    "slug": "event-ticket-08",
+    "name": "Event Ticket 08",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Epic",
+    "availability": "Event",
+    "description": "Event Ticket 08 is a Pokemon GO special access resource.",
+    "inGameEffect": "Unlocks premium timed event content and event-specific rewards.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "event-ticket-08",
+      "event ticket 08",
+      "item_event_ticket_08",
+      "special access",
+      "event",
+      "ticket",
+      "08"
+    ]
+  },
+  {
+    "id": 1033,
+    "slug": "event-ticket-08-to-gift",
+    "name": "Event Ticket 08 gift",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Epic",
+    "availability": "Event",
+    "description": "Gift-form variant of Event Ticket 08 gift for trainer gifting flows.",
+    "inGameEffect": "Unlocks premium timed event content and event-specific rewards.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity.",
+      "Gift-form variant used for trainer gifting flows.",
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "event-ticket-08-to-gift",
+      "event ticket 08 gift",
+      "item_event_ticket_08_to_gift",
+      "special access",
+      "event",
+      "ticket",
+      "08",
+      "to",
+      "gift"
+    ]
+  },
+  {
+    "id": 1034,
+    "slug": "event-ticket-09",
+    "name": "Event Ticket 09",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Epic",
+    "availability": "Event",
+    "description": "Event Ticket 09 is a Pokemon GO special access resource.",
+    "inGameEffect": "Unlocks premium timed event content and event-specific rewards.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "event-ticket-09",
+      "event ticket 09",
+      "item_event_ticket_09",
+      "special access",
+      "event",
+      "ticket",
+      "09"
+    ]
+  },
+  {
+    "id": 1035,
+    "slug": "event-ticket-09-to-gift",
+    "name": "Event Ticket 09 gift",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Epic",
+    "availability": "Event",
+    "description": "Gift-form variant of Event Ticket 09 gift for trainer gifting flows.",
+    "inGameEffect": "Unlocks premium timed event content and event-specific rewards.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity.",
+      "Gift-form variant used for trainer gifting flows.",
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "event-ticket-09-to-gift",
+      "event ticket 09 gift",
+      "item_event_ticket_09_to_gift",
+      "special access",
+      "event",
+      "ticket",
+      "09",
+      "to",
+      "gift"
+    ]
+  },
+  {
+    "id": 1036,
+    "slug": "event-ticket-10",
+    "name": "Event Ticket 10",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Epic",
+    "availability": "Event",
+    "description": "Event Ticket 10 is a Pokemon GO special access resource.",
+    "inGameEffect": "Unlocks premium timed event content and event-specific rewards.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "event-ticket-10",
+      "event ticket 10",
+      "item_event_ticket_10",
+      "special access",
+      "event",
+      "ticket",
+      "10"
+    ]
+  },
+  {
+    "id": 1037,
+    "slug": "event-ticket-10-to-gift",
+    "name": "Event Ticket 10 gift",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Epic",
+    "availability": "Event",
+    "description": "Gift-form variant of Event Ticket 10 gift for trainer gifting flows.",
+    "inGameEffect": "Unlocks premium timed event content and event-specific rewards.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity.",
+      "Gift-form variant used for trainer gifting flows.",
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "event-ticket-10-to-gift",
+      "event ticket 10 gift",
+      "item_event_ticket_10_to_gift",
+      "special access",
+      "event",
+      "ticket",
+      "10",
+      "to",
+      "gift"
+    ]
+  },
+  {
+    "id": 1038,
+    "slug": "event-ticket-gray",
+    "name": "Event Ticket (Gray)",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Epic",
+    "availability": "Event",
+    "description": "Event Ticket (Gray) is a Pokemon GO special access resource.",
+    "inGameEffect": "Unlocks premium timed event content and event-specific rewards.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "event-ticket-gray",
+      "event ticket (gray)",
+      "item_event_ticket_gray",
+      "special access",
+      "event",
+      "ticket",
+      "gray"
+    ]
+  },
+  {
+    "id": 1039,
+    "slug": "event-ticket-gray-to-gift",
+    "name": "Event Ticket Gray gift",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Epic",
+    "availability": "Event",
+    "description": "Gift-form variant of Event Ticket Gray gift for trainer gifting flows.",
+    "inGameEffect": "Unlocks premium timed event content and event-specific rewards.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity.",
+      "Gift-form variant used for trainer gifting flows.",
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "event-ticket-gray-to-gift",
+      "event ticket gray gift",
+      "item_event_ticket_gray_to_gift",
+      "special access",
+      "event",
+      "ticket",
+      "gray",
+      "to",
+      "gift"
+    ]
+  },
+  {
+    "id": 1040,
+    "slug": "event-ticket-pink",
+    "name": "Event Ticket (Pink)",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Epic",
+    "availability": "Event",
+    "description": "Event Ticket (Pink) is a Pokemon GO special access resource.",
+    "inGameEffect": "Unlocks premium timed event content and event-specific rewards.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "event-ticket-pink",
+      "event ticket (pink)",
+      "item_event_ticket_pink",
+      "special access",
+      "event",
+      "ticket",
+      "pink"
+    ]
+  },
+  {
+    "id": 1041,
+    "slug": "event-ticket-pink-to-gift",
+    "name": "Event Ticket Pink gift",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Epic",
+    "availability": "Event",
+    "description": "Gift-form variant of Event Ticket Pink gift for trainer gifting flows.",
+    "inGameEffect": "Unlocks premium timed event content and event-specific rewards.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity.",
+      "Gift-form variant used for trainer gifting flows.",
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "event-ticket-pink-to-gift",
+      "event ticket pink gift",
+      "item_event_ticket_pink_to_gift",
+      "special access",
+      "event",
+      "ticket",
+      "pink",
+      "to",
+      "gift"
+    ]
+  },
+  {
+    "id": 1042,
+    "slug": "evergreen-ticket",
+    "name": "Evergreen Ticket",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Common",
+    "availability": "Event",
+    "description": "Evergreen Ticket is a Pokemon GO special access resource.",
+    "inGameEffect": "Unlocks premium timed event content and event-specific rewards.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "evergreen-ticket",
+      "evergreen ticket",
+      "item_evergreen_ticket",
+      "special access",
+      "evergreen",
+      "ticket"
+    ]
+  },
+  {
+    "id": 1043,
+    "slug": "evergreen-ticket-to-gift",
+    "name": "Evergreen Ticket (Gift)",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Common",
+    "availability": "Event",
+    "description": "Gift-form variant of Evergreen Ticket for trainer gifting flows.",
+    "inGameEffect": "Unlocks premium timed event content and event-specific rewards.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity.",
+      "Gift-form variant used for trainer gifting flows.",
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "evergreen-ticket-to-gift",
+      "evergreen ticket (gift)",
+      "item_evergreen_ticket_to_gift",
+      "special access",
+      "evergreen",
+      "ticket",
+      "to",
+      "gift"
+    ]
+  },
+  {
+    "id": 1044,
+    "slug": "raid-pass",
+    "name": "Raid Pass",
+    "category": "raid",
+    "categoryLabel": "Raid Passes",
+    "rarity": "Rare",
+    "availability": "Free",
+    "description": "Raid Pass is a Pokemon GO raid passes resource.",
+    "inGameEffect": "Grants raid entry access under specific conditions.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Daily rewards",
+      "Core gameplay systems"
+    ],
+    "bestUseCases": [
+      "Daily raids",
+      "High-value boss windows"
+    ],
+    "relatedSystems": [
+      "Raid loop",
+      "Live events"
+    ],
+    "pvpRelevance": "No direct battle-league use; supports preparation loops.",
+    "raidRelevance": "High relevance for raid readiness and sustained boss cycles.",
+    "notes": [
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "raid-pass",
+      "raid pass",
+      "item_free_raid_ticket",
+      "raid passes",
+      "raid",
+      "pass"
+    ]
+  },
+  {
+    "id": 1045,
+    "slug": "gift",
+    "name": "Gift",
+    "category": "utility",
+    "categoryLabel": "Utility",
+    "rarity": "Common",
+    "availability": "Both",
+    "description": "Gift is a Pokemon GO utility resource.",
+    "inGameEffect": "Provides utility or meta-system support in Pokemon GO.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "System progression",
+      "Support loops"
+    ],
+    "relatedSystems": [
+      "Core progression"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "gift",
+      "item_friend_gift_box",
+      "utility"
+    ]
+  },
+  {
+    "id": 1046,
+    "slug": "sinnoh-stone",
+    "name": "Sinnoh Stone",
+    "category": "evolution",
+    "categoryLabel": "Evolution Items",
+    "rarity": "Uncommon",
+    "availability": "Both",
+    "description": "Sinnoh Stone is a Pokemon GO evolution items resource.",
+    "inGameEffect": "Used in progression, events, or account-level systems.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "Dex progression",
+      "Evolution requirements"
+    ],
+    "relatedSystems": [
+      "Core progression"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "sinnoh-stone",
+      "sinnoh stone",
+      "item_gen4_evolution_stone",
+      "evolution items",
+      "sinnoh",
+      "stone"
+    ]
+  },
+  {
+    "id": 1047,
+    "slug": "unova-stone",
+    "name": "Unova Stone",
+    "category": "evolution",
+    "categoryLabel": "Evolution Items",
+    "rarity": "Uncommon",
+    "availability": "Both",
+    "description": "Unova Stone is a Pokemon GO evolution items resource.",
+    "inGameEffect": "Used in progression, events, or account-level systems.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "Dex progression",
+      "Evolution requirements"
+    ],
+    "relatedSystems": [
+      "Core progression"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "unova-stone",
+      "unova stone",
+      "item_gen5_evolution_stone",
+      "evolution items",
+      "unova",
+      "stone"
+    ]
+  },
+  {
+    "id": 1048,
+    "slug": "super-rocket-radar",
+    "name": "Super Rocket Radar",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Common",
+    "availability": "Both",
+    "description": "Super Rocket Radar is a Pokemon GO special access resource.",
+    "inGameEffect": "Used in progression, events, or account-level systems.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Team GO Rocket"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "super-rocket-radar",
+      "super rocket radar",
+      "item_giovanni_map",
+      "special access",
+      "super",
+      "rocket",
+      "radar"
+    ]
+  },
+  {
+    "id": 1049,
+    "slug": "global-event-ticket",
+    "name": "Global Event Ticket",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Epic",
+    "availability": "Event",
+    "description": "Global Event Ticket is a Pokemon GO special access resource.",
+    "inGameEffect": "Unlocks premium timed event content and event-specific rewards.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "global-event-ticket",
+      "global event ticket",
+      "item_global_event_ticket",
+      "special access",
+      "global",
+      "event",
+      "ticket"
+    ]
+  },
+  {
+    "id": 1050,
+    "slug": "global-event-ticket-to-gift",
+    "name": "Global Event Ticket (Gift)",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Epic",
+    "availability": "Event",
+    "description": "Gift-form variant of Global Event Ticket for trainer gifting flows.",
+    "inGameEffect": "Unlocks premium timed event content and event-specific rewards.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity.",
+      "Gift-form variant used for trainer gifting flows.",
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "global-event-ticket-to-gift",
+      "global event ticket (gift)",
+      "item_global_event_ticket_to_gift",
+      "special access",
+      "global",
+      "event",
+      "ticket",
+      "to",
+      "gift"
+    ]
+  },
+  {
+    "id": 1051,
+    "slug": "silver-pinap-berry",
+    "name": "Golden Pinap Berry",
+    "category": "berries",
+    "categoryLabel": "Berries",
+    "rarity": "Rare",
+    "availability": "Both",
+    "description": "Golden Pinap Berry is a Pokemon GO berries resource.",
+    "inGameEffect": "Applies berry-style effects for catching, buddies, or gym motivation.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Pokestops",
+      "Gyms",
+      "Gifts",
+      "Research"
+    ],
+    "bestUseCases": [
+      "Catch reliability",
+      "Candy optimization"
+    ],
+    "relatedSystems": [
+      "Catch flow"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "silver-pinap-berry",
+      "golden pinap berry",
+      "item_golden_pinap_berry",
+      "berries",
+      "silver",
+      "pinap",
+      "berry"
+    ]
+  },
+  {
+    "id": 1052,
+    "slug": "golden-razz-berry",
+    "name": "Golden Razz Berry",
+    "category": "berries",
+    "categoryLabel": "Berries",
+    "rarity": "Rare",
+    "availability": "Both",
+    "description": "Golden Razz Berry is a Pokemon GO berries resource.",
+    "inGameEffect": "Applies berry-style effects for catching, buddies, or gym motivation.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Pokestops",
+      "Gyms",
+      "Gifts",
+      "Research"
+    ],
+    "bestUseCases": [
+      "Catch reliability",
+      "Candy optimization"
+    ],
+    "relatedSystems": [
+      "Catch flow"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "golden-razz-berry",
+      "golden razz berry",
+      "item_golden_razz_berry",
+      "berries",
+      "golden",
+      "razz",
+      "berry"
+    ]
+  },
+  {
+    "id": 1053,
+    "slug": "great-ball",
+    "name": "Great Ball",
+    "category": "balls",
+    "categoryLabel": "Capture Balls",
+    "rarity": "Uncommon",
+    "availability": "Both",
+    "description": "Great Ball is a Pokemon GO capture balls resource.",
+    "inGameEffect": "Used during encounter capture phases.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Pokestops",
+      "Gyms",
+      "Gifts",
+      "Research"
+    ],
+    "bestUseCases": [
+      "Capture pipelines",
+      "Rare encounter securing"
+    ],
+    "relatedSystems": [
+      "Catch flow"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Contextual relevance for event/raid capture phases.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "great-ball",
+      "great ball",
+      "item_great_ball",
+      "capture balls",
+      "great",
+      "ball"
+    ]
+  },
+  {
+    "id": 1054,
+    "slug": "hyper-potion",
+    "name": "Hyper Potion",
+    "category": "healing",
+    "categoryLabel": "Healing",
+    "rarity": "Uncommon",
+    "availability": "Both",
+    "description": "Hyper Potion is a Pokemon GO healing resource.",
+    "inGameEffect": "Restores HP and/or revives fainted Pokemon.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Pokestops",
+      "Gyms",
+      "Gifts",
+      "Research"
+    ],
+    "bestUseCases": [
+      "Raid sustain",
+      "Rocket battle loops"
+    ],
+    "relatedSystems": [
+      "Raid loop"
+    ],
+    "pvpRelevance": "No direct battle-league use; supports preparation loops.",
+    "raidRelevance": "High relevance for raid readiness and sustained boss cycles.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "hyper-potion",
+      "hyper potion",
+      "item_hyper_potion",
+      "healing",
+      "hyper",
+      "potion"
+    ]
+  },
+  {
+    "id": 1055,
+    "slug": "coin-bag",
+    "name": "Coin Bag",
+    "category": "spawn",
+    "categoryLabel": "Spawn Tools",
+    "rarity": "Common",
+    "availability": "Both",
+    "description": "Coin Bag is a Pokemon GO spawn tools resource.",
+    "inGameEffect": "Increases, modifies, or targets wild encounter generation.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Shop",
+      "Research",
+      "Event rewards"
+    ],
+    "bestUseCases": [
+      "Spawn optimization",
+      "Event catch sessions"
+    ],
+    "relatedSystems": [
+      "Wild spawns"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "coin-bag",
+      "coin bag",
+      "item_incense_beluga_box",
+      "spawn tools",
+      "coin",
+      "bag"
+    ]
+  },
+  {
+    "id": 1056,
+    "slug": "daily-adventure-incense",
+    "name": "Daily Adventure Incense",
+    "category": "spawn",
+    "categoryLabel": "Spawn Tools",
+    "rarity": "Common",
+    "availability": "Free",
+    "description": "Daily Adventure Incense is a Pokemon GO spawn tools resource.",
+    "inGameEffect": "Increases, modifies, or targets wild encounter generation.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Daily rewards",
+      "Core gameplay systems"
+    ],
+    "bestUseCases": [
+      "Spawn optimization",
+      "Event catch sessions"
+    ],
+    "relatedSystems": [
+      "Wild spawns"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity."
+    ],
+    "searchTags": [
+      "daily-adventure-incense",
+      "daily adventure incense",
+      "item_incense_daily_adventure",
+      "spawn tools",
+      "daily",
+      "adventure",
+      "incense"
+    ]
+  },
+  {
+    "id": 1057,
+    "slug": "incense-day-bonus",
+    "name": "Incense Day Bonus",
+    "category": "spawn",
+    "categoryLabel": "Spawn Tools",
+    "rarity": "Common",
+    "availability": "Both",
+    "description": "Incense Day Bonus is a Pokemon GO spawn tools resource.",
+    "inGameEffect": "Increases, modifies, or targets wild encounter generation.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Shop",
+      "Research",
+      "Event rewards"
+    ],
+    "bestUseCases": [
+      "Spawn optimization",
+      "Event catch sessions"
+    ],
+    "relatedSystems": [
+      "Wild spawns"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity."
+    ],
+    "searchTags": [
+      "incense-day-bonus",
+      "incense day bonus",
+      "item_incense_day_bonus",
+      "spawn tools",
+      "incense",
+      "day",
+      "bonus"
+    ]
+  },
+  {
+    "id": 1058,
+    "slug": "incense-night-bonus",
+    "name": "Incense Night Bonus",
+    "category": "spawn",
+    "categoryLabel": "Spawn Tools",
+    "rarity": "Common",
+    "availability": "Both",
+    "description": "Incense Night Bonus is a Pokemon GO spawn tools resource.",
+    "inGameEffect": "Increases, modifies, or targets wild encounter generation.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Shop",
+      "Research",
+      "Event rewards"
+    ],
+    "bestUseCases": [
+      "Spawn optimization",
+      "Event catch sessions"
+    ],
+    "relatedSystems": [
+      "Wild spawns"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity."
+    ],
+    "searchTags": [
+      "incense-night-bonus",
+      "incense night bonus",
+      "item_incense_night_bonus",
+      "spawn tools",
+      "incense",
+      "night",
+      "bonus"
+    ]
+  },
+  {
+    "id": 1059,
+    "slug": "incense",
+    "name": "Incense",
+    "category": "spawn",
+    "categoryLabel": "Spawn Tools",
+    "rarity": "Common",
+    "availability": "Both",
+    "description": "Incense is a Pokemon GO spawn tools resource.",
+    "inGameEffect": "Increases, modifies, or targets wild encounter generation.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Shop",
+      "Research",
+      "Event rewards"
+    ],
+    "bestUseCases": [
+      "Spawn optimization",
+      "Event catch sessions"
+    ],
+    "relatedSystems": [
+      "Wild spawns"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "incense",
+      "item_incense_ordinary",
+      "spawn tools"
+    ]
+  },
+  {
+    "id": 1060,
+    "slug": "incense-sparkly",
+    "name": "Incense Sparkly",
+    "category": "spawn",
+    "categoryLabel": "Spawn Tools",
+    "rarity": "Common",
+    "availability": "Both",
+    "description": "Incense Sparkly is a Pokemon GO spawn tools resource.",
+    "inGameEffect": "Increases, modifies, or targets wild encounter generation.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Shop",
+      "Research",
+      "Event rewards"
+    ],
+    "bestUseCases": [
+      "Spawn optimization",
+      "Event catch sessions"
+    ],
+    "relatedSystems": [
+      "Wild spawns"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "incense-sparkly",
+      "incense sparkly",
+      "item_incense_sparkly",
+      "spawn tools",
+      "incense",
+      "sparkly"
+    ]
+  },
+  {
+    "id": 1061,
+    "slug": "incubator",
+    "name": "Incubator Basic",
+    "category": "incubator",
+    "categoryLabel": "Eggs",
+    "rarity": "Uncommon",
+    "availability": "Both",
+    "description": "Incubator Basic is a Pokemon GO eggs resource.",
+    "inGameEffect": "Hatches Eggs with distance multiplier x1 (3 uses).",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Shop",
+      "Research",
+      "Event rewards"
+    ],
+    "bestUseCases": [
+      "Egg projects",
+      "Distance efficiency routes"
+    ],
+    "relatedSystems": [
+      "Egg hatching"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "incubator",
+      "incubator basic",
+      "item_incubator_basic",
+      "eggs"
+    ]
+  },
+  {
+    "id": 1062,
+    "slug": "egg-incubator",
+    "name": "Egg Incubator",
+    "category": "incubator",
+    "categoryLabel": "Eggs",
+    "rarity": "Uncommon",
+    "availability": "Free",
+    "description": "Egg Incubator is a Pokemon GO eggs resource.",
+    "inGameEffect": "Hatches Eggs with distance multiplier x1 (unlimited use).",
+    "stackCap": "Inventory based",
+    "consumable": false,
+    "acquisition": [
+      "Daily rewards",
+      "Core gameplay systems"
+    ],
+    "bestUseCases": [
+      "Egg projects",
+      "Distance efficiency routes"
+    ],
+    "relatedSystems": [
+      "Egg hatching"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "egg-incubator",
+      "egg incubator",
+      "item_incubator_basic_unlimited",
+      "eggs",
+      "egg",
+      "incubator"
+    ]
+  },
+  {
+    "id": 1063,
+    "slug": "incubator-special",
+    "name": "Incubator Special",
+    "category": "incubator",
+    "categoryLabel": "Eggs",
+    "rarity": "Uncommon",
+    "availability": "Both",
+    "description": "Incubator Special is a Pokemon GO eggs resource.",
+    "inGameEffect": "Hatches Eggs with distance multiplier x1 (unlimited use).",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Shop",
+      "Research",
+      "Event rewards"
+    ],
+    "bestUseCases": [
+      "Egg projects",
+      "Distance efficiency routes"
+    ],
+    "relatedSystems": [
+      "Egg hatching"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity."
+    ],
+    "searchTags": [
+      "incubator-special",
+      "incubator special",
+      "905",
+      "item_incubator_special",
+      "eggs",
+      "incubator",
+      "special"
+    ]
+  },
+  {
+    "id": 1064,
+    "slug": "super-incubator",
+    "name": "Incubator Super",
+    "category": "incubator",
+    "categoryLabel": "Eggs",
+    "rarity": "Rare",
+    "availability": "Premium",
+    "description": "Incubator Super is a Pokemon GO eggs resource.",
+    "inGameEffect": "Hatches Eggs with distance multiplier x0.6666667 (3 uses).",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Shop",
+      "Premium bundles",
+      "Paid tracks"
+    ],
+    "bestUseCases": [
+      "Egg projects",
+      "Distance efficiency routes"
+    ],
+    "relatedSystems": [
+      "Egg hatching"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "super-incubator",
+      "incubator super",
+      "item_incubator_super",
+      "eggs",
+      "super",
+      "incubator"
+    ]
+  },
+  {
+    "id": 1065,
+    "slug": "incubator-timed",
+    "name": "Incubator Timed",
+    "category": "incubator",
+    "categoryLabel": "Eggs",
+    "rarity": "Uncommon",
+    "availability": "Premium",
+    "description": "Incubator Timed is a Pokemon GO eggs resource.",
+    "inGameEffect": "Hatches Eggs with distance multiplier x1 (unlimited use).",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Shop",
+      "Premium bundles",
+      "Paid tracks"
+    ],
+    "bestUseCases": [
+      "Egg projects",
+      "Distance efficiency routes"
+    ],
+    "relatedSystems": [
+      "Egg hatching"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "incubator-timed",
+      "incubator timed",
+      "item_incubator_timed",
+      "eggs",
+      "incubator",
+      "timed"
+    ]
+  },
+  {
+    "id": 1066,
+    "slug": "item-bag-upgrade",
+    "name": "Item Bag Upgrade",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Rare",
+    "availability": "Premium",
+    "description": "Item Bag Upgrade is a Pokemon GO special access resource.",
+    "inGameEffect": "Used in progression, events, or account-level systems.",
+    "stackCap": "Inventory based",
+    "consumable": false,
+    "acquisition": [
+      "Shop",
+      "Premium bundles",
+      "Paid tracks"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Core progression"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "item-bag-upgrade",
+      "item bag upgrade",
+      "item_item_storage_upgrade",
+      "special access",
+      "item",
+      "bag",
+      "upgrade"
+    ]
+  },
+  {
+    "id": 1067,
+    "slug": "kings-rock",
+    "name": "Kings Rock",
+    "category": "evolution",
+    "categoryLabel": "Evolution Items",
+    "rarity": "Uncommon",
+    "availability": "Both",
+    "description": "Kings Rock is a Pokemon GO evolution items resource.",
+    "inGameEffect": "Used in progression, events, or account-level systems.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "Dex progression",
+      "Evolution requirements"
+    ],
+    "relatedSystems": [
+      "Core progression"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "kings-rock",
+      "kings rock",
+      "item_kings_rock",
+      "evolution items",
+      "kings",
+      "rock"
+    ]
+  },
+  {
+    "id": 1068,
+    "slug": "rocket-radar",
+    "name": "Rocket Radar",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Common",
+    "availability": "Both",
+    "description": "Rocket Radar is a Pokemon GO special access resource.",
+    "inGameEffect": "Used in progression, events, or account-level systems.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Team GO Rocket"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "rocket-radar",
+      "rocket radar",
+      "item_leader_map",
+      "special access",
+      "rocket",
+      "radar"
+    ]
+  },
+  {
+    "id": 1069,
+    "slug": "mysterious-component",
+    "name": "Mysterious Component",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Common",
+    "availability": "Both",
+    "description": "Mysterious Component is a Pokemon GO special access resource.",
+    "inGameEffect": "Used in progression, events, or account-level systems.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Team GO Rocket"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "mysterious-component",
+      "mysterious component",
+      "item_leader_map_fragment",
+      "special access",
+      "mysterious",
+      "component"
+    ]
+  },
+  {
+    "id": 1070,
+    "slug": "lucky-egg",
+    "name": "Lucky Egg",
+    "category": "boost",
+    "categoryLabel": "Boosters",
+    "rarity": "Rare",
+    "availability": "Both",
+    "description": "Lucky Egg is a Pokemon GO boosters resource.",
+    "inGameEffect": "Temporarily increases XP, Stardust, or companion progression value.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Shop",
+      "Research",
+      "Event rewards"
+    ],
+    "bestUseCases": [
+      "XP/dust timing",
+      "Value-stacking sessions"
+    ],
+    "relatedSystems": [
+      "XP/Stardust economy"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "lucky-egg",
+      "lucky egg",
+      "item_lucky_egg",
+      "boosters",
+      "lucky",
+      "egg"
+    ]
+  },
+  {
+    "id": 1071,
+    "slug": "lucky-friend-applicator",
+    "name": "Lucky Friend Applicator",
+    "category": "boost",
+    "categoryLabel": "Boosters",
+    "rarity": "Rare",
+    "availability": "Both",
+    "description": "Lucky Friend Applicator is a Pokemon GO boosters resource.",
+    "inGameEffect": "Temporarily increases XP, Stardust, or companion progression value.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Shop",
+      "Research",
+      "Event rewards"
+    ],
+    "bestUseCases": [
+      "XP/dust timing",
+      "Value-stacking sessions"
+    ],
+    "relatedSystems": [
+      "XP/Stardust economy"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "lucky-friend-applicator",
+      "lucky friend applicator",
+      "item_lucky_friend_applicator",
+      "boosters",
+      "lucky",
+      "friend",
+      "applicator"
+    ]
+  },
+  {
+    "id": 1072,
+    "slug": "master-ball",
+    "name": "Master Ball",
+    "category": "balls",
+    "categoryLabel": "Capture Balls",
+    "rarity": "Epic",
+    "availability": "Both",
+    "description": "Master Ball is a Pokemon GO capture balls resource.",
+    "inGameEffect": "Used during encounter capture phases.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Pokestops",
+      "Gyms",
+      "Gifts",
+      "Research"
+    ],
+    "bestUseCases": [
+      "Capture pipelines",
+      "Rare encounter securing"
+    ],
+    "relatedSystems": [
+      "Catch flow"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Contextual relevance for event/raid capture phases.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "master-ball",
+      "master ball",
+      "item_master_ball",
+      "capture balls",
+      "master",
+      "ball"
+    ]
+  },
+  {
+    "id": 1073,
+    "slug": "max-boost",
+    "name": "Max Boost",
+    "category": "boost",
+    "categoryLabel": "Boosters",
+    "rarity": "Common",
+    "availability": "Both",
+    "description": "Max Boost is a Pokemon GO boosters resource.",
+    "inGameEffect": "Temporarily increases XP, Stardust, or companion progression value.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Shop",
+      "Research",
+      "Event rewards"
+    ],
+    "bestUseCases": [
+      "XP/dust timing",
+      "Value-stacking sessions"
+    ],
+    "relatedSystems": [
+      "XP/Stardust economy"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "High relevance for raid readiness and sustained boss cycles.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "max-boost",
+      "max boost",
+      "item_max_boost",
+      "boosters",
+      "max",
+      "boost"
+    ]
+  },
+  {
+    "id": 1074,
+    "slug": "max-potion",
+    "name": "Max Potion",
+    "category": "healing",
+    "categoryLabel": "Healing",
+    "rarity": "Common",
+    "availability": "Both",
+    "description": "Max Potion is a Pokemon GO healing resource.",
+    "inGameEffect": "Restores HP and/or revives fainted Pokemon.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Pokestops",
+      "Gyms",
+      "Gifts",
+      "Research"
+    ],
+    "bestUseCases": [
+      "Raid sustain",
+      "Rocket battle loops"
+    ],
+    "relatedSystems": [
+      "Raid loop"
+    ],
+    "pvpRelevance": "No direct battle-league use; supports preparation loops.",
+    "raidRelevance": "High relevance for raid readiness and sustained boss cycles.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "max-potion",
+      "max potion",
+      "item_max_potion",
+      "healing",
+      "max",
+      "potion"
+    ]
+  },
+  {
+    "id": 1075,
+    "slug": "max-revive",
+    "name": "Max Revive",
+    "category": "healing",
+    "categoryLabel": "Healing",
+    "rarity": "Uncommon",
+    "availability": "Both",
+    "description": "Max Revive is a Pokemon GO healing resource.",
+    "inGameEffect": "Restores HP and/or revives fainted Pokemon.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Pokestops",
+      "Gyms",
+      "Gifts",
+      "Research"
+    ],
+    "bestUseCases": [
+      "Raid sustain",
+      "Rocket battle loops"
+    ],
+    "relatedSystems": [
+      "Raid loop"
+    ],
+    "pvpRelevance": "No direct battle-league use; supports preparation loops.",
+    "raidRelevance": "High relevance for raid readiness and sustained boss cycles.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "max-revive",
+      "max revive",
+      "item_max_revive",
+      "healing",
+      "max",
+      "revive"
+    ]
+  },
+  {
+    "id": 1076,
+    "slug": "metal-coat",
+    "name": "Metal Coat",
+    "category": "evolution",
+    "categoryLabel": "Evolution Items",
+    "rarity": "Uncommon",
+    "availability": "Both",
+    "description": "Metal Coat is a Pokemon GO evolution items resource.",
+    "inGameEffect": "Used in progression, events, or account-level systems.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "Dex progression",
+      "Evolution requirements"
+    ],
+    "relatedSystems": [
+      "Core progression"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "metal-coat",
+      "metal coat",
+      "item_metal_coat",
+      "evolution items",
+      "metal",
+      "coat"
+    ]
+  },
+  {
+    "id": 1077,
+    "slug": "elite-fast-tm",
+    "name": "Elite Fast TM",
+    "category": "battle",
+    "categoryLabel": "Battle Tech",
+    "rarity": "Epic",
+    "availability": "Both",
+    "description": "Elite Fast TM is a Pokemon GO battle tech resource.",
+    "inGameEffect": "Supports move optimization or battle state advantages.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "Move tuning",
+      "Meta adaptation"
+    ],
+    "relatedSystems": [
+      "PvP tuning"
+    ],
+    "pvpRelevance": "High indirect value for competitive build quality.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "elite-fast-tm",
+      "elite fast tm",
+      "item_move_reroll_elite_fast_attack",
+      "battle tech",
+      "elite",
+      "fast",
+      "tm"
+    ]
+  },
+  {
+    "id": 1078,
+    "slug": "elite-charged-tm",
+    "name": "Elite Charged TM",
+    "category": "battle",
+    "categoryLabel": "Battle Tech",
+    "rarity": "Epic",
+    "availability": "Both",
+    "description": "Elite Charged TM is a Pokemon GO battle tech resource.",
+    "inGameEffect": "Supports move optimization or battle state advantages.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "Move tuning",
+      "Meta adaptation"
+    ],
+    "relatedSystems": [
+      "PvP tuning"
+    ],
+    "pvpRelevance": "High indirect value for competitive build quality.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "elite-charged-tm",
+      "elite charged tm",
+      "item_move_reroll_elite_special_attack",
+      "battle tech",
+      "elite",
+      "charged",
+      "tm"
+    ]
+  },
+  {
+    "id": 1079,
+    "slug": "fast-tm",
+    "name": "Fast TM",
+    "category": "battle",
+    "categoryLabel": "Battle Tech",
+    "rarity": "Uncommon",
+    "availability": "Both",
+    "description": "Fast TM is a Pokemon GO battle tech resource.",
+    "inGameEffect": "Supports move optimization or battle state advantages.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "Move tuning",
+      "Meta adaptation"
+    ],
+    "relatedSystems": [
+      "PvP tuning"
+    ],
+    "pvpRelevance": "High indirect value for competitive build quality.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "fast-tm",
+      "fast tm",
+      "item_move_reroll_fast_attack",
+      "battle tech",
+      "fast",
+      "tm"
+    ]
+  },
+  {
+    "id": 1080,
+    "slug": "move-reroll-other-special-attack-a",
+    "name": "Legacy Charged TM A",
+    "category": "battle",
+    "categoryLabel": "Battle Tech",
+    "rarity": "Uncommon",
+    "availability": "Both",
+    "description": "Legacy Charged TM A is a Pokemon GO battle tech resource.",
+    "inGameEffect": "Supports move optimization or battle state advantages.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "Move tuning",
+      "Meta adaptation"
+    ],
+    "relatedSystems": [
+      "PvP tuning"
+    ],
+    "pvpRelevance": "High indirect value for competitive build quality.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity."
+    ],
+    "searchTags": [
+      "move-reroll-other-special-attack-a",
+      "legacy charged tm a",
+      "item_move_reroll_other_special_attack_a",
+      "battle tech",
+      "move",
+      "reroll",
+      "other",
+      "special",
+      "attack",
+      "a"
+    ]
+  },
+  {
+    "id": 1081,
+    "slug": "charged-tm",
+    "name": "Charged TM",
+    "category": "battle",
+    "categoryLabel": "Battle Tech",
+    "rarity": "Uncommon",
+    "availability": "Both",
+    "description": "Charged TM is a Pokemon GO battle tech resource.",
+    "inGameEffect": "Supports move optimization or battle state advantages.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "Move tuning",
+      "Meta adaptation"
+    ],
+    "relatedSystems": [
+      "PvP tuning"
+    ],
+    "pvpRelevance": "High indirect value for competitive build quality.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "charged-tm",
+      "charged tm",
+      "item_move_reroll_special_attack",
+      "battle tech",
+      "charged",
+      "tm"
+    ]
+  },
+  {
+    "id": 1082,
+    "slug": "max-particle",
+    "name": "Max Particle",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Rare",
+    "availability": "Both",
+    "description": "Max Particle is a Pokemon GO special access resource.",
+    "inGameEffect": "Used in progression, events, or account-level systems.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Core progression"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity."
+    ],
+    "searchTags": [
+      "max-particle",
+      "max particle",
+      "item_mp",
+      "special access",
+      "max",
+      "particle"
+    ]
+  },
+  {
+    "id": 1083,
+    "slug": "max-particle-pack",
+    "name": "Max Particle Pack",
+    "category": "boost",
+    "categoryLabel": "Boosters",
+    "rarity": "Rare",
+    "availability": "Both",
+    "description": "Max Particle Pack is a Pokemon GO boosters resource.",
+    "inGameEffect": "Temporarily increases XP, Stardust, or companion progression value.",
+    "stackCap": "12",
+    "consumable": true,
+    "acquisition": [
+      "Shop",
+      "Research",
+      "Event rewards"
+    ],
+    "bestUseCases": [
+      "XP/dust timing",
+      "Value-stacking sessions"
+    ],
+    "relatedSystems": [
+      "XP/Stardust economy"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "max-particle-pack",
+      "max particle pack",
+      "item_mp_replenish",
+      "boosters",
+      "max",
+      "particle",
+      "pack"
+    ]
+  },
+  {
+    "id": 1084,
+    "slug": "nanab-berry",
+    "name": "Nanab Berry",
+    "category": "berries",
+    "categoryLabel": "Berries",
+    "rarity": "Common",
+    "availability": "Both",
+    "description": "Nanab Berry is a Pokemon GO berries resource.",
+    "inGameEffect": "Applies berry-style effects for catching, buddies, or gym motivation.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Pokestops",
+      "Gyms",
+      "Gifts",
+      "Research"
+    ],
+    "bestUseCases": [
+      "Catch reliability",
+      "Candy optimization"
+    ],
+    "relatedSystems": [
+      "Catch flow"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "nanab-berry",
+      "nanab berry",
+      "item_nanab_berry",
+      "berries",
+      "nanab",
+      "berry"
+    ]
+  },
+  {
+    "id": 1085,
+    "slug": "other-evolution-stone-a",
+    "name": "Other Evolution Stone A",
+    "category": "evolution",
+    "categoryLabel": "Evolution Items",
+    "rarity": "Uncommon",
+    "availability": "Both",
+    "description": "Other Evolution Stone A is a Pokemon GO evolution items resource.",
+    "inGameEffect": "Used in progression, events, or account-level systems.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "Dex progression",
+      "Evolution requirements"
+    ],
+    "relatedSystems": [
+      "Core progression"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity."
+    ],
+    "searchTags": [
+      "other-evolution-stone-a",
+      "other evolution stone a",
+      "item_other_evolution_stone_a",
+      "evolution items",
+      "other",
+      "evolution",
+      "stone",
+      "a"
+    ]
+  },
+  {
+    "id": 1086,
+    "slug": "other-evolution-stone-maple-a",
+    "name": "Other Evolution Stone Maple A",
+    "category": "evolution",
+    "categoryLabel": "Evolution Items",
+    "rarity": "Uncommon",
+    "availability": "Both",
+    "description": "Other Evolution Stone Maple A is a Pokemon GO evolution items resource.",
+    "inGameEffect": "Used in progression, events, or account-level systems.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "Dex progression",
+      "Evolution requirements"
+    ],
+    "relatedSystems": [
+      "Core progression"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity."
+    ],
+    "searchTags": [
+      "other-evolution-stone-maple-a",
+      "other evolution stone maple a",
+      "item_other_evolution_stone_maple_a",
+      "evolution items",
+      "other",
+      "evolution",
+      "stone",
+      "maple",
+      "a"
+    ]
+  },
+  {
+    "id": 1087,
+    "slug": "other-evolution-stone-maple-b",
+    "name": "Other Evolution Stone Maple B",
+    "category": "evolution",
+    "categoryLabel": "Evolution Items",
+    "rarity": "Uncommon",
+    "availability": "Both",
+    "description": "Other Evolution Stone Maple B is a Pokemon GO evolution items resource.",
+    "inGameEffect": "Used in progression, events, or account-level systems.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "Dex progression",
+      "Evolution requirements"
+    ],
+    "relatedSystems": [
+      "Core progression"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity."
+    ],
+    "searchTags": [
+      "other-evolution-stone-maple-b",
+      "other evolution stone maple b",
+      "item_other_evolution_stone_maple_b",
+      "evolution items",
+      "other",
+      "evolution",
+      "stone",
+      "maple",
+      "b"
+    ]
+  },
+  {
+    "id": 1088,
+    "slug": "other-evolution-stone-maple-c",
+    "name": "Other Evolution Stone Maple C",
+    "category": "evolution",
+    "categoryLabel": "Evolution Items",
+    "rarity": "Uncommon",
+    "availability": "Both",
+    "description": "Other Evolution Stone Maple C is a Pokemon GO evolution items resource.",
+    "inGameEffect": "Used in progression, events, or account-level systems.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "Dex progression",
+      "Evolution requirements"
+    ],
+    "relatedSystems": [
+      "Core progression"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity."
+    ],
+    "searchTags": [
+      "other-evolution-stone-maple-c",
+      "other evolution stone maple c",
+      "item_other_evolution_stone_maple_c",
+      "evolution items",
+      "other",
+      "evolution",
+      "stone",
+      "maple",
+      "c"
+    ]
+  },
+  {
+    "id": 1089,
+    "slug": "premium-battle-pass",
+    "name": "Premium Battle Pass",
+    "category": "raid",
+    "categoryLabel": "Raid Passes",
+    "rarity": "Rare",
+    "availability": "Premium",
+    "description": "Premium Battle Pass is a Pokemon GO raid passes resource.",
+    "inGameEffect": "Grants raid entry access under specific conditions.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Shop",
+      "Premium bundles",
+      "Paid tracks"
+    ],
+    "bestUseCases": [
+      "Daily raids",
+      "High-value boss windows"
+    ],
+    "relatedSystems": [
+      "Raid loop",
+      "Live events"
+    ],
+    "pvpRelevance": "No direct battle-league use; supports preparation loops.",
+    "raidRelevance": "High relevance for raid readiness and sustained boss cycles.",
+    "notes": [
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "premium-battle-pass",
+      "premium battle pass",
+      "item_paid_raid_ticket",
+      "raid passes",
+      "premium",
+      "battle",
+      "pass"
+    ]
+  },
+  {
+    "id": 1090,
+    "slug": "pinap-berry",
+    "name": "Pinap Berry",
+    "category": "berries",
+    "categoryLabel": "Berries",
+    "rarity": "Common",
+    "availability": "Both",
+    "description": "Pinap Berry is a Pokemon GO berries resource.",
+    "inGameEffect": "Applies berry-style effects for catching, buddies, or gym motivation.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Pokestops",
+      "Gyms",
+      "Gifts",
+      "Research"
+    ],
+    "bestUseCases": [
+      "Catch reliability",
+      "Candy optimization"
+    ],
+    "relatedSystems": [
+      "Catch flow"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "pinap-berry",
+      "pinap berry",
+      "item_pinap_berry",
+      "berries",
+      "pinap",
+      "berry"
+    ]
+  },
+  {
+    "id": 1091,
+    "slug": "poffin",
+    "name": "Poffin",
+    "category": "boost",
+    "categoryLabel": "Boosters",
+    "rarity": "Rare",
+    "availability": "Premium",
+    "description": "Poffin is a Pokemon GO boosters resource.",
+    "inGameEffect": "Applies berry-style effects for catching, buddies, or gym motivation.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Shop",
+      "Premium bundles",
+      "Paid tracks"
+    ],
+    "bestUseCases": [
+      "XP/dust timing",
+      "Value-stacking sessions"
+    ],
+    "relatedSystems": [
+      "XP/Stardust economy"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "poffin",
+      "item_poffin",
+      "boosters"
+    ]
+  },
+  {
+    "id": 1092,
+    "slug": "poke-ball",
+    "name": "Poke Ball",
+    "category": "balls",
+    "categoryLabel": "Capture Balls",
+    "rarity": "Common",
+    "availability": "Both",
+    "description": "Poke Ball is a Pokemon GO capture balls resource.",
+    "inGameEffect": "Used during encounter capture phases.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Pokestops",
+      "Gyms",
+      "Gifts",
+      "Research"
+    ],
+    "bestUseCases": [
+      "Capture pipelines",
+      "Rare encounter securing"
+    ],
+    "relatedSystems": [
+      "Catch flow"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Contextual relevance for event/raid capture phases.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "poke-ball",
+      "poke ball",
+      "item_poke_ball",
+      "capture balls",
+      "poke",
+      "ball"
+    ]
+  },
+  {
+    "id": 1093,
+    "slug": "pokemon-storage-upgrade",
+    "name": "Pokemon Storage Upgrade",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Rare",
+    "availability": "Premium",
+    "description": "Pokemon Storage Upgrade is a Pokemon GO special access resource.",
+    "inGameEffect": "Used in progression, events, or account-level systems.",
+    "stackCap": "Inventory based",
+    "consumable": false,
+    "acquisition": [
+      "Shop",
+      "Premium bundles",
+      "Paid tracks"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Core progression"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "pokemon-storage-upgrade",
+      "pokemon storage upgrade",
+      "item_pokemon_storage_upgrade",
+      "special access",
+      "pokemon",
+      "storage",
+      "upgrade"
+    ]
+  },
+  {
+    "id": 1094,
+    "slug": "postcard-book-inventory",
+    "name": "Postcard Book",
+    "category": "utility",
+    "categoryLabel": "Utility",
+    "rarity": "Common",
+    "availability": "Both",
+    "description": "Postcard Book is a Pokemon GO utility resource.",
+    "inGameEffect": "Provides utility or meta-system support in Pokemon GO.",
+    "stackCap": "Inventory based",
+    "consumable": false,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "System progression",
+      "Support loops"
+    ],
+    "relatedSystems": [
+      "Core progression"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "postcard-book-inventory",
+      "postcard book",
+      "item_postcard_inventory",
+      "utility",
+      "postcard",
+      "book",
+      "inventory"
+    ]
+  },
+  {
+    "id": 1095,
+    "slug": "postcard-book",
+    "name": "Postcard Storage Upgrade",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Rare",
+    "availability": "Premium",
+    "description": "Postcard Storage Upgrade is a Pokemon GO special access resource.",
+    "inGameEffect": "Used in progression, events, or account-level systems.",
+    "stackCap": "Inventory based",
+    "consumable": false,
+    "acquisition": [
+      "Shop",
+      "Premium bundles",
+      "Paid tracks"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Core progression"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "postcard-book",
+      "postcard storage upgrade",
+      "item_postcard_storage_upgrade",
+      "special access",
+      "postcard",
+      "book"
+    ]
+  },
+  {
+    "id": 1096,
+    "slug": "potion",
+    "name": "Potion",
+    "category": "healing",
+    "categoryLabel": "Healing",
+    "rarity": "Common",
+    "availability": "Both",
+    "description": "Potion is a Pokemon GO healing resource.",
+    "inGameEffect": "Restores HP and/or revives fainted Pokemon.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Pokestops",
+      "Gyms",
+      "Gifts",
+      "Research"
+    ],
+    "bestUseCases": [
+      "Raid sustain",
+      "Rocket battle loops"
+    ],
+    "relatedSystems": [
+      "Raid loop"
+    ],
+    "pvpRelevance": "No direct battle-league use; supports preparation loops.",
+    "raidRelevance": "High relevance for raid readiness and sustained boss cycles.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "potion",
+      "item_potion",
+      "healing"
+    ]
+  },
+  {
+    "id": 1097,
+    "slug": "premier-ball",
+    "name": "Premier Ball",
+    "category": "balls",
+    "categoryLabel": "Capture Balls",
+    "rarity": "Common",
+    "availability": "Both",
+    "description": "Premier Ball is a Pokemon GO capture balls resource.",
+    "inGameEffect": "Used during encounter capture phases.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Pokestops",
+      "Gyms",
+      "Gifts",
+      "Research"
+    ],
+    "bestUseCases": [
+      "Capture pipelines",
+      "Rare encounter securing"
+    ],
+    "relatedSystems": [
+      "Catch flow"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Contextual relevance for event/raid capture phases.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "premier-ball",
+      "premier ball",
+      "item_premier_ball",
+      "capture balls",
+      "premier",
+      "ball"
+    ]
+  },
+  {
+    "id": 1098,
+    "slug": "rare-candy",
+    "name": "Rare Candy",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Common",
+    "availability": "Both",
+    "description": "Rare Candy is a Pokemon GO special access resource.",
+    "inGameEffect": "Used in progression, events, or account-level systems.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Core progression"
+    ],
+    "pvpRelevance": "High indirect value for competitive build quality.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "rare-candy",
+      "rare candy",
+      "item_rare_candy",
+      "special access",
+      "rare",
+      "candy"
+    ]
+  },
+  {
+    "id": 1099,
+    "slug": "razz-berry",
+    "name": "Razz Berry",
+    "category": "berries",
+    "categoryLabel": "Berries",
+    "rarity": "Common",
+    "availability": "Both",
+    "description": "Razz Berry is a Pokemon GO berries resource.",
+    "inGameEffect": "Applies berry-style effects for catching, buddies, or gym motivation.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Pokestops",
+      "Gyms",
+      "Gifts",
+      "Research"
+    ],
+    "bestUseCases": [
+      "Catch reliability",
+      "Candy optimization"
+    ],
+    "relatedSystems": [
+      "Catch flow"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "razz-berry",
+      "razz berry",
+      "item_razz_berry",
+      "berries",
+      "razz",
+      "berry"
+    ]
+  },
+  {
+    "id": 1100,
+    "slug": "remote-raid-pass",
+    "name": "Remote Raid Pass",
+    "category": "raid",
+    "categoryLabel": "Raid Passes",
+    "rarity": "Rare",
+    "availability": "Premium",
+    "description": "Remote Raid Pass is a Pokemon GO raid passes resource.",
+    "inGameEffect": "Grants raid entry access under specific conditions.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Shop",
+      "Premium bundles",
+      "Paid tracks"
+    ],
+    "bestUseCases": [
+      "Daily raids",
+      "High-value boss windows"
+    ],
+    "relatedSystems": [
+      "Raid loop",
+      "Live events"
+    ],
+    "pvpRelevance": "No direct battle-league use; supports preparation loops.",
+    "raidRelevance": "High relevance for raid readiness and sustained boss cycles.",
+    "notes": [
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "remote-raid-pass",
+      "remote raid pass",
+      "item_remote_raid_ticket",
+      "raid passes",
+      "remote",
+      "raid",
+      "pass"
+    ]
+  },
+  {
+    "id": 1101,
+    "slug": "crowned-zacian-resource",
+    "name": "Crowned Zacian Energy",
+    "category": "evolution",
+    "categoryLabel": "Evolution Items",
+    "rarity": "Uncommon",
+    "availability": "Both",
+    "description": "Crowned Zacian Energy is a Pokemon GO evolution items resource.",
+    "inGameEffect": "Used in progression, events, or account-level systems.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "Dex progression",
+      "Evolution requirements"
+    ],
+    "relatedSystems": [
+      "Core progression"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity."
+    ],
+    "searchTags": [
+      "crowned-zacian-resource",
+      "crowned zacian energy",
+      "item_resource_crowned_zacian",
+      "evolution items",
+      "crowned",
+      "zacian",
+      "resource"
+    ]
+  },
+  {
+    "id": 1102,
+    "slug": "crowned-zamazenta-resource",
+    "name": "Crowned Zamazenta Energy",
+    "category": "evolution",
+    "categoryLabel": "Evolution Items",
+    "rarity": "Uncommon",
+    "availability": "Both",
+    "description": "Crowned Zamazenta Energy is a Pokemon GO evolution items resource.",
+    "inGameEffect": "Used in progression, events, or account-level systems.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "Dex progression",
+      "Evolution requirements"
+    ],
+    "relatedSystems": [
+      "Core progression"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity."
+    ],
+    "searchTags": [
+      "crowned-zamazenta-resource",
+      "crowned zamazenta energy",
+      "item_resource_crowned_zamazenta",
+      "evolution items",
+      "crowned",
+      "zamazenta",
+      "resource"
+    ]
+  },
+  {
+    "id": 1103,
+    "slug": "revive",
+    "name": "Revive",
+    "category": "healing",
+    "categoryLabel": "Healing",
+    "rarity": "Uncommon",
+    "availability": "Both",
+    "description": "Revive is a Pokemon GO healing resource.",
+    "inGameEffect": "Restores HP and/or revives fainted Pokemon.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Pokestops",
+      "Gyms",
+      "Gifts",
+      "Research"
+    ],
+    "bestUseCases": [
+      "Raid sustain",
+      "Rocket battle loops"
+    ],
+    "relatedSystems": [
+      "Raid loop"
+    ],
+    "pvpRelevance": "No direct battle-league use; supports preparation loops.",
+    "raidRelevance": "High relevance for raid readiness and sustained boss cycles.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "revive",
+      "item_revive",
+      "healing"
+    ]
+  },
+  {
+    "id": 1104,
+    "slug": "route-maker-kit",
+    "name": "Route Maker",
+    "category": "utility",
+    "categoryLabel": "Utility",
+    "rarity": "Common",
+    "availability": "Both",
+    "description": "Route Maker is a Pokemon GO utility resource.",
+    "inGameEffect": "Provides utility or meta-system support in Pokemon GO.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "System progression",
+      "Support loops"
+    ],
+    "relatedSystems": [
+      "Core progression"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "route-maker-kit",
+      "route maker",
+      "1407",
+      "item_route_maker",
+      "utility",
+      "route",
+      "maker",
+      "kit"
+    ]
+  },
+  {
+    "id": 1105,
+    "slug": "shadow-gem",
+    "name": "Purified Gem",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Rare",
+    "availability": "Both",
+    "description": "Purified Gem is a Pokemon GO special access resource.",
+    "inGameEffect": "Used in progression, events, or account-level systems.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Team GO Rocket"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "shadow-gem",
+      "purified gem",
+      "item_shadow_gem",
+      "special access",
+      "shadow",
+      "gem"
+    ]
+  },
+  {
+    "id": 1106,
+    "slug": "shadow-shard",
+    "name": "Shadow Shard",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Rare",
+    "availability": "Both",
+    "description": "Shadow Shard is a Pokemon GO special access resource.",
+    "inGameEffect": "Used in progression, events, or account-level systems.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Team GO Rocket"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "shadow-shard",
+      "shadow shard",
+      "item_shadow_gem_fragment",
+      "special access",
+      "shadow",
+      "shard"
+    ]
+  },
+  {
+    "id": 1107,
+    "slug": "single-stat-increase",
+    "name": "Single Stat Increase",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Common",
+    "availability": "Both",
+    "description": "Single Stat Increase is a Pokemon GO special access resource.",
+    "inGameEffect": "Used in progression, events, or account-level systems.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Core progression"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity."
+    ],
+    "searchTags": [
+      "single-stat-increase",
+      "single stat increase",
+      "item_single_stat_increase",
+      "special access",
+      "single",
+      "stat",
+      "increase"
+    ]
+  },
+  {
+    "id": 1108,
+    "slug": "special-camera",
+    "name": "AR Camera",
+    "category": "utility",
+    "categoryLabel": "Utility",
+    "rarity": "Common",
+    "availability": "Both",
+    "description": "AR Camera is a Pokemon GO utility resource.",
+    "inGameEffect": "Provides utility or meta-system support in Pokemon GO.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "System progression",
+      "Support loops"
+    ],
+    "relatedSystems": [
+      "Core progression"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity."
+    ],
+    "searchTags": [
+      "special-camera",
+      "ar camera",
+      "item_special_camera",
+      "utility",
+      "special",
+      "camera"
+    ]
+  },
+  {
+    "id": 1109,
+    "slug": "star-piece",
+    "name": "Star Piece",
+    "category": "boost",
+    "categoryLabel": "Boosters",
+    "rarity": "Rare",
+    "availability": "Both",
+    "description": "Star Piece is a Pokemon GO boosters resource.",
+    "inGameEffect": "Temporarily increases XP, Stardust, or companion progression value.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Shop",
+      "Research",
+      "Event rewards"
+    ],
+    "bestUseCases": [
+      "XP/dust timing",
+      "Value-stacking sessions"
+    ],
+    "relatedSystems": [
+      "XP/Stardust economy"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "star-piece",
+      "star piece",
+      "item_star_piece",
+      "boosters",
+      "star",
+      "piece"
+    ]
+  },
+  {
+    "id": 1110,
+    "slug": "sticker",
+    "name": "Sticker Inventory",
+    "category": "utility",
+    "categoryLabel": "Utility",
+    "rarity": "Common",
+    "availability": "Both",
+    "description": "Sticker Inventory is a Pokemon GO utility resource.",
+    "inGameEffect": "Provides utility or meta-system support in Pokemon GO.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "System progression",
+      "Support loops"
+    ],
+    "relatedSystems": [
+      "Core progression"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "sticker",
+      "sticker inventory",
+      "item_sticker_inventory",
+      "utility"
+    ]
+  },
+  {
+    "id": 1111,
+    "slug": "sun-stone",
+    "name": "Sun Stone",
+    "category": "evolution",
+    "categoryLabel": "Evolution Items",
+    "rarity": "Uncommon",
+    "availability": "Both",
+    "description": "Sun Stone is a Pokemon GO evolution items resource.",
+    "inGameEffect": "Used in progression, events, or account-level systems.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "Dex progression",
+      "Evolution requirements"
+    ],
+    "relatedSystems": [
+      "Core progression"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "sun-stone",
+      "sun stone",
+      "item_sun_stone",
+      "evolution items",
+      "sun",
+      "stone"
+    ]
+  },
+  {
+    "id": 1112,
+    "slug": "super-potion",
+    "name": "Super Potion",
+    "category": "healing",
+    "categoryLabel": "Healing",
+    "rarity": "Rare",
+    "availability": "Both",
+    "description": "Super Potion is a Pokemon GO healing resource.",
+    "inGameEffect": "Restores HP and/or revives fainted Pokemon.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Pokestops",
+      "Gyms",
+      "Gifts",
+      "Research"
+    ],
+    "bestUseCases": [
+      "Raid sustain",
+      "Rocket battle loops"
+    ],
+    "relatedSystems": [
+      "Raid loop"
+    ],
+    "pvpRelevance": "No direct battle-league use; supports preparation loops.",
+    "raidRelevance": "High relevance for raid readiness and sustained boss cycles.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "super-potion",
+      "super potion",
+      "item_super_potion",
+      "healing",
+      "super",
+      "potion"
+    ]
+  },
+  {
+    "id": 1113,
+    "slug": "team-medallion",
+    "name": "Team Medallion",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Rare",
+    "availability": "Premium",
+    "description": "Team Medallion is a Pokemon GO special access resource.",
+    "inGameEffect": "Used in progression, events, or account-level systems.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Shop",
+      "Premium bundles",
+      "Paid tracks"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Core progression"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "team-medallion",
+      "team medallion",
+      "item_team_change",
+      "special access",
+      "team",
+      "medallion"
+    ]
+  },
+  {
+    "id": 1114,
+    "slug": "city-safari-ticket-00",
+    "name": "Ticket City Safari 00",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Epic",
+    "availability": "Event",
+    "description": "Ticket City Safari 00 is a Pokemon GO special access resource.",
+    "inGameEffect": "Unlocks premium timed event content and event-specific rewards.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "city-safari-ticket-00",
+      "ticket city safari 00",
+      "item_ticket_city_safari_00",
+      "special access",
+      "city",
+      "safari",
+      "ticket",
+      "00"
+    ]
+  },
+  {
+    "id": 1115,
+    "slug": "city-safari-ticket-01",
+    "name": "Ticket City Safari 01",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Epic",
+    "availability": "Event",
+    "description": "Ticket City Safari 01 is a Pokemon GO special access resource.",
+    "inGameEffect": "Unlocks premium timed event content and event-specific rewards.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "city-safari-ticket-01",
+      "ticket city safari 01",
+      "item_ticket_city_safari_01",
+      "special access",
+      "city",
+      "safari",
+      "ticket",
+      "01"
+    ]
+  },
+  {
+    "id": 1116,
+    "slug": "city-safari-ticket-02",
+    "name": "Ticket City Safari 02",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Epic",
+    "availability": "Event",
+    "description": "Ticket City Safari 02 is a Pokemon GO special access resource.",
+    "inGameEffect": "Unlocks premium timed event content and event-specific rewards.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "city-safari-ticket-02",
+      "ticket city safari 02",
+      "item_ticket_city_safari_02",
+      "special access",
+      "city",
+      "safari",
+      "ticket",
+      "02"
+    ]
+  },
+  {
+    "id": 1117,
+    "slug": "city-safari-ticket-04",
+    "name": "Ticket City Safari 04",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Epic",
+    "availability": "Event",
+    "description": "Ticket City Safari 04 is a Pokemon GO special access resource.",
+    "inGameEffect": "Unlocks premium timed event content and event-specific rewards.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Limited-time events",
+      "Timed research",
+      "Event passes"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Live events"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity.",
+      "Availability and rewards can change by live event schedule."
+    ],
+    "searchTags": [
+      "city-safari-ticket-04",
+      "ticket city safari 04",
+      "item_ticket_city_safari_04",
+      "special access",
+      "city",
+      "safari",
+      "ticket",
+      "04"
+    ]
+  },
+  {
+    "id": 1118,
+    "slug": "triple-stat-increase",
+    "name": "Triple Stat Increase",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Common",
+    "availability": "Both",
+    "description": "Triple Stat Increase is a Pokemon GO special access resource.",
+    "inGameEffect": "Used in progression, events, or account-level systems.",
+    "stackCap": "Not stored in bag",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Core progression"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "This item may bypass standard bag capacity."
+    ],
+    "searchTags": [
+      "triple-stat-increase",
+      "triple stat increase",
+      "item_triple_stat_increase",
+      "special access",
+      "triple",
+      "stat",
+      "increase"
+    ]
+  },
+  {
+    "id": 1119,
+    "slug": "troy-disk",
+    "name": "Lure Module",
+    "category": "spawn",
+    "categoryLabel": "Spawn Tools",
+    "rarity": "Rare",
+    "availability": "Both",
+    "description": "Lure Module is a Pokemon GO spawn tools resource.",
+    "inGameEffect": "Increases, modifies, or targets wild encounter generation.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Shop",
+      "Research",
+      "Event rewards"
+    ],
+    "bestUseCases": [
+      "Spawn optimization",
+      "Event catch sessions"
+    ],
+    "relatedSystems": [
+      "Wild spawns"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "troy-disk",
+      "lure module",
+      "item_troy_disk",
+      "spawn tools",
+      "troy",
+      "disk"
+    ]
+  },
+  {
+    "id": 1120,
+    "slug": "glacial-lure-module",
+    "name": "Glacial Lure Module",
+    "category": "spawn",
+    "categoryLabel": "Spawn Tools",
+    "rarity": "Rare",
+    "availability": "Both",
+    "description": "Glacial Lure Module is a Pokemon GO spawn tools resource.",
+    "inGameEffect": "Increases, modifies, or targets wild encounter generation.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Shop",
+      "Research",
+      "Event rewards"
+    ],
+    "bestUseCases": [
+      "Spawn optimization",
+      "Event catch sessions"
+    ],
+    "relatedSystems": [
+      "Wild spawns"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "glacial-lure-module",
+      "glacial lure module",
+      "item_troy_disk_glacial",
+      "spawn tools",
+      "glacial",
+      "lure",
+      "module"
+    ]
+  },
+  {
+    "id": 1121,
+    "slug": "magnetic-lure-module",
+    "name": "Magnetic Lure Module",
+    "category": "spawn",
+    "categoryLabel": "Spawn Tools",
+    "rarity": "Rare",
+    "availability": "Both",
+    "description": "Magnetic Lure Module is a Pokemon GO spawn tools resource.",
+    "inGameEffect": "Increases, modifies, or targets wild encounter generation.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Shop",
+      "Research",
+      "Event rewards"
+    ],
+    "bestUseCases": [
+      "Spawn optimization",
+      "Event catch sessions"
+    ],
+    "relatedSystems": [
+      "Wild spawns"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "magnetic-lure-module",
+      "magnetic lure module",
+      "item_troy_disk_magnetic",
+      "spawn tools",
+      "magnetic",
+      "lure",
+      "module"
+    ]
+  },
+  {
+    "id": 1122,
+    "slug": "mossy-lure-module",
+    "name": "Mossy Lure Module",
+    "category": "spawn",
+    "categoryLabel": "Spawn Tools",
+    "rarity": "Rare",
+    "availability": "Both",
+    "description": "Mossy Lure Module is a Pokemon GO spawn tools resource.",
+    "inGameEffect": "Increases, modifies, or targets wild encounter generation.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Shop",
+      "Research",
+      "Event rewards"
+    ],
+    "bestUseCases": [
+      "Spawn optimization",
+      "Event catch sessions"
+    ],
+    "relatedSystems": [
+      "Wild spawns"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "mossy-lure-module",
+      "mossy lure module",
+      "item_troy_disk_mossy",
+      "spawn tools",
+      "mossy",
+      "lure",
+      "module"
+    ]
+  },
+  {
+    "id": 1123,
+    "slug": "rainy-lure-module",
+    "name": "Rainy Lure Module",
+    "category": "spawn",
+    "categoryLabel": "Spawn Tools",
+    "rarity": "Rare",
+    "availability": "Both",
+    "description": "Rainy Lure Module is a Pokemon GO spawn tools resource.",
+    "inGameEffect": "Increases, modifies, or targets wild encounter generation.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Shop",
+      "Research",
+      "Event rewards"
+    ],
+    "bestUseCases": [
+      "Spawn optimization",
+      "Event catch sessions"
+    ],
+    "relatedSystems": [
+      "Wild spawns"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "rainy-lure-module",
+      "rainy lure module",
+      "item_troy_disk_rainy",
+      "spawn tools",
+      "rainy",
+      "lure",
+      "module"
+    ]
+  },
+  {
+    "id": 1124,
+    "slug": "golden-lure-module",
+    "name": "Golden Lure Module",
+    "category": "spawn",
+    "categoryLabel": "Spawn Tools",
+    "rarity": "Rare",
+    "availability": "Both",
+    "description": "Golden Lure Module is a Pokemon GO spawn tools resource.",
+    "inGameEffect": "Increases, modifies, or targets wild encounter generation.",
+    "stackCap": "1",
+    "consumable": true,
+    "acquisition": [
+      "Shop",
+      "Research",
+      "Event rewards"
+    ],
+    "bestUseCases": [
+      "Spawn optimization",
+      "Event catch sessions"
+    ],
+    "relatedSystems": [
+      "Wild spawns"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "golden-lure-module",
+      "golden lure module",
+      "item_troy_disk_sparkly",
+      "spawn tools",
+      "golden",
+      "lure",
+      "module"
+    ]
+  },
+  {
+    "id": 1125,
+    "slug": "ultra-ball",
+    "name": "Ultra Ball",
+    "category": "balls",
+    "categoryLabel": "Capture Balls",
+    "rarity": "Common",
+    "availability": "Both",
+    "description": "Ultra Ball is a Pokemon GO capture balls resource.",
+    "inGameEffect": "Used during encounter capture phases.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Pokestops",
+      "Gyms",
+      "Gifts",
+      "Research"
+    ],
+    "bestUseCases": [
+      "Capture pipelines",
+      "Rare encounter securing"
+    ],
+    "relatedSystems": [
+      "Catch flow"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Contextual relevance for event/raid capture phases.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "ultra-ball",
+      "ultra ball",
+      "item_ultra_ball",
+      "capture balls",
+      "ultra",
+      "ball"
+    ]
+  },
+  {
+    "id": 1126,
+    "slug": "up-grade",
+    "name": "Up Grade",
+    "category": "evolution",
+    "categoryLabel": "Evolution Items",
+    "rarity": "Uncommon",
+    "availability": "Both",
+    "description": "Up Grade is a Pokemon GO evolution items resource.",
+    "inGameEffect": "Used in progression, events, or account-level systems.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "Dex progression",
+      "Evolution requirements"
+    ],
+    "relatedSystems": [
+      "Core progression"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "up-grade",
+      "up grade",
+      "item_up_grade",
+      "evolution items",
+      "up",
+      "grade"
+    ]
+  },
+  {
+    "id": 1127,
+    "slug": "wepar-berry",
+    "name": "Wepar Berry",
+    "category": "berries",
+    "categoryLabel": "Berries",
+    "rarity": "Common",
+    "availability": "Both",
+    "description": "Wepar Berry is a Pokemon GO berries resource.",
+    "inGameEffect": "Applies berry-style effects for catching, buddies, or gym motivation.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Pokestops",
+      "Gyms",
+      "Gifts",
+      "Research"
+    ],
+    "bestUseCases": [
+      "Catch reliability",
+      "Candy optimization"
+    ],
+    "relatedSystems": [
+      "Catch flow"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "wepar-berry",
+      "wepar berry",
+      "item_wepar_berry",
+      "berries",
+      "wepar",
+      "berry"
+    ]
+  },
+  {
+    "id": 1128,
+    "slug": "wild-ball",
+    "name": "Wild Ball",
+    "category": "balls",
+    "categoryLabel": "Capture Balls",
+    "rarity": "Epic",
+    "availability": "Both",
+    "description": "Wild Ball is a Pokemon GO capture balls resource.",
+    "inGameEffect": "Used during encounter capture phases.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Pokestops",
+      "Gyms",
+      "Gifts",
+      "Research"
+    ],
+    "bestUseCases": [
+      "Capture pipelines",
+      "Rare encounter securing"
+    ],
+    "relatedSystems": [
+      "Catch flow"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Contextual relevance for event/raid capture phases.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "wild-ball",
+      "wild ball",
+      "item_wild_ball",
+      "capture balls",
+      "wild",
+      "ball"
+    ]
+  },
+  {
+    "id": 1129,
+    "slug": "wild-ball-premier",
+    "name": "Wild Ball Premier",
+    "category": "balls",
+    "categoryLabel": "Capture Balls",
+    "rarity": "Epic",
+    "availability": "Both",
+    "description": "Wild Ball Premier is a Pokemon GO capture balls resource.",
+    "inGameEffect": "Used during encounter capture phases.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Pokestops",
+      "Gyms",
+      "Gifts",
+      "Research"
+    ],
+    "bestUseCases": [
+      "Capture pipelines",
+      "Rare encounter securing"
+    ],
+    "relatedSystems": [
+      "Catch flow"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Contextual relevance for event/raid capture phases.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "wild-ball-premier",
+      "wild ball premier",
+      "item_wild_ball_premier",
+      "capture balls",
+      "wild",
+      "ball",
+      "premier"
+    ]
+  },
+  {
+    "id": 1130,
+    "slug": "x-attack",
+    "name": "X Attack",
+    "category": "boost",
+    "categoryLabel": "Boosters",
+    "rarity": "Common",
+    "availability": "Both",
+    "description": "X Attack is a Pokemon GO boosters resource.",
+    "inGameEffect": "Temporarily increases XP, Stardust, or companion progression value.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Shop",
+      "Research",
+      "Event rewards"
+    ],
+    "bestUseCases": [
+      "XP/dust timing",
+      "Value-stacking sessions"
+    ],
+    "relatedSystems": [
+      "XP/Stardust economy"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "x-attack",
+      "x attack",
+      "item_x_attack",
+      "boosters",
+      "x",
+      "attack"
+    ]
+  },
+  {
+    "id": 1131,
+    "slug": "x-defense",
+    "name": "X Defense",
+    "category": "boost",
+    "categoryLabel": "Boosters",
+    "rarity": "Common",
+    "availability": "Both",
+    "description": "X Defense is a Pokemon GO boosters resource.",
+    "inGameEffect": "Temporarily increases XP, Stardust, or companion progression value.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Shop",
+      "Research",
+      "Event rewards"
+    ],
+    "bestUseCases": [
+      "XP/dust timing",
+      "Value-stacking sessions"
+    ],
+    "relatedSystems": [
+      "XP/Stardust economy"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "x-defense",
+      "x defense",
+      "item_x_defense",
+      "boosters",
+      "x",
+      "defense"
+    ]
+  },
+  {
+    "id": 1132,
+    "slug": "x-miracle",
+    "name": "X Miracle",
+    "category": "boost",
+    "categoryLabel": "Boosters",
+    "rarity": "Common",
+    "availability": "Both",
+    "description": "X Miracle is a Pokemon GO boosters resource.",
+    "inGameEffect": "Temporarily increases XP, Stardust, or companion progression value.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Shop",
+      "Research",
+      "Event rewards"
+    ],
+    "bestUseCases": [
+      "XP/dust timing",
+      "Value-stacking sessions"
+    ],
+    "relatedSystems": [
+      "XP/Stardust economy"
+    ],
+    "pvpRelevance": "Indirect value depending on progression goals.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "x-miracle",
+      "x miracle",
+      "item_x_miracle",
+      "boosters",
+      "x",
+      "miracle"
+    ]
+  },
+  {
+    "id": 1133,
+    "slug": "rare-candy-xl",
+    "name": "Rare Candy XL",
+    "category": "special",
+    "categoryLabel": "Special Access",
+    "rarity": "Epic",
+    "availability": "Both",
+    "description": "Rare Candy XL is a Pokemon GO special access resource.",
+    "inGameEffect": "Used in progression, events, or account-level systems.",
+    "stackCap": "Inventory based",
+    "consumable": true,
+    "acquisition": [
+      "Research",
+      "Special systems",
+      "Events"
+    ],
+    "bestUseCases": [
+      "Strategic progression",
+      "Resource planning"
+    ],
+    "relatedSystems": [
+      "Core progression"
+    ],
+    "pvpRelevance": "High indirect value for competitive build quality.",
+    "raidRelevance": "Indirect relevance through resource planning.",
+    "notes": [
+      "Behavior may change slightly by season, event, or balancing update."
+    ],
+    "searchTags": [
+      "rare-candy-xl",
+      "rare candy xl",
+      "item_xl_rare_candy",
+      "special access",
+      "rare",
+      "candy",
+      "xl"
+    ]
+  }
+]

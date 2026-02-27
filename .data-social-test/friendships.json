@@ -1,0 +1,52 @@
+[
+  {
+    "id": "4fcdb5aa-5c85-43b8-9d41-03ff8f4241da__a053cbbb-f741-475a-940f-b6e38d3b9123",
+    "userAId": "4fcdb5aa-5c85-43b8-9d41-03ff8f4241da",
+    "userBId": "a053cbbb-f741-475a-940f-b6e38d3b9123",
+    "requestedBy": "a053cbbb-f741-475a-940f-b6e38d3b9123",
+    "status": "accepted",
+    "createdAt": "2026-02-19T02:01:04.453Z",
+    "updatedAt": "2026-02-19T02:01:04.456Z",
+    "acceptedAt": "2026-02-19T02:01:04.456Z"
+  },
+  {
+    "id": "a053cbbb-f741-475a-940f-b6e38d3b9123__e9eba73a-8902-473e-b268-5af01cfc365d",
+    "userAId": "a053cbbb-f741-475a-940f-b6e38d3b9123",
+    "userBId": "e9eba73a-8902-473e-b268-5af01cfc365d",
+    "requestedBy": "a053cbbb-f741-475a-940f-b6e38d3b9123",
+    "status": "accepted",
+    "createdAt": "2026-02-19T02:01:04.466Z",
+    "updatedAt": "2026-02-19T02:01:04.469Z",
+    "acceptedAt": "2026-02-19T02:01:04.469Z"
+  },
+  {
+    "id": "a053cbbb-f741-475a-940f-b6e38d3b9123__c67844b6-4c75-4851-b273-f8e7ff826132",
+    "userAId": "a053cbbb-f741-475a-940f-b6e38d3b9123",
+    "userBId": "c67844b6-4c75-4851-b273-f8e7ff826132",
+    "requestedBy": "a053cbbb-f741-475a-940f-b6e38d3b9123",
+    "status": "accepted",
+    "createdAt": "2026-02-19T02:01:04.476Z",
+    "updatedAt": "2026-02-19T02:01:04.480Z",
+    "acceptedAt": "2026-02-19T02:01:04.480Z"
+  },
+  {
+    "id": "1d7b5c4d-4444-48e5-81ea-200a12a2629f__a053cbbb-f741-475a-940f-b6e38d3b9123",
+    "userAId": "1d7b5c4d-4444-48e5-81ea-200a12a2629f",
+    "userBId": "a053cbbb-f741-475a-940f-b6e38d3b9123",
+    "requestedBy": "a053cbbb-f741-475a-940f-b6e38d3b9123",
+    "status": "accepted",
+    "createdAt": "2026-02-19T02:01:04.487Z",
+    "updatedAt": "2026-02-19T02:01:04.490Z",
+    "acceptedAt": "2026-02-19T02:01:04.490Z"
+  },
+  {
+    "id": "6933d4b6-2a03-4267-b6e1-df123d75e539__a053cbbb-f741-475a-940f-b6e38d3b9123",
+    "userAId": "6933d4b6-2a03-4267-b6e1-df123d75e539",
+    "userBId": "a053cbbb-f741-475a-940f-b6e38d3b9123",
+    "requestedBy": "a053cbbb-f741-475a-940f-b6e38d3b9123",
+    "status": "accepted",
+    "createdAt": "2026-02-19T02:01:04.498Z",
+    "updatedAt": "2026-02-19T02:01:04.501Z",
+    "acceptedAt": "2026-02-19T02:01:04.501Z"
+  }
+]

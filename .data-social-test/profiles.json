@@ -1,0 +1,72 @@
+[
+  {
+    "userId": "a053cbbb-f741-475a-940f-b6e38d3b9123",
+    "displayName": "Alice Alpha",
+    "bio": "",
+    "avatarUrl": null,
+    "visibility": "public",
+    "showFavoritesOnPublic": true,
+    "createdAt": "2026-02-19T02:01:04.391Z",
+    "updatedAt": "2026-02-19T02:01:04.392Z"
+  },
+  {
+    "userId": "fa1cc7b2-fedb-446b-90af-7f631e78092c",
+    "displayName": "Brock Bravo",
+    "bio": "",
+    "avatarUrl": null,
+    "visibility": "public",
+    "showFavoritesOnPublic": true,
+    "createdAt": "2026-02-19T02:01:04.395Z",
+    "updatedAt": "2026-02-19T02:01:04.396Z"
+  },
+  {
+    "userId": "4fcdb5aa-5c85-43b8-9d41-03ff8f4241da",
+    "displayName": "Friend 0",
+    "bio": "",
+    "avatarUrl": null,
+    "visibility": "public",
+    "showFavoritesOnPublic": true,
+    "createdAt": "2026-02-19T02:01:04.449Z",
+    "updatedAt": "2026-02-19T02:01:04.449Z"
+  },
+  {
+    "userId": "e9eba73a-8902-473e-b268-5af01cfc365d",
+    "displayName": "Friend 1",
+    "bio": "",
+    "avatarUrl": null,
+    "visibility": "public",
+    "showFavoritesOnPublic": true,
+    "createdAt": "2026-02-19T02:01:04.460Z",
+    "updatedAt": "2026-02-19T02:01:04.461Z"
+  },
+  {
+    "userId": "c67844b6-4c75-4851-b273-f8e7ff826132",
+    "displayName": "Friend 2",
+    "bio": "",
+    "avatarUrl": null,
+    "visibility": "public",
+    "showFavoritesOnPublic": true,
+    "createdAt": "2026-02-19T02:01:04.472Z",
+    "updatedAt": "2026-02-19T02:01:04.473Z"
+  },
+  {
+    "userId": "1d7b5c4d-4444-48e5-81ea-200a12a2629f",
+    "displayName": "Friend 3",
+    "bio": "",
+    "avatarUrl": null,
+    "visibility": "public",
+    "showFavoritesOnPublic": true,
+    "createdAt": "2026-02-19T02:01:04.483Z",
+    "updatedAt": "2026-02-19T02:01:04.484Z"
+  },
+  {
+    "userId": "6933d4b6-2a03-4267-b6e1-df123d75e539",
+    "displayName": "Friend 4",
+    "bio": "",
+    "avatarUrl": null,
+    "visibility": "public",
+    "showFavoritesOnPublic": true,
+    "createdAt": "2026-02-19T02:01:04.494Z",
+    "updatedAt": "2026-02-19T02:01:04.494Z"
+  }
+]

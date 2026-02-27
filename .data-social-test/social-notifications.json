@@ -1,0 +1,156 @@
+[
+  {
+    "id": "1feca13b-e1f3-4ddd-8d2a-70a97ed87261",
+    "userId": "a053cbbb-f741-475a-940f-b6e38d3b9123",
+    "kind": "social_report_submitted",
+    "actorUserId": null,
+    "title": "Report submitted",
+    "body": "Thanks. Your report was sent for moderation.",
+    "href": "/social",
+    "readAt": null,
+    "createdAt": "2026-02-19T02:01:04.515Z"
+  },
+  {
+    "id": "5d61374c-ea46-4daa-bcbc-a0bf28b18a06",
+    "userId": "a053cbbb-f741-475a-940f-b6e38d3b9123",
+    "kind": "friend_request_accepted",
+    "actorUserId": "6933d4b6-2a03-4267-b6e1-df123d75e539",
+    "title": "Friend request accepted",
+    "body": "Your friend request was accepted.",
+    "href": "/social",
+    "readAt": null,
+    "createdAt": "2026-02-19T02:01:04.503Z"
+  },
+  {
+    "id": "fff4b210-00de-4854-891b-1fadf26310c9",
+    "userId": "6933d4b6-2a03-4267-b6e1-df123d75e539",
+    "kind": "incoming_friend_request",
+    "actorUserId": "a053cbbb-f741-475a-940f-b6e38d3b9123",
+    "title": "New friend request",
+    "body": "A trainer sent you a friend request.",
+    "href": "/social",
+    "readAt": null,
+    "createdAt": "2026-02-19T02:01:04.500Z"
+  },
+  {
+    "id": "ac7bc9b2-e415-4d74-ae72-d47ea0b6b753",
+    "userId": "a053cbbb-f741-475a-940f-b6e38d3b9123",
+    "kind": "friend_request_accepted",
+    "actorUserId": "1d7b5c4d-4444-48e5-81ea-200a12a2629f",
+    "title": "Friend request accepted",
+    "body": "Your friend request was accepted.",
+    "href": "/social",
+    "readAt": null,
+    "createdAt": "2026-02-19T02:01:04.492Z"
+  },
+  {
+    "id": "8fe7a63e-4aa6-4e08-8ba7-5d051bcf7830",
+    "userId": "1d7b5c4d-4444-48e5-81ea-200a12a2629f",
+    "kind": "incoming_friend_request",
+    "actorUserId": "a053cbbb-f741-475a-940f-b6e38d3b9123",
+    "title": "New friend request",
+    "body": "A trainer sent you a friend request.",
+    "href": "/social",
+    "readAt": null,
+    "createdAt": "2026-02-19T02:01:04.489Z"
+  },
+  {
+    "id": "92d424e5-6536-4cbc-81a5-77e7a878bae4",
+    "userId": "a053cbbb-f741-475a-940f-b6e38d3b9123",
+    "kind": "friend_request_accepted",
+    "actorUserId": "c67844b6-4c75-4851-b273-f8e7ff826132",
+    "title": "Friend request accepted",
+    "body": "Your friend request was accepted.",
+    "href": "/social",
+    "readAt": null,
+    "createdAt": "2026-02-19T02:01:04.481Z"
+  },
+  {
+    "id": "ccab68ee-33ed-426b-845f-ede6a10b4945",
+    "userId": "c67844b6-4c75-4851-b273-f8e7ff826132",
+    "kind": "incoming_friend_request",
+    "actorUserId": "a053cbbb-f741-475a-940f-b6e38d3b9123",
+    "title": "New friend request",
+    "body": "A trainer sent you a friend request.",
+    "href": "/social",
+    "readAt": null,
+    "createdAt": "2026-02-19T02:01:04.478Z"
+  },
+  {
+    "id": "60145e22-d62d-401f-b537-b1ef1f68dbe8",
+    "userId": "a053cbbb-f741-475a-940f-b6e38d3b9123",
+    "kind": "friend_request_accepted",
+    "actorUserId": "e9eba73a-8902-473e-b268-5af01cfc365d",
+    "title": "Friend request accepted",
+    "body": "Your friend request was accepted.",
+    "href": "/social",
+    "readAt": null,
+    "createdAt": "2026-02-19T02:01:04.470Z"
+  },
+  {
+    "id": "3edfd1ed-d0b3-4adb-abdf-18707dbe99f9",
+    "userId": "e9eba73a-8902-473e-b268-5af01cfc365d",
+    "kind": "incoming_friend_request",
+    "actorUserId": "a053cbbb-f741-475a-940f-b6e38d3b9123",
+    "title": "New friend request",
+    "body": "A trainer sent you a friend request.",
+    "href": "/social",
+    "readAt": null,
+    "createdAt": "2026-02-19T02:01:04.468Z"
+  },
+  {
+    "id": "1428538a-6346-49df-bebd-89c0feeb0f41",
+    "userId": "a053cbbb-f741-475a-940f-b6e38d3b9123",
+    "kind": "friend_request_accepted",
+    "actorUserId": "4fcdb5aa-5c85-43b8-9d41-03ff8f4241da",
+    "title": "Friend request accepted",
+    "body": "Your friend request was accepted.",
+    "href": "/social",
+    "readAt": null,
+    "createdAt": "2026-02-19T02:01:04.458Z"
+  },
+  {
+    "id": "cb2e5544-96bf-4dba-b609-cfa657519f9e",
+    "userId": "4fcdb5aa-5c85-43b8-9d41-03ff8f4241da",
+    "kind": "incoming_friend_request",
+    "actorUserId": "a053cbbb-f741-475a-940f-b6e38d3b9123",
+    "title": "New friend request",
+    "body": "A trainer sent you a friend request.",
+    "href": "/social",
+    "readAt": null,
+    "createdAt": "2026-02-19T02:01:04.455Z"
+  },
+  {
+    "id": "9a9acddb-85c2-4e0d-af6b-321962402023",
+    "userId": "fa1cc7b2-fedb-446b-90af-7f631e78092c",
+    "kind": "friend_removed",
+    "actorUserId": "a053cbbb-f741-475a-940f-b6e38d3b9123",
+    "title": "Friendship removed",
+    "body": "A friendship connection was removed.",
+    "href": "/social",
+    "readAt": "2026-02-19T02:01:04.427Z",
+    "createdAt": "2026-02-19T02:01:04.424Z"
+  },
+  {
+    "id": "fe733bf1-3731-4ba4-bcfe-643563b12188",
+    "userId": "a053cbbb-f741-475a-940f-b6e38d3b9123",
+    "kind": "friend_request_accepted",
+    "actorUserId": "fa1cc7b2-fedb-446b-90af-7f631e78092c",
+    "title": "Friend request accepted",
+    "body": "Your friend request was accepted.",
+    "href": "/social",
+    "readAt": null,
+    "createdAt": "2026-02-19T02:01:04.419Z"
+  },
+  {
+    "id": "58d4ab03-073c-4cfe-b676-e7b749e95963",
+    "userId": "fa1cc7b2-fedb-446b-90af-7f631e78092c",
+    "kind": "incoming_friend_request",
+    "actorUserId": "a053cbbb-f741-475a-940f-b6e38d3b9123",
+    "title": "New friend request",
+    "body": "A trainer sent you a friend request.",
+    "href": "/social",
+    "readAt": "2026-02-19T02:01:04.427Z",
+    "createdAt": "2026-02-19T02:01:04.409Z"
+  }
+]

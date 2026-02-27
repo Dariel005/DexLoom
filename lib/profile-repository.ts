@@ -1,0 +1,336 @@
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+import path from "node:path";
+import { getFirebaseFirestoreDb, isFirebaseProfileSyncEnabled } from "@/lib/firebase-admin";
+import {
+  type FavoriteEntityType,
+  type FavoriteListResult,
+  type FavoriteRecord,
+  type FavoriteSyncResult,
+  type FavoriteSyncOperation,
+  type FavoriteUpsertResult,
+  type FavoriteUpsertInput,
+  type UserProfileRecord
+} from "@/lib/profile-types";
+import { buildFavoriteId, decodeCursor, encodeCursor } from "@/lib/profile-validation";
+
+const DATA_STORE_DIR = path.resolve(process.cwd(), process.env.POKEDEX_DATA_DIR?.trim() || ".data");
+const PROFILE_STORE_FILE = path.join(DATA_STORE_DIR, "profiles.json");
+const FAVORITES_STORE_FILE = path.join(DATA_STORE_DIR, "favorites.json");
+const PROFILE_COLLECTION = "pokedexProfiles";
+const FAVORITES_COLLECTION = "pokedexFavorites";
+
+let writeQueue: Promise<unknown> = Promise.resolve();
+
+function runExclusive<T>(task: () => Promise<T>) {
+  const next = writeQueue.then(task, task);
+  writeQueue = next.then(
+    () => undefined,
+    () => undefined
+  );
+  return next;
+}
+
+async function ensureStoreFile(filePath: string, initialValue: string) {
+  await mkdir(path.dirname(filePath), { recursive: true });
+  try {
+    await readFile(filePath, "utf-8");
+  } catch {
+    await writeFile(filePath, initialValue, "utf-8");
+  }
+}
+
+async function readArrayFile<T>(filePath: string) {
+  await ensureStoreFile(filePath, "[]");
+  const raw = await readFile(filePath, "utf-8");
+  try {
+    const parsed = JSON.parse(raw) as unknown;
+    return Array.isArray(parsed) ? (parsed as T[]) : ([] as T[]);
+  } catch {
+    return [] as T[];
+  }
+}
+
+async function writeArrayFile<T>(filePath: string, rows: T[]) {
+  await ensureStoreFile(filePath, "[]");
+  await writeFile(filePath, JSON.stringify(rows, null, 2), "utf-8");
+}
+
+function sortFavoritesByCreatedAtDesc(rows: FavoriteRecord[]) {
+  return rows
+    .slice()
+    .sort((a, b) => {
+      const timeA = Date.parse(a.createdAt);
+      const timeB = Date.parse(b.createdAt);
+      if (Number.isNaN(timeA) || Number.isNaN(timeB) || timeA === timeB) {
+        return a.id.localeCompare(b.id);
+      }
+      return timeB - timeA;
+    });
+}
+
+async function readLocalProfiles() {
+  return readArrayFile<UserProfileRecord>(PROFILE_STORE_FILE);
+}
+
+async function readLocalFavorites() {
+  return readArrayFile<FavoriteRecord>(FAVORITES_STORE_FILE);
+}
+
+async function getCloudProfile(userId: string) {
+  const db = getFirebaseFirestoreDb();
+  if (!db || !isFirebaseProfileSyncEnabled()) {
+    return null;
+  }
+
+  const snapshot = await db.collection(PROFILE_COLLECTION).doc(userId).get();
+  if (!snapshot.exists) {
+    return null;
+  }
+
+  const data = snapshot.data() as UserProfileRecord;
+  if (!data || typeof data.userId !== "string") {
+    return null;
+  }
+  return data;
+}
+
+async function upsertCloudProfile(record: UserProfileRecord) {
+  const db = getFirebaseFirestoreDb();
+  if (!db || !isFirebaseProfileSyncEnabled()) {
+    return;
+  }
+  await db.collection(PROFILE_COLLECTION).doc(record.userId).set(record, { merge: true });
+}
+
+async function getCloudFavorites(userId: string) {
+  const db = getFirebaseFirestoreDb();
+  if (!db || !isFirebaseProfileSyncEnabled()) {
+    return null;
+  }
+
+  const snapshot = await db
+    .collection(FAVORITES_COLLECTION)
+    .where("userId", "==", userId)
+    .get();
+  if (snapshot.empty) {
+    return [] as FavoriteRecord[];
+  }
+
+  const rows = snapshot.docs
+    .map((doc) => doc.data() as FavoriteRecord)
+    .filter((entry) => typeof entry?.id === "string" && typeof entry?.userId === "string");
+  return sortFavoritesByCreatedAtDesc(rows);
+}
+
+async function upsertCloudFavorite(record: FavoriteRecord) {
+  const db = getFirebaseFirestoreDb();
+  if (!db || !isFirebaseProfileSyncEnabled()) {
+    return;
+  }
+  const cloudDocId = `${record.userId}__${record.id}`;
+  await db.collection(FAVORITES_COLLECTION).doc(cloudDocId).set(record, { merge: true });
+}
+
+async function deleteCloudFavorite(
+  userId: string,
+  entityType: FavoriteEntityType,
+  entityId: string
+) {
+  const db = getFirebaseFirestoreDb();
+  if (!db || !isFirebaseProfileSyncEnabled()) {
+    return;
+  }
+  const cloudDocId = `${userId}__${buildFavoriteId(entityType, entityId)}`;
+  await db.collection(FAVORITES_COLLECTION).doc(cloudDocId).delete();
+}
+
+async function mirrorLocalProfile(record: UserProfileRecord) {
+  return runExclusive(async () => {
+    const profiles = await readLocalProfiles();
+    const index = profiles.findIndex((entry) => entry.userId === record.userId);
+    if (index >= 0) {
+      profiles[index] = record;
+    } else {
+      profiles.push(record);
+    }
+    await writeArrayFile(PROFILE_STORE_FILE, profiles);
+  });
+}
+
+async function mirrorLocalFavoritesForUser(userId: string, rows: FavoriteRecord[]) {
+  return runExclusive(async () => {
+    const favorites = await readLocalFavorites();
+    const preserved = favorites.filter((entry) => entry.userId !== userId);
+    const merged = [...preserved, ...rows];
+    await writeArrayFile(FAVORITES_STORE_FILE, merged);
+  });
+}
+
+async function readLocalProfile(userId: string) {
+  const profiles = await readLocalProfiles();
+  return profiles.find((entry) => entry.userId === userId) ?? null;
+}
+
+async function readLocalFavoritesByUser(userId: string) {
+  const favorites = await readLocalFavorites();
+  return sortFavoritesByCreatedAtDesc(favorites.filter((entry) => entry.userId === userId));
+}
+
+export async function getProfileRecord(userId: string) {
+  try {
+    const cloud = await getCloudProfile(userId);
+    if (cloud) {
+      await mirrorLocalProfile(cloud);
+      return cloud;
+    }
+  } catch {
+    // Cloud read failed; local fallback is applied below.
+  }
+
+  return readLocalProfile(userId);
+}
+
+export async function upsertProfileRecord(record: UserProfileRecord) {
+  try {
+    await upsertCloudProfile(record);
+  } catch {
+    // Ignore cloud write failure and keep local mirror.
+  }
+
+  await mirrorLocalProfile(record);
+  return record;
+}
+
+export async function listFavoriteRecords(input: {
+  userId: string;
+  entityType?: FavoriteEntityType | null;
+  cursor?: string | null;
+  limit?: number;
+}): Promise<FavoriteListResult> {
+  const { userId, entityType = null, cursor = null, limit = 50 } = input;
+
+  let favorites: FavoriteRecord[] | null = null;
+  try {
+    const cloudFavorites = await getCloudFavorites(userId);
+    if (cloudFavorites) {
+      favorites = cloudFavorites;
+      await mirrorLocalFavoritesForUser(userId, cloudFavorites);
+    }
+  } catch {
+    favorites = null;
+  }
+
+  if (!favorites) {
+    favorites = await readLocalFavoritesByUser(userId);
+  }
+
+  const filtered = entityType
+    ? favorites.filter((entry) => entry.entityType === entityType)
+    : favorites;
+
+  const offset = decodeCursor(cursor ?? null);
+  const safeLimit = Math.max(1, Math.min(100, Math.floor(limit)));
+  const page = filtered.slice(offset, offset + safeLimit);
+  const nextOffset = offset + safeLimit;
+  const nextCursor = nextOffset < filtered.length ? encodeCursor(nextOffset) : null;
+
+  return {
+    items: page,
+    nextCursor
+  };
+}
+
+export async function upsertFavoriteRecord(
+  userId: string,
+  input: FavoriteUpsertInput
+): Promise<FavoriteUpsertResult> {
+  const now = new Date().toISOString();
+  const favoriteId = buildFavoriteId(input.entityType, input.entityId);
+  const current = await readLocalFavoritesByUser(userId);
+  const existing = current.find((entry) => entry.id === favoriteId);
+  const created = !existing;
+  const record: FavoriteRecord = {
+    id: favoriteId,
+    userId,
+    entityType: input.entityType,
+    entityId: input.entityId,
+    title: input.title,
+    href: input.href,
+    imageUrl: input.imageUrl ?? null,
+    subtitle: input.subtitle ?? null,
+    tags: input.tags ?? [],
+    createdAt: existing?.createdAt ?? now
+  };
+
+  try {
+    await upsertCloudFavorite(record);
+  } catch {
+    // Ignore cloud write failure and keep local copy.
+  }
+
+  await runExclusive(async () => {
+    const all = await readLocalFavorites();
+    const index = all.findIndex((entry) => entry.userId === userId && entry.id === favoriteId);
+    if (index >= 0) {
+      all[index] = record;
+    } else {
+      all.push(record);
+    }
+    await writeArrayFile(FAVORITES_STORE_FILE, all);
+  });
+
+  return {
+    record,
+    created
+  };
+}
+
+export async function deleteFavoriteRecord(
+  userId: string,
+  entityType: FavoriteEntityType,
+  entityId: string
+) {
+  const favoriteId = buildFavoriteId(entityType, entityId);
+  try {
+    await deleteCloudFavorite(userId, entityType, entityId);
+  } catch {
+    // Ignore cloud deletion failure and keep local write attempt.
+  }
+
+  return runExclusive(async () => {
+    const all = await readLocalFavorites();
+    const next = all.filter((entry) => !(entry.userId === userId && entry.id === favoriteId));
+    const removed = next.length !== all.length;
+    if (removed) {
+      await writeArrayFile(FAVORITES_STORE_FILE, next);
+    }
+    return removed;
+  });
+}
+
+export async function syncFavoriteRecords(
+  userId: string,
+  ops: FavoriteSyncOperation[]
+): Promise<FavoriteSyncResult> {
+  let applied = 0;
+  let failed = 0;
+  const createdRecords: FavoriteRecord[] = [];
+
+  for (const op of ops) {
+    try {
+      if (op.op === "add") {
+        const upserted = await upsertFavoriteRecord(userId, op.item);
+        if (upserted.created) {
+          createdRecords.push(upserted.record);
+        }
+      } else {
+        await deleteFavoriteRecord(userId, op.entityType, op.entityId);
+      }
+      applied += 1;
+    } catch {
+      failed += 1;
+    }
+  }
+
+  return { applied, failed, createdRecords };
+}

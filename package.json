@@ -1,0 +1,47 @@
+{
+  "name": "pokedex-wiki-pro",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "node ./node_modules/next/dist/bin/next dev -H 0.0.0.0 -p 3000",
+    "build": "node ./node_modules/next/dist/bin/next build",
+    "start": "node ./node_modules/next/dist/bin/next start -H 0.0.0.0 -p 3000",
+    "lint": "node ./node_modules/next/dist/bin/next lint",
+    "typecheck": "node ./node_modules/typescript/bin/tsc --noEmit",
+    "test:games": "tsx --test tests/game-entries.test.ts",
+    "test:social": "tsx --test tests/social-service.test.ts",
+    "test:utils": "tsx --test tests/utils.test.ts",
+    "test:generations": "tsx --test tests/generations.test.ts",
+    "test:wiki": "tsx --test tests/wiki-directory.test.ts",
+    "test:avatar": "tsx --test tests/avatar-url.test.ts",
+    "test:all": "tsx --test tests/utils.test.ts tests/generations.test.ts tests/wiki-directory.test.ts tests/avatar-url.test.ts tests/game-entries.test.ts",
+    "migrate:firestore:preview": "node ./scripts/migrate-data-to-firestore.mjs",
+    "migrate:firestore:apply": "node ./scripts/migrate-data-to-firestore.mjs --apply",
+    "sync:pogo-icons": "node ./scripts/sync-pogo-item-icons.mjs",
+    "generate:pogo-items": "node ./scripts/generate-pogo-items-complete.mjs"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.64.2",
+    "clsx": "^2.1.1",
+    "firebase-admin": "^13.6.1",
+    "framer-motion": "^11.11.17",
+    "next": "14.2.35",
+    "next-auth": "^4.24.13",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "sharp": "^0.34.5",
+    "zustand": "^4.5.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.6",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "14.2.35",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.15",
+    "tsx": "^4.21.0",
+    "typescript": "^5.7.2"
+  }
+}

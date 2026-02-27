@@ -1,0 +1,72 @@
+[
+  {
+    "id": "a053cbbb-f741-475a-940f-b6e38d3b9123",
+    "email": "alice-social@test.local",
+    "name": "Alice Alpha",
+    "image": null,
+    "provider": "credentials",
+    "passwordHash": "hash",
+    "createdAt": "2026-02-19T02:01:04.388Z",
+    "updatedAt": "2026-02-19T02:01:04.392Z"
+  },
+  {
+    "id": "fa1cc7b2-fedb-446b-90af-7f631e78092c",
+    "email": "bob-social@test.local",
+    "name": "Brock Bravo",
+    "image": null,
+    "provider": "credentials",
+    "passwordHash": "hash",
+    "createdAt": "2026-02-19T02:01:04.394Z",
+    "updatedAt": "2026-02-19T02:01:04.397Z"
+  },
+  {
+    "id": "4fcdb5aa-5c85-43b8-9d41-03ff8f4241da",
+    "email": "friend-0@test.local",
+    "name": "Friend 0",
+    "image": null,
+    "provider": "credentials",
+    "passwordHash": "hash",
+    "createdAt": "2026-02-19T02:01:04.448Z",
+    "updatedAt": "2026-02-19T02:01:04.450Z"
+  },
+  {
+    "id": "e9eba73a-8902-473e-b268-5af01cfc365d",
+    "email": "friend-1@test.local",
+    "name": "Friend 1",
+    "image": null,
+    "provider": "credentials",
+    "passwordHash": "hash",
+    "createdAt": "2026-02-19T02:01:04.459Z",
+    "updatedAt": "2026-02-19T02:01:04.462Z"
+  },
+  {
+    "id": "c67844b6-4c75-4851-b273-f8e7ff826132",
+    "email": "friend-2@test.local",
+    "name": "Friend 2",
+    "image": null,
+    "provider": "credentials",
+    "passwordHash": "hash",
+    "createdAt": "2026-02-19T02:01:04.471Z",
+    "updatedAt": "2026-02-19T02:01:04.474Z"
+  },
+  {
+    "id": "1d7b5c4d-4444-48e5-81ea-200a12a2629f",
+    "email": "friend-3@test.local",
+    "name": "Friend 3",
+    "image": null,
+    "provider": "credentials",
+    "passwordHash": "hash",
+    "createdAt": "2026-02-19T02:01:04.482Z",
+    "updatedAt": "2026-02-19T02:01:04.484Z"
+  },
+  {
+    "id": "6933d4b6-2a03-4267-b6e1-df123d75e539",
+    "email": "friend-4@test.local",
+    "name": "Friend 4",
+    "image": null,
+    "provider": "credentials",
+    "passwordHash": "hash",
+    "createdAt": "2026-02-19T02:01:04.492Z",
+    "updatedAt": "2026-02-19T02:01:04.494Z"
+  }
+]
