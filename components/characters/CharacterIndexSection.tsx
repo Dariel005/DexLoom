@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import Image from "next/image";
 import { RouteTransitionLink } from "@/components/RouteTransitionLink";
 import { ViewportRender } from "@/components/ViewportRender";
 import type { CharacterWikiEntry } from "@/lib/characters-encyclopedia";
@@ -16,6 +15,9 @@ interface CharacterIndexSectionProps {
 }
 
 const CHARACTER_CATALOG_MIN_HEIGHT = 332;
+const CHARACTER_IMAGE_RETRY_LIMIT = 2;
+const CHARACTER_GENERIC_PORTRAIT_PLACEHOLDER =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 256 256'%3E%3Crect width='256' height='256' fill='%23f3f5f3'/%3E%3Ccircle cx='128' cy='94' r='34' fill='%23c7cec9'/%3E%3Cpath d='M64 212c8-36 33-56 64-56s56 20 64 56' fill='%23c7cec9'/%3E%3C/svg%3E";
 
 function formatCharacterChip(value: string): string {
   return value
@@ -31,7 +33,7 @@ function CharacterPortraitImage({ character }: { character: CharacterWikiEntry }
     const unique = new Set<string>();
     const fallbackSvg = `/images/characters/${character.slug}.svg`;
 
-    [character.portraitSrc, character.portraitFallbackSrc, fallbackSvg].forEach((value) => {
+    [character.portraitSrc, character.portraitFallbackSrc, fallbackSvg, CHARACTER_GENERIC_PORTRAIT_PLACEHOLDER].forEach((value) => {
       if (typeof value !== "string" || value.trim().length === 0) {
         return;
       }
@@ -41,27 +43,40 @@ function CharacterPortraitImage({ character }: { character: CharacterWikiEntry }
     return [...unique];
   }, [character.slug, character.portraitSrc, character.portraitFallbackSrc]);
   const [portraitIndex, setPortraitIndex] = useState(0);
+  const [retryCount, setRetryCount] = useState(0);
 
   useEffect(() => {
     setPortraitIndex(0);
+    setRetryCount(0);
   }, [character.slug, character.portraitSrc, character.portraitFallbackSrc]);
 
-  const safeIndex = Math.min(portraitIndex, portraitCandidates.length - 1);
-  const currentPortraitSrc =
-    portraitCandidates[safeIndex] ?? character.portraitSrc;
+  const safeIndex = Math.min(Math.max(portraitIndex, 0), portraitCandidates.length - 1);
+  const basePortraitSrc =
+    portraitCandidates[safeIndex] ?? CHARACTER_GENERIC_PORTRAIT_PLACEHOLDER;
+  const isDataUri = basePortraitSrc.startsWith("data:");
+  const currentPortraitSrc = isDataUri
+    ? basePortraitSrc
+    : `${basePortraitSrc}${basePortraitSrc.includes("?") ? "&" : "?"}retry=${retryCount}`;
 
   return (
-    <Image
+    <img
       src={currentPortraitSrc}
       alt={character.portraitAlt}
-      fill
-      sizes="(min-width: 640px) 156px, 138px"
-      className="object-contain object-bottom drop-shadow-[0_8px_10px_rgba(0,0,0,0.25)]"
-      unoptimized
+      loading="lazy"
+      decoding="async"
+      referrerPolicy="no-referrer"
+      className="absolute inset-0 h-full w-full object-contain object-bottom drop-shadow-[0_8px_10px_rgba(0,0,0,0.25)]"
       onError={() => {
-        setPortraitIndex((currentIndex) =>
-          currentIndex < portraitCandidates.length - 1 ? currentIndex + 1 : currentIndex
-        );
+        if (!isDataUri && retryCount < CHARACTER_IMAGE_RETRY_LIMIT) {
+          setRetryCount((value) => value + 1);
+          return;
+        }
+
+        setRetryCount(0);
+        setPortraitIndex((currentIndex) => {
+          const lastIndex = portraitCandidates.length - 1;
+          return currentIndex < lastIndex ? currentIndex + 1 : currentIndex;
+        });
       }}
     />
   );

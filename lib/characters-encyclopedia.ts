@@ -65,7 +65,8 @@ type CharacterSeed = {
 
 function toPortrait(seed: LocalPortraitSeed | RemotePortraitSeed) {
   const encodedFile = encodeURIComponent(seed.file);
-  const remotePortraitSrc = `https://archives.bulbagarden.net/wiki/Special:FilePath/${encodedFile}`;
+  const remotePortraitSrc = `https://archives.bulbagarden.net/wiki/Special:Redirect/file/${encodedFile}`;
+  const remoteLegacyPortraitSrc = `https://archives.bulbagarden.net/wiki/Special:FilePath/${encodedFile}`;
 
   if (seed.type === "local") {
     return {
@@ -80,6 +81,7 @@ function toPortrait(seed: LocalPortraitSeed | RemotePortraitSeed) {
 
   return {
     portraitSrc: remotePortraitSrc,
+    portraitFallbackSrc: remoteLegacyPortraitSrc,
     portraitType: "remote" as const,
     portraitCreditLabel: `Bulbagarden Archives - ${seed.creditLabel}`,
     portraitCreditHref: `https://archives.bulbagarden.net/wiki/File:${encodedFile}`,
