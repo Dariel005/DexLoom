@@ -44,12 +44,19 @@ export async function POST(request: Request) {
   }
 
   const fileBuffer = Buffer.from(await fileEntry.arrayBuffer());
-  const { avatarUrl } = await processAvatarUpload({
-    userId: user.id,
-    fileBuffer,
-    mimeType
-  });
+  try {
+    const { avatarUrl } = await processAvatarUpload({
+      userId: user.id,
+      fileBuffer,
+      mimeType
+    });
 
-  await updateUserAvatar(user.id, avatarUrl);
-  return NextResponse.json({ avatarUrl });
+    await updateUserAvatar(user.id, avatarUrl);
+    return NextResponse.json({ avatarUrl });
+  } catch (error) {
+    return NextResponse.json(
+      { message: error instanceof Error ? error.message : "Unable to upload avatar." },
+      { status: 500 }
+    );
+  }
 }

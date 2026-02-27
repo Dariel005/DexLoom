@@ -301,11 +301,7 @@ async function writeArrayToDatabase<T>(storeName: SocialStoreName, rows: T[]) {
   );
 }
 
-async function readArrayFile(filePath: string, storeName: SocialStoreName) {
-  if (canUseSocialDatabase()) {
-    return readArrayFromDatabase(storeName);
-  }
-
+async function readArrayFromLocalFile(filePath: string) {
   await ensureStoreFile(filePath);
   const raw = await readFile(filePath, "utf-8");
 
@@ -317,14 +313,45 @@ async function readArrayFile(filePath: string, storeName: SocialStoreName) {
   }
 }
 
-async function writeArrayFile<T>(filePath: string, rows: T[], storeName: SocialStoreName) {
-  if (canUseSocialDatabase()) {
-    await writeArrayToDatabase(storeName, rows);
-    return;
-  }
-
+async function writeArrayToLocalFile<T>(filePath: string, rows: T[]) {
   await ensureStoreFile(filePath);
   await writeFile(filePath, JSON.stringify(rows, null, 2), "utf-8");
+}
+
+async function readArrayFile(filePath: string, storeName: SocialStoreName) {
+  if (canUseSocialDatabase()) {
+    const remoteRows = await readArrayFromDatabase(storeName);
+    if (remoteRows.length > 0) {
+      return remoteRows;
+    }
+
+    const localRows = await readArrayFromLocalFile(filePath);
+    if (localRows.length > 0) {
+      try {
+        await writeArrayToDatabase(storeName, localRows);
+      } catch {
+        // Keep serving local data if cloud backfill fails.
+      }
+      return localRows;
+    }
+
+    return remoteRows;
+  }
+
+  return readArrayFromLocalFile(filePath);
+}
+
+async function writeArrayFile<T>(filePath: string, rows: T[], storeName: SocialStoreName) {
+  if (canUseSocialDatabase()) {
+    try {
+      await writeArrayToDatabase(storeName, rows);
+      return;
+    } catch {
+      // Fallback to local write if cloud write fails at runtime.
+    }
+  }
+
+  await writeArrayToLocalFile(filePath, rows);
 }
 
 async function readFriendships() {

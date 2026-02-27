@@ -5,6 +5,18 @@ env:
   - variable: AUTH_TRUST_HOST
     value: "true"
 
+  - variable: AUTH_FIREBASE_SYNC_ENABLED
+    value: "1"
+
+  - variable: PROFILE_FIREBASE_SYNC_ENABLED
+    value: "1"
+
+  - variable: SOCIAL_FIREBASE_SYNC_ENABLED
+    value: "1"
+
+  - variable: FIREBASE_STORAGE_BUCKET
+    value: dexloom.firebasestorage.app
+
   - variable: NEXTAUTH_SECRET
     secret: NEXTAUTH_SECRET
 

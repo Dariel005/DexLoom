@@ -45,28 +45,28 @@ export async function processAvatarUpload(input: {
     .webp({ quality: 82 })
     .toBuffer();
 
+  const remotePath = `avatars/${sanitizedUserId}/${fileName}`;
+
+  if (isFirebaseProfileSyncEnabled()) {
+    const bucket = getFirebaseStorageBucket();
+    if (!bucket) {
+      throw new Error("Avatar storage bucket is not configured.");
+    }
+
+    const file = bucket.file(remotePath);
+    await file.save(outputBuffer, {
+      contentType: "image/webp",
+      resumable: false,
+      metadata: {
+        cacheControl: "public, max-age=31536000, immutable"
+      }
+    });
+  }
+
+  // Keep a best-effort local mirror for local development and optional hot caching.
   await mkdir(AVATAR_DIR, { recursive: true });
   const outputPath = path.join(AVATAR_DIR, fileName);
   await writeFile(outputPath, outputBuffer);
-
-  if (isFirebaseProfileSyncEnabled()) {
-    try {
-      const bucket = getFirebaseStorageBucket();
-      if (bucket) {
-        const remotePath = `avatars/${sanitizedUserId}/${fileName}`;
-        const file = bucket.file(remotePath);
-        await file.save(outputBuffer, {
-          contentType: "image/webp",
-          resumable: false,
-          metadata: {
-            cacheControl: "public, max-age=31536000, immutable"
-          }
-        });
-      }
-    } catch {
-      // Ignore cloud mirror failures; local avatar remains canonical fallback.
-    }
-  }
 
   return {
     avatarUrl: `${AVATAR_BASE_PATH}/${fileName}`

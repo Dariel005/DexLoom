@@ -4,6 +4,20 @@ import { Providers } from "@/app/providers";
 import { WikiSiteFooter } from "@/components/WikiSiteFooter";
 import "./globals.css";
 
+const DEFAULT_SITE_URL = "https://dexloom.net";
+
+function resolveMetadataBaseUrl() {
+  const configuredUrl = String(process.env.NEXTAUTH_URL ?? "").trim() || DEFAULT_SITE_URL;
+  try {
+    return new URL(configuredUrl);
+  } catch {
+    return new URL(DEFAULT_SITE_URL);
+  }
+}
+
+const metadataBaseUrl = resolveMetadataBaseUrl();
+const metadataBaseHref = metadataBaseUrl.toString().replace(/\/$/, "");
+
 const pixelFont = Press_Start_2P({
   subsets: ["latin"],
   weight: "400",
@@ -16,7 +30,7 @@ const sansFont = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://pokedex-wiki-pro.vercel.app"),
+  metadataBase: metadataBaseUrl,
   title: {
     default: "DexLoom",
     template: "%s | DexLoom"
@@ -27,7 +41,8 @@ export const metadata: Metadata = {
     title: "DexLoom",
     description:
       "A high-performance interactive Pokedex with smooth animations and official data.",
-    type: "website"
+    type: "website",
+    url: metadataBaseHref
   },
   twitter: {
     card: "summary_large_image",
@@ -56,16 +71,15 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "WebSite",
               name: "DexLoom",
-              alternateName: "Pokémon Wiki Pro",
-              url: "https://pokedex-wiki-pro.vercel.app",
+              alternateName: "Pokemon Wiki Pro",
+              url: metadataBaseHref,
               description:
-                "Comprehensive Pokémon encyclopedia with Pokédex, moves, items, abilities, types, maps, cards, ROM hacks, and more.",
+                "Comprehensive Pokemon encyclopedia with Pokedex, moves, items, abilities, types, maps, cards, ROM hacks, and more.",
               potentialAction: {
                 "@type": "SearchAction",
                 target: {
                   "@type": "EntryPoint",
-                  urlTemplate:
-                    "https://pokedex-wiki-pro.vercel.app/?q={search_term_string}"
+                  urlTemplate: `${metadataBaseHref}/?q={search_term_string}`
                 },
                 "query-input": "required name=search_term_string"
               }

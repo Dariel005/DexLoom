@@ -176,18 +176,44 @@ async function readLocalFavoritesByUser(userId: string) {
   return sortFavoritesByCreatedAtDesc(favorites.filter((entry) => entry.userId === userId));
 }
 
+function hasFavoriteSetChanged(current: FavoriteRecord[], next: FavoriteRecord[]) {
+  if (current.length !== next.length) {
+    return true;
+  }
+
+  const byId = new Map(current.map((entry) => [entry.id, entry]));
+  for (const row of next) {
+    const currentRow = byId.get(row.id);
+    if (!currentRow) {
+      return true;
+    }
+
+    if (currentRow.createdAt !== row.createdAt || currentRow.href !== row.href) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 export async function getProfileRecord(userId: string) {
+  const local = await readLocalProfile(userId);
+
   try {
     const cloud = await getCloudProfile(userId);
     if (cloud) {
       await mirrorLocalProfile(cloud);
       return cloud;
     }
+
+    if (local) {
+      await upsertCloudProfile(local);
+    }
   } catch {
     // Cloud read failed; local fallback is applied below.
   }
 
-  return readLocalProfile(userId);
+  return local;
 }
 
 export async function upsertProfileRecord(record: UserProfileRecord) {
@@ -208,20 +234,25 @@ export async function listFavoriteRecords(input: {
   limit?: number;
 }): Promise<FavoriteListResult> {
   const { userId, entityType = null, cursor = null, limit = 50 } = input;
+  const localFavorites = await readLocalFavoritesByUser(userId);
 
-  let favorites: FavoriteRecord[] | null = null;
+  let favorites: FavoriteRecord[] = localFavorites;
   try {
     const cloudFavorites = await getCloudFavorites(userId);
-    if (cloudFavorites) {
+    if (cloudFavorites && cloudFavorites.length > 0) {
       favorites = cloudFavorites;
-      await mirrorLocalFavoritesForUser(userId, cloudFavorites);
+      if (hasFavoriteSetChanged(localFavorites, cloudFavorites)) {
+        await mirrorLocalFavoritesForUser(userId, cloudFavorites);
+      }
+    } else if (cloudFavorites && localFavorites.length > 0) {
+      // Cloud store is empty but local records exist; backfill to prevent data loss on next deploy.
+      await Promise.all(localFavorites.map((entry) => upsertCloudFavorite(entry)));
+      favorites = localFavorites;
+    } else if (cloudFavorites) {
+      favorites = [];
     }
   } catch {
-    favorites = null;
-  }
-
-  if (!favorites) {
-    favorites = await readLocalFavoritesByUser(userId);
+    favorites = localFavorites;
   }
 
   const filtered = entityType

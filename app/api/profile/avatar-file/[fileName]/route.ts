@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { NextResponse } from "next/server";
+import { getFirebaseStorageBucket, isFirebaseProfileSyncEnabled } from "@/lib/firebase-admin";
 
 export const runtime = "nodejs";
 
@@ -24,6 +25,50 @@ function notFoundResponse() {
 function isPathInsideAvatarDir(filePath: string) {
   const relative = path.relative(AVATAR_DIR, filePath);
   return relative.length > 0 && !relative.startsWith("..") && !path.isAbsolute(relative);
+}
+
+function resolveCloudAvatarPath(fileName: string) {
+  const normalized = String(fileName ?? "").trim();
+  const match = normalized.match(/^(.+)-(\d{10,16})-([a-f0-9]{8})\.(webp|png|jpe?g)$/i);
+  if (!match) {
+    return null;
+  }
+
+  const userId = String(match[1] ?? "").trim();
+  if (!/^[a-zA-Z0-9_-]{1,64}$/.test(userId)) {
+    return null;
+  }
+
+  return `avatars/${userId}/${normalized}`;
+}
+
+async function readCloudAvatarFile(fileName: string) {
+  if (!isFirebaseProfileSyncEnabled()) {
+    return null;
+  }
+
+  const bucket = getFirebaseStorageBucket();
+  if (!bucket) {
+    return null;
+  }
+
+  const remotePath = resolveCloudAvatarPath(fileName);
+  if (!remotePath) {
+    return null;
+  }
+
+  try {
+    const file = bucket.file(remotePath);
+    const [exists] = await file.exists();
+    if (!exists) {
+      return null;
+    }
+
+    const [buffer] = await file.download();
+    return buffer;
+  } catch {
+    return null;
+  }
 }
 
 export async function GET(
@@ -51,6 +96,20 @@ export async function GET(
   const filePath = path.resolve(AVATAR_DIR, decodedFileName);
   if (!isPathInsideAvatarDir(filePath)) {
     return forbiddenResponse();
+  }
+
+  if (isFirebaseProfileSyncEnabled()) {
+    const cloudBuffer = await readCloudAvatarFile(decodedFileName);
+    if (cloudBuffer) {
+      const body = new Uint8Array(cloudBuffer);
+      return new NextResponse(body, {
+        status: 200,
+        headers: {
+          "Content-Type": contentType,
+          "Cache-Control": "public, max-age=31536000, immutable"
+        }
+      });
+    }
   }
 
   try {

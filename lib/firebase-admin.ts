@@ -1,4 +1,5 @@
 import {
+  applicationDefault,
   cert,
   getApps,
   initializeApp,
@@ -23,16 +24,83 @@ function getPrivateKey() {
   return raw.replace(/\\n/g, "\n");
 }
 
+function parseFirebaseConfigEnv() {
+  const raw = String(process.env.FIREBASE_CONFIG ?? "").trim();
+  if (!raw) {
+    return { projectId: null as string | null, storageBucket: null as string | null };
+  }
+
+  try {
+    const parsed = JSON.parse(raw) as { projectId?: unknown; storageBucket?: unknown };
+    const projectId =
+      typeof parsed.projectId === "string" && parsed.projectId.trim().length > 0
+        ? parsed.projectId.trim()
+        : null;
+    const storageBucket =
+      typeof parsed.storageBucket === "string" && parsed.storageBucket.trim().length > 0
+        ? parsed.storageBucket.trim()
+        : null;
+    return { projectId, storageBucket };
+  } catch {
+    return { projectId: null as string | null, storageBucket: null as string | null };
+  }
+}
+
+function resolveProjectId() {
+  const fromEnv = String(process.env.FIREBASE_PROJECT_ID ?? "").trim();
+  if (fromEnv) {
+    return fromEnv;
+  }
+
+  const cloudProject =
+    String(process.env.GOOGLE_CLOUD_PROJECT ?? "").trim() ||
+    String(process.env.GCLOUD_PROJECT ?? "").trim();
+  if (cloudProject) {
+    return cloudProject;
+  }
+
+  return parseFirebaseConfigEnv().projectId;
+}
+
+function resolveStorageBucket() {
+  const fromEnv = String(process.env.FIREBASE_STORAGE_BUCKET ?? "").trim();
+  if (fromEnv) {
+    return fromEnv;
+  }
+
+  return parseFirebaseConfigEnv().storageBucket;
+}
+
+function isAuthSyncEnabledExplicit() {
+  return process.env.AUTH_FIREBASE_SYNC_ENABLED === "1";
+}
+
+function isSyncEnabledWithProductionDefault(value: string | undefined) {
+  if (value === "1") {
+    return true;
+  }
+  if (value === "0") {
+    return false;
+  }
+  return process.env.NODE_ENV === "production";
+}
+
 export function isFirebaseProfileSyncEnabled() {
-  return process.env.PROFILE_FIREBASE_SYNC_ENABLED === "1";
+  return (
+    isSyncEnabledWithProductionDefault(process.env.PROFILE_FIREBASE_SYNC_ENABLED) ||
+    isAuthSyncEnabledExplicit()
+  );
 }
 
 export function isFirebaseSocialSyncEnabled() {
-  return process.env.SOCIAL_FIREBASE_SYNC_ENABLED === "1";
+  return (
+    isSyncEnabledWithProductionDefault(process.env.SOCIAL_FIREBASE_SYNC_ENABLED) ||
+    isAuthSyncEnabledExplicit()
+  );
 }
 
 export function isFirebaseAuthSyncEnabled() {
-  return process.env.AUTH_FIREBASE_SYNC_ENABLED === "1";
+  return isSyncEnabledWithProductionDefault(process.env.AUTH_FIREBASE_SYNC_ENABLED);
 }
 
 export function isProfileFeatureEnabled() {
@@ -40,12 +108,12 @@ export function isProfileFeatureEnabled() {
 }
 
 export function isFirebaseAdminConfigured() {
+  const hasSyncEnabled =
+    isFirebaseProfileSyncEnabled() || isFirebaseSocialSyncEnabled() || isFirebaseAuthSyncEnabled();
+
   return Boolean(
-    (isFirebaseProfileSyncEnabled() || isFirebaseSocialSyncEnabled() || isFirebaseAuthSyncEnabled()) &&
-      process.env.FIREBASE_PROJECT_ID &&
-      process.env.FIREBASE_CLIENT_EMAIL &&
-      getPrivateKey() &&
-      process.env.FIREBASE_STORAGE_BUCKET
+    hasSyncEnabled &&
+      resolveProjectId()
   );
 }
 
@@ -68,22 +136,44 @@ export function getFirebaseAdminApp() {
     return cachedApp;
   }
 
-  const projectId = process.env.FIREBASE_PROJECT_ID!;
-  const clientEmail = process.env.FIREBASE_CLIENT_EMAIL!;
-  const privateKey = getPrivateKey()!;
-  const storageBucket = process.env.FIREBASE_STORAGE_BUCKET!;
+  const projectId = resolveProjectId();
+  if (!projectId) {
+    return null;
+  }
 
-  const credentials: ServiceAccount = {
-    projectId,
-    clientEmail,
-    privateKey
+  const clientEmail = String(process.env.FIREBASE_CLIENT_EMAIL ?? "").trim();
+  const privateKey = getPrivateKey();
+  const storageBucket = resolveStorageBucket();
+
+  const appConfig: {
+    credential?: ReturnType<typeof cert> | ReturnType<typeof applicationDefault>;
+    projectId: string;
+    storageBucket?: string;
+  } = {
+    projectId
   };
 
-  cachedApp = initializeApp({
-    credential: cert(credentials),
-    projectId,
-    storageBucket
-  });
+  if (storageBucket) {
+    appConfig.storageBucket = storageBucket;
+  }
+
+  if (clientEmail && privateKey) {
+    const credentials: ServiceAccount = {
+      projectId,
+      clientEmail,
+      privateKey
+    };
+    appConfig.credential = cert(credentials);
+  } else {
+    // Use default GCP service account in App Hosting / Cloud Run environments.
+    appConfig.credential = applicationDefault();
+  }
+
+  try {
+    cachedApp = initializeApp(appConfig);
+  } catch {
+    return null;
+  }
   return cachedApp;
 }
 
@@ -101,7 +191,7 @@ export function getFirebaseStorageBucket() {
     return null;
   }
 
-  const bucketName = process.env.FIREBASE_STORAGE_BUCKET;
+  const bucketName = resolveStorageBucket();
   if (!bucketName) {
     return null;
   }

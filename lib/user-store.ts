@@ -268,6 +268,14 @@ async function readUsers() {
     return cloudUsers;
   }
 
+  if (cloudUsers && cloudUsers.length === 0 && localUsers.length > 0) {
+    try {
+      await Promise.all(localUsers.map((user) => writeCloudUser(user)));
+    } catch {
+      // Ignore cloud backfill failures and keep local store.
+    }
+  }
+
   if (localUsers.length > 0) {
     return localUsers;
   }
@@ -295,7 +303,15 @@ export async function findUserByEmail(email: string) {
   }
 
   const users = await readLocalUsers();
-  return users.find((user) => user.email === normalizedEmail) ?? null;
+  const localUser = users.find((user) => user.email === normalizedEmail) ?? null;
+  if (localUser) {
+    try {
+      await writeCloudUser(localUser);
+    } catch {
+      // Keep local fallback when cloud is unavailable.
+    }
+  }
+  return localUser;
 }
 
 export async function listStoredUsers() {
@@ -316,7 +332,15 @@ export async function findUserById(userId: string) {
   }
 
   const users = await readLocalUsers();
-  return users.find((user) => user.id === normalizedId) ?? null;
+  const localUser = users.find((user) => user.id === normalizedId) ?? null;
+  if (localUser) {
+    try {
+      await writeCloudUser(localUser);
+    } catch {
+      // Keep local fallback when cloud is unavailable.
+    }
+  }
+  return localUser;
 }
 
 export async function registerCredentialsUser(input: {
