@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { TeamBuilderToolWorkspace } from "@/components/tools/TeamBuilderToolWorkspace";
 import { ToolsPageShell } from "@/components/tools/ToolsPageShell";
-import { ToolsRightRail } from "@/components/tools/ToolsRightRail";
 import { loadToolCandidatePokemon } from "@/lib/tools-candidates";
 import { getToolDefinition } from "@/lib/tools-directory";
 
@@ -10,7 +9,7 @@ const tool = getToolDefinition("team-builder");
 export const metadata: Metadata = {
   title: "Tools - Team Builder",
   description:
-    "Team Builder matrix with synergy scoring, defensive risk alerts, and repeated type diagnostics."
+    "Interactive Pokemon team builder with Bill's PC storage, drag and drop slots, live synergy reads, and detailed stat editing."
 };
 
 export default async function ToolsTeamBuilderPage() {
@@ -28,25 +27,16 @@ export default async function ToolsTeamBuilderPage() {
       frameTitle="Tools - Team Builder"
       heroEyebrow="Dedicated Tool"
       heroTitle={tool.title}
-      heroDescription={tool.description}
+      heroDescription="Build a six-slot party with Bill's PC drag-and-drop controls, save up to ten teams, tune stats, and scan global defensive synergy in real time."
       heroChips={[
-        { label: "6-slot builder" },
-        { label: "Coverage diagnostics", tone: "amber" },
-        { label: "Synergy score", tone: "green" }
+        { label: "Bill's PC UI" },
+        { label: "10 saved teams", tone: "amber" },
+        { label: "EV / IV radar", tone: "sky" },
+        { label: "Type synergy scan", tone: "green" }
       ]}
       schema={schema}
       leftContent={<TeamBuilderToolWorkspace candidatePokemon={candidatePokemon} />}
-      rightContent={
-        <ToolsRightRail
-          guideTitle="Team Builder Tactics"
-          guideItems={[
-            "Use Add selected to quickly transfer current focus Pokemon into your draft.",
-            "Watch Main Defensive Risks first; reduce severe weak stacks before finalizing.",
-            "Repeated Team Types helps detect hidden redundancy across offensive plans."
-          ]}
-        />
-      }
+      rightContent={null}
     />
   );
 }
-
