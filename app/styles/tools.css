@@ -205,8 +205,6 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
 
 .team-builder-gba {
   position: relative;
-  display: grid;
-  gap: 10px;
   border: 5px solid #b03b3b;
   border-radius: 24px;
   padding: 14px;
@@ -218,7 +216,6 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
   box-shadow:
     inset 0 0 0 6px rgba(143, 26, 26, 0.48),
     0 20px 30px rgba(64, 18, 18, 0.14);
-  overflow: hidden;
 }
 
 .team-builder-gba button,
@@ -384,13 +381,10 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
   display: grid;
   grid-template-columns: minmax(0, 1.16fr) minmax(360px, 0.84fr);
   gap: 16px;
-  min-height: 0;
+  align-items: start;
 }
 
 .team-builder-gba__panel {
-  display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
-  min-height: 0;
   border: 4px solid rgba(83, 127, 72, 0.92);
   border-radius: 18px;
   overflow: hidden;
@@ -433,16 +427,6 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
   display: grid;
   gap: 14px;
   padding: 16px;
-  min-height: 0;
-  overflow: hidden;
-}
-
-.team-builder-gba__panel-body--explorer {
-  grid-template-rows: auto auto auto minmax(0, 1fr);
-}
-
-.team-builder-gba__panel-body--terminal {
-  grid-template-rows: minmax(0, 1fr) auto;
 }
 
 .team-builder-gba__search {
@@ -533,6 +517,7 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
 .team-builder-gba__save-grid {
   display: grid;
   gap: 8px;
+  max-height: 152px;
 }
 
 .team-builder-gba__save-card {
@@ -592,7 +577,8 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   gap: 12px;
   align-content: start;
-  min-height: 0;
+  max-height: clamp(360px, 48vh, 560px);
+  padding-right: 4px;
 }
 
 .team-builder-gba__pokemon-card {
@@ -652,8 +638,6 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
 .team-builder-gba__party-grid {
   display: grid;
   gap: 10px;
-  align-content: start;
-  min-height: 0;
 }
 
 .team-builder-gba__drag-target {
@@ -1081,21 +1065,10 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
   }
 }
 
-@media (min-width: 1181px) {
-  .team-builder-gba {
-    height: clamp(620px, calc(100dvh - 16rem), 820px);
-  }
-
-  .team-builder-gba__save-grid {
-    max-height: 152px;
-  }
-}
-
 @media (max-width: 840px) {
   .team-builder-gba {
     padding: 14px;
     border-radius: 20px;
-    overflow: visible;
   }
 
   .team-builder-gba__pokemon-grid,
@@ -1104,9 +1077,9 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .team-builder-gba__panel-body,
   .team-builder-gba__scroll-region {
     overflow: visible;
+    max-height: none;
   }
 
   .team-builder-gba__editor {
