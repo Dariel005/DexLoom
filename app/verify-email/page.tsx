@@ -2,6 +2,7 @@ import Image from "next/image";
 import { RouteTransitionLink } from "@/components/RouteTransitionLink";
 import { verifyEmailVerificationToken } from "@/lib/email-verification-token";
 import { markUserEmailVerified } from "@/lib/user-store";
+import { sendWelcomeEmail } from "@/lib/welcome-email";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -73,6 +74,13 @@ export default async function VerifyEmailPage({ searchParams }: VerifyEmailPageP
         userId: verificationResult.payload.uid,
         email: verificationResult.payload.email
       });
+      if (result.status === "verified" && result.user) {
+        try {
+          await sendWelcomeEmail(result.user);
+        } catch {
+          // Verification should stay successful even if welcome mail fails.
+        }
+      }
       state =
         result.status === "verified"
           ? "verified"

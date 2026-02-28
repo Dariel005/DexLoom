@@ -547,7 +547,7 @@ export async function upsertGoogleUser(input: {
 
       upsertUserInList(users, updatedUser);
       await writeLocalUsers(users, { skipUnsafeLocalWrite: wroteCloudUser });
-      return updatedUser;
+      return { status: "updated" as const, user: updatedUser };
     }
 
     const user: StoredUser = {
@@ -571,7 +571,7 @@ export async function upsertGoogleUser(input: {
 
     users.push(user);
     await writeLocalUsers(users, { skipUnsafeLocalWrite: wroteCloudUser });
-    return user;
+    return { status: "created" as const, user };
   });
 }
 

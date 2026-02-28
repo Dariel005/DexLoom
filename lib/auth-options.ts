@@ -3,6 +3,7 @@ import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 import { validateCredentialsLogin } from "@/lib/credentials-auth";
 import { isCreatorUserId } from "@/lib/creator-profile";
+import { sendWelcomeEmail } from "@/lib/welcome-email";
 import { getOrCreateUserProfile } from "@/lib/profile-service";
 import { upsertGoogleUser } from "@/lib/user-store";
 
@@ -68,11 +69,20 @@ export const authOptions: NextAuthOptions = {
       }
 
       if (account?.provider === "google" && token.email) {
-        const persistedUser = await upsertGoogleUser({
+        const persisted = await upsertGoogleUser({
           email: token.email,
           name: user?.name ?? token.name ?? null,
           image: user?.image ?? null
         });
+        const persistedUser = persisted.user;
+
+        if (persisted.status === "created") {
+          try {
+            await sendWelcomeEmail(persistedUser);
+          } catch {
+            // Welcome email delivery must never block sign-in.
+          }
+        }
 
         token.uid = persistedUser.id;
         token.provider = persistedUser.provider;

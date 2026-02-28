@@ -26,6 +26,7 @@ export function buildVerificationEmail(input: {
   const trainerCode = escapeHtml(buildTrainerCode(input.userId));
   const verifyUrl = escapeHtml(input.verifyUrl);
   const lucarioImageUrl = escapeHtml(resolveAbsoluteUrl("/images/email/lucario-verifier.png"));
+  const pokeballImageUrl = escapeHtml(resolveAbsoluteUrl("/assets/pokemon-go/items/poke-ball.png"));
 
   const subject = "Verify your DexLoom Trainer Card";
   const text = [
@@ -48,19 +49,8 @@ export function buildVerificationEmail(input: {
         <td align="center">
           <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="680" style="width:100%;max-width:680px;background:#fbfbfc;border:1px solid #d9dde6;border-radius:28px;overflow:hidden;">
             <tr>
-              <td style="padding:24px 28px;border-bottom:1px solid #e4e7ee;">
-                <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
-                  <tr>
-                    <td style="font-size:18px;font-weight:800;color:#1b2842;">DexLoom Data Entry</td>
-                    <td align="right" style="font-size:14px;color:#6f7f98;">
-                      Registration Progress
-                      <span style="display:inline-block;margin-left:12px;color:#ff2b2b;font-weight:800;">Step 2 of 3</span>
-                      <span style="display:inline-block;vertical-align:middle;margin-left:10px;width:96px;height:8px;background:#d8deea;border-radius:999px;overflow:hidden;">
-                        <span style="display:block;width:67%;height:100%;background:#ff2b2b;"></span>
-                      </span>
-                    </td>
-                  </tr>
-                </table>
+              <td style="padding:22px 28px;border-bottom:1px solid #e4e7ee;text-align:center;">
+                <div style="font-size:18px;font-weight:800;color:#1b2842;">DexLoom Data Entry</div>
               </td>
             </tr>
             <tr>
@@ -72,33 +62,48 @@ export function buildVerificationEmail(input: {
                   </p>
                 </div>
 
-                <div style="margin:0 auto 28px;max-width:580px;border-radius:24px;overflow:hidden;box-shadow:0 18px 36px rgba(17,24,39,0.18);background:linear-gradient(135deg,#ef2525 0%,#a3121c 48%,#45111f 100%);">
-                  <div style="padding:26px 30px 30px;background:
-                    radial-gradient(circle at 30% 22%,rgba(255,255,255,0.10),transparent 26%),
-                    radial-gradient(circle at 50% 44%,rgba(255,255,255,0.08),transparent 12%),
-                    linear-gradient(180deg,rgba(255,255,255,0.04),rgba(0,0,0,0.12));">
-                    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                <div style="margin:0 auto 28px;max-width:580px;border-radius:24px;overflow:hidden;box-shadow:0 18px 36px rgba(17,24,39,0.18);background:linear-gradient(135deg,#ef2525 0%,#9d0d19 52%,#4f0c18 100%);">
+                  <div style="position:relative;padding:24px 26px 28px;height:216px;background:
+                    radial-gradient(circle at 24% 18%,rgba(255,255,255,0.12),transparent 24%),
+                    linear-gradient(180deg,rgba(255,255,255,0.03),rgba(0,0,0,0.16));">
+                    <img src="${pokeballImageUrl}" alt="" width="420" height="420" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-47%);display:block;width:420px;height:420px;opacity:0.22;" />
+                    <div style="position:absolute;left:-14px;top:-50px;width:286px;height:286px;border:18px solid rgba(255,255,255,0.08);border-radius:999px;"></div>
+                    <div style="position:absolute;right:-58px;top:-28px;width:240px;height:240px;border:16px solid rgba(255,255,255,0.06);border-radius:999px;"></div>
+                    <div style="position:absolute;left:0;right:0;top:50%;margin-top:-10px;height:20px;background:rgba(64,10,18,0.42);"></div>
+                    <div style="position:absolute;left:50%;top:50%;width:122px;height:122px;margin-left:-61px;margin-top:-61px;border-radius:999px;border:14px solid rgba(91,18,26,0.46);background:rgba(255,255,255,0.08);"></div>
+                    <div style="position:absolute;left:50%;top:50%;width:72px;height:72px;margin-left:-36px;margin-top:-36px;border-radius:999px;border:10px solid rgba(119,28,36,0.26);background:rgba(255,255,255,0.10);"></div>
+
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" height="100%" style="position:relative;">
                       <tr>
-                        <td>
-                          <span style="display:inline-block;border:1px solid rgba(255,255,255,0.24);background:rgba(255,255,255,0.12);padding:9px 12px;border-radius:12px;color:#fff;font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;">Region: DexLoom</span>
+                        <td valign="top">
+                          <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
+                            <tr>
+                              <td>
+                                <span style="display:inline-block;border:1px solid rgba(255,255,255,0.32);background:rgba(255,255,255,0.10);padding:10px 14px;border-radius:12px;color:#fff;font-size:12px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;">Region: DexLoom</span>
+                              </td>
+                              <td align="right">
+                                <span style="display:inline-block;background:#ff3e35;color:#fff;padding:10px 14px;border-radius:10px;font-size:12px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;">Unverified</span>
+                              </td>
+                            </tr>
+                          </table>
                         </td>
-                        <td align="right">
-                          <span style="display:inline-block;background:#ff3e35;color:#fff;padding:10px 14px;border-radius:10px;font-size:12px;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;">Unverified</span>
+                      </tr>
+                      <tr>
+                        <td valign="bottom" style="padding-top:84px;">
+                          <div style="font-size:14px;color:rgba(255,255,255,0.80);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">Trainer ID</div>
+                          <div style="margin-top:10px;font-size:34px;line-height:1.1;font-weight:900;color:#fff;">${trainerName}</div>
+                          <div style="margin-top:8px;font-size:18px;line-height:1.4;font-weight:700;letter-spacing:0.18em;color:rgba(255,255,255,0.84);">${trainerCode}</div>
                         </td>
                       </tr>
                     </table>
-
-                    <div style="padding:94px 0 8px;">
-                      <div style="font-size:14px;color:rgba(255,255,255,0.76);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">Trainer ID</div>
-                      <div style="margin-top:10px;font-size:34px;line-height:1.1;font-weight:900;color:#fff;">${trainerName}</div>
-                      <div style="margin-top:8px;font-size:18px;line-height:1.4;font-weight:700;letter-spacing:0.18em;color:rgba(255,255,255,0.84);">${trainerCode}</div>
-                    </div>
                   </div>
                 </div>
 
                 <div style="text-align:center;margin:0 auto 26px;">
-                  <div style="display:inline-flex;align-items:center;justify-content:center;width:148px;height:148px;border-radius:999px;background:#f3f5f9;border:1px solid #e4e8ef;box-shadow:inset 0 1px 0 rgba(255,255,255,0.92);">
-                    <img src="${lucarioImageUrl}" alt="Lucario verification guide" width="96" height="96" style="display:block;width:96px;height:96px;object-fit:contain;" />
+                  <div style="display:inline-flex;align-items:center;justify-content:center;width:172px;height:172px;border-radius:999px;background:#f3f5f9;border:1px solid #e4e8ef;box-shadow:inset 0 1px 0 rgba(255,255,255,0.92);">
+                    <div style="display:flex;align-items:center;justify-content:center;width:142px;height:142px;border-radius:999px;background:#eef2f7;box-shadow:inset 0 1px 0 rgba(255,255,255,0.96);">
+                      <img src="${lucarioImageUrl}" alt="Lucario verification guide" width="122" height="122" style="display:block;width:122px;height:122px;object-fit:contain;object-position:center;" />
+                    </div>
                   </div>
                 </div>
 

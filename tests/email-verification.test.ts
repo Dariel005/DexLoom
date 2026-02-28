@@ -55,5 +55,8 @@ test("verification email template includes DexLoom link and Lucario art", () => 
   assert.match(email.html, /Lucario verification guide/);
   assert.match(email.html, /VERIFY TRAINER CARD/);
   assert.match(email.html, /https:\/\/dexloom\.net\/images\/email\/lucario-verifier\.png/);
+  assert.match(email.html, /https:\/\/dexloom\.net\/assets\/pokemon-go\/items\/poke-ball\.png/);
+  assert.doesNotMatch(email.html, /Registration Progress/);
+  assert.doesNotMatch(email.html, /Step 2 of 3/);
   assert.match(email.text, /Verify now:/);
 });
