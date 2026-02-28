@@ -17,6 +17,7 @@ import {
   useState
 } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { RoleBadge } from "@/components/RoleBadge";
 import { RoleGate, useRole } from "@/components/RoleContext";
 import type { AdminOverviewPayload, AdminUserRow, AdminUsersPayload } from "@/lib/admin-types";
 import { ROLE_LABELS, USER_ROLE_VALUES, type UserRole } from "@/lib/roles";
@@ -546,7 +547,9 @@ export function AdminDashboardClient() {
                                 <p className="mt-1 text-xs text-slate-400">{user.email}</p>
                               </div>
                             </td>
-                            <td className="px-4 py-4 text-slate-200">{ROLE_LABELS[user.role]}</td>
+                            <td className="px-4 py-4 text-slate-200">
+                              <RoleBadge role={user.role} compact />
+                            </td>
                             <td className="px-4 py-4 text-slate-300">{formatAbsoluteDate(user.joinDate)}</td>
                             <td className="px-4 py-4 text-slate-300">{formatRelativeDate(user.lastActive)}</td>
                             <td className="px-4 py-4">

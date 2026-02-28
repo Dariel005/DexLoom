@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { CreatorName } from "@/components/CreatorName";
 import { PokedexFrame } from "@/components/PokedexFrame";
+import { RoleBadge } from "@/components/RoleBadge";
 import { RouteTransitionLink } from "@/components/RouteTransitionLink";
 import { ProfileAvatarLightbox } from "@/components/profile/ProfileAvatarLightbox";
 import { ProfileAvatarCropper } from "@/components/profile/ProfileAvatarCropper";
@@ -21,7 +22,6 @@ import {
   type FavoriteRecord,
   type UserProfileRecord
 } from "@/lib/profile-types";
-import { ROLE_LABELS } from "@/lib/roles";
 import { resolveAvatarSrc } from "@/lib/avatar-url";
 import { cn } from "@/lib/utils";
 
@@ -663,7 +663,7 @@ export function ProfileMeClient() {
                 role={activeRole}
                 className="pixel-font text-[17px] uppercase tracking-[0.12em] text-black/85"
               />
-              {activeRole !== "member" ? <span className="profile-chip profile-chip-creator">{ROLE_LABELS[activeRole]}</span> : null}
+              {activeRole !== "member" ? <RoleBadge role={activeRole} /> : null}
               <span className={cn("profile-chip", visibility === "public" ? "profile-chip-public" : "profile-chip-private")}>
                 {visibility === "public" ? "Public" : "Private"}
               </span>
