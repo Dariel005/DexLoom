@@ -944,13 +944,13 @@ export function TeamBuilderWorkbench({ candidatePokemon }: TeamBuilderWorkbenchP
       ) : null}
 
       <div className="team-builder-gba__main-grid">
-        <section className="team-builder-gba__panel">
+        <section className="team-builder-gba__panel team-builder-gba__panel--explorer">
           <header className="team-builder-gba__panel-head">
             <p className="pixel-font">EXPLORER CONSOLE A</p>
             <span className="team-builder-gba__panel-pill">{filteredCandidates.length}</span>
           </header>
 
-          <div className="team-builder-gba__panel-body">
+          <div className="team-builder-gba__panel-body team-builder-gba__panel-body--explorer">
             <label className="team-builder-gba__search">
               <span className="pixel-font">Search Pokemon Database</span>
               <input
@@ -989,7 +989,7 @@ export function TeamBuilderWorkbench({ candidatePokemon }: TeamBuilderWorkbenchP
                 </span>
               </div>
 
-              <div className="team-builder-gba__save-grid">
+              <div className="team-builder-gba__save-grid team-builder-gba__scroll-region">
                 {savedTeams.length > 0 ? (
                   savedTeams.map((team) => (
                     <SavedTeamCard
@@ -1009,7 +1009,7 @@ export function TeamBuilderWorkbench({ candidatePokemon }: TeamBuilderWorkbenchP
               </div>
             </section>
 
-            <div className="team-builder-gba__pokemon-grid">
+            <div className="team-builder-gba__pokemon-grid team-builder-gba__scroll-region">
               {filteredCandidates.map((entry) => (
                 <article
                   key={entry.id}
@@ -1048,14 +1048,14 @@ export function TeamBuilderWorkbench({ candidatePokemon }: TeamBuilderWorkbenchP
           </div>
         </section>
 
-        <section className="team-builder-gba__panel">
+        <section className="team-builder-gba__panel team-builder-gba__panel--terminal">
           <header className="team-builder-gba__panel-head">
             <p className="pixel-font">DATA TERMINAL</p>
             <span className="team-builder-gba__panel-pill">{occupiedCount}/6</span>
           </header>
 
-          <div className="team-builder-gba__panel-body">
-            <div className="team-builder-gba__party-grid">
+          <div className="team-builder-gba__panel-body team-builder-gba__panel-body--terminal">
+            <div className="team-builder-gba__party-grid team-builder-gba__scroll-region">
               {resolvedSlots.map((slot, index) => (
                 <div
                   key={`team-slot-${index}`}

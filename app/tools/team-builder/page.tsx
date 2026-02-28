@@ -27,13 +27,13 @@ export default async function ToolsTeamBuilderPage() {
       frameTitle="Tools - Team Builder"
       heroEyebrow="Dedicated Tool"
       heroTitle={tool.title}
-      heroDescription="Build a six-slot party with Bill's PC drag-and-drop controls, save up to ten teams, tune stats, and scan global defensive synergy in real time."
+      heroDescription="Build and tune a six-slot party with Bill's PC controls, quick cloud saves, and live synergy reads."
       heroChips={[
         { label: "Bill's PC UI" },
-        { label: "10 saved teams", tone: "amber" },
-        { label: "EV / IV radar", tone: "sky" },
-        { label: "Type synergy scan", tone: "green" }
+        { label: "Cloud sync", tone: "sky" },
+        { label: "10 saved teams", tone: "amber" }
       ]}
+      heroVariant="compact"
       schema={schema}
       leftContent={<TeamBuilderToolWorkspace candidatePokemon={candidatePokemon} />}
       rightContent={null}

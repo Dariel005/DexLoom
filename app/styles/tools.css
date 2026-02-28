@@ -205,17 +205,20 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
 
 .team-builder-gba {
   position: relative;
-  border: 6px solid #b03b3b;
-  border-radius: 28px;
-  padding: 20px;
+  display: grid;
+  gap: 10px;
+  border: 5px solid #b03b3b;
+  border-radius: 24px;
+  padding: 14px;
   background:
     linear-gradient(180deg, rgba(245, 100, 94, 0.98), rgba(185, 55, 48, 0.98)),
     linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
     linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-  background-size: auto, 22px 22px, 22px 22px;
+  background-size: auto, 18px 18px, 18px 18px;
   box-shadow:
     inset 0 0 0 6px rgba(143, 26, 26, 0.48),
-    0 26px 42px rgba(64, 18, 18, 0.16);
+    0 20px 30px rgba(64, 18, 18, 0.14);
+  overflow: hidden;
 }
 
 .team-builder-gba button,
@@ -227,12 +230,12 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
 .team-builder-gba__topbar {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 12px;
   justify-content: space-between;
   align-items: center;
-  padding: 18px 22px;
-  border: 4px solid rgba(133, 40, 40, 0.52);
-  border-radius: 20px;
+  padding: 14px 16px;
+  border: 3px solid rgba(133, 40, 40, 0.52);
+  border-radius: 18px;
   background:
     linear-gradient(180deg, rgba(222, 90, 76, 0.98), rgba(182, 59, 47, 0.98)),
     linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
@@ -264,27 +267,27 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
 .team-builder-gba__brand-title {
   margin: 0;
   color: #fff8d6;
-  font-size: 14px;
+  font-size: 12px;
   letter-spacing: 0.22em;
 }
 
 .team-builder-gba__brand-copy {
-  margin: 4px 0 0;
-  font-size: 12px;
+  margin: 2px 0 0;
+  font-size: 11px;
   color: rgba(255, 243, 217, 0.78);
 }
 
 .team-builder-gba__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 10px;
   align-items: end;
 }
 
 .team-builder-gba__draft-field {
   display: grid;
-  gap: 6px;
-  min-width: min(100%, 240px);
+  gap: 4px;
+  min-width: min(100%, 220px);
   color: #fff8d6;
 }
 
@@ -294,10 +297,10 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
 }
 
 .team-builder-gba__draft-field input {
-  min-height: 42px;
-  border: 3px solid rgba(112, 48, 48, 0.8);
-  border-radius: 14px;
-  padding: 0 14px;
+  min-height: 36px;
+  border: 2px solid rgba(112, 48, 48, 0.8);
+  border-radius: 12px;
+  padding: 0 10px;
   background: #fff8e6;
   color: #2f2f2f;
   box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.72);
@@ -305,8 +308,8 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
 
 .team-builder-gba__action-btn,
 .team-builder-gba__mini-btn {
-  border: 3px solid rgba(87, 42, 16, 0.55);
-  border-radius: 12px;
+  border: 2px solid rgba(87, 42, 16, 0.55);
+  border-radius: 10px;
   background: linear-gradient(180deg, #ffd55c, #d79f1d);
   color: #342100;
   font-weight: 700;
@@ -320,8 +323,8 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
 }
 
 .team-builder-gba__action-btn {
-  min-height: 42px;
-  padding: 0 18px;
+  min-height: 36px;
+  padding: 0 14px;
 }
 
 .team-builder-gba__action-btn:hover,
@@ -336,9 +339,9 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
 }
 
 .team-builder-gba__mini-btn {
-  min-height: 34px;
-  padding: 0 12px;
-  font-size: 12px;
+  min-height: 30px;
+  padding: 0 10px;
+  font-size: 11px;
 }
 
 .team-builder-gba__mini-btn.is-danger {
@@ -349,27 +352,25 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
 .team-builder-gba__hud {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 14px;
+  gap: 8px;
 }
 
 .team-builder-gba__hud p,
 .team-builder-gba__status-line {
   margin: 0;
-  padding: 8px 12px;
-  border: 3px solid rgba(27, 86, 35, 0.3);
-  border-radius: 12px;
+  padding: 6px 10px;
+  border: 2px solid rgba(27, 86, 35, 0.3);
+  border-radius: 10px;
   background: rgba(217, 245, 183, 0.88);
   color: #365f28;
-  font-size: 10px;
+  font-size: 9px;
   letter-spacing: 0.14em;
 }
 
 .team-builder-gba__status-line {
-  margin-top: 12px;
   display: inline-flex;
   font-family: inherit;
-  font-size: 13px;
+  font-size: 12px;
   letter-spacing: 0.02em;
 }
 
@@ -381,13 +382,16 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
 
 .team-builder-gba__main-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(430px, 0.9fr);
-  gap: 22px;
-  margin-top: 18px;
+  grid-template-columns: minmax(0, 1.16fr) minmax(360px, 0.84fr);
+  gap: 16px;
+  min-height: 0;
 }
 
 .team-builder-gba__panel {
-  border: 5px solid rgba(83, 127, 72, 0.92);
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  min-height: 0;
+  border: 4px solid rgba(83, 127, 72, 0.92);
   border-radius: 18px;
   overflow: hidden;
   background:
@@ -405,8 +409,8 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  padding: 18px 20px;
-  border-bottom: 3px solid rgba(86, 131, 76, 0.66);
+  padding: 14px 16px;
+  border-bottom: 2px solid rgba(86, 131, 76, 0.66);
   background: linear-gradient(180deg, rgba(159, 214, 138, 0.9), rgba(143, 194, 126, 0.88));
 }
 
@@ -419,7 +423,7 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
 }
 
 .team-builder-gba__panel-pill {
-  padding: 8px 10px;
+  padding: 6px 8px;
   border: 2px solid rgba(89, 128, 82, 0.34);
   border-radius: 10px;
   background: rgba(241, 255, 233, 0.76);
@@ -427,8 +431,18 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
 
 .team-builder-gba__panel-body {
   display: grid;
-  gap: 18px;
-  padding: 20px;
+  gap: 14px;
+  padding: 16px;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.team-builder-gba__panel-body--explorer {
+  grid-template-rows: auto auto auto minmax(0, 1fr);
+}
+
+.team-builder-gba__panel-body--terminal {
+  grid-template-rows: minmax(0, 1fr) auto;
 }
 
 .team-builder-gba__search {
@@ -448,10 +462,10 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
 .team-builder-gba__search input,
 .team-builder-gba__move-field input,
 .team-builder-gba__field select {
-  min-height: 44px;
-  border: 3px solid rgba(112, 153, 99, 0.5);
-  border-radius: 16px;
-  padding: 0 14px;
+  min-height: 36px;
+  border: 2px solid rgba(112, 153, 99, 0.5);
+  border-radius: 12px;
+  padding: 0 12px;
   background: rgba(245, 255, 235, 0.92);
   color: #234123;
   box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.78);
@@ -464,11 +478,11 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
 }
 
 .team-builder-gba__tab {
-  min-height: 38px;
-  min-width: 58px;
-  padding: 0 12px;
-  border: 3px solid rgba(109, 145, 94, 0.38);
-  border-radius: 12px;
+  min-height: 32px;
+  min-width: 46px;
+  padding: 0 10px;
+  border: 2px solid rgba(109, 145, 94, 0.38);
+  border-radius: 10px;
   background: rgba(244, 255, 240, 0.78);
   color: #4c7445;
   font-weight: 700;
@@ -485,10 +499,10 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
 .team-builder-gba__moves-panel,
 .team-builder-gba__stats-panel {
   display: grid;
-  gap: 14px;
-  padding: 16px;
-  border: 3px solid rgba(104, 143, 94, 0.34);
-  border-radius: 16px;
+  gap: 10px;
+  padding: 12px;
+  border: 2px solid rgba(104, 143, 94, 0.34);
+  border-radius: 14px;
   background:
     rgba(221, 246, 208, 0.82);
 }
@@ -511,14 +525,14 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
 .team-builder-gba__editor-flavor,
 .team-builder-gba__nature-panel p + p {
   margin: 6px 0 0;
-  font-size: 13px;
-  line-height: 1.55;
+  font-size: 12px;
+  line-height: 1.45;
   color: #456143;
 }
 
 .team-builder-gba__save-grid {
   display: grid;
-  gap: 10px;
+  gap: 8px;
 }
 
 .team-builder-gba__save-card {
@@ -526,9 +540,9 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
   justify-content: space-between;
   gap: 12px;
   align-items: center;
-  padding: 12px 14px;
-  border: 3px solid rgba(106, 144, 96, 0.34);
-  border-radius: 14px;
+  padding: 10px 12px;
+  border: 2px solid rgba(106, 144, 96, 0.34);
+  border-radius: 12px;
   background: rgba(247, 255, 242, 0.9);
 }
 
@@ -550,7 +564,7 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
 .team-builder-gba__team-summary,
 .team-builder-gba__computed-cell span {
   margin: 5px 0 0;
-  font-size: 12px;
+  font-size: 11px;
   color: #5b7158;
 }
 
@@ -560,9 +574,9 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
 }
 
 .team-builder-gba__empty-copy {
-  padding: 18px;
-  border: 3px dashed rgba(99, 144, 92, 0.36);
-  border-radius: 16px;
+  padding: 14px;
+  border: 2px dashed rgba(99, 144, 92, 0.36);
+  border-radius: 14px;
   background: rgba(245, 255, 239, 0.44);
 }
 
@@ -575,18 +589,20 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
 
 .team-builder-gba__pokemon-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+  align-content: start;
+  min-height: 0;
 }
 
 .team-builder-gba__pokemon-card {
   display: grid;
-  gap: 12px;
-  padding: 14px;
-  border: 3px solid rgba(105, 143, 93, 0.34);
-  border-radius: 16px;
+  gap: 10px;
+  padding: 10px;
+  border: 2px solid rgba(105, 143, 93, 0.34);
+  border-radius: 14px;
   background: linear-gradient(180deg, rgba(249, 255, 245, 0.98), rgba(239, 250, 233, 0.96));
-  box-shadow: 0 10px 18px rgba(78, 111, 68, 0.08);
+  box-shadow: 0 8px 14px rgba(78, 111, 68, 0.08);
 }
 
 .team-builder-gba__pokemon-card-head,
@@ -606,7 +622,7 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
 
 .team-builder-gba__pokemon-card-head span,
 .team-builder-gba__pokemon-card-copy p:last-child {
-  font-size: 12px;
+  font-size: 11px;
   color: #597655;
 }
 
@@ -614,17 +630,17 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
 .team-builder-gba__editor-sprite-shell {
   display: grid;
   place-items: center;
-  min-height: 138px;
-  border: 3px solid rgba(113, 151, 104, 0.34);
-  border-radius: 18px;
+  min-height: 96px;
+  border: 2px solid rgba(113, 151, 104, 0.34);
+  border-radius: 14px;
   background:
     radial-gradient(circle at center, rgba(255, 255, 255, 0.62), transparent 62%),
     linear-gradient(180deg, rgba(214, 239, 205, 0.96), rgba(187, 218, 173, 0.98));
 }
 
 .team-builder-gba__pokemon-sprite {
-  width: 110px;
-  height: 110px;
+  width: 78px;
+  height: 78px;
   object-fit: contain;
 }
 
@@ -635,7 +651,9 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
 
 .team-builder-gba__party-grid {
   display: grid;
-  gap: 14px;
+  gap: 10px;
+  align-content: start;
+  min-height: 0;
 }
 
 .team-builder-gba__drag-target {
@@ -647,10 +665,10 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
   position: relative;
   display: block;
   width: 100%;
-  min-height: 132px;
-  padding: 16px;
-  border: 3px dashed rgba(116, 153, 104, 0.42);
-  border-radius: 18px;
+  min-height: 102px;
+  padding: 12px;
+  border: 2px dashed rgba(116, 153, 104, 0.42);
+  border-radius: 16px;
   background: rgba(229, 247, 220, 0.86);
   text-align: left;
 }
@@ -666,7 +684,7 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
 
 .team-builder-gba__team-slot-shell {
   position: absolute;
-  inset: 14px;
+  inset: 10px;
   border-radius: 999px;
   background:
     linear-gradient(180deg, rgba(226, 91, 91, 0.24) 0 48%, rgba(111, 73, 73, 0.14) 48% 52%, rgba(240, 248, 234, 0.42) 52% 100%),
@@ -684,33 +702,34 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
 
 .team-builder-gba__team-empty {
   display: grid;
-  gap: 6px;
+  gap: 4px;
   justify-items: center;
-  padding-top: 22px;
+  padding-top: 12px;
   text-align: center;
   color: #5d775a;
+  font-size: 11px;
 }
 
 .team-builder-gba__team-card {
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 12px;
+  gap: 10px;
   align-items: center;
 }
 
 .team-builder-gba__team-sprite-wrap {
   display: grid;
   place-items: center;
-  width: 74px;
-  height: 74px;
-  border: 3px solid rgba(112, 151, 104, 0.34);
-  border-radius: 16px;
+  width: 58px;
+  height: 58px;
+  border: 2px solid rgba(112, 151, 104, 0.34);
+  border-radius: 12px;
   background: rgba(247, 255, 243, 0.88);
 }
 
 .team-builder-gba__team-sprite {
-  width: 68px;
-  height: 68px;
+  width: 52px;
+  height: 52px;
   object-fit: contain;
 }
 
@@ -725,8 +744,8 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 26px;
-  padding: 0 10px;
+  min-height: 22px;
+  padding: 0 8px;
   border: 2px solid color-mix(in srgb, var(--type-accent) 62%, #2f392f 38%);
   border-radius: 999px;
   background: color-mix(in srgb, var(--type-accent) 88%, white 12%);
@@ -739,11 +758,11 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
 
 .team-builder-gba__remove-slot {
   position: absolute;
-  top: 12px;
-  right: 12px;
+  top: 8px;
+  right: 8px;
   z-index: 2;
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   display: grid;
   place-items: center;
   border: 2px solid rgba(114, 148, 102, 0.4);
@@ -762,9 +781,9 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
 
 .team-builder-gba__summary-card,
 .team-builder-gba__computed-cell {
-  padding: 14px;
-  border: 3px solid rgba(108, 145, 96, 0.34);
-  border-radius: 14px;
+  padding: 10px;
+  border: 2px solid rgba(108, 145, 96, 0.34);
+  border-radius: 12px;
   background: rgba(247, 255, 242, 0.9);
 }
 
@@ -783,21 +802,43 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
 .team-builder-gba__type-table {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
+  gap: 8px;
 }
 
 .team-builder-gba__type-cell {
   display: grid;
-  gap: 10px;
-  padding: 12px;
-  border: 3px solid rgba(109, 145, 96, 0.28);
-  border-radius: 14px;
+  gap: 8px;
+  padding: 10px;
+  border: 2px solid rgba(109, 145, 96, 0.28);
+  border-radius: 12px;
   background: rgba(247, 255, 242, 0.9);
 }
 
 .team-builder-gba__type-cell-bottom {
-  font-size: 12px;
+  font-size: 11px;
   color: #5a7458;
+}
+
+.team-builder-gba__scroll-region {
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(104, 143, 94, 0.72) rgba(245, 255, 235, 0.3);
+}
+
+.team-builder-gba__scroll-region::-webkit-scrollbar {
+  width: 8px;
+}
+
+.team-builder-gba__scroll-region::-webkit-scrollbar-track {
+  background: rgba(245, 255, 235, 0.28);
+  border-radius: 999px;
+}
+
+.team-builder-gba__scroll-region::-webkit-scrollbar-thumb {
+  background: rgba(104, 143, 94, 0.74);
+  border-radius: 999px;
 }
 
 .team-builder-gba__editor-overlay,
@@ -1040,16 +1081,32 @@ html:is(.scroll-perf-lite, .runtime-perf-low, .device-perf-low) .tools-preview-c
   }
 }
 
+@media (min-width: 1181px) {
+  .team-builder-gba {
+    height: clamp(620px, calc(100dvh - 16rem), 820px);
+  }
+
+  .team-builder-gba__save-grid {
+    max-height: 152px;
+  }
+}
+
 @media (max-width: 840px) {
   .team-builder-gba {
     padding: 14px;
     border-radius: 20px;
+    overflow: visible;
   }
 
   .team-builder-gba__pokemon-grid,
   .team-builder-gba__type-table,
   .team-builder-gba__computed-grid {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .team-builder-gba__panel-body,
+  .team-builder-gba__scroll-region {
+    overflow: visible;
   }
 
   .team-builder-gba__editor {

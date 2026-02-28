@@ -1,5 +1,6 @@
 import { type ReactNode } from "react";
 import { PokedexFrame } from "@/components/PokedexFrame";
+import { cn } from "@/lib/utils";
 
 interface ToolsHeroChip {
   label: string;
@@ -15,6 +16,7 @@ interface ToolsPageShellProps {
   leftContent: ReactNode;
   rightContent: ReactNode;
   schema?: Record<string, unknown>;
+  heroVariant?: "default" | "compact";
 }
 
 function chipToneClass(tone: ToolsHeroChip["tone"]) {
@@ -44,24 +46,47 @@ export function ToolsPageShell({
   heroChips = [],
   leftContent,
   rightContent,
-  schema
+  schema,
+  heroVariant = "default"
 }: ToolsPageShellProps) {
+  const isCompactHero = heroVariant === "compact";
   const leftPanel = (
     <section className="space-y-4">
-      <section className="tools-hero-panel rounded-2xl border border-black/20 p-4">
-        <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/68">
+      <section
+        className={cn(
+          "tools-hero-panel rounded-2xl border border-black/20",
+          isCompactHero ? "p-3" : "p-4"
+        )}
+      >
+        <p
+          className={cn(
+            "pixel-font uppercase tracking-[0.16em] text-black/68",
+            isCompactHero ? "text-[9px]" : "text-[10px]"
+          )}
+        >
           {heroEyebrow}
         </p>
-        <h1 className="pixel-font mt-2 text-[14px] uppercase tracking-[0.12em] text-black/86">
+        <h1
+          className={cn(
+            "pixel-font uppercase tracking-[0.12em] text-black/86",
+            isCompactHero ? "mt-1.5 text-[12px]" : "mt-2 text-[14px]"
+          )}
+        >
           {heroTitle}
         </h1>
-        <p className="mt-2 text-sm text-black/76">{heroDescription}</p>
+        <p className={cn("text-black/76", isCompactHero ? "mt-1.5 text-[13px]" : "mt-2 text-sm")}>
+          {heroDescription}
+        </p>
         {heroChips.length > 0 ? (
-          <div className="mt-3 flex flex-wrap gap-1.5">
+          <div className={cn("flex flex-wrap gap-1.5", isCompactHero ? "mt-2" : "mt-3")}>
             {heroChips.map((chip) => (
               <span
                 key={chip.label}
-                className={`rounded-md border px-2 py-1 text-xs ${chipToneClass(chip.tone)}`}
+                className={cn(
+                  "rounded-md border px-2 py-1",
+                  isCompactHero ? "text-[11px]" : "text-xs",
+                  chipToneClass(chip.tone)
+                )}
               >
                 {chip.label}
               </span>
@@ -81,7 +106,12 @@ export function ToolsPageShell({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
       ) : null}
-      <main className="pokemon-detail-page mx-auto min-h-screen w-full max-w-[2560px] px-2 py-5 sm:px-4 sm:py-8 lg:px-5">
+      <main
+        className={cn(
+          "pokemon-detail-page mx-auto min-h-screen w-full max-w-[2560px] px-2 sm:px-4 lg:px-5",
+          isCompactHero ? "py-3 sm:py-4" : "py-5 sm:py-8"
+        )}
+      >
         <PokedexFrame
           title={frameTitle}
           status="success"
