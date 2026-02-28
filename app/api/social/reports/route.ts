@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { jsonErrorResponse } from "@/lib/api-error-response";
 import { getServerAuthUser } from "@/lib/auth-session";
-import { isCreatorUserId } from "@/lib/creator-profile";
 import { isProfileFeatureEnabled } from "@/lib/firebase-admin";
 import {
   listSocialReportsForModerator,
@@ -29,7 +28,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ message: "Unauthorized." }, { status: 401 });
   }
 
-  if (!(await isCreatorUserId(user.id))) {
+  if (!user.permissions.reviewReports) {
     return forbidden();
   }
 
@@ -56,7 +55,7 @@ export async function PATCH(request: Request) {
     return NextResponse.json({ message: "Unauthorized." }, { status: 401 });
   }
 
-  if (!(await isCreatorUserId(user.id))) {
+  if (!user.permissions.reviewReports) {
     return forbidden();
   }
 

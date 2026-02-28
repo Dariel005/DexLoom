@@ -5,7 +5,9 @@ import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { CreatorName } from "@/components/CreatorName";
 import { PokedexFrame } from "@/components/PokedexFrame";
+import { useRole } from "@/components/RoleContext";
 import { RouteTransitionLink } from "@/components/RouteTransitionLink";
+import { SocialCommunityPanel } from "@/components/social/SocialCommunityPanel";
 import {
   type BlockedUserView,
   type FriendNetworkSnapshot,
@@ -68,7 +70,7 @@ interface SelectedTrainer {
   relationId: string | null;
 }
 
-type SocialConsoleTab = "trainer" | "requests" | "network" | "alerts" | "moderation";
+type SocialConsoleTab = "trainer" | "community" | "requests" | "network" | "alerts" | "moderation";
 
 function formatRelativeDate(value: string | null | undefined) {
   if (!value) {
@@ -213,6 +215,7 @@ function toSelection(
 
 export function SocialHubClient() {
   const { data: session, status } = useSession();
+  const { permissions } = useRole();
   const searchParams = useSearchParams();
 
   const [network, setNetwork] = useState<FriendNetworkSnapshot>(EMPTY_NETWORK);
@@ -686,7 +689,7 @@ export function SocialHubClient() {
 
   const loadModerationReports = useCallback(
     async (input?: { append?: boolean; cursor?: string | null }) => {
-      if (!userId || session?.user?.isCreator !== true) {
+      if (!userId || !permissions.reviewReports) {
         return;
       }
 
@@ -736,12 +739,12 @@ export function SocialHubClient() {
         setIsLoadingMoreModeration(false);
       }
     },
-    [moderationStatusFilter, session?.user?.isCreator, userId]
+    [moderationStatusFilter, permissions.reviewReports, userId]
   );
 
   const handleReviewReport = useCallback(
     async (input: { reportId: string; action: "resolve" | "dismiss" | "reopen" }) => {
-      if (!userId || session?.user?.isCreator !== true) {
+      if (!userId || !permissions.reviewReports) {
         return;
       }
 
@@ -764,7 +767,7 @@ export function SocialHubClient() {
         setIsReviewingReport(false);
       }
     },
-    [loadModerationReports, session?.user?.isCreator, userId]
+    [loadModerationReports, permissions.reviewReports, userId]
   );
 
   const selectTrainer = useCallback((selection: SelectedTrainer) => {
@@ -800,10 +803,10 @@ export function SocialHubClient() {
 
     void loadHub();
     void loadNotifications();
-    if (session?.user?.isCreator === true) {
+    if (permissions.reviewReports) {
       void loadModerationReports();
     }
-  }, [loadHub, loadModerationReports, loadNotifications, session?.user?.isCreator, userId]);
+  }, [loadHub, loadModerationReports, loadNotifications, permissions.reviewReports, userId]);
 
   useEffect(() => {
     setFriendRequestPolicyDraft(settings.friendRequestPolicy);
@@ -845,7 +848,7 @@ export function SocialHubClient() {
       }
       void loadHub();
       void loadNotifications();
-      if (session?.user?.isCreator === true) {
+      if (permissions.reviewReports) {
         void loadModerationReports();
       }
     }, 45_000);
@@ -858,7 +861,7 @@ export function SocialHubClient() {
       void sendPresenceHeartbeat();
       void loadHub();
       void loadNotifications();
-      if (session?.user?.isCreator === true) {
+      if (permissions.reviewReports) {
         void loadModerationReports();
       }
     };
@@ -870,7 +873,7 @@ export function SocialHubClient() {
       window.clearInterval(hubRefreshIntervalId);
       document.removeEventListener("visibilitychange", handleVisibility);
     };
-  }, [loadHub, loadModerationReports, loadNotifications, session?.user?.isCreator, userId]);
+  }, [loadHub, loadModerationReports, loadNotifications, permissions.reviewReports, userId]);
 
   useEffect(() => {
     if (!userId) {
@@ -904,7 +907,7 @@ export function SocialHubClient() {
   const refreshSocialContext = useCallback(async () => {
     await loadHub();
     await loadNotifications();
-    if (session?.user?.isCreator === true) {
+    if (permissions.reviewReports) {
       await loadModerationReports();
     }
     if (searchInput.trim()) {
@@ -921,7 +924,7 @@ export function SocialHubClient() {
     loadNotifications,
     loadSearch,
     searchInput,
-    session?.user?.isCreator
+    permissions.reviewReports
   ]);
 
   const handleAction = useCallback(
@@ -1126,7 +1129,7 @@ export function SocialHubClient() {
       setReportNotes("");
       setInfoMessage("Report submitted.");
       await loadNotifications();
-      if (session?.user?.isCreator === true) {
+      if (permissions.reviewReports) {
         await loadModerationReports();
       }
     } catch (error) {
@@ -1134,7 +1137,7 @@ export function SocialHubClient() {
     } finally {
       setIsSubmittingReport(false);
     }
-  }, [loadModerationReports, loadNotifications, reportNotes, reportReason, selectedFallback, session?.user?.isCreator, userId]);
+  }, [loadModerationReports, loadNotifications, permissions.reviewReports, reportNotes, reportReason, selectedFallback, userId]);
 
   const selectedFromNetwork = useMemo(() => {
     if (!selectedUserId) {
@@ -1239,7 +1242,7 @@ export function SocialHubClient() {
   const currentSelection = selectedTrainer;
   const selectedTrainerInitial =
     currentSelection?.user.displayName.trim().charAt(0).toUpperCase() || "?";
-  const hasModerationAccess = session?.user?.isCreator === true;
+  const hasModerationAccess = permissions.reviewReports;
 
   useEffect(() => {
     if (activeConsoleTab === "moderation" && !hasModerationAccess) {
@@ -1277,7 +1280,7 @@ export function SocialHubClient() {
           <section className="social-theme-arcade space-y-4">
             <section className="profile-surface profile-surface-hero social-arcade-panel social-arcade-grid-hero p-4">
               <p className="social-arcade-title pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">Trainer Social Grid</p>
-              <p className="mt-2 text-sm text-black/74">Connected as <CreatorName name={session?.user?.name ?? session?.user?.email ?? "Trainer"} isCreator={session?.user?.isCreator === true} compact /></p>
+              <p className="mt-2 text-sm text-black/74">Connected as <CreatorName name={session?.user?.name ?? session?.user?.email ?? "Trainer"} isCreator={session?.user?.isCreator === true} role={session?.user?.role} compact /></p>
               <div className="profile-metric-grid social-arcade-metric-grid mt-3">
                 <div className="profile-metric-tile social-arcade-metric-tile"><span className="profile-metric-label">Friends</span><span className="profile-metric-value">{stats.friends}</span></div>
                 <div className="profile-metric-tile social-arcade-metric-tile"><span className="profile-metric-label">Incoming</span><span className="profile-metric-value">{stats.incoming}</span></div>
@@ -1405,6 +1408,17 @@ export function SocialHubClient() {
                   </button>
                   <button
                     type="button"
+                    onClick={() => setActiveConsoleTab("community")}
+                    className={cn(
+                      "social-arcade-btn social-gba-tab-btn social-arcade-btn-neutral px-2 py-1 text-xs",
+                      activeConsoleTab === "community" && "social-gba-tab-btn-active"
+                    )}
+                  >
+                    <span>Community</span>
+                    <span className="social-gba-tab-pill">{permissions.moderateContent ? "mod" : "feed"}</span>
+                  </button>
+                  <button
+                    type="button"
                     onClick={() => setActiveConsoleTab("requests")}
                     className={cn(
                       "social-arcade-btn social-gba-tab-btn social-arcade-btn-neutral px-2 py-1 text-xs",
@@ -1451,6 +1465,10 @@ export function SocialHubClient() {
                   ) : null}
                 </div>
               </section>
+
+              {activeConsoleTab === "community" ? (
+                <SocialCommunityPanel canModerate={permissions.moderateContent} />
+              ) : null}
 
               {activeConsoleTab === "trainer" ? (
                 <section className="profile-surface social-arcade-panel social-arcade-report-panel p-4">

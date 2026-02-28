@@ -13,9 +13,11 @@ import {
   type SocialActivityKind,
   type SocialActivityRecord,
   type SocialBlockRecord,
+  type SocialCommentRecord,
   type SocialNotificationKind,
   type SocialNotificationRecord,
   type SocialPresenceRecord,
+  type SocialPostRecord,
   type SocialPrivacySettingsRecord,
   type SocialReportReason,
   type SocialReportStatus,
@@ -30,6 +32,8 @@ const SOCIAL_BLOCKS_STORE_FILE = path.join(DATA_STORE_DIR, "social-blocks.json")
 const SOCIAL_REPORTS_STORE_FILE = path.join(DATA_STORE_DIR, "social-reports.json");
 const SOCIAL_ACTIVITIES_STORE_FILE = path.join(DATA_STORE_DIR, "social-activities.json");
 const SOCIAL_NOTIFICATIONS_STORE_FILE = path.join(DATA_STORE_DIR, "social-notifications.json");
+const SOCIAL_POSTS_STORE_FILE = path.join(DATA_STORE_DIR, "social-posts.json");
+const SOCIAL_COMMENTS_STORE_FILE = path.join(DATA_STORE_DIR, "social-comments.json");
 
 type SocialStoreName =
   | "friendships"
@@ -38,7 +42,9 @@ type SocialStoreName =
   | "social_blocks"
   | "social_reports"
   | "social_activities"
-  | "social_notifications";
+  | "social_notifications"
+  | "social_posts"
+  | "social_comments";
 
 const SOCIAL_STORE_COLLECTION = "social_store";
 
@@ -49,6 +55,8 @@ const MAX_ACTIVITY_ROWS = 2000;
 const ACTIVITY_RETENTION_MS = 30 * 24 * 60 * 60 * 1000;
 const MAX_NOTIFICATIONS_ROWS = 4000;
 const NOTIFICATION_RETENTION_MS = 60 * 24 * 60 * 60 * 1000;
+const MAX_POST_ROWS = 4000;
+const MAX_COMMENT_ROWS = 12000;
 
 let writeQueue: Promise<unknown> = Promise.resolve();
 
@@ -202,6 +210,42 @@ function normalizeReportRecord(value: unknown): SocialReportRecord | null {
 
 function isValidReportRecord(value: unknown): value is SocialReportRecord {
   return Boolean(normalizeReportRecord(value));
+}
+
+function isValidPostRecord(value: unknown): value is SocialPostRecord {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  const row = value as Partial<SocialPostRecord>;
+  return (
+    typeof row.id === "string" &&
+    typeof row.authorUserId === "string" &&
+    typeof row.content === "string" &&
+    typeof row.createdAt === "string" &&
+    typeof row.updatedAt === "string" &&
+    row.authorUserId.trim().length > 0 &&
+    row.content.trim().length > 0
+  );
+}
+
+function isValidCommentRecord(value: unknown): value is SocialCommentRecord {
+  if (!value || typeof value !== "object") {
+    return false;
+  }
+
+  const row = value as Partial<SocialCommentRecord>;
+  return (
+    typeof row.id === "string" &&
+    typeof row.postId === "string" &&
+    typeof row.authorUserId === "string" &&
+    typeof row.content === "string" &&
+    typeof row.createdAt === "string" &&
+    typeof row.updatedAt === "string" &&
+    row.postId.trim().length > 0 &&
+    row.authorUserId.trim().length > 0 &&
+    row.content.trim().length > 0
+  );
 }
 
 function isValidNotificationKind(value: string): value is SocialNotificationKind {
@@ -512,6 +556,28 @@ async function writeNotificationRecords(rows: SocialNotificationRecord[]) {
   });
 }
 
+async function readPostRecords() {
+  const rows = await readArrayFile(SOCIAL_POSTS_STORE_FILE, "social_posts");
+  return rows.filter(isValidPostRecord);
+}
+
+async function writePostRecords(rows: SocialPostRecord[]) {
+  await writeArrayFile(SOCIAL_POSTS_STORE_FILE, rows, "social_posts", {
+    errorMessage: "Persistent community post storage is unavailable. Your changes were not saved."
+  });
+}
+
+async function readCommentRecords() {
+  const rows = await readArrayFile(SOCIAL_COMMENTS_STORE_FILE, "social_comments");
+  return rows.filter(isValidCommentRecord);
+}
+
+async function writeCommentRecords(rows: SocialCommentRecord[]) {
+  await writeArrayFile(SOCIAL_COMMENTS_STORE_FILE, rows, "social_comments", {
+    errorMessage: "Persistent community comment storage is unavailable. Your changes were not saved."
+  });
+}
+
 function toSafeTime(value: string | null | undefined) {
   if (!value) {
     return 0;
@@ -582,6 +648,14 @@ function pruneNotifications(rows: SocialNotificationRecord[]) {
   const filtered = rows.filter((entry) => toSafeTime(entry.createdAt) >= cutoff);
   const sorted = sortByCreatedAtDesc(filtered);
   return sorted.slice(0, MAX_NOTIFICATIONS_ROWS);
+}
+
+function prunePosts(rows: SocialPostRecord[]) {
+  return sortByCreatedAtDesc(rows).slice(0, MAX_POST_ROWS);
+}
+
+function pruneComments(rows: SocialCommentRecord[]) {
+  return sortByCreatedAtDesc(rows).slice(0, MAX_COMMENT_ROWS);
 }
 
 function buildCursor(createdAt: string, id: string) {
@@ -1339,5 +1413,168 @@ export async function markAllSocialNotificationsRead(userIdRaw: string) {
       await writeNotificationRecords(pruneNotifications(nextRows));
     }
     return updated;
+  });
+}
+
+export async function listSocialPostRecordsPaginated(input: {
+  limit: number;
+  cursor?: string | null;
+}) {
+  const all = await readPostRecords();
+  return paginateByCursor(all, input.cursor ?? null, input.limit);
+}
+
+export async function getSocialPostRecordById(postIdRaw: string) {
+  const postId = normalizeRelationId(postIdRaw);
+  if (!postId) {
+    return null;
+  }
+
+  const all = await readPostRecords();
+  return all.find((entry) => entry.id === postId) ?? null;
+}
+
+export async function createSocialPostRecord(input: {
+  authorUserId: string;
+  content: string;
+}) {
+  const authorUserId = normalizeUserId(input.authorUserId);
+  const content = String(input.content ?? "").trim();
+  if (!authorUserId || !content) {
+    throw new Error("Invalid social post payload.");
+  }
+
+  return runExclusive(async () => {
+    const all = await readPostRecords();
+    const now = new Date().toISOString();
+    const nextRecord: SocialPostRecord = {
+      id: randomUUID(),
+      authorUserId,
+      content,
+      createdAt: now,
+      updatedAt: now
+    };
+
+    await writePostRecords(prunePosts([nextRecord, ...all]));
+    return nextRecord;
+  });
+}
+
+export async function deleteSocialPostRecord(postIdRaw: string) {
+  const postId = normalizeRelationId(postIdRaw);
+  if (!postId) {
+    return {
+      post: null as SocialPostRecord | null,
+      deletedComments: 0
+    };
+  }
+
+  return runExclusive(async () => {
+    const [posts, comments] = await Promise.all([readPostRecords(), readCommentRecords()]);
+    const post = posts.find((entry) => entry.id === postId) ?? null;
+    if (!post) {
+      return {
+        post: null,
+        deletedComments: 0
+      };
+    }
+
+    const nextPosts = posts.filter((entry) => entry.id !== postId);
+    const deletedComments = comments.filter((entry) => entry.postId === postId).length;
+    const nextComments = comments.filter((entry) => entry.postId !== postId);
+
+    await Promise.all([writePostRecords(nextPosts), writeCommentRecords(nextComments)]);
+    return {
+      post,
+      deletedComments
+    };
+  });
+}
+
+export async function listSocialCommentRecordsByPostPaginated(input: {
+  postId: string;
+  limit: number;
+  cursor?: string | null;
+}) {
+  const postId = normalizeRelationId(input.postId);
+  if (!postId) {
+    return {
+      items: [] as SocialCommentRecord[],
+      nextCursor: null as string | null
+    };
+  }
+
+  const all = await readCommentRecords();
+  const filtered = all.filter((entry) => entry.postId === postId);
+  return paginateByCursor(filtered, input.cursor ?? null, input.limit);
+}
+
+export async function listSocialCommentRecordsByPostIds(postIdsRaw: string[]) {
+  const postIds = new Set(
+    postIdsRaw.map((value) => normalizeRelationId(value)).filter((value) => value.length > 0)
+  );
+  if (postIds.size === 0) {
+    return [] as SocialCommentRecord[];
+  }
+
+  const all = await readCommentRecords();
+  return sortByCreatedAtDesc(all.filter((entry) => postIds.has(entry.postId)));
+}
+
+export async function getSocialCommentRecordById(commentIdRaw: string) {
+  const commentId = normalizeRelationId(commentIdRaw);
+  if (!commentId) {
+    return null;
+  }
+
+  const all = await readCommentRecords();
+  return all.find((entry) => entry.id === commentId) ?? null;
+}
+
+export async function createSocialCommentRecord(input: {
+  postId: string;
+  authorUserId: string;
+  content: string;
+}) {
+  const postId = normalizeRelationId(input.postId);
+  const authorUserId = normalizeUserId(input.authorUserId);
+  const content = String(input.content ?? "").trim();
+  if (!postId || !authorUserId || !content) {
+    throw new Error("Invalid social comment payload.");
+  }
+
+  return runExclusive(async () => {
+    const all = await readCommentRecords();
+    const now = new Date().toISOString();
+    const nextRecord: SocialCommentRecord = {
+      id: randomUUID(),
+      postId,
+      authorUserId,
+      content,
+      createdAt: now,
+      updatedAt: now
+    };
+
+    await writeCommentRecords(pruneComments([nextRecord, ...all]));
+    return nextRecord;
+  });
+}
+
+export async function deleteSocialCommentRecord(commentIdRaw: string) {
+  const commentId = normalizeRelationId(commentIdRaw);
+  if (!commentId) {
+    return null;
+  }
+
+  return runExclusive(async () => {
+    const all = await readCommentRecords();
+    const comment = all.find((entry) => entry.id === commentId) ?? null;
+    if (!comment) {
+      return null;
+    }
+
+    const nextRows = all.filter((entry) => entry.id !== commentId);
+    await writeCommentRecords(nextRows);
+    return comment;
   });
 }

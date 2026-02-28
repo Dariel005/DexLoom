@@ -13,6 +13,7 @@ export default function LoginPage() {
     () => searchParams.get("callbackUrl") || "/",
     [searchParams]
   );
+  const authError = searchParams.get("error");
   const [providers, setProviders] = useState<Record<string, ClientSafeProvider> | null>(null);
   const [providersLoaded, setProvidersLoaded] = useState(false);
   const [providersLoadError, setProvidersLoadError] = useState<string | null>(null);
@@ -286,6 +287,12 @@ export default function LoginPage() {
               {providersLoadError ? (
                 <p className="mt-2 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700">
                   {providersLoadError}
+                </p>
+              ) : null}
+
+              {authError === "AccessDenied" ? (
+                <p className="mt-2 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-700">
+                  This account cannot sign in.
                 </p>
               ) : null}
             </div>

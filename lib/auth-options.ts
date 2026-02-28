@@ -2,10 +2,11 @@ import { type NextAuthOptions } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 import { validateCredentialsLogin } from "@/lib/credentials-auth";
-import { isCreatorUserId } from "@/lib/creator-profile";
 import { sendWelcomeEmail } from "@/lib/welcome-email";
 import { getOrCreateUserProfile } from "@/lib/profile-service";
-import { upsertGoogleUser } from "@/lib/user-store";
+import { getResolvedUserAccessState, resolveUserRoleById } from "@/lib/role-service";
+import { getRolePermissions } from "@/lib/roles";
+import { findUserByEmail, findUserById, upsertGoogleUser } from "@/lib/user-store";
 
 const credentialsProvider = Credentials({
   name: "Email & Password",
@@ -30,7 +31,9 @@ const credentialsProvider = Credentials({
       email: user.email,
       name: user.name,
       image: user.image,
-      provider: user.provider
+      provider: user.provider,
+      role: user.role,
+      suspendedAt: user.suspendedAt
     };
   }
 });
@@ -53,6 +56,21 @@ export const authOptions: NextAuthOptions = {
   },
   providers,
   callbacks: {
+    async signIn({ user, account }) {
+      if (account?.provider === "google") {
+        const email = typeof user.email === "string" ? user.email : "";
+        if (!email) {
+          return false;
+        }
+
+        const existingUser = await findUserByEmail(email);
+        if (existingUser?.suspendedAt) {
+          return false;
+        }
+      }
+
+      return true;
+    },
     async jwt({ token, user, account, trigger, session }) {
       async function hydrateTokenFromProfile(userId: string) {
         try {
@@ -66,6 +84,13 @@ export const authOptions: NextAuthOptions = {
         } catch {
           // Keep auth resilient if profile storage is unavailable.
         }
+      }
+
+      async function hydrateTokenFromAccess(userId: string) {
+        const access = await getResolvedUserAccessState(userId);
+        token.role = access?.role ?? (await resolveUserRoleById(userId));
+        token.isCreator = access?.isCreator ?? token.role === "creator";
+        token.suspendedAt = access?.suspendedAt ?? null;
       }
 
       if (account?.provider === "google" && token.email) {
@@ -89,6 +114,7 @@ export const authOptions: NextAuthOptions = {
         token.name = persistedUser.name;
         token.picture = persistedUser.image ?? null;
         await hydrateTokenFromProfile(persistedUser.id);
+        await hydrateTokenFromAccess(persistedUser.id);
       } else if (user) {
         token.uid = user.id;
         token.provider =
@@ -102,12 +128,14 @@ export const authOptions: NextAuthOptions = {
           token.picture = null;
         }
         await hydrateTokenFromProfile(user.id);
+        await hydrateTokenFromAccess(user.id);
       } else if (
         typeof token.uid === "string" &&
         token.uid.trim().length > 0 &&
         (token.picture === undefined || token.picture === null)
       ) {
         await hydrateTokenFromProfile(token.uid);
+        await hydrateTokenFromAccess(token.uid);
       }
 
       if (trigger === "update" && session?.user) {
@@ -117,12 +145,15 @@ export const authOptions: NextAuthOptions = {
         if (typeof session.user.image === "string" || session.user.image === null) {
           token.picture = session.user.image;
         }
-      }
 
-      token.isCreator =
-        typeof token.uid === "string" && token.uid.trim().length > 0
-          ? await isCreatorUserId(token.uid)
-          : false;
+        if (typeof token.uid === "string" && token.uid.trim().length > 0) {
+          const refreshedUser = await findUserById(token.uid);
+          if (refreshedUser) {
+            token.email = refreshedUser.email;
+          }
+          await hydrateTokenFromAccess(token.uid);
+        }
+      }
 
       return token;
     },
@@ -136,6 +167,12 @@ export const authOptions: NextAuthOptions = {
             ? token.picture
             : session.user.image;
         session.user.isCreator = token.isCreator === true;
+        session.user.role = token.role ?? "member";
+        session.user.permissions = getRolePermissions(session.user.role);
+        session.user.suspendedAt =
+          typeof token.suspendedAt === "string" || token.suspendedAt === null
+            ? token.suspendedAt
+            : null;
       }
 
       return session;

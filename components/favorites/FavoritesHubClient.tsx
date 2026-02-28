@@ -212,6 +212,7 @@ export function FavoritesHubClient() {
             <CreatorName
               name={session.user.name ?? session.user.email ?? "Trainer"}
               isCreator={session.user.isCreator === true}
+              role={session.user.role}
               compact
             />
           </p>

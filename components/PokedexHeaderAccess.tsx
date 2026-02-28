@@ -4,6 +4,7 @@ import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
 import { type ReactNode } from "react";
 import { CreatorName } from "@/components/CreatorName";
+import { useRole } from "@/components/RoleContext";
 import { RouteTransitionLink } from "@/components/RouteTransitionLink";
 
 import { useTranslation } from "@/hooks/useTranslation";
@@ -22,6 +23,7 @@ export function PokedexHeaderAccess({
   tone = "light"
 }: PokedexHeaderAccessProps) {
   const { data: session, status } = useSession();
+  const { permissions } = useRole();
   const { t } = useTranslation();
   const avatarSrc = resolveAvatarSrc(session?.user?.image) ?? "/images/characters/red.svg";
 
@@ -62,6 +64,7 @@ export function PokedexHeaderAccess({
               <CreatorName
                 name={session.user.name ?? session.user.email ?? "Trainer"}
                 isCreator={session.user.isCreator === true}
+                role={session.user.role}
                 className="pixel-font pokedex-header-creator-name"
                 badgeClassName="pixel-font pokedex-header-creator-badge"
                 compact
@@ -75,6 +78,14 @@ export function PokedexHeaderAccess({
             >
               Profile
             </RouteTransitionLink>
+            {permissions.accessAdmin ? (
+              <RouteTransitionLink
+                href="/admin"
+                className="explorer-trainer-btn pokedex-header-action-btn pokedex-header-action-btn-profile explorer-trainer-btn-profile gbc-nav-link pixel-font rounded-lg px-2.5 py-1 text-[9px] uppercase tracking-[0.08em]"
+              >
+                Admin
+              </RouteTransitionLink>
+            ) : null}
             <button
               type="button"
               onClick={() => signOut({ callbackUrl: "/" })}

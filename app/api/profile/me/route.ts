@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 import { jsonErrorResponse } from "@/lib/api-error-response";
 import { getServerAuthUser } from "@/lib/auth-session";
-import { isCreatorUserId } from "@/lib/creator-profile";
 import { isProfileFeatureEnabled } from "@/lib/firebase-admin";
 import { getOrCreateUserProfile, updateUserProfile } from "@/lib/profile-service";
 import { parseProfileUpdatePayload } from "@/lib/profile-validation";
+import { enrichProfileWithRole } from "@/lib/role-service";
 
 export const runtime = "nodejs";
 
@@ -24,10 +24,7 @@ export async function GET() {
 
   try {
     const profile = await getOrCreateUserProfile(user.id);
-    return NextResponse.json({
-      ...profile,
-      isCreator: await isCreatorUserId(profile.userId)
-    });
+    return NextResponse.json(await enrichProfileWithRole(profile));
   } catch (error) {
     return jsonErrorResponse(error, "Unable to load profile.", 500);
   }
@@ -59,10 +56,7 @@ export async function PUT(request: Request) {
       showFavoritesOnPublic: current.showFavoritesOnPublic
     });
     const profile = await updateUserProfile(user.id, parsed);
-    return NextResponse.json({
-      ...profile,
-      isCreator: await isCreatorUserId(profile.userId)
-    });
+    return NextResponse.json(await enrichProfileWithRole(profile));
   } catch (error) {
     return jsonErrorResponse(error, "Unable to update profile.", 500);
   }

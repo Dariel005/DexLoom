@@ -1,3 +1,5 @@
+import type { UserRole } from "@/lib/roles";
+
 export type FriendshipStatus = "pending" | "accepted";
 
 export type FriendshipRelationStatus =
@@ -30,6 +32,7 @@ export interface FriendshipRecord {
 export interface SocialUserSummary {
   userId: string;
   displayName: string;
+  role: UserRole;
   avatarUrl: string | null;
   bio: string | null;
   visibility: "private" | "public";
@@ -110,6 +113,23 @@ export interface SocialReportRecord {
   reviewedByUserId: string | null;
   reviewNotes: string | null;
   createdAt: string;
+}
+
+export interface SocialPostRecord {
+  id: string;
+  authorUserId: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface SocialCommentRecord {
+  id: string;
+  postId: string;
+  authorUserId: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export type SocialActivityKind =
@@ -214,5 +234,39 @@ export interface SocialReportAdminView {
 
 export interface SocialReportListPayload {
   items: SocialReportAdminView[];
+  nextCursor: string | null;
+}
+
+export interface SocialCommentView {
+  id: string;
+  postId: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  author: SocialUserSummary | null;
+  canDelete: boolean;
+}
+
+export interface SocialPostView {
+  id: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  author: SocialUserSummary | null;
+  canDelete: boolean;
+  commentCount: number;
+  comments: SocialCommentView[];
+  commentsNextCursor: string | null;
+}
+
+export interface SocialPostListPayload {
+  items: SocialPostView[];
+  nextCursor: string | null;
+}
+
+export interface SocialCommentListPayload {
+  postId: string;
+  items: SocialCommentView[];
+  total: number;
   nextCursor: string | null;
 }

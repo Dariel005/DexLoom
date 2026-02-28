@@ -32,6 +32,16 @@ export async function POST(request: Request) {
     );
   }
 
+  if (result.status === "suspended") {
+    return NextResponse.json(
+      {
+        code: "ACCOUNT_SUSPENDED",
+        message: "This account has been permanently suspended."
+      },
+      { status: 403 }
+    );
+  }
+
   if (result.status !== "success") {
     return NextResponse.json(
       { code: "INVALID_CREDENTIALS", message: "Invalid email or password." },

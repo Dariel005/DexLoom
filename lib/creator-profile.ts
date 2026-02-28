@@ -1,8 +1,9 @@
 import { findUserByEmail, listStoredUsers } from "@/lib/user-store";
+import { normalizeUserRole } from "@/lib/roles";
 
 const CREATOR_CACHE_TTL_MS = 60_000;
 
-let creatorUserIdCache: string | null = null;
+let creatorUserIdsCache = new Set<string>();
 let creatorCacheExpiresAt = 0;
 
 function readEnvValue(...keys: string[]) {
@@ -15,23 +16,34 @@ function readEnvValue(...keys: string[]) {
   return "";
 }
 
-async function resolveCreatorUserIdUncached() {
+async function resolveCreatorUserIdsUncached() {
+  const creatorIds = new Set<string>();
   const explicitUserId = readEnvValue("CREATOR_USER_ID", "NEXT_PUBLIC_CREATOR_USER_ID");
   if (explicitUserId) {
-    return explicitUserId;
+    creatorIds.add(explicitUserId);
   }
 
   const explicitEmail = readEnvValue("CREATOR_EMAIL", "NEXT_PUBLIC_CREATOR_EMAIL");
   if (explicitEmail) {
     const matchedUser = await findUserByEmail(explicitEmail);
     if (matchedUser?.id) {
-      return matchedUser.id;
+      creatorIds.add(matchedUser.id);
     }
   }
 
   const users = await listStoredUsers();
+  users.forEach((user) => {
+    if (normalizeUserRole(user.role) === "creator") {
+      creatorIds.add(user.id);
+    }
+  });
+
+  if (creatorIds.size > 0) {
+    return creatorIds;
+  }
+
   if (users.length === 0) {
-    return null;
+    return creatorIds;
   }
 
   const sortedByOldest = users.slice().sort((a, b) => {
@@ -49,18 +61,27 @@ async function resolveCreatorUserIdUncached() {
     return left - right;
   });
 
-  return sortedByOldest[0]?.id ?? null;
+  if (sortedByOldest[0]?.id) {
+    creatorIds.add(sortedByOldest[0].id);
+  }
+
+  return creatorIds;
+}
+
+async function getCreatorUserIds() {
+  const now = Date.now();
+  if (now < creatorCacheExpiresAt) {
+    return creatorUserIdsCache;
+  }
+
+  creatorUserIdsCache = await resolveCreatorUserIdsUncached();
+  creatorCacheExpiresAt = now + CREATOR_CACHE_TTL_MS;
+  return creatorUserIdsCache;
 }
 
 export async function getCreatorUserId() {
-  const now = Date.now();
-  if (now < creatorCacheExpiresAt) {
-    return creatorUserIdCache;
-  }
-
-  creatorUserIdCache = await resolveCreatorUserIdUncached();
-  creatorCacheExpiresAt = now + CREATOR_CACHE_TTL_MS;
-  return creatorUserIdCache;
+  const creatorIds = await getCreatorUserIds();
+  return creatorIds.values().next().value ?? null;
 }
 
 export async function isCreatorUserId(userId: string | null | undefined) {
@@ -69,7 +90,6 @@ export async function isCreatorUserId(userId: string | null | undefined) {
     return false;
   }
 
-  const creatorUserId = await getCreatorUserId();
-  return Boolean(creatorUserId && creatorUserId === normalizedUserId);
+  const creatorIds = await getCreatorUserIds();
+  return creatorIds.has(normalizedUserId);
 }
-

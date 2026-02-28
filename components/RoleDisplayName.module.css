@@ -1,0 +1,221 @@
+.shell {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  isolation: isolate;
+}
+
+.compactShell {
+  gap: 0.4rem;
+}
+
+.text {
+  position: relative;
+  display: inline-block;
+  line-height: 1;
+  text-rendering: geometricPrecision;
+  will-change: transform, opacity, filter;
+}
+
+.compactText {
+  font-size: 0.92em;
+}
+
+.effects {
+  position: absolute;
+  inset: -0.2em -0.16em;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.badge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 1.4rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  padding: 0.22rem 0.58rem;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 24px rgba(12, 18, 28, 0.18);
+}
+
+.compactBadge {
+  min-height: 1.2rem;
+  padding: 0.18rem 0.46rem;
+  font-size: 0.55rem;
+}
+
+.vipText {
+  background-image: linear-gradient(120deg, #ffbf66 0%, #ff7d45 38%, #ff4d2d 72%, #8b0d04 100%);
+  background-size: 200% 200%;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: drop-shadow(0 0 0.35rem rgba(255, 123, 61, 0.45));
+  animation: vipGradient 4.8s linear infinite;
+}
+
+.creatorText {
+  background-image: linear-gradient(120deg, #f7fbff 0%, #bbd6ff 38%, #48b2ff 68%, #eff8ff 100%);
+  background-size: 200% 200%;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter:
+    drop-shadow(0 0 0.24rem rgba(255, 255, 255, 0.78))
+    drop-shadow(0 0 0.68rem rgba(77, 180, 255, 0.44));
+  animation: creatorPulse 2.2s ease-in-out infinite, creatorGradient 5.2s linear infinite;
+}
+
+.betaText {
+  font-family:
+    ui-monospace,
+    "SFMono-Regular",
+    "Cascadia Code",
+    "Consolas",
+    "Liberation Mono",
+    monospace;
+  color: #87ffb2;
+  text-shadow: 0 0 0.5rem rgba(88, 255, 174, 0.35);
+}
+
+.moderatorText {
+  background-image: linear-gradient(120deg, #f8f8f8 0%, #d6dde4 32%, #9ca7b7 55%, #f7fafc 100%);
+  background-size: 200% 200%;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: drop-shadow(0 0 0.28rem rgba(199, 209, 219, 0.42));
+  animation: moderatorSheen 4.4s linear infinite;
+}
+
+.vipBadge {
+  color: #fff5eb;
+  background: linear-gradient(120deg, rgba(255, 120, 57, 0.28), rgba(120, 11, 4, 0.54));
+}
+
+.creatorBadge {
+  color: #eef8ff;
+  background: linear-gradient(120deg, rgba(55, 137, 255, 0.26), rgba(6, 38, 96, 0.64));
+  box-shadow: 0 0 1.1rem rgba(63, 159, 255, 0.24);
+}
+
+.betaBadge {
+  color: #bcffd4;
+  background: linear-gradient(120deg, rgba(18, 94, 48, 0.3), rgba(8, 34, 18, 0.66));
+}
+
+.moderatorBadge {
+  color: #f8fafc;
+  background: linear-gradient(120deg, rgba(173, 182, 193, 0.3), rgba(79, 89, 107, 0.72));
+}
+
+.vipParticle {
+  position: absolute;
+  bottom: -0.1rem;
+  width: 0.48rem;
+  height: 0.48rem;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(255, 230, 188, 0.88), rgba(255, 120, 42, 0.6) 58%, transparent 72%);
+  filter: blur(0.16rem);
+  opacity: 0.56;
+  will-change: transform, opacity;
+}
+
+.bolt {
+  position: absolute;
+  top: 50%;
+  height: 0.14rem;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.94) 16%, rgba(118, 195, 255, 0.94) 48%, transparent 100%);
+  box-shadow: 0 0 0.95rem rgba(112, 192, 255, 0.7);
+  will-change: transform, opacity;
+}
+
+.scanLine {
+  position: absolute;
+  inset: -0.18em 0;
+  background: linear-gradient(180deg, transparent, rgba(95, 255, 165, 0.18), transparent);
+  mix-blend-mode: screen;
+}
+
+.gear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  color: #7df8a9;
+  filter: drop-shadow(0 0 0.4rem rgba(102, 255, 169, 0.38));
+}
+
+.compactGear {
+  width: 0.85rem;
+  height: 0.85rem;
+}
+
+.moderatorGlow {
+  position: absolute;
+  inset: 58% -0.08em -0.12em;
+  background: linear-gradient(180deg, transparent, rgba(199, 209, 219, 0.22), transparent);
+  filter: blur(0.28rem);
+  opacity: 0.72;
+}
+
+@keyframes vipGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+@keyframes creatorGradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+@keyframes creatorPulse {
+  0%,
+  100% {
+    filter:
+      drop-shadow(0 0 0.2rem rgba(255, 255, 255, 0.62))
+      drop-shadow(0 0 0.55rem rgba(75, 178, 255, 0.32));
+  }
+  50% {
+    filter:
+      drop-shadow(0 0 0.36rem rgba(255, 255, 255, 0.94))
+      drop-shadow(0 0 0.92rem rgba(75, 178, 255, 0.58));
+  }
+}
+
+@keyframes moderatorSheen {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vipText,
+  .creatorText,
+  .moderatorText {
+    animation: none;
+  }
+}

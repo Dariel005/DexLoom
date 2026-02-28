@@ -1,5 +1,6 @@
 ﻿import { getProfileRecord } from "@/lib/profile-repository";
 import { getUserProfileForViewer } from "@/lib/profile-service";
+import { resolveUserRoleById } from "@/lib/role-service";
 import {
   acceptIncomingFriendshipRecord,
   appendSocialActivityRecord,
@@ -324,7 +325,11 @@ async function resolveBaseSocialUserSummary(userIdRaw: string): Promise<Omit<Soc
     return null;
   }
 
-  const [user, profile] = await Promise.all([findUserById(userId), getProfileRecord(userId)]);
+  const [user, profile, role] = await Promise.all([
+    findUserById(userId),
+    getProfileRecord(userId),
+    resolveUserRoleById(userId)
+  ]);
   if (!user && !profile) {
     return null;
   }
@@ -332,6 +337,7 @@ async function resolveBaseSocialUserSummary(userIdRaw: string): Promise<Omit<Soc
   return {
     userId,
     displayName: fallbackDisplayName(userId, profile?.displayName ?? user?.name),
+    role,
     avatarUrl: profile?.avatarUrl ?? user?.image ?? null,
     bio: profile?.bio ?? null,
     visibility: profile?.visibility ?? "private",

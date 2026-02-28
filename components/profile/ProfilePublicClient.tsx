@@ -336,6 +336,7 @@ export function ProfilePublicClient({ profileId }: ProfilePublicClientProps) {
                 <CreatorName
                   name={profile.displayName}
                   isCreator={profile.isCreator === true}
+                  role={profile.role}
                   className="pixel-font text-[15px] uppercase tracking-[0.12em] text-black/84"
                 />
                 <p className="profile-identity-bio profile-trainer-bio text-sm text-black/74">{profile.bio || "No bio available."}</p>
@@ -639,6 +640,7 @@ export function ProfilePublicClient({ profileId }: ProfilePublicClientProps) {
               <CreatorName
                 name={session.user.name ?? session.user.email ?? "Trainer"}
                 isCreator={session.user.isCreator === true}
+                role={session.user.role}
                 compact
               />
             </>

@@ -814,6 +814,26 @@
   ) !important;
 }
 
+.social-community-panel {
+  contain: layout paint;
+  content-visibility: auto;
+  contain-intrinsic-size: 520px 720px;
+}
+
+.social-community-card {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.72),
+    0 12px 16px -18px rgba(35, 88, 58, 0.42);
+}
+
+.social-community-comment {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.62);
+}
+
+.social-community-textarea {
+  resize: vertical;
+}
+
 @media (max-width: 1024px) {
   .social-arcade-top-grid {
     grid-template-columns: minmax(0, 1fr);

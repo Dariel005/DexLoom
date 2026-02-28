@@ -12,6 +12,7 @@ import { assertCanUseUnsafeLocalPersistence } from "@/lib/durable-storage";
 import { normalizeEmailAddress, sanitizeDisplayName } from "@/lib/auth-validation";
 import { DEFAULT_TRAINER_AVATAR_URL, isGoogleProfileImageUrl } from "@/lib/default-avatar";
 import { readPostgresJsonArray, writePostgresJsonArray } from "@/lib/postgres-json-store";
+import { normalizeUserRole, type UserRole } from "@/lib/roles";
 import { resolveDataStoreDir } from "@/lib/runtime-storage";
 
 export type AuthProviderKind = "credentials" | "google" | "hybrid";
@@ -22,9 +23,12 @@ export interface StoredUser {
   name: string;
   image: string | null;
   provider: AuthProviderKind;
+  role: UserRole;
   passwordHash: string | null;
   emailVerified: boolean;
   emailVerifiedAt: string | null;
+  suspendedAt: string | null;
+  suspensionReason: string | null;
   createdAt: string;
   updatedAt: string;
 }
@@ -81,6 +85,16 @@ function normalizeEmailVerified(value: unknown) {
   return typeof value === "boolean" ? value : true;
 }
 
+function normalizeOptionalIsoDate(value: unknown) {
+  const raw = typeof value === "string" ? value.trim() : "";
+  if (!raw) {
+    return null;
+  }
+
+  const parsed = Date.parse(raw);
+  return Number.isNaN(parsed) ? null : new Date(parsed).toISOString();
+}
+
 function normalizeStoredUser(value: unknown): StoredUser | null {
   if (!value || typeof value !== "object") {
     return null;
@@ -111,9 +125,15 @@ function normalizeStoredUser(value: unknown): StoredUser | null {
     name: sanitizeDisplayName(typeof row.name === "string" ? row.name : "", email),
     image: typeof row.image === "string" ? row.image : row.image === null ? null : null,
     provider: isValidProvider(row.provider) ? row.provider : "credentials",
+    role: normalizeUserRole((row as { role?: unknown }).role),
     passwordHash: typeof row.passwordHash === "string" ? row.passwordHash : null,
     emailVerified,
     emailVerifiedAt,
+    suspendedAt: normalizeOptionalIsoDate((row as { suspendedAt?: unknown }).suspendedAt),
+    suspensionReason:
+      typeof (row as { suspensionReason?: unknown }).suspensionReason === "string"
+        ? (row as { suspensionReason?: string }).suspensionReason?.trim().slice(0, 240) ?? null
+        : null,
     createdAt,
     updatedAt
   };
@@ -493,9 +513,12 @@ export async function registerCredentialsUser(input: {
       name: resolvedName,
       image: null,
       provider: "credentials",
+      role: "member",
       passwordHash: input.passwordHash,
       emailVerified: false,
       emailVerifiedAt: null,
+      suspendedAt: null,
+      suspensionReason: null,
       createdAt: now,
       updatedAt: now
     };
@@ -556,9 +579,12 @@ export async function upsertGoogleUser(input: {
       name: resolvedName,
       image: DEFAULT_TRAINER_AVATAR_URL,
       provider: "google",
+      role: "member",
       passwordHash: null,
       emailVerified: true,
       emailVerifiedAt: now,
+      suspendedAt: null,
+      suspensionReason: null,
       createdAt: now,
       updatedAt: now
     };
@@ -604,6 +630,93 @@ export async function updateStoredUserProfile(
 
     if (input.image !== undefined) {
       nextUser.image = input.image ?? null;
+    }
+
+    nextUser.updatedAt = new Date().toISOString();
+
+    try {
+      wroteCloudUser = await writeCloudUser(nextUser);
+    } catch {
+      // Keep local write as source of truth when cloud sync fails.
+    }
+
+    upsertUserInList(users, nextUser);
+    await writeLocalUsers(users, { skipUnsafeLocalWrite: wroteCloudUser });
+    return nextUser;
+  });
+}
+
+export async function updateStoredUserAdminFields(
+  userId: string,
+  input: {
+    email?: string;
+    name?: string | null;
+    image?: string | null;
+    role?: UserRole;
+    suspendedAt?: string | null;
+    suspensionReason?: string | null;
+  }
+) {
+  const normalizedId = String(userId ?? "").trim();
+  if (!normalizedId) {
+    return null;
+  }
+
+  return runExclusive(async () => {
+    const users = await readLocalUsers();
+    const cloudUser = await readCloudUserById(normalizedId);
+    let wroteCloudUser = false;
+    const user = cloudUser ?? users.find((entry) => entry.id === normalizedId);
+    if (!user) {
+      return null;
+    }
+
+    const nextUser: StoredUser = { ...user };
+
+    if (input.email !== undefined) {
+      const nextEmail = normalizeEmailAddress(input.email);
+      if (!nextEmail) {
+        throw new Error("Email cannot be empty.");
+      }
+
+      const localConflict = users.find(
+        (entry) => entry.id !== normalizedId && entry.email === nextEmail
+      );
+      const cloudConflict = await readCloudUserByEmail(nextEmail);
+      if (
+        localConflict ||
+        (cloudConflict && cloudConflict.id !== normalizedId)
+      ) {
+        throw new Error("Another account already uses that email address.");
+      }
+
+      nextUser.email = nextEmail;
+      nextUser.name = sanitizeDisplayName(nextUser.name, nextEmail);
+    }
+
+    if (input.name !== undefined) {
+      nextUser.name = sanitizeDisplayName(input.name ?? "", nextUser.email);
+    }
+
+    if (input.image !== undefined) {
+      const nextImage = typeof input.image === "string" ? input.image.trim() : "";
+      nextUser.image = nextImage ? nextImage : null;
+    }
+
+    if (input.role !== undefined) {
+      nextUser.role = normalizeUserRole(input.role, nextUser.role);
+    }
+
+    if (input.suspendedAt !== undefined) {
+      nextUser.suspendedAt = normalizeOptionalIsoDate(input.suspendedAt);
+    }
+
+    if (input.suspensionReason !== undefined) {
+      const nextReason =
+        typeof input.suspensionReason === "string"
+          ? input.suspensionReason.trim().slice(0, 240)
+          : "";
+      nextUser.suspensionReason = nextReason ? nextReason : null;
     }
 
     nextUser.updatedAt = new Date().toISOString();

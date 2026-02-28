@@ -3,11 +3,13 @@
 import Image from "next/image";
 import { signOut, useSession } from "next-auth/react";
 import { CreatorName } from "@/components/CreatorName";
+import { useRole } from "@/components/RoleContext";
 import { RouteTransitionLink } from "@/components/RouteTransitionLink";
 import { resolveAvatarSrc } from "@/lib/avatar-url";
 
 export function AuthTopBar() {
   const { data: session, status } = useSession();
+  const { permissions } = useRole();
   const avatarSrc = resolveAvatarSrc(session?.user?.image) ?? "/images/characters/red.svg";
 
   return (
@@ -36,6 +38,7 @@ export function AuthTopBar() {
               <CreatorName
                 name={session.user.name ?? session.user.email ?? "Trainer"}
                 isCreator={session.user.isCreator === true}
+                role={session.user.role}
                 compact
               />{" "}
               <span className="text-black/45">
@@ -49,6 +52,15 @@ export function AuthTopBar() {
             >
               Profile
             </RouteTransitionLink>
+            {permissions.accessAdmin ? (
+              <RouteTransitionLink
+                href="/admin"
+                exitDurationMs={220}
+                className="gbc-nav-link rounded-lg border border-black/25 bg-white/75 px-3 py-1 text-xs text-black/75 transition hover:bg-white"
+              >
+                Admin
+              </RouteTransitionLink>
+            ) : null}
             <button
               type="button"
               onClick={() => signOut({ callbackUrl: "/" })}

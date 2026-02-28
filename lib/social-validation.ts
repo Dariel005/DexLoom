@@ -26,6 +26,8 @@ const MAX_QUERY = 64;
 const MAX_CURSOR = 96;
 const MAX_REPORT_NOTES = 300;
 const MAX_REVIEW_NOTES = 400;
+const MAX_POST_CONTENT = 560;
+const MAX_COMMENT_CONTENT = 320;
 
 function asString(value: unknown) {
   return typeof value === "string" ? value : "";
@@ -33,6 +35,10 @@ function asString(value: unknown) {
 
 function clampString(value: string, maxLength: number) {
   return value.trim().slice(0, maxLength);
+}
+
+function normalizeContent(value: string, maxLength: number) {
+  return value.replace(/\r\n?/g, "\n").trim().slice(0, maxLength);
 }
 
 export function parseFriendshipActionPayload(payload: unknown): ParsedFriendshipActionPayload {
@@ -210,4 +216,81 @@ export function parseSocialNotificationPayload(payload: unknown) {
     action: action as SocialNotificationAction,
     notificationId
   };
+}
+
+export function parseSocialPostListParams(searchParams: URLSearchParams) {
+  const { limit, cursor } = parsePaginationParams(searchParams, { limit: 12 });
+  const commentsLimitRaw = Number(searchParams.get("commentsLimit"));
+  const commentsLimit =
+    Number.isFinite(commentsLimitRaw) && commentsLimitRaw > 0
+      ? Math.max(1, Math.min(8, Math.floor(commentsLimitRaw)))
+      : 3;
+
+  return {
+    limit,
+    cursor,
+    commentsLimit
+  };
+}
+
+export function parseSocialPostCreatePayload(payload: unknown) {
+  const body = (payload ?? {}) as Record<string, unknown>;
+  const content = normalizeContent(asString(body.content), MAX_POST_CONTENT);
+  if (!content) {
+    throw new Error("Post content cannot be empty.");
+  }
+
+  return { content };
+}
+
+export function parseSocialPostDeletePayload(payload: unknown) {
+  const body = (payload ?? {}) as Record<string, unknown>;
+  const postId = clampString(asString(body.postId), MAX_RELATION_ID);
+  if (!postId) {
+    throw new Error("Missing post id.");
+  }
+
+  return { postId };
+}
+
+export function parseSocialCommentListParams(searchParams: URLSearchParams) {
+  const { limit, cursor } = parsePaginationParams(searchParams, { limit: 8 });
+  const postId = clampString(asString(searchParams.get("postId")), MAX_RELATION_ID);
+  if (!postId) {
+    throw new Error("Missing post id.");
+  }
+
+  return {
+    postId,
+    limit,
+    cursor
+  };
+}
+
+export function parseSocialCommentCreatePayload(payload: unknown) {
+  const body = (payload ?? {}) as Record<string, unknown>;
+  const postId = clampString(asString(body.postId), MAX_RELATION_ID);
+  const content = normalizeContent(asString(body.content), MAX_COMMENT_CONTENT);
+
+  if (!postId) {
+    throw new Error("Missing post id.");
+  }
+  if (!content) {
+    throw new Error("Comment content cannot be empty.");
+  }
+
+  return {
+    postId,
+    content
+  };
+}
+
+export function parseSocialCommentDeletePayload(payload: unknown) {
+  const body = (payload ?? {}) as Record<string, unknown>;
+  const commentId = clampString(asString(body.commentId), MAX_RELATION_ID);
+  if (!commentId) {
+    throw new Error("Missing comment id.");
+  }
+
+  return { commentId };
 }

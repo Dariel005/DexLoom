@@ -7,7 +7,9 @@ import {
 import { LazyMotion, MotionConfig, domAnimation } from "framer-motion";
 import { SessionProvider } from "next-auth/react";
 import { useEffect, useState } from "react";
+import { AnalyticsTracker } from "@/components/AnalyticsTracker";
 import { FavoriteAuthToast } from "@/components/FavoriteAuthToast";
+import { RoleProvider } from "@/components/RoleContext";
 
 interface LongTaskObserver extends PerformanceObserver {
   observe(options: { entryTypes: string[] }): void;
@@ -198,10 +200,13 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <LazyMotion features={domAnimation}>
       <MotionConfig reducedMotion="user">
         <SessionProvider refetchOnWindowFocus={false} refetchInterval={0}>
-          <QueryClientProvider client={queryClient}>
-            {children}
-            <FavoriteAuthToast />
-          </QueryClientProvider>
+          <RoleProvider>
+            <QueryClientProvider client={queryClient}>
+              {children}
+              <AnalyticsTracker />
+              <FavoriteAuthToast />
+            </QueryClientProvider>
+          </RoleProvider>
         </SessionProvider>
       </MotionConfig>
     </LazyMotion>

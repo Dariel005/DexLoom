@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 import { getServerAuthUser } from "@/lib/auth-session";
-import { isCreatorUserId } from "@/lib/creator-profile";
 import { isProfileFeatureEnabled } from "@/lib/firebase-admin";
 import { getUserProfileForViewer, listPublicFavorites } from "@/lib/profile-service";
+import { enrichProfileWithRole } from "@/lib/role-service";
 import { getBlockRelationForUsers } from "@/lib/social-service";
 
 export const runtime = "nodejs";
@@ -34,10 +34,7 @@ export async function GET(request: Request, context: RouteContext) {
   if (!profile) {
     return NextResponse.json({ message: "Profile not found." }, { status: 404 });
   }
-  const profileWithCreatorFlag = {
-    ...profile,
-    isCreator: await isCreatorUserId(profile.userId)
-  };
+  const profileWithCreatorFlag = await enrichProfileWithRole(profile);
 
   if (!includeFavorites) {
     return NextResponse.json(profileWithCreatorFlag);

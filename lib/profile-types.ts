@@ -1,3 +1,5 @@
+import type { UserRole } from "@/lib/roles";
+
 export type ProfileVisibility = "private" | "public";
 
 export type FavoriteEntityType =
@@ -23,6 +25,10 @@ export interface UserProfileRecord {
   bio: string;
   avatarUrl: string | null;
   isCreator?: boolean;
+  role?: UserRole;
+  joinDate?: string;
+  lastActive?: string | null;
+  isSuspended?: boolean;
   visibility: ProfileVisibility;
   showFavoritesOnPublic: boolean;
   createdAt: string;

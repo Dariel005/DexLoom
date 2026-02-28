@@ -1,8 +1,10 @@
-import { cn } from "@/lib/utils";
+import { RoleDisplayName } from "@/components/RoleDisplayName";
+import type { UserRole } from "@/lib/roles";
 
 interface CreatorNameProps {
   name: string;
   isCreator?: boolean;
+  role?: UserRole;
   className?: string;
   badgeClassName?: string;
   compact?: boolean;
@@ -12,24 +14,22 @@ interface CreatorNameProps {
 export function CreatorName({
   name,
   isCreator = false,
+  role,
   className,
   badgeClassName,
   compact = false,
   showBadge = true
 }: CreatorNameProps) {
-  if (!isCreator) {
-    return <span className={className}>{name}</span>;
-  }
+  const resolvedRole = role ?? (isCreator ? "creator" : "member");
 
   return (
-    <span className={cn("creator-name-shell", compact && "creator-name-shell-compact", className)}>
-      <span className={cn("creator-name-text", compact && "creator-name-text-compact")}>{name}</span>
-      {showBadge ? (
-        <span className={cn("creator-name-badge", compact && "creator-name-badge-compact", badgeClassName)}>
-          Creator
-        </span>
-      ) : null}
-    </span>
+    <RoleDisplayName
+      name={name}
+      role={resolvedRole}
+      className={className}
+      badgeClassName={badgeClassName}
+      compact={compact}
+      showBadge={showBadge}
+    />
   );
 }
-

@@ -126,6 +126,44 @@ export async function updateUserAvatar(userId: string, avatarUrl: string | null)
   return upsertProfileRecord(next);
 }
 
+export async function updateUserProfileByAdmin(
+  userId: string,
+  input: {
+    displayName?: string;
+    bio?: string;
+    avatarUrl?: string | null;
+    visibility?: UserProfileRecord["visibility"];
+    showFavoritesOnPublic?: boolean;
+  }
+) {
+  const current = await getOrCreateUserProfile(userId);
+  const nextDisplayName = input.displayName?.trim();
+
+  const next: UserProfileRecord = {
+    ...current,
+    displayName:
+      typeof nextDisplayName === "string" && nextDisplayName.length > 0
+        ? nextDisplayName.slice(0, 60)
+        : current.displayName,
+    bio:
+      typeof input.bio === "string"
+        ? input.bio.trim().slice(0, 320)
+        : current.bio,
+    avatarUrl:
+      input.avatarUrl !== undefined ? input.avatarUrl : current.avatarUrl,
+    visibility: input.visibility ?? current.visibility,
+    showFavoritesOnPublic: input.showFavoritesOnPublic ?? current.showFavoritesOnPublic,
+    updatedAt: new Date().toISOString()
+  };
+
+  await updateStoredUserProfile(userId, {
+    name: next.displayName,
+    image: next.avatarUrl
+  });
+
+  return upsertProfileRecord(next);
+}
+
 export async function getUserProfileForViewer(input: {
   profileId: string;
   viewerId?: string | null;

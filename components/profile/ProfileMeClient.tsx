@@ -21,6 +21,7 @@ import {
   type FavoriteRecord,
   type UserProfileRecord
 } from "@/lib/profile-types";
+import { ROLE_LABELS } from "@/lib/roles";
 import { resolveAvatarSrc } from "@/lib/avatar-url";
 import { cn } from "@/lib/utils";
 
@@ -589,6 +590,7 @@ export function ProfileMeClient() {
 
   const activeDisplayName =
     displayName.trim() || profile?.displayName || session?.user?.name || session?.user?.email || "Trainer";
+  const activeRole = profile?.role ?? session?.user?.role ?? (isCreatorProfile ? "creator" : "member");
   const avatarPreviewSrc =
     resolveAvatarSrc(profile?.avatarUrl ?? session?.user?.image) ?? "/images/characters/red.svg";
   const checklistPreview = profileCompletion.checklist.slice(0, 6);
@@ -658,9 +660,10 @@ export function ProfileMeClient() {
               <CreatorName
                 name={activeDisplayName}
                 isCreator={isCreatorProfile}
+                role={activeRole}
                 className="pixel-font text-[17px] uppercase tracking-[0.12em] text-black/85"
               />
-              {isCreatorProfile ? <span className="profile-chip profile-chip-creator">Creator Core</span> : null}
+              {activeRole !== "member" ? <span className="profile-chip profile-chip-creator">{ROLE_LABELS[activeRole]}</span> : null}
               <span className={cn("profile-chip", visibility === "public" ? "profile-chip-public" : "profile-chip-private")}>
                 {visibility === "public" ? "Public" : "Private"}
               </span>

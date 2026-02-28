@@ -5,7 +5,8 @@ import { findUserByEmail, type StoredUser } from "@/lib/user-store";
 export type CredentialsValidationResult =
   | { status: "success"; user: StoredUser }
   | { status: "invalid" }
-  | { status: "unverified"; user: StoredUser };
+  | { status: "unverified"; user: StoredUser }
+  | { status: "suspended"; user: StoredUser };
 
 export async function validateCredentialsLogin(input: {
   email: string;
@@ -32,6 +33,10 @@ export async function validateCredentialsLogin(input: {
   const isValidPassword = await verifyPassword(password, user.passwordHash);
   if (!isValidPassword) {
     return { status: "invalid" };
+  }
+
+  if (user.suspendedAt) {
+    return { status: "suspended", user };
   }
 
   if (user.emailVerified === false) {
