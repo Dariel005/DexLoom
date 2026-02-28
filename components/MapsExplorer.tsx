@@ -19,6 +19,7 @@ import { VirtualizedStack } from "@/components/VirtualizedStack";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { useUiTone } from "@/hooks/useUiTone";
 import { mapsEncyclopediaQueryOptions } from "@/lib/encyclopedia-query-options";
+import { resolveBulbagardenImageSrc } from "@/lib/remote-image";
 import { cn } from "@/lib/utils";
 import {
   type PokemonRegionMapDetail,
@@ -432,6 +433,10 @@ export function MapsExplorer() {
     () => filteredMaps.find((region) => region.id === selectedRegionId) ?? null,
     [filteredMaps, selectedRegionId]
   );
+  const selectedRegionMapImageSrc = useMemo(
+    () => resolveBulbagardenImageSrc(selectedRegion?.mapImageUrl) ?? selectedRegion?.mapImageUrl ?? null,
+    [selectedRegion?.mapImageUrl]
+  );
 
   const selectedRegionPoints = useMemo(
     () => getRegionInteractivePoints(interactivePoints, selectedRegion?.key ?? null),
@@ -810,7 +815,7 @@ export function MapsExplorer() {
                         entityId: selectedRegion.key,
                         title: selectedRegion.name,
                         href: "/maps",
-                        imageUrl: selectedRegion.mapImageUrl,
+                        imageUrl: selectedRegionMapImageSrc ?? selectedRegion.mapImageUrl,
                         subtitle: selectedRegion.generationLabel,
                         tags: ["map_region", selectedRegion.key]
                       }}
@@ -824,7 +829,7 @@ export function MapsExplorer() {
 
                 <div className="relative mt-4 h-[280px] overflow-hidden rounded-xl border border-black/20 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.45),transparent_36%),linear-gradient(165deg,rgba(244,248,243,0.92),rgba(223,233,221,0.88))] sm:h-[340px]">
                   <Image
-                    src={selectedRegion.mapImageUrl}
+                    src={selectedRegionMapImageSrc ?? selectedRegion.mapImageUrl}
                     alt={selectedRegion.mapImageAlt}
                     fill
                     priority={selectedRegion.id === regionMaps[0]?.id}
@@ -907,7 +912,7 @@ export function MapsExplorer() {
                 <div className="grid gap-3 xl:grid-cols-[1.15fr_0.85fr]">
                   <div className="relative aspect-[16/10] overflow-hidden rounded-xl border border-black/20 bg-[radial-gradient(circle_at_16%_8%,rgba(255,255,255,0.45),transparent_34%),linear-gradient(165deg,rgba(243,248,243,0.92),rgba(219,232,219,0.86))]">
                     <Image
-                      src={selectedRegion.mapImageUrl}
+                      src={selectedRegionMapImageSrc ?? selectedRegion.mapImageUrl}
                       alt={`${selectedRegion.name} tactical overlay map`}
                       fill
                       sizes="(max-width: 1280px) 92vw, 42vw"

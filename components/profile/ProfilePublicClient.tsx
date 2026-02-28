@@ -20,6 +20,7 @@ import {
   type FavoriteRecord,
   type UserProfileRecord
 } from "@/lib/profile-types";
+import { resolveBulbagardenImageSrc } from "@/lib/remote-image";
 import { type FriendshipRelationView } from "@/lib/social-types";
 import { resolveAvatarSrc } from "@/lib/avatar-url";
 import { cn } from "@/lib/utils";
@@ -85,7 +86,9 @@ function normalizeFavoriteImageUrl(imageUrl: string | null | undefined) {
   if (!imageUrl) {
     return null;
   }
-  return imageUrl.replace("/sprites/items/dream-world/", "/sprites/items/");
+  return resolveBulbagardenImageSrc(
+    imageUrl.replace("/sprites/items/dream-world/", "/sprites/items/")
+  );
 }
 
 function resolveFavoriteImageUrl(entry: FavoriteRecord) {

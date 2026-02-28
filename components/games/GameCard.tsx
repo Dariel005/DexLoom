@@ -6,6 +6,7 @@ import { TypeBadge } from "@/components/TypeBadge";
 import { useUserFavorites } from "@/hooks/useUserFavorites";
 import { emitFavoriteAuthNotice } from "@/lib/favorite-auth-notice";
 import { type MainlineGameCatalogEntry } from "@/lib/mainline-games";
+import { resolveBulbagardenImageSrc } from "@/lib/remote-image";
 import { cn } from "@/lib/utils";
 
 interface GameCardProps {
@@ -99,6 +100,7 @@ export function GameCard({ game }: GameCardProps) {
   const favorites = useUserFavorites();
   const canToggleFavorite = favorites.isAuthenticated;
   const isFavorite = favorites.isFavorite("game", game.slug);
+  const resolvedGameImageSrc = resolveBulbagardenImageSrc(game.imageSrc) ?? game.imageSrc;
   const platformTag = normalizePlatformTag(game.platform);
   const platformLabel = getPlatformBadgeLabel(game.platform);
   const generationBadgeLabel = game.generationKey === "mobile" ? "Live" : undefined;
@@ -110,7 +112,7 @@ export function GameCard({ game }: GameCardProps) {
     entityId: game.slug,
     title: game.title,
     href: entryHref,
-    imageUrl: game.imageSrc,
+    imageUrl: resolvedGameImageSrc,
     subtitle: `${game.generationLabel} (${game.regionLabel})`,
     tags: ["game", game.generationKey, platformTag]
   };
@@ -194,7 +196,7 @@ export function GameCard({ game }: GameCardProps) {
           <div className="flex justify-center">
             <div className="pokemon-card-sprite relative h-[134px] w-[134px] flex-shrink-0 sm:h-[152px] sm:w-[152px]">
               <Image
-                src={game.imageSrc}
+                src={resolvedGameImageSrc}
                 alt={game.imageAlt}
                 fill
                 loading="lazy"

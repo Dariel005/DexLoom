@@ -11,6 +11,7 @@ import {
   ALL_GAME_DETAILS,
   getMainlineGameDetailBySlug,
 } from "@/lib/mainline-games";
+import { resolveBulbagardenImageSrc } from "@/lib/remote-image";
 
 interface GameDetailPageProps {
   params: { slug: string };
@@ -100,6 +101,7 @@ export default function GameDetailPage({ params }: GameDetailPageProps) {
   const relatedEntries = game.relatedSlugs
     .map((slug) => getMainlineGameDetailBySlug(slug))
     .filter((entry): entry is NonNullable<typeof entry> => entry !== null);
+  const resolvedGameImageSrc = resolveBulbagardenImageSrc(game.imageSrc) ?? game.imageSrc;
 
   const sourceById = new Map(game.references.map((reference) => [reference.id, reference] as const));
   const hasCompleteSectionMap = GAME_ENTRY_SECTION_KEYS.every(
@@ -139,7 +141,7 @@ export default function GameDetailPage({ params }: GameDetailPageProps) {
         <div className="mt-3 grid gap-3 lg:grid-cols-[260px_1fr]">
           <div className="relative aspect-[3/4] overflow-hidden rounded-xl border border-black/20 bg-white/75">
             <Image
-              src={game.imageSrc}
+              src={resolvedGameImageSrc}
               alt={game.imageAlt}
               fill
               sizes="(max-width: 1024px) 70vw, 260px"
@@ -398,7 +400,7 @@ export default function GameDetailPage({ params }: GameDetailPageProps) {
               entityId: game.slug,
               title: game.title,
               href: `/games/${game.slug}`,
-              imageUrl: game.imageSrc,
+              imageUrl: resolvedGameImageSrc,
               subtitle: `${game.generationLabel} (${game.regionLabel})`,
               tags: ["game", game.generationKey]
             }}

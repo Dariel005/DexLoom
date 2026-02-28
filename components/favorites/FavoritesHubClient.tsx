@@ -14,6 +14,7 @@ import {
   sortFavoritesByCreatedAt
 } from "@/lib/profile-insights";
 import { type FavoriteEntityType, type FavoriteRecord } from "@/lib/profile-types";
+import { resolveBulbagardenImageSrc } from "@/lib/remote-image";
 import { cn } from "@/lib/utils";
 
 type FavoriteSortMode = "newest" | "oldest" | "title_asc" | "title_desc";
@@ -30,7 +31,9 @@ function normalizeFavoriteImageUrl(imageUrl: string | null | undefined) {
   if (!imageUrl) {
     return null;
   }
-  return imageUrl.replace("/sprites/items/dream-world/", "/sprites/items/");
+  return resolveBulbagardenImageSrc(
+    imageUrl.replace("/sprites/items/dream-world/", "/sprites/items/")
+  );
 }
 
 function resolveFavoriteImageUrl(entry: FavoriteRecord) {
