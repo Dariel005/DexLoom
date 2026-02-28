@@ -682,16 +682,6 @@
   padding: 0.3rem 0.5rem;
 }
 
-.profile-chip-creator {
-  background: linear-gradient(
-    180deg,
-    rgba(209, 47, 54, 0.92),
-    rgba(131, 23, 28, 0.92)
-  );
-  border-color: rgba(72, 7, 10, 0.48);
-  color: rgba(255, 250, 240, 0.96);
-}
-
 .profile-chip-public {
   background: rgba(212, 244, 214, 0.86);
   border-color: rgba(31, 98, 53, 0.38);

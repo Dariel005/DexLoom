@@ -575,7 +575,10 @@ export function AdminDashboardClient() {
               <div className="flex items-end justify-between gap-3 border-b border-white/8 pb-5">
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.28em] text-slate-500">User Editor</p>
-                  <h2 className="mt-2 text-xl font-semibold text-white">{selectedUser ? selectedUser.username : "Select a user"}</h2>
+                  <div className="mt-2 flex flex-wrap items-center gap-3">
+                    <h2 className="text-xl font-semibold text-white">{selectedUser ? selectedUser.username : "Select a user"}</h2>
+                    {selectedUser ? <RoleBadge role={selectedUser.role} compact /> : null}
+                  </div>
                 </div>
                 {selectedUser ? <span className="rounded-full border border-white/10 bg-black/20 px-3 py-1 text-xs text-slate-300">{selectedUser.uid.slice(0, 12)}</span> : null}
               </div>

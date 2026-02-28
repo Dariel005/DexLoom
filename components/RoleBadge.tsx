@@ -24,6 +24,7 @@ export function RoleBadge({
     <span
       className={cn("role-badge", compact && "role-badge--compact", className)}
       data-role={role}
+      aria-label={`Role ${resolvedLabel}`}
     >
       {resolvedLabel}
     </span>
