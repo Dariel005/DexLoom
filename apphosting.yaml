@@ -17,8 +17,29 @@ env:
   - variable: FIREBASE_STORAGE_BUCKET
     value: dexloom-976538736609-user-assets
 
+  - variable: SMTP_HOST
+    value: smtp.gmail.com
+
+  - variable: SMTP_PORT
+    value: "465"
+
+  - variable: SMTP_SECURE
+    value: "1"
+
+  - variable: SMTP_USER
+    value: dexloom.verify@gmail.com
+
+  - variable: SMTP_FROM
+    value: "DexLoom <dexloom.verify@gmail.com>"
+
   - variable: NEXTAUTH_SECRET
     secret: NEXTAUTH_SECRET
+
+  - variable: SMTP_PASS
+    secret: SMTP_PASS
+
+  - variable: EMAIL_VERIFICATION_SECRET
+    secret: EMAIL_VERIFICATION_SECRET
 
   - variable: GOOGLE_CLIENT_ID
     secret: GOOGLE_CLIENT_ID
