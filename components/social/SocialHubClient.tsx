@@ -8,6 +8,7 @@ import { PokedexFrame } from "@/components/PokedexFrame";
 import { useRole } from "@/components/RoleContext";
 import { RouteTransitionLink } from "@/components/RouteTransitionLink";
 import { SocialCommunityPanel } from "@/components/social/SocialCommunityPanel";
+import { resolveAvatarSrc } from "@/lib/avatar-url";
 import {
   type BlockedUserView,
   type FriendNetworkSnapshot,
@@ -271,6 +272,7 @@ export function SocialHubClient() {
   const [inviteErrorMessage, setInviteErrorMessage] = useState<string | null>(null);
   const [infoMessage, setInfoMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [brokenSelectedAvatarUserId, setBrokenSelectedAvatarUserId] = useState<string | null>(null);
   const hubRequestControllerRef = useRef<AbortController | null>(null);
   const searchRequestControllerRef = useRef<AbortController | null>(null);
   const inviteRequestControllerRef = useRef<AbortController | null>(null);
@@ -1242,6 +1244,10 @@ export function SocialHubClient() {
   const currentSelection = selectedTrainer;
   const selectedTrainerInitial =
     currentSelection?.user.displayName.trim().charAt(0).toUpperCase() || "?";
+  const selectedTrainerAvatarSrc =
+    currentSelection && brokenSelectedAvatarUserId !== currentSelection.user.userId
+      ? resolveAvatarSrc(currentSelection.user.avatarUrl)
+      : null;
   const hasModerationAccess = permissions.reviewReports;
 
   useEffect(() => {
@@ -1249,6 +1255,10 @@ export function SocialHubClient() {
       setActiveConsoleTab("trainer");
     }
   }, [activeConsoleTab, hasModerationAccess]);
+
+  useEffect(() => {
+    setBrokenSelectedAvatarUserId(null);
+  }, [currentSelection?.user.userId, currentSelection?.user.avatarUrl]);
 
   if (status === "loading") {
     return (
@@ -1513,10 +1523,18 @@ export function SocialHubClient() {
                   <div className="social-arcade-selected-card rounded-lg border border-black/20 bg-white/84 px-3 py-2.5">
                     <div className="social-arcade-selected-head">
                       <div className="social-arcade-selected-avatar">
-                        {currentSelection.user.avatarUrl ? (
+                        {selectedTrainerAvatarSrc ? (
                           <>
                             {/* eslint-disable-next-line @next/next/no-img-element */}
-                            <img src={currentSelection.user.avatarUrl} alt={`${currentSelection.user.displayName} avatar`} className="h-full w-full object-cover" loading="lazy" />
+                            <img
+                              src={selectedTrainerAvatarSrc}
+                              alt={`${currentSelection.user.displayName} avatar`}
+                              className="h-full w-full object-cover"
+                              loading="lazy"
+                              onError={() => {
+                                setBrokenSelectedAvatarUserId(currentSelection.user.userId);
+                              }}
+                            />
                           </>
                         ) : (
                           <span className="social-arcade-selected-avatar-fallback">{selectedTrainerInitial}</span>
