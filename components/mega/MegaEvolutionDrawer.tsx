@@ -249,7 +249,7 @@ function MegaEvolutionDrawerComponent({ selectedEntry, onClose }: MegaEvolutionD
                           href={`/pokemon/${stage.id}`}
                           className="pokemon-drawer-evolution-link group flex shrink-0 flex-col items-center rounded-xl border px-2 py-1.5 transition"
                         >
-                          <span className="relative h-20 w-20 shrink-0 sm:h-24 sm:w-24">
+                          <span className="relative flex h-20 w-20 shrink-0 items-center justify-center sm:h-24 sm:w-24">
                             <Image
                               src={stage.sprite ?? getFallbackSprite(stage.id)}
                               alt={stage.name}
@@ -277,7 +277,7 @@ function MegaEvolutionDrawerComponent({ selectedEntry, onClose }: MegaEvolutionD
                         </span>
                       ) : null}
                       <article className="pokemon-drawer-evolution-link flex shrink-0 flex-col items-center rounded-xl border px-2 py-1.5">
-                        <span className="relative h-20 w-20 shrink-0 sm:h-24 sm:w-24">
+                        <span className="relative flex h-20 w-20 shrink-0 items-center justify-center sm:h-24 sm:w-24">
                           <Image
                             src={selectedEntry.imageSrc}
                             alt={selectedEntry.imageAlt}

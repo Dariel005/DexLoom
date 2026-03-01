@@ -594,19 +594,26 @@
 
   .home-mobile-terminal-screen .pokemon-drawer-evolution-link {
     padding: 0.24rem 0.34rem;
+    align-items: center !important;
+    text-align: center;
   }
 
   .home-mobile-terminal-screen .pokemon-drawer-evolution-scroll {
-    display: flex;
-    justify-content: center;
+    display: flex !important;
+    width: 100%;
+    justify-content: center !important;
+    align-items: center;
     padding-inline: 0.18rem;
   }
 
   .home-mobile-terminal-screen .pokemon-drawer-evolution-list {
-    width: 100%;
+    display: flex !important;
+    width: 100% !important;
+    min-width: 100% !important;
     margin-inline: auto;
-    min-width: 100%;
-    justify-content: center;
+    padding-inline: 0;
+    justify-content: center !important;
+    align-items: center;
     gap: 0.5rem;
   }
 
@@ -622,8 +629,12 @@
   }
 
   .home-mobile-terminal-screen .pokemon-drawer-evolution-link > span:first-child {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 2.3rem;
     height: 2.3rem;
+    margin-inline: auto;
   }
 
   .home-mobile-terminal-screen .pokemon-drawer-evolution-link > span:last-child {

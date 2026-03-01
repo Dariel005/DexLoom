@@ -161,8 +161,12 @@
   }
 
   .mega-mobile-terminal-screen .pokemon-drawer-evolution-link > span:first-child {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 1.66rem;
     height: 1.66rem;
+    margin-inline: auto;
   }
 
   .mega-mobile-terminal-screen .pokemon-drawer-evolution-link > span:last-child {
