@@ -133,8 +133,8 @@ function PokemonDrawerComponent({ selectedPokemonId, onClose }: PokemonDrawerPro
             {data ? (
               <div className="space-y-2">
                 <section className="rounded-xl border border-black/15 bg-white/84 p-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]">
-                  <div className="flex items-start justify-between gap-2">
-                    <div>
+                  <div className="pokemon-drawer-header flex items-start justify-between gap-2">
+                    <div className="pokemon-drawer-header-copy">
                       <h2 className="pixel-font text-[13px] uppercase tracking-[0.12em] text-black/84">
                         {data.name}
                       </h2>
@@ -145,7 +145,7 @@ function PokemonDrawerComponent({ selectedPokemonId, onClose }: PokemonDrawerPro
                     <button
                       type="button"
                       onClick={onClose}
-                      className="rounded-lg border border-black/20 bg-white/82 px-2.5 py-1 text-[11px] text-black/65 transition hover:bg-white"
+                      className="pokemon-drawer-close rounded-lg border border-black/20 bg-white/82 px-2.5 py-1 text-[11px] text-black/65 transition hover:bg-white"
                     >
                       Close
                     </button>
@@ -196,10 +196,10 @@ function PokemonDrawerComponent({ selectedPokemonId, onClose }: PokemonDrawerPro
                     Evolution Chain
                   </p>
                   {data.evolutionChain.stages.length > 0 ? (
-                    <div className="pokemon-scrollbar mt-2 overflow-x-auto pb-2">
-                      <ol className="mx-auto flex w-max items-center gap-3 pt-1">
+                    <div className="pokemon-drawer-evolution-scroll pokemon-scrollbar mt-2 overflow-x-auto pb-2">
+                      <ol className="pokemon-drawer-evolution-list flex w-max items-center gap-3 pt-1">
                         {data.evolutionChain.stages.map((stage, index) => (
-                          <li key={`${stage.id}-${index}`} className="flex items-center gap-3">
+                          <li key={`${stage.id}-${index}`} className="pokemon-drawer-evolution-stage flex items-center gap-3">
                             <Link
                               href={`/pokemon/${stage.id}`}
                               className="pokemon-drawer-evolution-link group flex shrink-0 flex-col items-center rounded-xl border px-2 py-1.5 transition"
@@ -219,7 +219,9 @@ function PokemonDrawerComponent({ selectedPokemonId, onClose }: PokemonDrawerPro
                               </span>
                             </Link>
                             {index < data.evolutionChain.stages.length - 1 ? (
-                              <span className="pixel-font -mt-2 px-0.5 text-[20px] leading-none text-black/40">{"->"}</span>
+                              <span className="pokemon-drawer-evolution-arrow pixel-font -mt-2 px-0.5 text-[20px] leading-none text-black/40">
+                                {"->"}
+                              </span>
                             ) : null}
                           </li>
                         ))}

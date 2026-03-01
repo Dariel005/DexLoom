@@ -174,8 +174,8 @@ function MegaEvolutionDrawerComponent({ selectedEntry, onClose }: MegaEvolutionD
             ) : null}
 
             <section className="rounded-xl border border-black/15 bg-white/84 p-2.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.9)]">
-              <div className="flex items-start justify-between gap-2">
-                <div>
+              <div className="pokemon-drawer-header flex items-start justify-between gap-2">
+                <div className="pokemon-drawer-header-copy">
                   <h2 className="pixel-font text-[13px] uppercase tracking-[0.12em] text-black/84">
                     {selectedEntry.megaName}
                   </h2>
@@ -187,7 +187,7 @@ function MegaEvolutionDrawerComponent({ selectedEntry, onClose }: MegaEvolutionD
                 <button
                   type="button"
                   onClick={onClose}
-                  className="rounded-lg border border-black/20 bg-white/82 px-2.5 py-1 text-[11px] text-black/65 transition hover:bg-white"
+                  className="pokemon-drawer-close rounded-lg border border-black/20 bg-white/82 px-2.5 py-1 text-[11px] text-black/65 transition hover:bg-white"
                 >
                   Close
                 </button>
@@ -238,10 +238,13 @@ function MegaEvolutionDrawerComponent({ selectedEntry, onClose }: MegaEvolutionD
                 Evolution Chain
               </p>
               {evolutionStages.length > 0 ? (
-                <div className="pokemon-scrollbar mt-2 overflow-x-auto pb-2">
-                  <ol className="mx-auto flex w-max items-center gap-3 pt-1">
+                <div className="pokemon-drawer-evolution-scroll pokemon-scrollbar mt-2 overflow-x-auto pb-2">
+                  <ol className="pokemon-drawer-evolution-list flex w-max items-center gap-3 pt-1">
                     {evolutionStages.map((stage, index) => (
-                      <li key={`${selectedEntry.slug}-stage-${stage.id}-${index}`} className="flex items-center gap-3">
+                      <li
+                        key={`${selectedEntry.slug}-stage-${stage.id}-${index}`}
+                        className="pokemon-drawer-evolution-stage flex items-center gap-3"
+                      >
                         <Link
                           href={`/pokemon/${stage.id}`}
                           className="pokemon-drawer-evolution-link group flex shrink-0 flex-col items-center rounded-xl border px-2 py-1.5 transition"
@@ -261,13 +264,17 @@ function MegaEvolutionDrawerComponent({ selectedEntry, onClose }: MegaEvolutionD
                           </span>
                         </Link>
                         {index < evolutionStages.length - 1 ? (
-                          <span className="pixel-font -mt-2 px-0.5 text-[20px] leading-none text-black/40">{"->"}</span>
+                          <span className="pokemon-drawer-evolution-arrow pixel-font -mt-2 px-0.5 text-[20px] leading-none text-black/40">
+                            {"->"}
+                          </span>
                         ) : null}
                       </li>
                     ))}
-                    <li className="flex items-center gap-3">
+                    <li className="pokemon-drawer-evolution-stage flex items-center gap-3">
                       {evolutionStages.length > 0 ? (
-                        <span className="pixel-font -mt-2 px-0.5 text-[20px] leading-none text-black/40">{"->"}</span>
+                        <span className="pokemon-drawer-evolution-arrow pixel-font -mt-2 px-0.5 text-[20px] leading-none text-black/40">
+                          {"->"}
+                        </span>
                       ) : null}
                       <article className="pokemon-drawer-evolution-link flex shrink-0 flex-col items-center rounded-xl border px-2 py-1.5">
                         <span className="relative h-20 w-20 shrink-0 sm:h-24 sm:w-24">

@@ -500,6 +500,9 @@
   .home-mobile-terminal-screen .pokemon-drawer-shell {
     height: 100%;
     min-height: 0;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
     border-radius: 0.9rem;
     padding: 0.4rem !important;
   }
@@ -516,28 +519,48 @@
   }
 
   .home-mobile-terminal-screen .pokemon-drawer-shell > .pokemon-scrollbar {
+    min-width: 0;
+    overflow-x: hidden;
     padding-right: 0.15rem;
   }
 
   .home-mobile-terminal-screen .pokemon-drawer-shell section {
+    width: 100%;
+    min-width: 0;
     border-radius: 0.86rem;
     padding: 0.5rem !important;
   }
 
-  .home-mobile-terminal-screen .pokemon-drawer-shell section:first-of-type > div:first-child {
+  .home-mobile-terminal-screen .pokemon-drawer-header {
+    align-items: flex-start;
+    flex-wrap: wrap;
     gap: 0.5rem;
+  }
+
+  .home-mobile-terminal-screen .pokemon-drawer-header-copy {
+    min-width: 0;
+    flex: 1 1 9rem;
+  }
+
+  .home-mobile-terminal-screen .pokemon-drawer-close {
+    flex: 0 0 auto;
+    margin-left: auto;
+    max-width: 100%;
+    white-space: nowrap;
   }
 
   .home-mobile-terminal-screen .pokemon-drawer-shell section:first-of-type h2 {
     font-size: 10px;
     letter-spacing: 0.09em;
+    overflow-wrap: anywhere;
   }
 
   .home-mobile-terminal-screen .pokemon-drawer-shell section:first-of-type p {
     font-size: 10px;
+    overflow-wrap: anywhere;
   }
 
-  .home-mobile-terminal-screen .pokemon-drawer-shell section:first-of-type button {
+  .home-mobile-terminal-screen .pokemon-drawer-close {
     padding: 0.3rem 0.55rem;
     font-size: 10px;
   }
@@ -573,13 +596,39 @@
     padding: 0.24rem 0.34rem;
   }
 
+  .home-mobile-terminal-screen .pokemon-drawer-evolution-scroll {
+    padding-right: 0.1rem;
+    padding-left: 0.02rem;
+  }
+
+  .home-mobile-terminal-screen .pokemon-drawer-evolution-list {
+    margin-inline: 0;
+    min-width: 100%;
+    justify-content: flex-start;
+    gap: 0.5rem;
+  }
+
+  .home-mobile-terminal-screen .pokemon-drawer-evolution-stage {
+    gap: 0.5rem;
+  }
+
+  .home-mobile-terminal-screen .pokemon-drawer-evolution-arrow {
+    margin-top: -0.1rem;
+    padding-inline: 0;
+    font-size: 15px;
+  }
+
   .home-mobile-terminal-screen .pokemon-drawer-evolution-link > span:first-child {
-    width: 2.55rem;
-    height: 2.55rem;
+    width: 2.3rem;
+    height: 2.3rem;
   }
 
   .home-mobile-terminal-screen .pokemon-drawer-evolution-link > span:last-child {
-    font-size: 6.4px;
+    max-width: 3.25rem;
+    font-size: 6px;
+    line-height: 1.08;
+    text-align: center;
+    overflow-wrap: anywhere;
   }
 
   .home-mobile-terminal-screen .pokemon-drawer-shell .space-y-2 {
@@ -599,6 +648,70 @@
     padding: 0.55rem 0.72rem;
     font-size: 8px;
     letter-spacing: 0.08em;
+  }
+}
+
+@media (max-width: 420px) {
+  .home-mobile-terminal-screen .pokemon-drawer-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.36rem;
+  }
+
+  .home-mobile-terminal-screen .pokemon-drawer-header-copy {
+    flex: initial;
+  }
+
+  .home-mobile-terminal-screen .pokemon-drawer-shell section:first-of-type h2 {
+    font-size: 8.5px;
+    line-height: 1.02;
+    letter-spacing: 0.07em;
+  }
+
+  .home-mobile-terminal-screen .pokemon-drawer-shell section:first-of-type p {
+    font-size: 8.5px;
+    line-height: 1.14;
+  }
+
+  .home-mobile-terminal-screen .pokemon-drawer-close {
+    padding: 0.24rem 0.42rem;
+    font-size: 8px;
+  }
+
+  .home-mobile-terminal-screen .pokemon-drawer-shell .type-badge {
+    min-width: 3.18rem;
+    height: 1rem;
+    padding-inline: 0.28rem;
+    font-size: 5.4px;
+  }
+
+  .home-mobile-terminal-screen .pokemon-drawer-art-stage {
+    height: 112px !important;
+    max-width: 176px !important;
+  }
+
+  .home-mobile-terminal-screen .pokemon-drawer-evolution-link {
+    padding: 0.18rem 0.24rem;
+  }
+
+  .home-mobile-terminal-screen .pokemon-drawer-evolution-list,
+  .home-mobile-terminal-screen .pokemon-drawer-evolution-stage {
+    gap: 0.3rem;
+  }
+
+  .home-mobile-terminal-screen .pokemon-drawer-evolution-arrow {
+    font-size: 12px;
+  }
+
+  .home-mobile-terminal-screen .pokemon-drawer-evolution-link > span:first-child {
+    width: 1.82rem;
+    height: 1.82rem;
+  }
+
+  .home-mobile-terminal-screen .pokemon-drawer-evolution-link > span:last-child {
+    max-width: 2.45rem;
+    font-size: 5.1px;
+    line-height: 1.05;
   }
 }
 
@@ -663,9 +776,33 @@
     font-size: 9px;
   }
 
+  .home-mobile-terminal-screen .pokemon-drawer-close {
+    padding: 0.28rem 0.48rem;
+    font-size: 9px;
+  }
+
   .home-mobile-terminal-screen .pokemon-drawer-shell .type-badge {
     min-width: 3.55rem;
     font-size: 5.8px;
+  }
+
+  .home-mobile-terminal-screen .pokemon-drawer-evolution-list,
+  .home-mobile-terminal-screen .pokemon-drawer-evolution-stage {
+    gap: 0.38rem;
+  }
+
+  .home-mobile-terminal-screen .pokemon-drawer-evolution-arrow {
+    font-size: 13px;
+  }
+
+  .home-mobile-terminal-screen .pokemon-drawer-evolution-link > span:first-child {
+    width: 2.05rem;
+    height: 2.05rem;
+  }
+
+  .home-mobile-terminal-screen .pokemon-drawer-evolution-link > span:last-child {
+    max-width: 2.85rem;
+    font-size: 5.6px;
   }
 }
 

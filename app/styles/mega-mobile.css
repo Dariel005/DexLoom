@@ -150,6 +150,27 @@
   }
 }
 
+@media (max-width: 420px) {
+  .mega-mobile-terminal-screen .pokemon-drawer-evolution-list,
+  .mega-mobile-terminal-screen .pokemon-drawer-evolution-stage {
+    gap: 0.24rem;
+  }
+
+  .mega-mobile-terminal-screen .pokemon-drawer-evolution-arrow {
+    font-size: 10px;
+  }
+
+  .mega-mobile-terminal-screen .pokemon-drawer-evolution-link > span:first-child {
+    width: 1.66rem;
+    height: 1.66rem;
+  }
+
+  .mega-mobile-terminal-screen .pokemon-drawer-evolution-link > span:last-child {
+    max-width: 2.08rem;
+    font-size: 4.8px;
+  }
+}
+
 @media (max-width: 380px) {
   .mega-explorer-actions .explorer-nav-btn {
     padding-inline: 0.56rem;
