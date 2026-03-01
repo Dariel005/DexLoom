@@ -10,15 +10,17 @@ interface ReferencesBlockProps {
   title?: string;
   references?: ReferenceEntry[];
   emptyLabel?: string;
+  className?: string;
 }
 
 export function ReferencesBlock({
   title = "References",
   references = [],
-  emptyLabel = "No references added yet."
+  emptyLabel = "No references added yet.",
+  className
 }: ReferencesBlockProps) {
   return (
-    <section className="rounded-2xl border border-black/20 bg-white/60 p-4">
+    <section className={`rounded-2xl border border-black/20 bg-white/60 p-4 ${className ?? ""}`}>
       <h2 className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/75">
         {title}
       </h2>
@@ -50,4 +52,3 @@ export function ReferencesBlock({
     </section>
   );
 }
-

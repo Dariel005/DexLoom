@@ -1,0 +1,225 @@
+@media (max-width: 767px) {
+  .mega-explorer-console h1 {
+    font-size: 11px;
+    letter-spacing: 0.11em;
+  }
+
+  .mega-explorer-console p:not(.pixel-font) {
+    font-size: 11px;
+    line-height: 1.35;
+  }
+
+  .mega-explorer-actions .explorer-nav-btn {
+    min-height: 2rem;
+    border-radius: 0.72rem;
+    padding: 0.48rem 0.72rem;
+    font-size: 7px;
+    letter-spacing: 0.1em;
+  }
+
+  .mega-grid-panel {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .mega-grid-lattice {
+    gap: 0.48rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .mega-grid-lattice > * {
+    min-width: 0;
+  }
+
+  .mega-mobile-card {
+    min-height: 0 !important;
+    display: flex;
+    flex-direction: column;
+    aspect-ratio: 0.88;
+    border-radius: 0.88rem;
+    padding: 0.54rem 0.46rem 0.48rem !important;
+    contain-intrinsic-size: 198px 226px;
+  }
+
+  .mega-mobile-card-hit-area {
+    display: flex;
+    min-height: 0;
+    flex: 1 1 auto;
+    flex-direction: column;
+  }
+
+  .mega-mobile-card-head {
+    align-items: flex-start;
+    gap: 0.3rem;
+  }
+
+  .mega-mobile-card-meta {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  .mega-mobile-card .pokemon-card-index {
+    font-size: 7px;
+    line-height: 1;
+  }
+
+  .mega-mobile-card .pokemon-card-name {
+    margin-top: 0.12rem;
+    min-height: 2.1em;
+    overflow: visible;
+    white-space: normal;
+    text-overflow: clip;
+    line-height: 1.03;
+    font-size: 8.6px;
+  }
+
+  .mega-mobile-card .pokemon-card-generation {
+    margin-top: 0.18rem;
+    font-size: 6.2px;
+    line-height: 1.1;
+  }
+
+  .mega-mobile-card .mega-card-favorite {
+    height: 2rem;
+    width: 2rem;
+    flex-shrink: 0;
+    border-radius: 0.72rem;
+    font-size: 12px;
+  }
+
+  .mega-mobile-card-content {
+    margin-top: 0.34rem;
+    display: grid;
+    flex: 1 1 auto;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.28rem;
+  }
+
+  .mega-mobile-card .pokemon-card-sprite {
+    width: 4rem !important;
+    height: 4rem !important;
+    justify-self: center;
+  }
+
+  .mega-mobile-card .pokemon-card-type-stack {
+    min-width: 0;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 0.24rem;
+  }
+
+  .mega-mobile-card .pokemon-card-type-badge {
+    min-width: 3.68rem !important;
+    height: 0.96rem !important;
+    padding-inline: 0.3rem !important;
+    font-size: 5.8px !important;
+  }
+
+  .mega-mobile-card-footer {
+    margin-top: auto;
+    justify-content: flex-end;
+    gap: 0.32rem;
+  }
+
+  .mega-mobile-card-chip {
+    display: none;
+  }
+
+  .mega-mobile-card-entry {
+    min-width: 3.6rem !important;
+    justify-content: center;
+    padding-inline: 0.38rem !important;
+    padding-block: 0.26rem !important;
+    font-size: 6.5px !important;
+  }
+
+  .mega-main-chassis .mega-card-shell::after,
+  .mega-main-chassis .mega-card-energy,
+  .mega-main-chassis .mega-card-sprite-shell::before,
+  .mega-mobile-terminal-screen .mega-drawer-shell::before,
+  .mega-mobile-terminal-screen .mega-drawer-aura {
+    display: none;
+  }
+
+  .mega-mobile-terminal-screen .mega-drawer-shell section {
+    background: rgba(255, 255, 255, 0.84);
+    border-color: rgba(0, 0, 0, 0.15);
+  }
+}
+
+@media (max-width: 380px) {
+  .mega-explorer-actions .explorer-nav-btn {
+    padding-inline: 0.56rem;
+    font-size: 6.4px;
+  }
+
+  .mega-mobile-card {
+    aspect-ratio: 0.84;
+    padding: 0.48rem 0.4rem 0.42rem !important;
+  }
+
+  .mega-mobile-card .pokemon-card-name {
+    font-size: 8px;
+  }
+
+  .mega-mobile-card .pokemon-card-generation {
+    font-size: 5.7px;
+  }
+
+  .mega-mobile-card .pokemon-card-sprite {
+    width: 3.5rem !important;
+    height: 3.5rem !important;
+  }
+
+  .mega-mobile-card .pokemon-card-type-badge {
+    min-width: 3.2rem !important;
+    font-size: 5.2px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mega-main-chassis .mega-card-shell,
+  .mega-main-chassis .mega-card-shell * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .mega-full-data-page.mega-full-immersive-page::before,
+  .mega-full-data-page.mega-full-immersive-page::after,
+  .mega-full-data-page .mega-full-section::after,
+  .mega-full-data-page .mega-full-art-shell::before,
+  .mega-full-data-page .retro-screen::before,
+  .mega-full-data-page .metal-plate::before,
+  .mega-full-data-page .mega-cosmic-core,
+  .mega-full-data-page .mega-cosmic-ring-a,
+  .mega-full-data-page .mega-cosmic-ring-b,
+  .mega-full-data-page .mega-cosmic-arc-a,
+  .mega-full-data-page .mega-cosmic-arc-b,
+  .mega-full-data-page [class*="mega-cosmic-shard"],
+  .mega-full-data-page [class*="mega-cosmic-dust"],
+  .mega-full-data-page [class*="mega-hero-particle"],
+  .mega-full-data-page [class*="mega-hero-prism"],
+  .mega-full-data-page .mega-hero-aura {
+    animation: none !important;
+    display: none !important;
+  }
+
+  .mega-full-data-page .mega-full-art {
+    animation: none !important;
+  }
+  .mega-full-data-page .pokemon-full-data-sprite-toggle {
+    box-shadow: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mega-full-data-page .mega-full-art {
+    transition: none !important;
+    animation: none !important;
+  }
+}

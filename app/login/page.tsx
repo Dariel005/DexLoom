@@ -117,8 +117,8 @@ export default function LoginPage() {
   const showGoogleConfigHint = providersLoaded && !providersLoadError && !googleEnabled;
 
   return (
-    <main className="pokemon-detail-page auth-surface min-h-screen px-2 py-4 sm:px-4 sm:py-8">
-      <section className="auth-route-surface route-transition-surface auth-shell-live mx-auto w-full max-w-[980px] rounded-[2.2rem] border-[3px] border-[#2d4b87] bg-[linear-gradient(180deg,#fdfdfd_0%,#f4f6fb_100%)] p-3 shadow-[0_24px_46px_rgba(0,0,0,0.24)]">
+    <main className="auth-mobile-page pokemon-detail-page auth-surface min-h-screen px-2 py-4 sm:px-4 sm:py-8">
+      <section className="auth-mobile-shell auth-route-surface route-transition-surface auth-shell-live mx-auto w-full max-w-[980px] rounded-[2.2rem] border-[3px] border-[#2d4b87] bg-[linear-gradient(180deg,#fdfdfd_0%,#f4f6fb_100%)] p-3 shadow-[0_24px_46px_rgba(0,0,0,0.24)]">
         <div className="overflow-hidden rounded-[1.8rem] border-2 border-[#c8ced9] bg-white">
           <header className="border-b-2 border-[#b92f35] bg-[radial-gradient(circle_at_12%_14%,rgba(255,255,255,0.24),transparent_34%),linear-gradient(145deg,#e14749,#b72128)] px-4 py-5 sm:px-6 sm:py-6">
             <h1 className="auth-title-live pixel-font text-center text-[22px] uppercase tracking-[0.08em] text-[#fff4f3] drop-shadow-[0_2px_0_#8d1d23] sm:text-[30px]">
@@ -146,7 +146,7 @@ export default function LoginPage() {
           </div>
 
           <div className="p-4 sm:p-6">
-            <div className="auth-red-panel-live rounded-3xl border-2 border-[#a9262c] bg-[linear-gradient(160deg,#cb343a,#b5262d)] p-4 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] sm:p-5">
+            <div className="auth-mobile-panel auth-red-panel-live rounded-3xl border-2 border-[#a9262c] bg-[linear-gradient(160deg,#cb343a,#b5262d)] p-4 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] sm:p-5">
               <form onSubmit={handleCredentialLogin} className="space-y-4">
                 <div className="grid gap-3 md:grid-cols-2">
                   <label className="block space-y-2">
@@ -179,7 +179,7 @@ export default function LoginPage() {
                   </label>
                 </div>
 
-                <div className="grid items-end gap-4 sm:grid-cols-[1fr_auto_1fr]">
+                <div className="auth-mobile-access-grid grid items-end gap-4 sm:grid-cols-[1fr_auto_1fr]">
                   <div className="auth-pokemon-frame-live mx-auto flex h-[124px] w-[124px] items-end justify-center rounded-2xl border border-white/35 bg-white/10 p-2 sm:h-[156px] sm:w-[156px] [animation-delay:120ms]">
                     <Image
                       src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png"
@@ -254,7 +254,7 @@ export default function LoginPage() {
               </form>
             </div>
 
-            <div className="mt-4 rounded-3xl border-2 border-[#c53a3f] bg-white p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]">
+            <div className="auth-mobile-help-card mt-4 rounded-3xl border-2 border-[#c53a3f] bg-white p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]">
               <p className="text-sm text-[#8a2a30]">
                 Welcome, Trainer. Sign in with your account credentials, or continue with Google.
               </p>

@@ -1,4 +1,5 @@
 import { type ReactNode } from "react";
+import { MobileDexBottomNav } from "@/components/MobileDexBottomNav";
 import { PokedexFrame } from "@/components/PokedexFrame";
 import { cn } from "@/lib/utils";
 
@@ -51,10 +52,10 @@ export function ToolsPageShell({
 }: ToolsPageShellProps) {
   const isCompactHero = heroVariant === "compact";
   const leftPanel = (
-    <section className="space-y-4">
+    <section className="tools-mobile-left space-y-4">
       <section
         className={cn(
-          "tools-hero-panel rounded-2xl border border-black/20",
+          "tools-hero-panel tools-mobile-hero rounded-2xl border border-black/20",
           isCompactHero ? "p-3" : "p-4"
         )}
       >
@@ -94,7 +95,9 @@ export function ToolsPageShell({
           </div>
         ) : null}
       </section>
-      {leftContent}
+      <div id="tools-workspace" className="tools-mobile-workspace">
+        {leftContent}
+      </div>
     </section>
   );
 
@@ -108,7 +111,7 @@ export function ToolsPageShell({
       ) : null}
       <main
         className={cn(
-          "pokemon-detail-page mx-auto min-h-screen w-full max-w-[2560px] px-2 sm:px-4 lg:px-5",
+          "tools-mobile-page pokemon-detail-page mx-auto min-h-screen w-full max-w-[2560px] px-2 sm:px-4 lg:px-5",
           isCompactHero ? "py-3 sm:py-4" : "py-5 sm:py-8"
         )}
       >
@@ -116,8 +119,15 @@ export function ToolsPageShell({
           title={frameTitle}
           status="success"
           leftPanel={leftPanel}
-          rightPanel={rightContent}
+          rightPanel={<div className="tools-mobile-right space-y-4">{rightContent}</div>}
           rightPanelSticky
+          className="tools-mobile-frame"
+        />
+        <MobileDexBottomNav
+          activeKey="explore"
+          exploreHref="#tools-workspace"
+          settingsHref="#tools-guide"
+          className="tools-mobile-bottom-nav"
         />
       </main>
     </>

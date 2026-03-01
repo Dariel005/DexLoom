@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FavoriteStarButton } from "@/components/FavoriteStarButton";
+import { MobileDexBottomNav } from "@/components/MobileDexBottomNav";
 import { CharacterPageTemplate } from "@/components/templates/CharacterPageTemplate";
 import { PokedexFrame } from "@/components/PokedexFrame";
 import { ReferencesBlock } from "@/components/wiki/ReferencesBlock";
@@ -67,8 +68,11 @@ export default function CharacterDetailPage({ params }: CharacterDetailPageProps
   );
 
   const rightPanel = (
-    <section className="space-y-4">
-      <section className="rounded-2xl border border-black/20 bg-gradient-to-br from-white/70 via-white/60 to-black/[0.03] p-4">
+    <section className="characters-detail-sidebar space-y-4">
+      <section
+        id="character-navigation"
+        className="rounded-2xl border border-black/20 bg-gradient-to-br from-white/70 via-white/60 to-black/[0.03] p-4"
+      >
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
           Character Navigation
         </p>
@@ -100,7 +104,10 @@ export default function CharacterDetailPage({ params }: CharacterDetailPageProps
         </div>
       </section>
 
-      <section className="rounded-2xl border border-black/20 bg-gradient-to-br from-white/70 via-white/60 to-black/[0.03] p-4">
+      <section
+        id="character-intel"
+        className="rounded-2xl border border-black/20 bg-gradient-to-br from-white/70 via-white/60 to-black/[0.03] p-4"
+      >
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
           Character Intel Matrix
         </p>
@@ -164,12 +171,19 @@ export default function CharacterDetailPage({ params }: CharacterDetailPageProps
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
-      <main className="pokemon-detail-page mx-auto min-h-screen w-full max-w-[2560px] px-2 py-5 sm:px-4 sm:py-8 lg:px-5">
+      <main className="characters-detail-page pokemon-detail-page mx-auto min-h-screen w-full max-w-[2560px] px-2 py-5 sm:px-4 sm:py-8 lg:px-5">
         <PokedexFrame
           title={`${character.name} - Character Encyclopedia`}
           status="success"
           leftPanel={leftPanel}
           rightPanel={rightPanel}
+          className="characters-detail-frame"
+        />
+        <MobileDexBottomNav
+          activeKey="explore"
+          exploreHref="/characters"
+          settingsHref={`/characters/${character.slug}#character-intel`}
+          className="characters-mobile-bottom-nav"
         />
       </main>
     </>

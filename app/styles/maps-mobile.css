@@ -1,0 +1,274 @@
+@media (max-width: 767px) {
+  .maps-mobile-page {
+    padding-bottom: calc(5.8rem + env(safe-area-inset-bottom));
+  }
+
+  .maps-mobile-frame.pokedex-shell {
+    border-radius: 1.72rem;
+    padding: 0.42rem;
+    background:
+      linear-gradient(
+        155deg,
+        var(--map-shell-from, #ef6059) 0%,
+        var(--map-shell-mid, #d33737) 32%,
+        var(--map-shell-to, #b41e25) 100%
+      );
+    box-shadow:
+      inset 2px 2px 0 rgba(255, 255, 255, 0.26),
+      inset -9px -12px 20px rgba(0, 0, 0, 0.24),
+      0 18px 34px rgba(0, 0, 0, 0.28);
+  }
+
+  .maps-mobile-frame .pokedex-home-shortcut,
+  .maps-mobile-frame .pokedex-header-actions-cluster,
+  .maps-mobile-frame .explorer-trainer-name,
+  .maps-mobile-frame .pokedex-header-guest-btn-register {
+    display: none;
+  }
+
+  .maps-mobile-frame > .relative {
+    gap: 0.58rem;
+  }
+
+  .maps-mobile-frame > .relative > header {
+    border-radius: 0.86rem;
+    margin: 0.14rem 0.14rem 0;
+    padding: 0.52rem 0.62rem;
+    background: rgba(0, 0, 0, 0.14);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  .maps-mobile-frame > .relative > header > div {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 0.46rem;
+  }
+
+  .maps-mobile-frame .pokedex-header-trainer-hub {
+    min-width: 0;
+    padding: 0.15rem;
+    border-radius: 0.92rem;
+  }
+
+  .maps-mobile-frame .pokedex-header-trainer-user {
+    gap: 0;
+    padding: 0;
+  }
+
+  .maps-mobile-frame .explorer-trainer-avatar {
+    width: 1.95rem;
+    height: 1.95rem;
+  }
+
+  .maps-mobile-frame .retro-screen,
+  .maps-mobile-frame .metal-plate {
+    min-height: auto;
+    border-radius: 1.08rem;
+    padding: 0.52rem;
+    background:
+      radial-gradient(circle at 22% 10%, rgba(255, 255, 255, 0.24), transparent 28%),
+      linear-gradient(
+        180deg,
+        color-mix(in srgb, var(--map-screen-from, #c7efb9) 88%, #f5fff2 12%),
+        color-mix(in srgb, var(--map-screen-to, #7cb67a) 78%, #dcebd6 22%)
+      );
+    box-shadow:
+      inset 0 1px 0 rgba(237, 255, 221, 0.48),
+      inset 0 -1px 0 rgba(34, 73, 26, 0.36),
+      0 10px 20px rgba(47, 88, 39, 0.12);
+  }
+
+  .maps-mobile-frame .scan-overlay {
+    opacity: 0.34;
+  }
+
+  .maps-mobile-left,
+  .maps-mobile-right {
+    gap: 0.68rem;
+  }
+
+  .maps-mobile-controls,
+  .maps-mobile-catalog,
+  .maps-mobile-detail-shell,
+  .maps-mobile-detail-section {
+    border-radius: 0.98rem;
+    padding: 0.68rem !important;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(251, 255, 247, 0.76),
+        color-mix(in srgb, var(--map-screen-from, #c7efb9) 18%, rgba(227, 240, 219, 0.62))
+      );
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.55),
+      inset 0 -1px 0 rgba(68, 92, 55, 0.08),
+      0 6px 18px rgba(41, 67, 32, 0.08);
+  }
+
+  .maps-mobile-controls .search-deck-field {
+    min-height: 2.75rem;
+    border-radius: 1.06rem;
+    border-color: color-mix(in srgb, var(--map-accent) 28%, rgba(87, 136, 173, 0.42));
+  }
+
+  .maps-mobile-controls .mt-3.grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.42rem;
+  }
+
+  .maps-mobile-controls .mt-3.grid > label {
+    grid-column: 1 / -1;
+  }
+
+  .maps-mobile-controls select {
+    min-height: 2.2rem;
+    border-radius: 0.8rem;
+    padding-inline: 0.58rem;
+    font-size: 0.68rem;
+  }
+
+  .maps-mobile-controls .inline-flex.items-center.gap-1 {
+    width: 100%;
+    justify-content: center;
+    border-radius: 0.82rem;
+  }
+
+  .maps-mobile-controls .mt-2.grid.gap-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .maps-mobile-info-chip {
+    border-radius: 0.7rem;
+    padding: 0.28rem 0.46rem;
+    font-size: 0.6rem;
+  }
+
+  .maps-mobile-catalog-list {
+    margin-top: 0.52rem !important;
+    height: 17rem !important;
+    min-height: 17rem !important;
+    max-height: 17rem !important;
+    padding-right: 0.1rem !important;
+  }
+
+  .maps-mobile-catalog-item {
+    border-radius: 0.84rem;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.44),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.05);
+  }
+
+  .maps-mobile-detail-shell {
+    min-height: auto !important;
+  }
+
+  .maps-mobile-detail-scroll {
+    max-height: none !important;
+    overflow: visible !important;
+    padding-right: 0 !important;
+  }
+
+  .maps-mobile-region-hero {
+    padding: 0.72rem !important;
+  }
+
+  .maps-mobile-region-hero h1 {
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+  }
+
+  .maps-mobile-region-hero .favorite-star-btn {
+    width: 1.82rem;
+    height: 1.82rem;
+    min-width: 1.82rem;
+    min-height: 1.82rem;
+  }
+
+  .maps-mobile-region-stage {
+    margin-top: 0.58rem !important;
+    height: 13rem !important;
+    border-radius: 0.88rem;
+  }
+
+  .maps-mobile-detail-section {
+    padding: 0.62rem !important;
+  }
+
+  .maps-mobile-detail-section .mb-3 {
+    margin-bottom: 0.48rem !important;
+  }
+
+  .maps-mobile-stat-card {
+    min-height: 2.35rem;
+    padding: 0.5rem 0.62rem !important;
+  }
+
+  .maps-mobile-detail-shell p,
+  .maps-mobile-detail-shell li,
+  .maps-mobile-detail-section p,
+  .maps-mobile-detail-section li {
+    font-size: 0.76rem;
+    line-height: 1.42;
+  }
+
+  .maps-mobile-detail-section .overflow-x-auto {
+    border-radius: 0.82rem;
+  }
+
+  .maps-mobile-detail-section table {
+    min-width: 34rem;
+    font-size: 0.72rem;
+  }
+
+  .maps-mobile-detail-section th,
+  .maps-mobile-detail-section td {
+    padding: 0.46rem 0.56rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .maps-mobile-frame > .relative > header {
+    padding: 0.44rem 0.5rem;
+  }
+
+  .maps-mobile-frame > .relative > header .pixel-font {
+    font-size: 9px;
+    letter-spacing: 0.08em;
+  }
+
+  .maps-mobile-frame .explorer-trainer-avatar {
+    width: 1.7rem;
+    height: 1.7rem;
+  }
+
+  .maps-mobile-controls,
+  .maps-mobile-catalog,
+  .maps-mobile-detail-shell,
+  .maps-mobile-detail-section {
+    padding: 0.56rem !important;
+  }
+
+  .maps-mobile-catalog-list {
+    height: 15rem !important;
+    min-height: 15rem !important;
+    max-height: 15rem !important;
+  }
+
+  .maps-mobile-region-stage {
+    height: 11.25rem !important;
+  }
+
+  .maps-mobile-detail-section table {
+    min-width: 30rem;
+    font-size: 0.68rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .maps-mobile-frame.pokedex-shell,
+  .maps-mobile-catalog-item {
+    transition: none !important;
+    animation: none !important;
+  }
+}

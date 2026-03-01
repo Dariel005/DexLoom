@@ -13,6 +13,7 @@ import {
 import { EncyclopediaDataTable } from "@/components/EncyclopediaDataTable";
 import { ExplorerDetailSection, ExplorerEmptyState, ExplorerPagination, ExplorerSearchBar } from "@/components/explorer";
 import { FavoriteStarButton } from "@/components/FavoriteStarButton";
+import { MobileDexBottomNav } from "@/components/MobileDexBottomNav";
 import { PokedexFrame } from "@/components/PokedexFrame";
 import { RouteTransitionLink } from "@/components/RouteTransitionLink";
 import { TypeBadge } from "@/components/TypeBadge";
@@ -86,6 +87,9 @@ function buildMoveTier(power: number | null, accuracy: number | null, priority: 
 
 export function MovesExplorer() {
   const playUiTone = useUiTone();
+  const controlsRef = useRef<HTMLDivElement | null>(null);
+  const catalogRef = useRef<HTMLElement | null>(null);
+  const detailRef = useRef<HTMLDivElement | null>(null);
   const [searchInput, setSearchInput] = useState("");
   const [sortMode, setSortMode] = useState<MoveSortMode>("id-asc");
   const [catalogDensity, setCatalogDensity] = useState<MoveCatalogDensity>("detail");
@@ -123,14 +127,28 @@ export function MovesExplorer() {
     [playUiTone]
   );
 
+  const scrollToElement = useCallback((element: HTMLElement | null) => {
+    if (!element) {
+      return;
+    }
+
+    element.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
+
   const handleSelectMove = useCallback(
     (moveId: number) => {
       setSelectedMoveId((current) => {
         playUiTone(current === moveId ? "switch" : "select");
         return moveId;
       });
+
+      if (typeof window !== "undefined" && window.innerWidth < 768) {
+        window.requestAnimationFrame(() => {
+          scrollToElement(detailRef.current);
+        });
+      }
     },
-    [playUiTone]
+    [playUiTone, scrollToElement]
   );
 
   const handlePreviousPage = useCallback(() => {
@@ -188,6 +206,16 @@ export function MovesExplorer() {
       return next;
     });
   }, [playUiTone]);
+
+  const handleMobileExplore = useCallback(() => {
+    playUiTone("switch");
+    scrollToElement(catalogRef.current);
+  }, [playUiTone, scrollToElement]);
+
+  const handleMobileSettings = useCallback(() => {
+    playUiTone("switch");
+    scrollToElement(controlsRef.current);
+  }, [playUiTone, scrollToElement]);
 
   const safePage = Math.min(page, totalPages);
   const pagedMoves = useMemo(
@@ -251,7 +279,7 @@ export function MovesExplorer() {
   }, [detailQuery.isError, detailQuery.isLoading, indexQuery.isError, indexQuery.isLoading, selectedMoveId]);
 
   const leftPanel = (
-    <section className="dex-reading-copy space-y-4">
+    <section className="moves-mobile-left dex-reading-copy space-y-4">
       <div className="flex flex-wrap items-center gap-2">
         <RouteTransitionLink
           href="/"
@@ -261,7 +289,10 @@ export function MovesExplorer() {
         </RouteTransitionLink>
       </div>
 
-      <div className="rounded-2xl border border-black/20 bg-white/55 p-3">
+      <div
+        ref={controlsRef}
+        className="moves-mobile-controls rounded-2xl border border-black/20 bg-white/55 p-3"
+      >
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
           Move Explorer
         </p>
@@ -318,7 +349,10 @@ export function MovesExplorer() {
         </div>
       </div>
 
-      <section className="rounded-2xl border border-black/20 bg-white/55 p-3">
+      <section
+        ref={catalogRef}
+        className="moves-mobile-catalog rounded-2xl border border-black/20 bg-white/55 p-3"
+      >
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
           Move Catalog
         </p>
@@ -351,7 +385,7 @@ export function MovesExplorer() {
             itemHeight={moveRowHeight}
             gap={moveRowGap}
             overscan={8}
-            className="pokemon-scrollbar mt-3 h-[58vh] min-h-[360px] max-h-[86vh] sm:h-[64vh] sm:min-h-[520px] sm:max-h-[88vh] lg:h-[72vh] lg:min-h-[760px] lg:max-h-[900px] overflow-y-scroll pr-1"
+            className="moves-mobile-catalog-list pokemon-scrollbar mt-3 h-[58vh] min-h-[360px] max-h-[86vh] sm:h-[64vh] sm:min-h-[520px] sm:max-h-[88vh] lg:h-[72vh] lg:min-h-[760px] lg:max-h-[900px] overflow-y-scroll pr-1"
             renderItem={(move) => {
               const isSelected = move.id === selectedMoveId;
 
@@ -360,7 +394,7 @@ export function MovesExplorer() {
                   type="button"
                   onClick={() => handleSelectMove(move.id)}
                   className={cn(
-                    "h-full w-full rounded-lg border text-left transition",
+                    "moves-mobile-catalog-item h-full w-full rounded-lg border text-left transition",
                     isCompactDensity ? "px-2.5 py-1.5" : "px-3 py-2",
                     isSelected
                       ? "border-[var(--theme-accent)] bg-[var(--theme-accent-soft)] text-black/85 pokedex-accent-glow"
@@ -406,8 +440,11 @@ export function MovesExplorer() {
   );
 
   const rightPanel = (
-    <section className="dex-reading-copy space-y-4">
-      <div className="rounded-2xl border border-black/20 bg-white/55 p-4 min-h-[420px] sm:min-h-[560px] lg:min-h-[760px]">
+    <section className="moves-mobile-right dex-reading-copy space-y-4">
+      <div
+        ref={detailRef}
+        className="moves-mobile-detail-shell rounded-2xl border border-black/20 bg-white/55 p-4 min-h-[420px] sm:min-h-[560px] lg:min-h-[760px]"
+      >
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
           Move Details
         </p>
@@ -428,9 +465,9 @@ export function MovesExplorer() {
         ) : null}
 
         {selectedMove ? (
-          <div className="mt-3 space-y-4">
+          <div className="moves-mobile-detail-stack mt-3 space-y-4">
             <div
-              className="rounded-2xl border p-4"
+              className="moves-mobile-detail-hero rounded-2xl border p-4"
               style={
                 {
                   borderColor: "rgba(0,0,0,0.18)",
@@ -553,12 +590,20 @@ export function MovesExplorer() {
   );
 
   return (
-    <PokedexFrame
-      title="Pokemon Moves Encyclopedia"
-      status={frameStatus}
-      leftPanel={leftPanel}
-      rightPanel={rightPanel}
-    />
+    <div className="encyclopedia-mobile-page">
+      <PokedexFrame
+        title="Pokemon Moves Encyclopedia"
+        status={frameStatus}
+        leftPanel={leftPanel}
+        rightPanel={rightPanel}
+        className="encyclopedia-mobile-frame moves-mobile-frame"
+      />
+      <MobileDexBottomNav
+        activeKey="explore"
+        onExplore={handleMobileExplore}
+        onSettings={handleMobileSettings}
+        className="encyclopedia-mobile-bottom-nav"
+      />
+    </div>
   );
 }
-

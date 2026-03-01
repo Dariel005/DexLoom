@@ -5,6 +5,7 @@ import { type PokemonStat } from "@/types/pokemon";
 
 interface StatChartProps {
   stats: PokemonStat[];
+  tone?: "dynamic" | "terminal";
 }
 
 function getBattleStatColor(value: number) {
@@ -39,27 +40,29 @@ function getBattleTier(value: number) {
   return "D";
 }
 
-export function StatChart({ stats }: StatChartProps) {
+export function StatChart({ stats, tone = "dynamic" }: StatChartProps) {
   return (
-    <div className="space-y-2.5">
+    <div className="pokemon-stat-chart space-y-2.5">
       {stats.map((stat, index) => {
         const progress = Math.min((stat.baseStat / 255) * 100, 100);
-        const color = getBattleStatColor(stat.baseStat);
+        const color = tone === "terminal" ? "#f97316" : getBattleStatColor(stat.baseStat);
         const tier = getBattleTier(stat.baseStat);
         return (
-          <div key={stat.name}>
-            <div className="mb-1 flex items-center justify-between text-[11px] text-black/65">
-              <span className="pixel-font text-[9px] uppercase tracking-wide">{stat.name}</span>
+          <div key={stat.name} className="pokemon-stat-row">
+            <div className="pokemon-stat-row-head mb-1 flex items-center justify-between text-[11px] text-black/65">
+              <span className="pokemon-stat-row-name pixel-font text-[9px] uppercase tracking-wide">
+                {stat.name}
+              </span>
               <div className="flex items-center gap-1.5">
                 <span>{stat.baseStat}</span>
-                <span className="pixel-font rounded border border-black/15 bg-white/65 px-1 py-0.5 text-[8px] uppercase leading-none">
+                <span className="pokemon-stat-row-tier pixel-font rounded border border-black/15 bg-white/65 px-1 py-0.5 text-[8px] uppercase leading-none">
                   {tier}
                 </span>
               </div>
             </div>
-            <div className="relative h-3 overflow-hidden rounded-full border border-black/15 bg-black/10">
+            <div className="pokemon-stat-track relative h-3 overflow-hidden rounded-full border border-black/15 bg-black/10">
               <m.div
-                className="absolute inset-y-0 left-0 rounded-full"
+                className="pokemon-stat-fill absolute inset-y-0 left-0 rounded-full"
                 style={{
                   backgroundColor: color,
                   boxShadow: `0 0 12px ${color}77`
@@ -68,7 +71,7 @@ export function StatChart({ stats }: StatChartProps) {
                 animate={{ width: `${progress}%` }}
                 transition={{ duration: 0.45, delay: index * 0.04, ease: "easeOut" }}
               />
-              <div className="pointer-events-none absolute inset-0 rounded-full [background:repeating-linear-gradient(to_right,rgba(255,255,255,0.28)_0,rgba(255,255,255,0.28)_1px,transparent_1px,transparent_12px)]" />
+              <div className="pokemon-stat-grid pointer-events-none absolute inset-0 rounded-full [background:repeating-linear-gradient(to_right,rgba(255,255,255,0.28)_0,rgba(255,255,255,0.28)_1px,transparent_1px,transparent_12px)]" />
             </div>
           </div>
         );

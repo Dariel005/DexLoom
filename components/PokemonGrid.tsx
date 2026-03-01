@@ -27,9 +27,9 @@ function PokemonGridComponent({
   const enableCardEntranceMotion = pokemon.length <= 36 && !useViewportCulling;
 
   return (
-    <div className="rounded-2xl border border-black/25 bg-black/[0.06] p-3">
+    <div className="pokemon-grid-panel rounded-2xl border border-black/25 bg-black/[0.06] p-3">
       {pokemon.length > 0 ? (
-        <div className="grid gap-3 sm:gap-3.5 [grid-template-columns:repeat(auto-fit,minmax(min(100%,236px),1fr))]">
+        <div className="pokemon-grid-lattice grid gap-3 sm:gap-3.5 [grid-template-columns:repeat(auto-fit,minmax(min(100%,236px),1fr))]">
           {pokemon.map((entry, index) => {
             const cardContent = (
               <PokemonCard

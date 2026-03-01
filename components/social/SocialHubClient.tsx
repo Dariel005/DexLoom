@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { CreatorName } from "@/components/CreatorName";
+import { MobileDexBottomNav } from "@/components/MobileDexBottomNav";
 import { PokedexFrame } from "@/components/PokedexFrame";
 import { useRole } from "@/components/RoleContext";
 import { RouteTransitionLink } from "@/components/RouteTransitionLink";
@@ -276,6 +277,7 @@ export function SocialHubClient() {
   const hubRequestControllerRef = useRef<AbortController | null>(null);
   const searchRequestControllerRef = useRef<AbortController | null>(null);
   const inviteRequestControllerRef = useRef<AbortController | null>(null);
+  const privacyPanelRef = useRef<HTMLElement | null>(null);
 
   const userId = session?.user?.id ?? null;
 
@@ -287,6 +289,16 @@ export function SocialHubClient() {
     },
     []
   );
+
+  const openPrivacyControls = useCallback(() => {
+    setActiveConsoleTab("trainer");
+
+    if (typeof window !== "undefined") {
+      window.setTimeout(() => {
+        privacyPanelRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 40);
+    }
+  }, []);
 
   const setHubPayload = useCallback((hub: SocialHubPayload) => {
     setNetwork({
@@ -1270,25 +1282,28 @@ export function SocialHubClient() {
 
   if (!userId) {
     return (
-      <main className="pokemon-detail-page mx-auto min-h-screen w-full max-w-[2560px] px-2 py-5 sm:px-4 sm:py-8 lg:px-5">
+      <main className="pokemon-detail-page social-mobile-page mx-auto min-h-screen w-full max-w-[2560px] px-2 py-5 sm:px-4 sm:py-8 lg:px-5">
         <PokedexFrame
           title="Trainer Social"
           status="idle"
-          leftPanel={<section className="social-theme-arcade space-y-4"><section className="profile-surface social-arcade-panel p-4"><p className="social-arcade-title pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">Social Network</p><h1 className="pixel-font mt-2 text-[14px] uppercase tracking-[0.12em] text-black/84">Sign in required</h1><p className="mt-2 text-sm text-black/72">Sign in to send requests, accept friends, and build your trainer network.</p><div className="mt-3 flex flex-wrap gap-2"><RouteTransitionLink href="/login" className="social-arcade-btn social-arcade-btn-neutral px-3 py-2 text-xs">Go to login</RouteTransitionLink><RouteTransitionLink href="/register" className="social-arcade-btn social-arcade-btn-neutral px-3 py-2 text-xs">Create account</RouteTransitionLink></div></section></section>}
-          rightPanel={<section className="social-theme-arcade space-y-4"><section className="profile-surface social-arcade-panel p-4"><p className="social-arcade-title pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">Navigation</p><div className="mt-2 flex flex-wrap gap-2"><RouteTransitionLink href="/" className="social-arcade-btn social-arcade-btn-neutral px-2.5 py-1 text-xs">Back to Pokedex</RouteTransitionLink></div></section></section>}
+          leftPanel={<section className="social-theme-arcade social-mobile-left space-y-4"><section className="profile-surface social-arcade-panel p-4"><p className="social-arcade-title pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">Social Network</p><h1 className="pixel-font mt-2 text-[14px] uppercase tracking-[0.12em] text-black/84">Sign in required</h1><p className="mt-2 text-sm text-black/72">Sign in to send requests, accept friends, and build your trainer network.</p><div className="mt-3 flex flex-wrap gap-2"><RouteTransitionLink href="/login" className="social-arcade-btn social-arcade-btn-neutral px-3 py-2 text-xs">Go to login</RouteTransitionLink><RouteTransitionLink href="/register" className="social-arcade-btn social-arcade-btn-neutral px-3 py-2 text-xs">Create account</RouteTransitionLink></div></section></section>}
+          rightPanel={<section className="social-theme-arcade social-mobile-right space-y-4"><section className="profile-surface social-arcade-panel p-4"><p className="social-arcade-title pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">Navigation</p><div className="mt-2 flex flex-wrap gap-2"><RouteTransitionLink href="/" className="social-arcade-btn social-arcade-btn-neutral px-2.5 py-1 text-xs">Back to Pokedex</RouteTransitionLink></div></section></section>}
+          className="social-mobile-frame"
         />
       </main>
     );
   }
 
   return (
-    <main className="pokemon-detail-page mx-auto min-h-screen w-full max-w-[2560px] px-2 py-5 sm:px-4 sm:py-8 lg:px-5">
+    <>
+    <main className="pokemon-detail-page social-mobile-page mx-auto min-h-screen w-full max-w-[2560px] px-2 py-5 sm:px-4 sm:py-8 lg:px-5">
       <PokedexFrame
         title="Trainer Social"
         status={isLoadingHub ? "loading" : "success"}
+        className="social-mobile-frame"
         leftPanel={
-          <section className="social-theme-arcade space-y-4">
-            <section className="profile-surface profile-surface-hero social-arcade-panel social-arcade-grid-hero p-4">
+          <section className="social-theme-arcade social-mobile-left space-y-4">
+            <section className="profile-surface profile-surface-hero social-arcade-panel social-arcade-grid-hero social-mobile-overview-panel p-4">
               <p className="social-arcade-title pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">Trainer Social Grid</p>
               <p className="mt-2 text-sm text-black/74">Connected as <CreatorName name={session?.user?.name ?? session?.user?.email ?? "Trainer"} isCreator={session?.user?.isCreator === true} role={session?.user?.role} compact /></p>
               <div className="profile-metric-grid social-arcade-metric-grid mt-3">
@@ -1301,7 +1316,7 @@ export function SocialHubClient() {
               {errorMessage ? <p className="mt-3 rounded-lg border border-rose-300 bg-rose-100/70 px-3 py-2 text-sm text-rose-900">{errorMessage}</p> : null}
             </section>
 
-            <section className="profile-surface social-arcade-panel p-4">
+            <section ref={privacyPanelRef} className="profile-surface social-arcade-panel social-mobile-privacy-panel p-4">
               <p className="social-arcade-title pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">Social Privacy Controls</p>
               <div className="mt-2 grid gap-2 sm:grid-cols-2">
                 <select value={friendRequestPolicyDraft} onChange={(event) => setFriendRequestPolicyDraft(event.target.value as SocialPrivacySettingsView["friendRequestPolicy"])} className="social-arcade-field rounded-md border border-black/20 bg-white/90 px-2 py-1 text-xs text-black/76"><option value="everyone">Friend requests: Everyone</option><option value="no_one">Friend requests: No one</option></select>
@@ -1313,7 +1328,7 @@ export function SocialHubClient() {
               </div>
             </section>
 
-            <section className="profile-surface social-arcade-panel social-discover-panel p-4">
+            <section className="profile-surface social-arcade-panel social-discover-panel social-mobile-discover-panel p-4">
               <div className="social-panel-header flex flex-wrap items-end justify-between gap-2"><p className="social-panel-title pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">Discover Trainers</p>{isSearching ? <p className="text-xs text-black/60">Searching...</p> : null}</div>
               <div className="social-discover-controls mt-2 rounded-lg border border-black/20 bg-white/72 p-2.5">
                 <div className="flex flex-wrap items-center gap-2">
@@ -1332,7 +1347,7 @@ export function SocialHubClient() {
 
             <section
               className={cn(
-                "profile-surface social-arcade-panel social-incoming-panel p-4",
+                "profile-surface social-arcade-panel social-incoming-panel social-mobile-incoming-panel p-4",
                 hasIncomingRequests && "social-incoming-panel-alert"
               )}
             >
@@ -1395,9 +1410,9 @@ export function SocialHubClient() {
           </section>
         }
         rightPanel={
-          <section className="social-theme-arcade space-y-4">
+          <section className="social-theme-arcade social-mobile-right space-y-4">
             <div className="social-arcade-top-grid">
-              <section className="profile-surface social-arcade-panel social-arcade-nav-panel p-4">
+              <section className="profile-surface social-arcade-panel social-arcade-nav-panel social-mobile-nav-panel p-4">
                 <p className="social-arcade-title pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">Navigation</p>
                 <div className="mt-2 grid gap-2">
                   <RouteTransitionLink href="/" className="social-arcade-btn social-arcade-btn-neutral px-2.5 py-1.5 text-xs">Back to Pokedex</RouteTransitionLink>
@@ -1481,7 +1496,7 @@ export function SocialHubClient() {
               ) : null}
 
               {activeConsoleTab === "trainer" ? (
-                <section className="profile-surface social-arcade-panel social-arcade-report-panel p-4">
+                <section className="profile-surface social-arcade-panel social-arcade-report-panel social-mobile-report-panel p-4">
                 <p className="social-arcade-title pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">Report Trainer</p>
                 <div className="mt-2 grid gap-2">
                   <div className="grid gap-2 sm:grid-cols-2">
@@ -1512,7 +1527,7 @@ export function SocialHubClient() {
               ) : null}
             </div>
             {activeConsoleTab === "trainer" ? (
-              <section className="profile-surface social-quick-card social-arcade-panel social-arcade-selected-panel p-4">
+              <section className="profile-surface social-quick-card social-arcade-panel social-arcade-selected-panel social-mobile-selected-panel p-4">
               <p className="social-arcade-title pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">Selected Trainer</p>
               {!currentSelection ? (
                 <p className="social-arcade-empty mt-2 rounded-lg border border-dashed border-black/25 bg-white/75 px-3 py-3 text-xs text-black/62">
@@ -2110,5 +2125,13 @@ export function SocialHubClient() {
         }
       />
     </main>
+    <MobileDexBottomNav
+      activeKey="profile"
+      className="social-mobile-bottom-nav"
+      profileLabel="Social"
+      profileHref="/social"
+      onSettings={openPrivacyControls}
+    />
+    </>
   );
 }

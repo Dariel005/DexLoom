@@ -1,8 +1,9 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { CreatorName } from "@/components/CreatorName";
+import { MobileDexBottomNav } from "@/components/MobileDexBottomNav";
 import { PokedexFrame } from "@/components/PokedexFrame";
 import { RouteTransitionLink } from "@/components/RouteTransitionLink";
 import { useUserFavorites } from "@/hooks/useUserFavorites";
@@ -129,6 +130,7 @@ function sortFavorites(rows: FavoriteRecord[], mode: FavoriteSortMode) {
 export function FavoritesHubClient() {
   const { data: session, status } = useSession();
   const favorites = useUserFavorites();
+  const filterPanelRef = useRef<HTMLElement | null>(null);
   const [searchInput, setSearchInput] = useState("");
   const [entityFilter, setEntityFilter] = useState<FavoriteEntityType | "all">("all");
   const [sortMode, setSortMode] = useState<FavoriteSortMode>("newest");
@@ -163,9 +165,17 @@ export function FavoritesHubClient() {
     return sortFavorites(filtered, sortMode);
   }, [entityFilter, favorites.items, onlyArtwork, searchInput, sortMode]);
 
+  const scrollToFilters = useCallback(() => {
+    if (typeof window !== "undefined") {
+      window.setTimeout(() => {
+        filterPanelRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 40);
+    }
+  }, []);
+
   if (status === "loading") {
     return (
-      <main className="pokemon-detail-page mx-auto min-h-screen w-full max-w-[2560px] px-2 py-5 sm:px-4 sm:py-8 lg:px-5">
+      <main className="pokemon-detail-page favorites-mobile-page mx-auto min-h-screen w-full max-w-[2560px] px-2 py-5 sm:px-4 sm:py-8 lg:px-5">
         <div className="rounded-2xl border border-black/20 bg-white/65 p-4 text-sm text-black/75">Checking session...</div>
       </main>
     );
@@ -173,12 +183,13 @@ export function FavoritesHubClient() {
 
   if (!session?.user?.id) {
     return (
-      <main className="pokemon-detail-page mx-auto min-h-screen w-full max-w-[2560px] px-2 py-5 sm:px-4 sm:py-8 lg:px-5">
+      <main className="pokemon-detail-page favorites-mobile-page mx-auto min-h-screen w-full max-w-[2560px] px-2 py-5 sm:px-4 sm:py-8 lg:px-5">
         <PokedexFrame
           title="My Favorites"
           status="idle"
+          className="favorites-mobile-frame"
           leftPanel={
-            <section className="space-y-4">
+            <section className="favorites-mobile-left space-y-4">
               <section className="profile-surface p-4">
                 <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">Favorites Hub</p>
                 <h1 className="pixel-font mt-2 text-[14px] uppercase tracking-[0.12em] text-black/84">Sign in required</h1>
@@ -191,7 +202,7 @@ export function FavoritesHubClient() {
             </section>
           }
           rightPanel={
-            <section className="space-y-4">
+            <section className="favorites-mobile-right space-y-4">
               <section className="profile-surface p-4">
                 <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">Navigation</p>
                 <div className="mt-2 flex flex-wrap gap-2">
@@ -206,8 +217,8 @@ export function FavoritesHubClient() {
   }
 
   const leftPanel = (
-    <section className="space-y-4">
-      <section className="profile-surface profile-surface-hero favorites-hub-hero p-4">
+    <section className="favorites-mobile-left space-y-4">
+      <section className="profile-surface profile-surface-hero favorites-hub-hero favorites-mobile-hero p-4">
         <p className="favorites-hub-title pixel-font text-[12px] uppercase tracking-[0.16em] text-black/70">Favorites Hub</p>
         <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
           <p className="favorites-hub-identity text-base text-black/74">
@@ -249,7 +260,7 @@ export function FavoritesHubClient() {
         ) : null}
       </section>
 
-      <section className="profile-surface favorites-hub-list-panel p-4">
+      <section ref={filterPanelRef} className="profile-surface favorites-hub-list-panel favorites-mobile-list-panel p-4">
         <div className="flex flex-wrap items-end justify-between gap-2">
           <p className="pixel-font text-[12px] uppercase tracking-[0.16em] text-black/70">My Favorites</p>
           <p className="text-sm text-black/60">Showing {filteredFavorites.length} of {favorites.items.length}</p>
@@ -368,8 +379,8 @@ export function FavoritesHubClient() {
   );
 
   const rightPanel = (
-    <section className="space-y-4">
-      <section className="profile-surface profile-side-panel p-4">
+    <section className="favorites-mobile-right space-y-4">
+      <section className="profile-surface profile-side-panel favorites-mobile-nav-panel p-4">
         <p className="pixel-font text-[11px] uppercase tracking-[0.16em] text-black/70">Navigation</p>
         <div className="mt-2 flex flex-wrap gap-2">
           <RouteTransitionLink href="/" className="profile-side-nav-link px-2.5 py-1 text-sm">Back to Pokedex</RouteTransitionLink>
@@ -378,7 +389,7 @@ export function FavoritesHubClient() {
         </div>
       </section>
 
-      <section className="profile-surface profile-side-panel p-4">
+      <section className="profile-surface profile-side-panel favorites-mobile-radar-panel p-4">
         <p className="pixel-font text-[11px] uppercase tracking-[0.16em] text-black/70">Module Radar</p>
         <div className="mt-2 space-y-2">
           {entityInsights.length === 0 ? (
@@ -396,7 +407,7 @@ export function FavoritesHubClient() {
         </div>
       </section>
 
-      <section className="profile-surface profile-side-panel p-4">
+      <section className="profile-surface profile-side-panel favorites-mobile-tags-panel p-4">
         <p className="pixel-font text-[11px] uppercase tracking-[0.16em] text-black/70">Top Tags</p>
         <div className="mt-2 flex flex-wrap gap-1.5">
           {tagInsights.length === 0 ? (
@@ -409,7 +420,7 @@ export function FavoritesHubClient() {
         </div>
       </section>
 
-      <section className="profile-surface profile-side-panel p-4">
+      <section className="profile-surface profile-side-panel favorites-mobile-captures-panel p-4">
         <p className="pixel-font text-[11px] uppercase tracking-[0.16em] text-black/70">Recent Captures</p>
         <div className="profile-side-capture-list mt-2 space-y-2">
           {recentFavorites.length === 0 ? (
@@ -450,13 +461,21 @@ export function FavoritesHubClient() {
   );
 
   return (
-    <main className="pokemon-detail-page mx-auto min-h-screen w-full max-w-[2560px] px-2 py-5 sm:px-4 sm:py-8 lg:px-5">
-      <PokedexFrame
-        title="My Favorites"
-        status={favorites.isReady ? "success" : "loading"}
-        leftPanel={leftPanel}
-        rightPanel={rightPanel}
+    <>
+      <main className="pokemon-detail-page favorites-mobile-page mx-auto min-h-screen w-full max-w-[2560px] px-2 py-5 sm:px-4 sm:py-8 lg:px-5">
+        <PokedexFrame
+          title="My Favorites"
+          status={favorites.isReady ? "success" : "loading"}
+          leftPanel={leftPanel}
+          rightPanel={rightPanel}
+          className="favorites-mobile-frame"
+        />
+      </main>
+      <MobileDexBottomNav
+        activeKey="favorites"
+        className="favorites-mobile-bottom-nav"
+        onSettings={scrollToFilters}
       />
-    </main>
+    </>
   );
 }

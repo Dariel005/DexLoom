@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { CreatorName } from "@/components/CreatorName";
+import { MobileDexBottomNav } from "@/components/MobileDexBottomNav";
 import { PokedexFrame } from "@/components/PokedexFrame";
 import { RoleBadge } from "@/components/RoleBadge";
 import { RouteTransitionLink } from "@/components/RouteTransitionLink";
@@ -242,6 +243,7 @@ export function ProfileMeClient() {
   const [infoMessage, setInfoMessage] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const avatarInputRef = useRef<HTMLInputElement | null>(null);
+  const editorPanelRef = useRef<HTMLElement | null>(null);
 
   const userId = session?.user?.id ?? null;
   const isCreatorProfile = session?.user?.isCreator === true || profile?.isCreator === true;
@@ -495,6 +497,16 @@ export function ProfileMeClient() {
     setIsAvatarLightboxOpen(true);
   }, []);
 
+  const openEditorConsole = useCallback(() => {
+    setActiveConsoleTab("editor");
+
+    if (typeof window !== "undefined") {
+      window.setTimeout(() => {
+        editorPanelRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 40);
+    }
+  }, []);
+
   const closeAvatarLightbox = useCallback(() => {
     setIsAvatarLightboxOpen(false);
   }, []);
@@ -559,12 +571,13 @@ export function ProfileMeClient() {
 
   if (!userId) {
     return (
-      <main className="pokemon-detail-page mx-auto min-h-screen w-full max-w-[2560px] px-2 py-5 sm:px-4 sm:py-8 lg:px-5">
+      <main className="pokemon-detail-page profile-mobile-page mx-auto min-h-screen w-full max-w-[2560px] px-2 py-5 sm:px-4 sm:py-8 lg:px-5">
         <PokedexFrame
           title="Trainer Profile"
           status="idle"
+          className="profile-mobile-frame"
           leftPanel={
-            <section className="profile-theme-matrix space-y-4">
+            <section className="profile-theme-matrix profile-mobile-left space-y-4">
               <section className="profile-surface p-4">
                 <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">Trainer Profile</p>
                 <h1 className="pixel-font mt-2 text-[14px] uppercase tracking-[0.12em] text-black/84">Sign in required</h1>
@@ -577,7 +590,7 @@ export function ProfileMeClient() {
             </section>
           }
           rightPanel={
-            <section className="profile-theme-matrix space-y-4">
+            <section className="profile-theme-matrix profile-mobile-right space-y-4">
               <section className="profile-surface p-4">
                 <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">Navigation</p>
                 <div className="mt-2 flex flex-wrap gap-2">
@@ -600,8 +613,8 @@ export function ProfileMeClient() {
   const hiddenChecklistCount = Math.max(0, profileCompletion.checklist.length - checklistPreview.length);
 
   const leftPanel = (
-    <section className="profile-theme-matrix space-y-4">
-      <section id="profile-identity" className="profile-surface profile-surface-hero profile-trainer-profile-card scroll-mt-28 p-4">
+    <section className="profile-theme-matrix profile-mobile-left space-y-4">
+      <section id="profile-identity" className="profile-surface profile-surface-hero profile-trainer-profile-card profile-mobile-identity-panel scroll-mt-28 p-4">
         <p className="pixel-font text-[12px] uppercase tracking-[0.16em] text-black/70">Trainer Identity Matrix</p>
         <div className="profile-hero-grid profile-trainer-profile-grid mt-3">
           <div className="profile-avatar-column profile-avatar-column-editable">
@@ -720,7 +733,7 @@ export function ProfileMeClient() {
             <div className="profile-gba-quick-links">
               <button
                 type="button"
-                onClick={() => setActiveConsoleTab("editor")}
+                onClick={openEditorConsole}
                 className="profile-trainer-action-btn profile-trainer-action-neutral"
               >
                 Open editor console
@@ -765,7 +778,7 @@ export function ProfileMeClient() {
       </section>
 
       {activeConsoleTab === "overview" ? (
-        <section className="profile-surface profile-editor-panel profile-gba-overview-panel p-4">
+        <section className="profile-surface profile-editor-panel profile-gba-overview-panel profile-mobile-overview-panel p-4">
           <div className="profile-editor-head flex flex-wrap items-center justify-between gap-2">
             <p className="pixel-font text-[12px] uppercase tracking-[0.16em] text-black/70">Trainer Console Overview</p>
             <span className={cn("profile-sync-pill", hasUnsavedChanges ? "profile-sync-pill-unsaved" : "profile-sync-pill-synced")}>
@@ -806,7 +819,11 @@ export function ProfileMeClient() {
       ) : null}
 
       {activeConsoleTab === "editor" ? (
-        <section id="profile-editor" className="profile-surface profile-editor-panel scroll-mt-28 p-4">
+        <section
+          id="profile-editor"
+          ref={editorPanelRef}
+          className="profile-surface profile-editor-panel profile-mobile-editor-panel scroll-mt-28 p-4"
+        >
         <div className="profile-editor-head flex flex-wrap items-center justify-between gap-2">
           <p className="pixel-font text-[12px] uppercase tracking-[0.16em] text-black/70">Profile Editor</p>
           <span
@@ -968,8 +985,8 @@ export function ProfileMeClient() {
   );
 
   const rightPanel = (
-    <section className="profile-theme-matrix profile-gba-console space-y-4">
-      <section className="profile-surface profile-side-panel p-4">
+    <section className="profile-theme-matrix profile-mobile-right profile-gba-console space-y-4">
+      <section className="profile-surface profile-side-panel profile-mobile-console-nav p-4">
         <p className="pixel-font text-[11px] uppercase tracking-[0.16em] text-black/70">PokéNav Profile Console</p>
         <div className="profile-side-nav-links profile-gba-top-links mt-2 flex flex-wrap gap-2">
           <RouteTransitionLink href="/" className="profile-side-nav-link px-2.5 py-1 text-sm">Back to Pokedex</RouteTransitionLink>
@@ -1023,7 +1040,7 @@ export function ProfileMeClient() {
       </section>
 
       {activeConsoleTab === "overview" || activeConsoleTab === "radar" ? (
-        <section className="profile-surface profile-side-panel p-4">
+        <section className="profile-surface profile-side-panel profile-mobile-radar-panel p-4">
         <p className="pixel-font text-[11px] uppercase tracking-[0.16em] text-black/70">Module Radar</p>
         <div className="mt-2 space-y-2">
           {entityInsights.length === 0 ? <p className="profile-side-empty px-3 py-3 text-sm">No module activity yet.</p> : entityInsights.slice(0, activeConsoleTab === "overview" ? 4 : 6).map((entry) => (
@@ -1045,7 +1062,7 @@ export function ProfileMeClient() {
       ) : null}
 
       {activeConsoleTab === "overview" || activeConsoleTab === "captures" ? (
-        <section className="profile-surface profile-side-panel p-4">
+        <section className="profile-surface profile-side-panel profile-mobile-captures-panel p-4">
         <p className="pixel-font text-[11px] uppercase tracking-[0.16em] text-black/70">Recent Captures</p>
         <div className="profile-side-capture-list mt-2 space-y-2">
           {recentFavorites.length === 0 ? <p className="profile-side-empty px-3 py-3 text-sm">No captures yet.</p> : recentFavorites.slice(0, activeConsoleTab === "overview" ? 3 : 5).map((entry) => {
@@ -1088,7 +1105,7 @@ export function ProfileMeClient() {
       ) : null}
 
       {activeConsoleTab === "editor" || activeConsoleTab === "intel" ? (
-        <section className="profile-surface profile-side-panel profile-gba-overview-panel p-4">
+        <section className="profile-surface profile-side-panel profile-gba-overview-panel profile-mobile-shortcuts-panel p-4">
           <p className="pixel-font text-[11px] uppercase tracking-[0.16em] text-black/70">
             {activeConsoleTab === "editor" ? "Editor Shortcuts" : "Intel Shortcuts"}
           </p>
@@ -1110,9 +1127,20 @@ export function ProfileMeClient() {
 
   return (
     <>
-      <main className="pokemon-detail-page mx-auto min-h-screen w-full max-w-[2560px] px-2 py-5 sm:px-4 sm:py-8 lg:px-5">
-        <PokedexFrame title="Trainer Profile" status={isLoadingProfile ? "loading" : "success"} leftPanel={leftPanel} rightPanel={rightPanel} />
+      <main className="pokemon-detail-page profile-mobile-page mx-auto min-h-screen w-full max-w-[2560px] px-2 py-5 sm:px-4 sm:py-8 lg:px-5">
+        <PokedexFrame
+          title="Trainer Profile"
+          status={isLoadingProfile ? "loading" : "success"}
+          leftPanel={leftPanel}
+          rightPanel={rightPanel}
+          className="profile-mobile-frame"
+        />
       </main>
+      <MobileDexBottomNav
+        activeKey="profile"
+        className="profile-mobile-bottom-nav"
+        onSettings={openEditorConsole}
+      />
       <ProfileAvatarCropper
         open={avatarCropDraft !== null}
         imageSrc={avatarCropDraft?.previewUrl ?? null}

@@ -25,8 +25,8 @@ export function ExplorerSearchBar({
     trailing
 }: ExplorerSearchBarProps) {
     return (
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-            <label htmlFor={id} className="search-deck-field w-full sm:flex-1">
+        <div className="explorer-searchbar flex flex-col gap-2 sm:flex-row sm:items-center">
+            <label htmlFor={id} className="explorer-searchbar-field search-deck-field w-full sm:flex-1">
                 <span className="search-deck-led" aria-hidden />
                 <span className="search-deck-ball" aria-hidden />
                 <input
@@ -57,7 +57,7 @@ export function ExplorerSearchBar({
                 ) : null}
                 <span className="search-deck-gloss" aria-hidden />
             </label>
-            {trailing}
+            {trailing ? <div className="explorer-searchbar-trailing">{trailing}</div> : null}
         </div>
     );
 }

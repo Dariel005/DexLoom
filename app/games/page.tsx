@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { MobileDexBottomNav } from "@/components/MobileDexBottomNav";
 import { GameCard } from "@/components/games/GameCard";
 import { PokedexFrame } from "@/components/PokedexFrame";
 import { RouteTransitionLink } from "@/components/RouteTransitionLink";
@@ -29,7 +30,11 @@ function InfoChip({
           ? "border-emerald-300/85 bg-emerald-100/72 text-emerald-900"
           : "border-black/20 bg-white/72 text-black/74";
 
-  return <span className={`rounded-md border px-2 py-1 text-xs ${toneClass}`}>{label}</span>;
+  return (
+    <span className={`games-mobile-info-chip rounded-md border px-2 py-1 text-xs ${toneClass}`}>
+      {label}
+    </span>
+  );
 }
 
 export default function GamesPage() {
@@ -40,8 +45,8 @@ export default function GamesPage() {
   const mobilePlatformCount = new Set(MOBILE_GAME_CATALOG.map((entry) => entry.platform)).size;
 
   const leftPanel = (
-    <section className="space-y-4">
-      <section className="rounded-2xl border border-black/20 bg-[radial-gradient(circle_at_10%_6%,rgba(255,255,255,0.6),transparent_36%),linear-gradient(158deg,rgba(255,255,255,0.84),rgba(224,238,227,0.72))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.84),0_10px_20px_rgba(0,0,0,0.08)]">
+    <section className="games-mobile-index space-y-4">
+      <section className="games-mobile-hero rounded-2xl border border-black/20 bg-[radial-gradient(circle_at_10%_6%,rgba(255,255,255,0.6),transparent_36%),linear-gradient(158deg,rgba(255,255,255,0.84),rgba(224,238,227,0.72))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.84),0_10px_20px_rgba(0,0,0,0.08)]">
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/68">Video Games</p>
         <h1 className="pixel-font mt-2 text-[14px] uppercase tracking-[0.12em] text-black/86">
           Pokemon Game Index
@@ -60,32 +65,35 @@ export default function GamesPage() {
         </div>
       </section>
 
-      <section className="rounded-2xl border border-black/20 bg-[linear-gradient(160deg,rgba(255,255,255,0.78),rgba(228,238,229,0.7))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.82)]">
+      <section className="games-mobile-quicklinks rounded-2xl border border-black/20 bg-[linear-gradient(160deg,rgba(255,255,255,0.78),rgba(228,238,229,0.7))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.82)]">
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">Quick Links</p>
-        <div className="mt-2 flex flex-wrap gap-2">
+        <div className="games-mobile-quicklink-row mt-2 flex flex-wrap gap-2">
           <RouteTransitionLink
             href="/"
-            className="gbc-nav-link rounded-md border border-black/25 bg-white/75 px-2.5 py-1 text-xs text-black/75"
+            className="games-mobile-quicklink gbc-nav-link rounded-md border border-black/25 bg-white/75 px-2.5 py-1 text-xs text-black/75"
           >
             Back to Pokedex
           </RouteTransitionLink>
           <RouteTransitionLink
             href="/maps"
-            className="gbc-nav-link rounded-md border border-black/25 bg-white/75 px-2.5 py-1 text-xs text-black/75"
+            className="games-mobile-quicklink gbc-nav-link rounded-md border border-black/25 bg-white/75 px-2.5 py-1 text-xs text-black/75"
           >
             Region Maps
           </RouteTransitionLink>
           <RouteTransitionLink
             href="/characters"
-            className="gbc-nav-link rounded-md border border-black/25 bg-white/75 px-2.5 py-1 text-xs text-black/75"
+            className="games-mobile-quicklink gbc-nav-link rounded-md border border-black/25 bg-white/75 px-2.5 py-1 text-xs text-black/75"
           >
             Character Directory
           </RouteTransitionLink>
         </div>
       </section>
 
-      <section className="rounded-2xl border border-black/20 bg-[linear-gradient(160deg,rgba(255,255,255,0.8),rgba(223,236,229,0.72))] p-4">
-        <div className="flex flex-wrap items-end justify-between gap-2">
+      <section
+        id="games-mobile-mainline"
+        className="games-mobile-catalog-section games-mobile-catalog-section-mainline rounded-2xl border border-black/20 bg-[linear-gradient(160deg,rgba(255,255,255,0.8),rgba(223,236,229,0.72))] p-4"
+      >
+        <div className="games-mobile-section-head flex flex-wrap items-end justify-between gap-2">
           <div>
             <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
               Mainline Cards
@@ -95,13 +103,13 @@ export default function GamesPage() {
               game entry.
             </p>
           </div>
-          <span className="rounded-md border border-black/20 bg-white/72 px-2 py-1 text-xs text-black/72">
+          <span className="games-mobile-section-count rounded-md border border-black/20 bg-white/72 px-2 py-1 text-xs text-black/72">
             {MAINLINE_GAME_CATALOG.length} games
           </span>
         </div>
 
-        <div className="mt-3 rounded-2xl border border-black/25 bg-black/[0.06] p-3">
-          <div className="grid gap-3.5 sm:gap-4 [grid-template-columns:repeat(auto-fit,minmax(min(100%,268px),1fr))]">
+        <div className="games-mobile-catalog-shell mt-3 rounded-2xl border border-black/25 bg-black/[0.06] p-3">
+          <div className="games-mobile-catalog-grid grid gap-3.5 sm:gap-4 [grid-template-columns:repeat(auto-fit,minmax(min(100%,268px),1fr))]">
             {MAINLINE_GAME_CATALOG.map((game) => (
               <GameCard key={game.slug} game={game} />
             ))}
@@ -109,8 +117,11 @@ export default function GamesPage() {
         </div>
       </section>
 
-      <section className="rounded-2xl border border-black/20 bg-[linear-gradient(160deg,rgba(255,255,255,0.8),rgba(220,241,233,0.74))] p-4">
-        <div className="flex flex-wrap items-end justify-between gap-2">
+      <section
+        id="games-mobile-service-cards"
+        className="games-mobile-catalog-section games-mobile-catalog-section-service rounded-2xl border border-black/20 bg-[linear-gradient(160deg,rgba(255,255,255,0.8),rgba(220,241,233,0.74))] p-4"
+      >
+        <div className="games-mobile-section-head flex flex-wrap items-end justify-between gap-2">
           <div>
             <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
               Mobile & Live Service Cards
@@ -119,25 +130,28 @@ export default function GamesPage() {
               Mobile Pokemon games now appear here with the same card interaction and dedicated entry pages.
             </p>
           </div>
-          <span className="rounded-md border border-black/20 bg-white/72 px-2 py-1 text-xs text-black/72">
+          <span className="games-mobile-section-count rounded-md border border-black/20 bg-white/72 px-2 py-1 text-xs text-black/72">
             {MOBILE_GAME_CATALOG.length} games
           </span>
         </div>
 
-        <div className="mt-3 rounded-2xl border border-black/25 bg-black/[0.06] p-3">
-          <div className="grid gap-3.5 sm:gap-4 [grid-template-columns:repeat(auto-fit,minmax(min(100%,268px),1fr))]">
+        <div className="games-mobile-catalog-shell mt-3 rounded-2xl border border-black/25 bg-black/[0.06] p-3">
+          <div className="games-mobile-catalog-grid grid gap-3.5 sm:gap-4 [grid-template-columns:repeat(auto-fit,minmax(min(100%,268px),1fr))]">
             {MOBILE_GAME_CATALOG.map((game) => (
               <GameCard key={game.slug} game={game} />
             ))}
           </div>
         </div>
-        <div className="mt-2 flex flex-wrap gap-1.5">
+        <div className="games-mobile-chip-row mt-2 flex flex-wrap gap-1.5">
           <InfoChip label={`Mobile platform groups: ${mobilePlatformCount}`} tone="sky" />
           <InfoChip label="Includes active service titles" tone="green" />
         </div>
       </section>
 
-      <section className="rounded-2xl border border-black/20 bg-white/60 p-4">
+      <section
+        id="games-mobile-coverage"
+        className="games-mobile-coverage rounded-2xl border border-black/20 bg-white/60 p-4"
+      >
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">Data Coverage</p>
         <p className="mt-2 text-sm text-black/75">
           Every card opens a dedicated detail entry with release profile, key features, progression
@@ -145,7 +159,7 @@ export default function GamesPage() {
         </p>
       </section>
 
-      <SectionModuleNav />
+      <SectionModuleNav className="games-mobile-module-nav" />
     </section>
   );
 
@@ -163,8 +177,19 @@ export default function GamesPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
-      <main className="pokemon-detail-page mx-auto min-h-screen w-full max-w-[2560px] px-2 py-5 sm:px-4 sm:py-8 lg:px-5">
-        <PokedexFrame title="Pokemon Video Games" status="success" leftPanel={leftPanel} />
+      <main className="games-mobile-page pokemon-detail-page mx-auto min-h-screen w-full max-w-[2560px] px-2 py-5 sm:px-4 sm:py-8 lg:px-5">
+        <PokedexFrame
+          title="Pokemon Video Games"
+          status="success"
+          leftPanel={leftPanel}
+          className="games-mobile-frame"
+        />
+        <MobileDexBottomNav
+          activeKey="explore"
+          exploreHref="/games"
+          settingsHref="/games#games-mobile-service-cards"
+          className="games-mobile-bottom-nav"
+        />
       </main>
     </>
   );

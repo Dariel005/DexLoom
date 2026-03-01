@@ -13,6 +13,7 @@ import {
 import { EncyclopediaDataTable } from "@/components/EncyclopediaDataTable";
 import { ExplorerDetailSection, ExplorerEmptyState, ExplorerSearchBar } from "@/components/explorer";
 import { FavoriteStarButton } from "@/components/FavoriteStarButton";
+import { MobileDexBottomNav } from "@/components/MobileDexBottomNav";
 import { PokedexFrame } from "@/components/PokedexFrame";
 import { RouteTransitionLink } from "@/components/RouteTransitionLink";
 import { TypeBadge } from "@/components/TypeBadge";
@@ -83,7 +84,7 @@ function IntelChip({
   value: string;
 }) {
   return (
-    <div className="rounded-lg border border-black/18 bg-white/72 px-3 py-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]">
+    <div className="types-intel-chip rounded-lg border border-black/18 bg-white/72 px-3 py-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]">
       <p className="pixel-font text-[8px] uppercase tracking-[0.12em] text-black/58">{label}</p>
       <p className="mt-1 text-sm font-medium text-black/78">{value}</p>
     </div>
@@ -109,7 +110,7 @@ function StatMeter({
           : "from-sky-400 to-sky-600";
 
   return (
-    <div className="rounded-lg border border-black/18 bg-white/72 px-3 py-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.74)]">
+    <div className="types-stat-meter rounded-lg border border-black/18 bg-white/72 px-3 py-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.74)]">
       <div className="flex items-center justify-between gap-2">
         <p className="pixel-font text-[9px] uppercase tracking-[0.12em] text-black/65">{label}</p>
         <span className="text-xs text-black/62">{value}</span>
@@ -148,7 +149,7 @@ function RelationGroup({
         : "border-slate-300 bg-slate-100/86 text-slate-800";
 
   return (
-    <article className={cn("rounded-xl border px-3 py-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]", panelClass)}>
+    <article className={cn("types-relation-group rounded-xl border px-3 py-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]", panelClass)}>
       <div className="flex items-center justify-between gap-2">
         <p className="pixel-font text-[9px] uppercase tracking-[0.12em] text-black/72">{title}</p>
         <span className={cn("rounded-md border px-1.5 py-0.5 text-[10px] font-medium", counterClass)}>
@@ -176,10 +177,28 @@ function RelationGroup({
 
 export function TypesExplorer() {
   const playUiTone = useUiTone();
+  const controlsRef = useRef<HTMLElement | null>(null);
+  const catalogRef = useRef<HTMLElement | null>(null);
+  const detailRef = useRef<HTMLDivElement | null>(null);
   const [searchInput, setSearchInput] = useState("");
   const [selectedTypeId, setSelectedTypeId] = useState<number | null>(null);
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
   const debouncedSearch = useDebouncedValue(searchInput, 220);
   const didMountSearchRef = useRef(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const updateViewport = () => {
+      setIsMobileViewport(window.innerWidth < 768);
+    };
+
+    updateViewport();
+    window.addEventListener("resize", updateViewport);
+    return () => window.removeEventListener("resize", updateViewport);
+  }, []);
 
   const indexQuery = useQuery(pokemonTypeIndexQueryOptions());
   const types = useMemo(() => indexQuery.data ?? [], [indexQuery.data]);
@@ -218,15 +237,39 @@ export function TypesExplorer() {
     }
   }, [debouncedSearch, playUiTone]);
 
+  const scrollToElement = useCallback((element: HTMLElement | null) => {
+    if (!element) {
+      return;
+    }
+
+    element.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
+
   const handleSelectType = useCallback(
     (typeId: number) => {
       setSelectedTypeId((current) => {
         playUiTone(current === typeId ? "switch" : "select");
         return typeId;
       });
+
+      if (typeof window !== "undefined" && window.innerWidth < 768) {
+        window.requestAnimationFrame(() => {
+          scrollToElement(detailRef.current);
+        });
+      }
     },
-    [playUiTone]
+    [playUiTone, scrollToElement]
   );
+
+  const handleMobileExplore = useCallback(() => {
+    playUiTone("switch");
+    scrollToElement(catalogRef.current);
+  }, [playUiTone, scrollToElement]);
+
+  const handleMobileSettings = useCallback(() => {
+    playUiTone("switch");
+    scrollToElement(controlsRef.current);
+  }, [playUiTone, scrollToElement]);
 
   useEffect(() => {
     if (filteredTypes.length === 0) {
@@ -290,8 +333,11 @@ export function TypesExplorer() {
   }, [detailQuery.isError, detailQuery.isLoading, indexQuery.isError, indexQuery.isLoading, selectedTypeId]);
 
   const leftPanel = (
-    <section className="space-y-4">
-      <section className="rounded-2xl border border-black/20 bg-[radial-gradient(circle_at_12%_12%,rgba(255,255,255,0.55),transparent_40%),linear-gradient(160deg,rgba(255,255,255,0.84),rgba(225,237,230,0.75))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_12px_20px_rgba(0,0,0,0.08)]">
+    <section className="types-mobile-left space-y-4">
+      <section
+        ref={controlsRef}
+        className="types-mobile-controls rounded-2xl border border-black/20 bg-[radial-gradient(circle_at_12%_12%,rgba(255,255,255,0.55),transparent_40%),linear-gradient(160deg,rgba(255,255,255,0.84),rgba(225,237,230,0.75))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_12px_20px_rgba(0,0,0,0.08)]"
+      >
         <div className="flex flex-wrap items-center justify-between gap-2">
           <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
             Type Command Deck
@@ -329,7 +375,10 @@ export function TypesExplorer() {
         </div>
       </section>
 
-      <section className="rounded-2xl border border-black/20 bg-white/55 p-3">
+      <section
+        ref={catalogRef}
+        className="types-mobile-catalog rounded-2xl border border-black/20 bg-white/55 p-3"
+      >
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/72">
           Type Matrix
         </p>
@@ -356,11 +405,11 @@ export function TypesExplorer() {
           <VirtualizedGrid
             items={filteredTypes}
             itemKey={(type) => type.id}
-            minColumnWidth={170}
+            minColumnWidth={isMobileViewport ? 132 : 170}
             itemHeight={88}
             gap={8}
             overscanRows={3}
-            className="pokemon-scrollbar mt-3 h-[58vh] min-h-[360px] max-h-[86vh] sm:h-[64vh] sm:min-h-[520px] sm:max-h-[88vh] lg:h-[72vh] lg:min-h-[760px] lg:max-h-[900px] overflow-y-scroll pr-1 pt-1"
+            className="types-mobile-catalog-grid pokemon-scrollbar mt-3 h-[58vh] min-h-[360px] max-h-[86vh] sm:h-[64vh] sm:min-h-[520px] sm:max-h-[88vh] lg:h-[72vh] lg:min-h-[760px] lg:max-h-[900px] overflow-y-scroll pr-1 pt-1"
             renderItem={(type) => {
               const isSelected = type.id === selectedTypeId;
               const typeAccent = TYPE_ACCENT_MAP[normalize(type.name)] ?? "#6b7280";
@@ -377,7 +426,7 @@ export function TypesExplorer() {
                   onClick={() => handleSelectType(type.id)}
                   style={selectedStyle}
                   className={cn(
-                    "group relative h-full w-full overflow-hidden rounded-xl border px-3 py-2 text-left transition",
+                    "types-mobile-catalog-item group relative h-full w-full overflow-hidden rounded-xl border px-3 py-2 text-left transition",
                     isSelected
                       ? "bg-[linear-gradient(155deg,rgba(255,255,255,0.9),rgba(233,243,238,0.76))] text-black/86"
                       : "border-black/20 bg-[linear-gradient(155deg,rgba(255,255,255,0.84),rgba(236,241,248,0.74))] text-black/75 hover:bg-white"
@@ -408,8 +457,11 @@ export function TypesExplorer() {
   );
 
   const rightPanel = (
-    <section className="space-y-4">
-      <div className="rounded-2xl border border-black/20 bg-[linear-gradient(165deg,rgba(255,255,255,0.64),rgba(227,237,248,0.58))] p-4 min-h-[420px] sm:min-h-[560px] lg:min-h-[760px] shadow-[inset_0_1px_0_rgba(255,255,255,0.76),0_10px_18px_rgba(0,0,0,0.07)]">
+    <section className="types-mobile-right space-y-4">
+      <div
+        ref={detailRef}
+        className="types-mobile-detail-shell rounded-2xl border border-black/20 bg-[linear-gradient(165deg,rgba(255,255,255,0.64),rgba(227,237,248,0.58))] p-4 min-h-[420px] sm:min-h-[560px] lg:min-h-[760px] shadow-[inset_0_1px_0_rgba(255,255,255,0.76),0_10px_18px_rgba(0,0,0,0.07)]"
+      >
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
           Type Details
         </p>
@@ -430,9 +482,9 @@ export function TypesExplorer() {
         ) : null}
 
         {selectedType ? (
-          <div className="mt-3 space-y-4">
+          <div className="types-mobile-detail-stack mt-3 space-y-4">
             <div
-              className="rounded-2xl border bg-[radial-gradient(circle_at_10%_12%,rgba(255,255,255,0.42),transparent_44%),linear-gradient(145deg,rgba(248,251,248,0.9),rgba(232,239,233,0.82))] p-4"
+              className="types-mobile-detail-hero rounded-2xl border bg-[radial-gradient(circle_at_10%_12%,rgba(255,255,255,0.42),transparent_44%),linear-gradient(145deg,rgba(248,251,248,0.9),rgba(232,239,233,0.82))] p-4"
               style={
                 {
                   borderColor: activeAccentBorder,
@@ -574,12 +626,20 @@ export function TypesExplorer() {
   );
 
   return (
-    <PokedexFrame
-      title="Pokemon Types Encyclopedia"
-      status={frameStatus}
-      leftPanel={leftPanel}
-      rightPanel={rightPanel}
-    />
+    <div className="encyclopedia-mobile-page">
+      <PokedexFrame
+        title="Pokemon Types Encyclopedia"
+        status={frameStatus}
+        leftPanel={leftPanel}
+        rightPanel={rightPanel}
+        className="encyclopedia-mobile-frame types-mobile-frame"
+      />
+      <MobileDexBottomNav
+        activeKey="explore"
+        onExplore={handleMobileExplore}
+        onSettings={handleMobileSettings}
+        className="encyclopedia-mobile-bottom-nav"
+      />
+    </div>
   );
 }
-

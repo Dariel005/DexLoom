@@ -31,15 +31,15 @@ export function ExplorerDetailSection({
     };
 
     return (
-        <section className="rounded-2xl border border-black/20 bg-white/55 p-4" style={style}>
-            <div className="mb-3">
+        <section className="explorer-detail-section rounded-2xl border border-black/20 bg-white/55 p-4" style={style}>
+            <div className="explorer-detail-section-head mb-3">
                 <h2
-                    className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/75"
+                    className="explorer-detail-section-title pixel-font text-[10px] uppercase tracking-[0.16em] text-black/75"
                     style={accentColor ? { color: accentColor } : undefined}
                 >
                     {title}
                 </h2>
-                {subtitle ? <p className="mt-1 text-sm text-black/60">{subtitle}</p> : null}
+                {subtitle ? <p className="explorer-detail-section-subtitle mt-1 text-sm text-black/60">{subtitle}</p> : null}
             </div>
             {children}
         </section>

@@ -55,10 +55,13 @@ function MegaEvolutionCardComponent({
       whileTap={shouldAnimate ? { scale: 0.99 } : undefined}
       data-selected={isSelected ? "true" : "false"}
       className={cn(
-        "pokemon-card-shell flex h-full min-h-[252px] flex-col overflow-hidden rounded-2xl border p-3 transition sm:p-3.5",
+        "pokemon-card-shell mega-mobile-card mega-card-shell flex h-full min-h-[252px] flex-col overflow-hidden rounded-2xl border p-3 transition sm:p-3.5",
         isSelected ? "pokemon-card-selected" : "pokemon-card-idle"
       )}
     >
+      <span className="mega-card-energy mega-card-energy-a" aria-hidden />
+      <span className="mega-card-energy mega-card-energy-b" aria-hidden />
+      <span className="mega-card-energy mega-card-energy-c" aria-hidden />
       <div
         role="button"
         tabIndex={0}
@@ -69,10 +72,10 @@ function MegaEvolutionCardComponent({
             onSelect(entry.slug);
           }
         }}
-        className="w-full flex-1 text-left"
+        className="mega-mobile-card-hit-area w-full flex-1 text-left"
       >
-        <div className="flex items-start justify-between gap-3">
-          <div>
+        <div className="mega-mobile-card-head flex items-start justify-between gap-3">
+          <div className="mega-mobile-card-meta">
             <p className="pokemon-card-index pixel-font text-[9px] uppercase tracking-[0.14em] text-black/55">
               #{entry.baseDexNumber.toString().padStart(4, "0")}
             </p>
@@ -105,7 +108,7 @@ function MegaEvolutionCardComponent({
             }
             title={canToggleFavorite ? undefined : "Sign in to use favorites"}
             className={cn(
-              "favorite-star-btn inline-flex h-9 w-9 items-center justify-center text-[16px] leading-none transition-all duration-200 active:scale-[0.96]",
+              "favorite-star-btn mega-card-favorite inline-flex h-9 w-9 items-center justify-center text-[16px] leading-none transition-all duration-200 active:scale-[0.96]",
               !canToggleFavorite && "cursor-not-allowed opacity-55"
             )}
           >
@@ -115,8 +118,8 @@ function MegaEvolutionCardComponent({
           </button>
         </div>
 
-        <div className="mt-3 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2.5 sm:gap-3">
-          <div className="pokemon-card-sprite relative h-[114px] w-[114px] flex-shrink-0 sm:h-[130px] sm:w-[130px]">
+        <div className="mega-mobile-card-content mt-3 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2.5 sm:gap-3">
+          <div className="mega-card-sprite-shell pokemon-card-sprite relative h-[114px] w-[114px] flex-shrink-0 sm:h-[130px] sm:w-[130px]">
             <Image
               src={entry.imageSrc}
               alt={entry.imageAlt}
@@ -126,7 +129,7 @@ function MegaEvolutionCardComponent({
               className="object-contain drop-shadow-[0_8px_10px_rgba(0,0,0,0.25)]"
             />
           </div>
-          <div className="pokemon-card-type-stack flex min-w-0 flex-col items-end gap-1.5">
+          <div className="mega-card-type-stack pokemon-card-type-stack flex min-w-0 flex-col items-end gap-1.5">
             {entry.types.map((type) => (
               <TypeBadge
                 key={`${entry.slug}-${type}`}
@@ -138,8 +141,8 @@ function MegaEvolutionCardComponent({
         </div>
       </div>
 
-      <div className="mt-3 flex items-center justify-between">
-        <span className="rounded-lg border border-black/20 bg-black/5 px-2 py-1 text-[11px]">
+      <div className="mega-mobile-card-footer mt-3 flex items-center justify-between">
+        <span className="mega-mobile-card-chip rounded-lg border border-black/20 bg-black/5 px-2 py-1 text-[11px]">
           Atk {entry.stats.attack}
         </span>
         <Link
@@ -147,7 +150,7 @@ function MegaEvolutionCardComponent({
           prefetch={false}
           onClick={() => onSelect(entry.slug)}
           className={cn(
-            "pokemon-card-footer-btn pixel-font rounded-lg border px-2.5 py-1.5 text-[9px] uppercase tracking-wide text-white transition hover:brightness-110",
+            "pokemon-card-footer-btn mega-card-action mega-mobile-card-entry pixel-font rounded-lg border px-2.5 py-1.5 text-[9px] uppercase tracking-wide text-white transition hover:brightness-110",
             isSelected ? "pokedex-accent-button pokedex-accent-glow" : "border-black/25 bg-pokedex-red"
           )}
         >

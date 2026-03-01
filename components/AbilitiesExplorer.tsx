@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useRef, useState, type ChangeEvent } f
 import { EncyclopediaDataTable } from "@/components/EncyclopediaDataTable";
 import { ExplorerDetailSection, ExplorerEmptyState, ExplorerPagination, ExplorerSearchBar } from "@/components/explorer";
 import { FavoriteStarButton } from "@/components/FavoriteStarButton";
+import { MobileDexBottomNav } from "@/components/MobileDexBottomNav";
 import { PokedexFrame } from "@/components/PokedexFrame";
 import { RouteTransitionLink } from "@/components/RouteTransitionLink";
 import { VirtualizedStack } from "@/components/VirtualizedStack";
@@ -78,7 +79,7 @@ function AbilityIcon({
     <span
       aria-hidden
       className={cn(
-        "inline-flex shrink-0 items-center justify-center rounded-xl border shadow-[inset_0_1px_0_rgba(255,255,255,0.78)]",
+        "ability-icon inline-flex shrink-0 items-center justify-center rounded-xl border shadow-[inset_0_1px_0_rgba(255,255,255,0.78)]",
         size === "lg" ? "h-14 w-14 text-[11px]" : "h-8 w-8 text-[8px]"
       )}
       style={{
@@ -121,6 +122,9 @@ function classifyAbilityTier(pokemonCount: number, isMainSeries: boolean) {
 
 export function AbilitiesExplorer() {
   const playUiTone = useUiTone();
+  const controlsRef = useRef<HTMLDivElement | null>(null);
+  const catalogRef = useRef<HTMLElement | null>(null);
+  const detailRef = useRef<HTMLDivElement | null>(null);
   const [searchInput, setSearchInput] = useState("");
   const [sortMode, setSortMode] = useState<AbilitySortMode>("id-asc");
   const [page, setPage] = useState(1);
@@ -145,14 +149,28 @@ export function AbilitiesExplorer() {
     [playUiTone]
   );
 
+  const scrollToElement = useCallback((element: HTMLElement | null) => {
+    if (!element) {
+      return;
+    }
+
+    element.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
+
   const handleSelectAbility = useCallback(
     (abilityId: number) => {
       setSelectedAbilityId((current) => {
         playUiTone(current === abilityId ? "switch" : "select");
         return abilityId;
       });
+
+      if (typeof window !== "undefined" && window.innerWidth < 768) {
+        window.requestAnimationFrame(() => {
+          scrollToElement(detailRef.current);
+        });
+      }
     },
-    [playUiTone]
+    [playUiTone, scrollToElement]
   );
 
   const handlePreviousPage = useCallback(() => {
@@ -174,6 +192,16 @@ export function AbilitiesExplorer() {
       return next;
     });
   }, [playUiTone]);
+
+  const handleMobileExplore = useCallback(() => {
+    playUiTone("switch");
+    scrollToElement(catalogRef.current);
+  }, [playUiTone, scrollToElement]);
+
+  const handleMobileSettings = useCallback(() => {
+    playUiTone("switch");
+    scrollToElement(controlsRef.current);
+  }, [playUiTone, scrollToElement]);
 
   const indexQuery = useQuery(pokemonAbilityIndexQueryOptions());
   const abilities = useMemo(() => indexQuery.data ?? [], [indexQuery.data]);
@@ -266,7 +294,7 @@ export function AbilitiesExplorer() {
   }, [detailQuery.isError, detailQuery.isLoading, indexQuery.isError, indexQuery.isLoading, selectedAbilityId]);
 
   const leftPanel = (
-    <section className="space-y-4">
+    <section className="abilities-mobile-left space-y-4">
       <div className="flex flex-wrap items-center gap-2">
         <RouteTransitionLink
           href="/"
@@ -276,7 +304,10 @@ export function AbilitiesExplorer() {
         </RouteTransitionLink>
       </div>
 
-      <div className="rounded-2xl border border-black/20 bg-white/55 p-3">
+      <div
+        ref={controlsRef}
+        className="abilities-mobile-controls rounded-2xl border border-black/20 bg-white/55 p-3"
+      >
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
           Ability Explorer
         </p>
@@ -305,7 +336,10 @@ export function AbilitiesExplorer() {
         </p>
       </div>
 
-      <section className="rounded-2xl border border-black/20 bg-white/55 p-3">
+      <section
+        ref={catalogRef}
+        className="abilities-mobile-catalog rounded-2xl border border-black/20 bg-white/55 p-3"
+      >
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
           Ability Catalog
         </p>
@@ -336,7 +370,7 @@ export function AbilitiesExplorer() {
             itemHeight={ABILITY_ROW_HEIGHT}
             gap={6}
             overscan={8}
-            className="pokemon-scrollbar mt-3 h-[58vh] min-h-[360px] max-h-[86vh] sm:h-[64vh] sm:min-h-[520px] sm:max-h-[88vh] lg:h-[72vh] lg:min-h-[760px] lg:max-h-[900px] overflow-y-scroll pr-1"
+            className="abilities-mobile-catalog-list pokemon-scrollbar mt-3 h-[58vh] min-h-[360px] max-h-[86vh] sm:h-[64vh] sm:min-h-[520px] sm:max-h-[88vh] lg:h-[72vh] lg:min-h-[760px] lg:max-h-[900px] overflow-y-scroll pr-1"
             renderItem={(ability) => {
               const isSelected = ability.id === selectedAbilityId;
 
@@ -345,7 +379,7 @@ export function AbilitiesExplorer() {
                   type="button"
                   onClick={() => handleSelectAbility(ability.id)}
                   className={cn(
-                    "h-full w-full rounded-lg border px-3 py-2 text-left transition",
+                    "abilities-mobile-catalog-item h-full w-full rounded-lg border px-3 py-2 text-left transition",
                     isSelected
                       ? "border-[var(--theme-accent)] bg-[var(--theme-accent-soft)] text-black/85 pokedex-accent-glow"
                       : "border-black/20 bg-white/70 text-black/75 hover:bg-white"
@@ -388,8 +422,11 @@ export function AbilitiesExplorer() {
   );
 
   const rightPanel = (
-    <section className="space-y-4">
-      <div className="rounded-2xl border border-black/20 bg-white/55 p-4 min-h-[420px] sm:min-h-[560px] lg:min-h-[760px]">
+    <section className="abilities-mobile-right space-y-4">
+      <div
+        ref={detailRef}
+        className="abilities-mobile-detail-shell rounded-2xl border border-black/20 bg-white/55 p-4 min-h-[420px] sm:min-h-[560px] lg:min-h-[760px]"
+      >
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
           Ability Details
         </p>
@@ -410,8 +447,8 @@ export function AbilitiesExplorer() {
         ) : null}
 
         {selectedAbility ? (
-          <div className="mt-3 space-y-4">
-            <div className="rounded-2xl border border-black/20 bg-[linear-gradient(145deg,rgba(248,251,248,0.9),rgba(232,239,233,0.82))] p-4">
+          <div className="abilities-mobile-detail-stack mt-3 space-y-4">
+            <div className="abilities-mobile-detail-hero rounded-2xl border border-black/20 bg-[linear-gradient(145deg,rgba(248,251,248,0.9),rgba(232,239,233,0.82))] p-4">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="flex items-start gap-3">
                   <AbilityIcon
@@ -527,13 +564,20 @@ export function AbilitiesExplorer() {
   );
 
   return (
-    <PokedexFrame
-      title="Pokemon Abilities Encyclopedia"
-      status={frameStatus}
-      leftPanel={leftPanel}
-      rightPanel={rightPanel}
-    />
+    <div className="encyclopedia-mobile-page">
+      <PokedexFrame
+        title="Pokemon Abilities Encyclopedia"
+        status={frameStatus}
+        leftPanel={leftPanel}
+        rightPanel={rightPanel}
+        className="encyclopedia-mobile-frame abilities-mobile-frame"
+      />
+      <MobileDexBottomNav
+        activeKey="explore"
+        onExplore={handleMobileExplore}
+        onSettings={handleMobileSettings}
+        className="encyclopedia-mobile-bottom-nav"
+      />
+    </div>
   );
 }
-
-

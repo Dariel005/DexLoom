@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { EncyclopediaDataTable } from "@/components/EncyclopediaDataTable";
 import { FavoriteStarButton } from "@/components/FavoriteStarButton";
+import { MobileDexBottomNav } from "@/components/MobileDexBottomNav";
 import { MechanicsSectionNav } from "@/components/mechanics/MechanicsSectionNav";
 import { PokedexFrame } from "@/components/PokedexFrame";
 import { RouteTransitionLink } from "@/components/RouteTransitionLink";
@@ -58,8 +59,8 @@ function TopicSection({
 
 export default function MechanicsPage() {
   const leftPanel = (
-    <section id="mechanics-top" className="space-y-4">
-      <section className="rounded-2xl border border-black/20 bg-[radial-gradient(circle_at_12%_10%,rgba(255,255,255,0.58),transparent_38%),linear-gradient(160deg,rgba(255,255,255,0.82),rgba(225,238,223,0.72))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_10px_20px_rgba(0,0,0,0.08)]">
+    <section id="mechanics-top" className="mechanics-mobile-left space-y-4">
+      <section className="mechanics-mobile-hero rounded-2xl border border-black/20 bg-[radial-gradient(circle_at_12%_10%,rgba(255,255,255,0.58),transparent_38%),linear-gradient(160deg,rgba(255,255,255,0.82),rgba(225,238,223,0.72))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_10px_20px_rgba(0,0,0,0.08)]">
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/68">Mechanics Command Deck</p>
         <h1 className="pixel-font mt-2 text-[14px] uppercase tracking-[0.12em] text-black/86">
           Combat Systems Intelligence
@@ -292,7 +293,7 @@ export default function MechanicsPage() {
   );
 
   const rightPanel = (
-    <section className="space-y-4">
+    <section id="mechanics-links" className="mechanics-mobile-right space-y-4">
       <section className="rounded-2xl border border-black/20 bg-white/60 p-4">
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">Quick Links</p>
         <div className="mt-2 flex flex-wrap gap-2">
@@ -352,13 +353,20 @@ export default function MechanicsPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
-      <main className="pokemon-detail-page mx-auto min-h-screen w-full max-w-[2560px] px-2 py-5 sm:px-4 sm:py-8 lg:px-5">
+      <main className="mechanics-mobile-page pokemon-detail-page mx-auto min-h-screen w-full max-w-[2560px] px-2 py-5 sm:px-4 sm:py-8 lg:px-5">
         <PokedexFrame
           title="Pokemon Mechanics Intelligence Deck"
           status="success"
           leftPanel={leftPanel}
           rightPanel={rightPanel}
           rightPanelSticky
+          className="mechanics-mobile-frame"
+        />
+        <MobileDexBottomNav
+          activeKey="explore"
+          exploreHref="/mechanics#mechanics-top"
+          settingsHref="/mechanics#mechanics-links"
+          className="mechanics-mobile-bottom-nav"
         />
       </main>
     </>

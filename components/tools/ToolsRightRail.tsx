@@ -14,8 +14,11 @@ export function ToolsRightRail({
   footerNote
 }: ToolsRightRailProps) {
   return (
-    <section className="space-y-4">
-      <section className="rounded-2xl border border-black/20 bg-white/60 p-4">
+    <section className="tools-rail-sections space-y-4">
+      <section
+        id="tools-links"
+        className="tools-rail-section tools-rail-links rounded-2xl border border-black/20 bg-white/60 p-4"
+      >
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
           Quick Links
         </p>
@@ -41,14 +44,20 @@ export function ToolsRightRail({
         </div>
       </section>
 
-      <section className="rounded-2xl border border-black/20 bg-white/60 p-4">
+      <section
+        id="tools-navigation"
+        className="tools-rail-section tools-rail-nav rounded-2xl border border-black/20 bg-white/60 p-4"
+      >
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
           Tools Navigation
         </p>
         <ToolsSectionNav className="mt-2" />
       </section>
 
-      <section className="rounded-2xl border border-black/20 bg-white/60 p-4">
+      <section
+        id="tools-guide"
+        className="tools-rail-section tools-rail-guide rounded-2xl border border-black/20 bg-white/60 p-4"
+      >
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
           {guideTitle}
         </p>
@@ -71,4 +80,3 @@ export function ToolsRightRail({
     </section>
   );
 }
-

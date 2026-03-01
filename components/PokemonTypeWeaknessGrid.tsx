@@ -63,21 +63,21 @@ export function PokemonTypeWeaknessGrid({
   const multipliers = buildMultiplierMap(effectiveness);
 
   return (
-    <div className="space-y-2">
-      <p className="text-sm text-black/70">
+    <div className="pokemon-weakness-grid space-y-2">
+      <p className="pokemon-weakness-grid-note text-sm text-black/70">
         Auto-calculated matchup chart for incoming type damage.
       </p>
-      <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="pokemon-weakness-grid-lattice grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
         {TYPE_ORDER.map((type) => {
           const multiplier = multipliers.get(normalize(type)) ?? 1;
           return (
             <div
               key={type}
-              className={`rounded-lg border px-2.5 py-2 ${getMultiplierTone(multiplier)}`}
+              className={`pokemon-weakness-grid-cell rounded-lg border px-2.5 py-2 ${getMultiplierTone(multiplier)}`}
             >
-              <div className="flex items-center justify-between gap-2">
+              <div className="pokemon-weakness-grid-cell-inner flex items-center justify-between gap-2">
                 <TypeBadge type={type} className="h-6 px-2.5 text-[8px]" />
-                <span className="pixel-font text-[10px] uppercase tracking-[0.12em]">
+                <span className="pokemon-weakness-grid-multiplier pixel-font text-[10px] uppercase tracking-[0.12em]">
                   x{multiplier}
                 </span>
               </div>

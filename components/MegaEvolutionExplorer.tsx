@@ -1,9 +1,12 @@
 "use client";
 
+import { AnimatePresence, m } from "framer-motion";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { type CSSProperties, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { MobileDexBottomNav } from "@/components/MobileDexBottomNav";
 import { PokedexChassis } from "@/components/PokedexChassis";
+import { PokedexHeaderAccess } from "@/components/PokedexHeaderAccess";
 import { RouteTransitionLink } from "@/components/RouteTransitionLink";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { useUiTone } from "@/hooks/useUiTone";
@@ -63,6 +66,7 @@ export function MegaEvolutionExplorer() {
   const detailAnchorRef = useRef<HTMLDivElement | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const debouncedSearchQuery = useDebouncedValue(searchQuery, 200);
+  const [isMobileTerminalOpen, setIsMobileTerminalOpen] = useState(false);
   const [selectedSlug, setSelectedSlug] = useState<string | null>(
     MEGA_EVOLUTION_INDEX[0]?.slug ?? null
   );
@@ -83,6 +87,23 @@ export function MegaEvolutionExplorer() {
     const timeout = window.setTimeout(() => setIsSelectionJoltActive(false), 230);
     return () => window.clearTimeout(timeout);
   }, [isSelectionJoltActive]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    if (!isMobileTerminalOpen || !window.matchMedia("(max-width: 767px)").matches) {
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isMobileTerminalOpen]);
 
   const filteredEntries = useMemo(() => {
     const normalizedQuery = debouncedSearchQuery.trim().toLowerCase();
@@ -131,6 +152,10 @@ export function MegaEvolutionExplorer() {
       playUiTone("select");
 
       if (typeof window !== "undefined" && window.innerWidth < 1280) {
+        if (window.innerWidth < 768) {
+          setIsMobileTerminalOpen(true);
+          return;
+        }
         window.requestAnimationFrame(() => {
           detailAnchorRef.current?.scrollIntoView({
             behavior: "smooth",
@@ -141,6 +166,15 @@ export function MegaEvolutionExplorer() {
     },
     [playUiTone]
   );
+
+  const handleCloseDrawer = useCallback(() => {
+    if (typeof window !== "undefined" && window.innerWidth < 768) {
+      setIsMobileTerminalOpen(false);
+      return;
+    }
+    setSelectedSlug(null);
+    playUiTone("switch");
+  }, [playUiTone]);
 
   const handleToggleFavorite = useCallback(
     (slug: string) => {
@@ -173,8 +207,8 @@ export function MegaEvolutionExplorer() {
   }, [router]);
 
   const explorerScreen = (
-    <div className="space-y-4">
-      <section className="rounded-2xl border border-black/20 bg-black/[0.06] p-3">
+    <div className="home-explorer-stack mega-explorer-stack space-y-4">
+      <section className="home-explorer-console mega-explorer-console rounded-2xl border border-black/20 bg-black/[0.06] p-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <p className="pixel-font text-[10px] uppercase tracking-[0.18em] text-black/65">
             Screen A: Explorer
@@ -224,7 +258,7 @@ export function MegaEvolutionExplorer() {
             Browse every Mega form with role profile, stone requirement, and live stats.
           </p>
 
-          <div className="flex flex-wrap gap-2">
+          <div className="mega-explorer-actions flex flex-wrap gap-2">
             <RouteTransitionLink
               href="/mega-evolutions/stones"
               onMouseEnter={warmMegaStonesRoute}
@@ -257,23 +291,73 @@ export function MegaEvolutionExplorer() {
       <div className="min-h-0 flex-1">
         <MegaEvolutionDrawer
           selectedEntry={selectedEntry}
-          onClose={() => {
-            setSelectedSlug(null);
-            playUiTone("switch");
-          }}
+          onClose={handleCloseDrawer}
         />
       </div>
     </div>
   );
 
-  return (
-    <PokedexChassis
-      className="home-main-chassis"
-      title="Pokemon Mega Evolution Deck"
-      status="success"
-      explorerScreen={explorerScreen}
-      detailScreen={detailScreen}
-      themeStyle={themeStyle}
+  const mobileBottomNav = (
+    <MobileDexBottomNav
+      activeKey="explore"
+      settingsHref="/mega-evolutions/stones"
+      onExplore={() => {
+        setIsMobileTerminalOpen(false);
+        if (typeof window !== "undefined") {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      }}
     />
+  );
+
+  const mobileDetailTerminal = (
+    <AnimatePresence>
+      {selectedEntry && isMobileTerminalOpen ? (
+        <m.div
+          key={`mega-mobile-terminal-${selectedEntry.slug}`}
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 18 }}
+          transition={{ duration: 0.24, ease: "easeOut" }}
+          className="home-mobile-terminal-overlay mega-mobile-terminal-overlay md:hidden"
+        >
+          <div className="home-mobile-terminal-frame mega-mobile-terminal-frame">
+            <header className="home-mobile-terminal-topbar">
+              <div className="home-mobile-terminal-leds" aria-hidden>
+                <span className="pokedex-led pokedex-led-signal h-4 w-4 bg-emerald-300 shadow-[0_0_8px_rgba(52,211,153,0.64)]" />
+                <span className="pokedex-led pokedex-led-signal h-2.5 w-2.5 bg-amber-300 shadow-[0_0_8px_rgba(252,211,77,0.58)]" />
+                <span className="pokedex-led pokedex-led-signal h-2.5 w-2.5 bg-red-300 shadow-[0_0_8px_rgba(252,165,165,0.58)]" />
+              </div>
+              <p className="pixel-font home-mobile-terminal-title">Data Terminal</p>
+              <div className="home-mobile-terminal-avatar-slot">
+                <PokedexHeaderAccess tone="dark" className="home-mobile-terminal-access" />
+              </div>
+            </header>
+
+            <div className="home-mobile-terminal-screen mega-mobile-terminal-screen">
+              <MegaEvolutionDrawer
+                selectedEntry={selectedEntry}
+                onClose={handleCloseDrawer}
+              />
+            </div>
+          </div>
+        </m.div>
+      ) : null}
+    </AnimatePresence>
+  );
+
+  return (
+    <>
+      <PokedexChassis
+        className="home-main-chassis mega-main-chassis"
+        title="Mega Evolutions"
+        status="success"
+        explorerScreen={explorerScreen}
+        detailScreen={detailScreen}
+        themeStyle={themeStyle}
+      />
+      {mobileDetailTerminal}
+      {mobileBottomNav}
+    </>
   );
 }

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { type ReactNode } from "react";
 import { FavoriteStarButton } from "@/components/FavoriteStarButton";
+import { MobileDexBottomNav } from "@/components/MobileDexBottomNav";
 import { PokedexFrame } from "@/components/PokedexFrame";
 import { StatChart } from "@/components/StatChart";
 import { TypeBadge } from "@/components/TypeBadge";
@@ -145,20 +146,22 @@ function estimateHatchSteps(hatchCounter: number) {
 function DetailSection({
   title,
   subtitle,
-  children
+  children,
+  className
 }: {
   title: string;
   subtitle?: string;
   children: ReactNode;
+  className?: string;
 }) {
   return (
-    <section className="rounded-2xl border border-black/25 bg-white/60 p-4">
-      <div className="mb-3">
-        <h2 className="pixel-font text-[11px] uppercase tracking-wide text-black/75">
+    <section className={`pokemon-full-data-section rounded-2xl border border-black/25 bg-white/60 p-4 ${className ?? ""}`}>
+      <div className="pokemon-full-data-section-head mb-3">
+        <h2 className="pokemon-full-data-section-title pixel-font text-[11px] uppercase tracking-wide text-black/75">
           {title}
         </h2>
         {subtitle ? (
-          <p className="mt-1 text-sm text-black/60">{subtitle}</p>
+          <p className="pokemon-full-data-section-subtitle mt-1 text-sm text-black/60">{subtitle}</p>
         ) : null}
       </div>
       {children}
@@ -258,94 +261,106 @@ export default async function PokemonDetailPage({
     };
 
     const leftPanel = (
-      <article className="relative z-10 space-y-4">
-        <div className="flex flex-wrap items-center justify-between gap-2">
+      <article className="pokemon-full-data-left relative z-10 space-y-4">
+        <div className="pokemon-full-data-toolbar flex flex-wrap items-center justify-between gap-2">
           <Link
             href="/"
-            className="pixel-font inline-flex rounded-lg border border-black/30 bg-black/10 px-3 py-2 text-[10px] uppercase tracking-wide transition hover:bg-black/15"
+            className="pokemon-full-data-back pixel-font inline-flex rounded-lg border border-black/30 bg-black/10 px-3 py-2 text-[10px] uppercase tracking-wide transition hover:bg-black/15"
           >
             Back to index
           </Link>
         </div>
 
         <DetailSection
-          title="Primary Profile"
+          title="Data Terminal"
           subtitle={`${pokemon.generation} | ${pokemon.speciesName}`}
+          className="pokemon-full-data-section-profile"
         >
-          <div className="flex flex-wrap items-start justify-between gap-3">
-            <div>
-              <p className="pixel-font text-[10px] uppercase tracking-wide text-black/65">
-                #{pokemon.id.toString().padStart(4, "0")}
-              </p>
-              <h1 className="pixel-font mt-1 text-[15px] uppercase tracking-wide text-black/90">
-                {pokemon.name}
-              </h1>
-              <p className="mt-1 text-sm text-black/70">{pokemon.genus}</p>
-              <p className="mt-1 text-xs text-black/60">
-                {primaryJapanese
-                  ? `${primaryJapanese}${romajiName ? ` (${romajiName})` : ""}`
-                  : englishName}
-              </p>
-            </div>
-            <div className="flex flex-wrap items-center justify-end gap-1.5">
-              <FavoriteStarButton
-                favorite={{
-                  entityType: "pokemon",
-                  entityId: String(pokemon.id),
-                  title: pokemon.name,
-                  href: `/pokemon/${pokemon.id}`,
-                  imageUrl: artwork,
-                  subtitle: pokemon.speciesName,
-                  tags: [
-                    "pokemon",
-                    pokemon.generationKey,
-                    ...pokemon.types.map((type) => type.toLowerCase())
-                  ]
-                }}
+          <div className="pokemon-full-data-hero">
+            <div className="pokemon-full-data-hero-visual">
+              <PokemonSpriteToggle
+                pokemonId={pokemon.id}
+                pokemonName={pokemon.name}
+                normalSprite={artwork}
+                shinySprite={shinyArtwork}
+                priority
+                className="pokemon-full-data-sprite-toggle"
               />
-              {pokemon.types.map((type) => (
-                <TypeBadge key={type} type={type} />
-              ))}
+            </div>
+
+            <div className="pokemon-full-data-hero-summary">
+              <div className="pokemon-full-data-hero-copy">
+                <p className="pokemon-full-data-dex pixel-font text-[10px] uppercase tracking-wide text-black/65">
+                  #{pokemon.id.toString().padStart(4, "0")}
+                </p>
+                <h1 className="pokemon-full-data-name pixel-font mt-1 text-[15px] uppercase tracking-wide text-black/90">
+                  {pokemon.name}
+                </h1>
+                <p className="pokemon-full-data-genus mt-1 text-sm text-black/70">{pokemon.genus}</p>
+                <p className="pokemon-full-data-alt-name mt-1 text-xs text-black/60">
+                  {primaryJapanese
+                    ? `${primaryJapanese}${romajiName ? ` (${romajiName})` : ""}`
+                    : englishName}
+                </p>
+              </div>
+              <div className="pokemon-full-data-badges flex flex-wrap items-center gap-1.5">
+                <FavoriteStarButton
+                  favorite={{
+                    entityType: "pokemon",
+                    entityId: String(pokemon.id),
+                    title: pokemon.name,
+                    href: `/pokemon/${pokemon.id}`,
+                    imageUrl: artwork,
+                    subtitle: pokemon.speciesName,
+                    tags: [
+                      "pokemon",
+                      pokemon.generationKey,
+                      ...pokemon.types.map((type) => type.toLowerCase())
+                    ]
+                  }}
+                />
+                {pokemon.types.map((type) => (
+                  <TypeBadge key={type} type={type} />
+                ))}
+              </div>
             </div>
           </div>
 
-          <div className="mt-4">
-            <PokemonSpriteToggle
-              pokemonId={pokemon.id}
-              pokemonName={pokemon.name}
-              normalSprite={artwork}
-              shinySprite={shinyArtwork}
-              priority
-            />
-          </div>
-
-          <div className="mt-3 grid gap-2 text-sm sm:grid-cols-2">
-            <p className="rounded-lg border border-black/20 bg-white/45 px-3 py-2">
+          <div className="pokemon-full-data-meta-grid mt-3 grid gap-2 text-sm sm:grid-cols-2">
+            <p className="pokemon-full-data-meta-card rounded-lg border border-black/20 bg-white/45 px-3 py-2">
               Height: {pokemon.height.toFixed(1)} m
             </p>
-            <p className="rounded-lg border border-black/20 bg-white/45 px-3 py-2">
+            <p className="pokemon-full-data-meta-card rounded-lg border border-black/20 bg-white/45 px-3 py-2">
               Weight: {pokemon.weight.toFixed(1)} kg
             </p>
-            <p className="rounded-lg border border-black/20 bg-white/45 px-3 py-2">
+            <p className="pokemon-full-data-meta-card rounded-lg border border-black/20 bg-white/45 px-3 py-2">
               Base Exp: {pokemon.baseExperience ?? "N/A"}
             </p>
-            <p className="rounded-lg border border-black/20 bg-white/45 px-3 py-2">
+            <p className="pokemon-full-data-meta-card rounded-lg border border-black/20 bg-white/45 px-3 py-2">
               Growth Rate: {pokemon.growthRate ?? "Unknown"}
             </p>
           </div>
         </DetailSection>
 
-        <DetailSection title="Battle Data" subtitle={`Base stat total: ${pokemon.baseStatTotal}`}>
-          <StatChart stats={pokemon.stats} />
+        <DetailSection
+          title="Battle Data"
+          subtitle={`Base stat total: ${pokemon.baseStatTotal}`}
+          className="pokemon-full-data-section-stats"
+        >
+          <StatChart stats={pokemon.stats} tone="terminal" />
         </DetailSection>
 
-        <DetailSection title="Type Weakness Calculator">
+        <DetailSection
+          title="Type Weakness Calculator"
+          className="pokemon-full-data-section-weakness"
+        >
           <PokemonTypeWeaknessGrid effectiveness={pokemon.typeEffectiveness} />
         </DetailSection>
 
         <DetailSection
           title="Sprites Gallery"
           subtitle={`Available sprites: ${pokemon.spriteGallery.length}`}
+          className="pokemon-full-data-section-gallery"
         >
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
             {pokemon.spriteGallery.slice(0, 18).map((sprite) => (
@@ -375,6 +390,7 @@ export default async function PokemonDetailPage({
         <DetailSection
           title="3D Viewer"
           subtitle="Interactive model view (rotate and zoom)"
+          className="pokemon-full-data-section-model"
         >
           <PokemonModelViewer
             pokemonId={pokemon.id}
@@ -386,8 +402,12 @@ export default async function PokemonDetailPage({
     );
 
     const rightPanel = (
-      <article className="space-y-4">
-        <DetailSection title="Technical Infobox" subtitle="Core game data (quick access)">
+      <article className="pokemon-full-data-right space-y-4">
+        <DetailSection
+          title="Technical Infobox"
+          subtitle="Core game data (quick access)"
+          className="pokemon-full-data-section-tech"
+        >
           <div className="grid gap-2 text-sm sm:grid-cols-2">
             <p className="rounded-lg border border-black/20 bg-white/55 px-3 py-2">
               Capture Rate: <span className="font-semibold">{pokemon.captureRate}</span>
@@ -417,7 +437,7 @@ export default async function PokemonDetailPage({
           </div>
         </DetailSection>
 
-        <DetailSection title="Abilities">
+        <DetailSection title="Abilities" className="pokemon-full-data-section-abilities">
           <div className="space-y-2">
             {pokemon.abilities.map((ability) => (
               <article
@@ -449,11 +469,15 @@ export default async function PokemonDetailPage({
           </div>
         </DetailSection>
 
-        <DetailSection title="Evolution Chain">
+        <DetailSection title="Evolution Chain" className="pokemon-full-data-section-evolution">
           <EvolutionChain stages={pokemon.evolutionChain.stages} />
         </DetailSection>
 
-        <DetailSection title="Locations" subtitle="Known encounter areas in games">
+        <DetailSection
+          title="Locations"
+          subtitle="Known encounter areas in games"
+          className="pokemon-full-data-section-locations"
+        >
           {pokemon.encounters.length > 0 ? (
             <div className="space-y-2">
               {pokemon.encounters.map((encounter) => (
@@ -477,7 +501,10 @@ export default async function PokemonDetailPage({
           )}
         </DetailSection>
 
-        <DetailSection title="Generation / Game Explorer">
+        <DetailSection
+          title="Generation / Game Explorer"
+          className="pokemon-full-data-section-games"
+        >
           <PokemonGameDataPanel
             defaultGenerationKey={pokemon.generationKey}
             stats={pokemon.stats}
@@ -487,7 +514,10 @@ export default async function PokemonDetailPage({
           />
         </DetailSection>
 
-        <DetailSection title="Forms, Varieties & Indexes">
+        <DetailSection
+          title="Forms, Varieties & Indexes"
+          className="pokemon-full-data-section-forms"
+        >
           <div className="space-y-3 text-sm">
             <div className="rounded-lg border border-black/20 bg-white/55 px-3 py-2">
               <p className="break-words text-black/80">
@@ -524,7 +554,7 @@ export default async function PokemonDetailPage({
           </div>
         </DetailSection>
 
-        <DetailSection title="Held Items">
+        <DetailSection title="Held Items" className="pokemon-full-data-section-held-items">
           {pokemon.heldItems.length > 0 ? (
             <div className="space-y-2">
               {pokemon.heldItems.map((item) => (
@@ -549,11 +579,11 @@ export default async function PokemonDetailPage({
           )}
         </DetailSection>
 
-        <DetailSection title="Audio Module">
+        <DetailSection title="Audio Module" className="pokemon-full-data-section-audio">
           <CryButton cryUrl={pokemon.cryUrl} pokemonName={pokemon.name} autoPlayOnLoad={false} />
         </DetailSection>
 
-        <section className="rounded-2xl border border-black/25 bg-white/60 p-4">
+        <section className="pokemon-full-data-section pokemon-full-data-section-lore rounded-2xl border border-black/25 bg-white/60 p-4">
           <details>
             <summary className="cursor-pointer list-none">
               <span className="pixel-font text-[11px] uppercase tracking-wide text-black/75">
@@ -621,16 +651,18 @@ export default async function PokemonDetailPage({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(detailSchema) }}
         />
-        <main className="pokemon-detail-page mx-auto min-h-screen w-full max-w-[2560px] px-2 py-5 sm:px-4 sm:py-8 lg:px-5">
+        <main className="pokemon-detail-page pokemon-full-data-page mx-auto min-h-screen w-full max-w-[2560px] px-2 py-5 sm:px-4 sm:py-8 lg:px-5">
           <div className="space-y-3">
             <PokedexFrame
-              title={`${pokemon.name} - Full Data Encyclopedia`}
+              title={`${pokemon.name} - Full Data`}
               status="success"
               leftPanel={leftPanel}
               rightPanel={rightPanel}
+              className="pokemon-full-data-frame"
             />
           </div>
         </main>
+        <MobileDexBottomNav activeKey="explore" exploreHref="/" settingsHref="/" />
       </>
     );
   } catch (error) {

@@ -65,7 +65,7 @@ export function ToolsHubPreviewBoard({ candidateCount }: ToolsHubPreviewBoardPro
   const soundVolume = useSoundStore((state) => state.volume);
 
   return (
-    <section className="tools-preview-board rounded-2xl border border-black/20 bg-white/30 p-4">
+    <section className="tools-preview-board tools-mobile-preview-board rounded-2xl border border-black/20 bg-white/30 p-4">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/72">
           Tools Mission Board
@@ -85,7 +85,7 @@ export function ToolsHubPreviewBoard({ candidateCount }: ToolsHubPreviewBoardPro
           <article
             key={tool.slug}
             className={cn(
-              "tools-preview-card rounded-xl border border-black/20 p-3",
+              "tools-preview-card tools-mobile-preview-card rounded-xl border border-black/20 p-3",
               toneClass(tool)
             )}
           >
@@ -164,4 +164,3 @@ export function ToolsHubPreviewBoard({ candidateCount }: ToolsHubPreviewBoardPro
     </section>
   );
 }
-

@@ -193,7 +193,7 @@ export function CharacterIndexSection({
 
   return (
     <div className="character-scroll-list pokemon-scrollbar mt-3">
-      <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7">
+      <div className="character-index-grid grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7">
         {filteredCharacters.map((character, index) => {
           const characterCard = renderCharacterIndexCard(character, index);
 

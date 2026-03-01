@@ -1,0 +1,399 @@
+@media (max-width: 767px) {
+  .profile-mobile-page,
+  .social-mobile-page {
+    padding:
+      max(0.42rem, env(safe-area-inset-top))
+      max(0.3rem, env(safe-area-inset-right))
+      calc(5.85rem + env(safe-area-inset-bottom))
+      max(0.3rem, env(safe-area-inset-left));
+  }
+
+  .profile-mobile-frame.pokedex-shell,
+  .social-mobile-frame.pokedex-shell {
+    border-radius: 1.72rem;
+    padding: 0.42rem;
+    background:
+      linear-gradient(155deg, #ef6059 0%, #d33737 32%, #b41e25 100%);
+    box-shadow:
+      inset 2px 2px 0 rgba(255, 255, 255, 0.26),
+      inset -9px -12px 20px rgba(0, 0, 0, 0.24),
+      0 18px 34px rgba(0, 0, 0, 0.28);
+  }
+
+  .profile-mobile-frame > .relative,
+  .social-mobile-frame > .relative {
+    gap: 0.58rem;
+  }
+
+  .profile-mobile-frame > .relative > header,
+  .social-mobile-frame > .relative > header {
+    border-radius: 0.86rem;
+    margin: 0.14rem 0.14rem 0;
+    padding: 0.52rem 0.62rem;
+    background: rgba(0, 0, 0, 0.14);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  .profile-mobile-frame > .relative > header > div,
+  .social-mobile-frame > .relative > header > div {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 0.46rem;
+  }
+
+  .profile-mobile-frame .pokedex-home-shortcut,
+  .social-mobile-frame .pokedex-home-shortcut,
+  .profile-mobile-frame .explorer-trainer-name,
+  .social-mobile-frame .explorer-trainer-name,
+  .profile-mobile-frame .pokedex-header-guest-btn-register {
+    display: none;
+  }
+
+  .profile-mobile-frame .pokedex-header-trainer-hub,
+  .social-mobile-frame .pokedex-header-trainer-hub {
+    min-width: 0;
+    padding: 0.15rem;
+    border-radius: 0.92rem;
+  }
+
+  .profile-mobile-frame .pokedex-header-trainer-user,
+  .social-mobile-frame .pokedex-header-trainer-user {
+    gap: 0;
+    padding: 0;
+  }
+
+  .profile-mobile-frame .explorer-trainer-avatar,
+  .social-mobile-frame .explorer-trainer-avatar {
+    width: 1.95rem;
+    height: 1.95rem;
+  }
+
+  .profile-mobile-frame .pokedex-header-actions-cluster {
+    display: none;
+  }
+
+  .social-mobile-frame .pokedex-header-action-btn-profile {
+    display: none;
+  }
+
+  .social-mobile-frame .pokedex-header-action-btn-signout {
+    min-height: 2.05rem;
+    padding-inline: 0.78rem;
+    font-size: 8px;
+    letter-spacing: 0.08em;
+  }
+
+  .profile-mobile-frame .retro-screen,
+  .profile-mobile-frame .metal-plate,
+  .social-mobile-frame .retro-screen,
+  .social-mobile-frame .metal-plate {
+    min-height: auto;
+    border-radius: 1.08rem;
+    padding: 0.58rem;
+  }
+
+  .profile-mobile-frame .retro-screen,
+  .profile-mobile-frame .metal-plate,
+  .social-mobile-frame .retro-screen,
+  .social-mobile-frame .metal-plate {
+    background:
+      radial-gradient(circle at 22% 10%, rgba(228, 255, 206, 0.44), transparent 28%),
+      linear-gradient(180deg, rgba(155, 223, 114, 0.96), rgba(104, 170, 82, 0.96));
+    box-shadow:
+      inset 0 1px 0 rgba(237, 255, 221, 0.48),
+      inset 0 -1px 0 rgba(34, 73, 26, 0.36),
+      0 10px 20px rgba(47, 88, 39, 0.12);
+  }
+
+  .profile-mobile-frame .scan-overlay,
+  .social-mobile-frame .scan-overlay {
+    opacity: 0.34;
+  }
+
+  .profile-mobile-left,
+  .profile-mobile-right,
+  .social-mobile-left,
+  .social-mobile-right {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .profile-mobile-frame .profile-surface,
+  .social-mobile-frame .profile-surface {
+    border-radius: 0.96rem;
+    padding: 0.72rem;
+  }
+
+  .profile-mobile-identity-panel .profile-hero-grid {
+    gap: 0.7rem;
+    grid-template-columns: 5.6rem minmax(0, 1fr);
+  }
+
+  .profile-mobile-identity-panel .profile-avatar-column-editable {
+    max-width: 5.6rem;
+  }
+
+  .profile-mobile-identity-panel .profile-avatar-panel {
+    gap: 0.34rem;
+    padding: 0.36rem;
+    border-radius: 0.82rem;
+  }
+
+  .profile-mobile-identity-panel .profile-avatar-shell {
+    width: 5rem;
+    height: 5rem;
+    margin-inline: auto;
+  }
+
+  .profile-mobile-identity-panel .profile-avatar-shell::before {
+    inset: -0.44rem;
+  }
+
+  .profile-mobile-identity-panel .profile-avatar-shell::after {
+    inset: -0.72rem;
+  }
+
+  .profile-mobile-identity-panel .profile-avatar-upload-btn {
+    min-height: 1.9rem;
+    padding-inline: 0.4rem;
+    font-size: 8px;
+  }
+
+  .profile-mobile-identity-panel .profile-avatar-upload-name,
+  .profile-mobile-identity-panel .profile-avatar-file-meta {
+    display: none;
+  }
+
+  .profile-mobile-identity-panel .profile-identity-stack {
+    gap: 0.55rem;
+  }
+
+  .profile-mobile-identity-panel .profile-identity-heading {
+    gap: 0.4rem;
+  }
+
+  .profile-mobile-identity-panel .profile-identity-heading .role-name {
+    font-size: 0.95rem;
+  }
+
+  .profile-mobile-identity-panel .profile-identity-meta,
+  .profile-mobile-identity-panel .profile-identity-bio {
+    font-size: 0.78rem;
+  }
+
+  .profile-mobile-identity-panel .profile-metric-grid-identity {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.42rem;
+  }
+
+  .profile-mobile-identity-panel .profile-metric-tile {
+    min-height: 4rem;
+    padding: 0.58rem;
+  }
+
+  .profile-mobile-identity-panel .profile-metric-value {
+    font-size: 1.14rem;
+  }
+
+  .profile-mobile-identity-panel .profile-trainer-action-grid,
+  .profile-mobile-identity-panel .profile-gba-quick-links,
+  .profile-mobile-overview-panel {
+    display: none;
+  }
+
+  .profile-mobile-identity-panel .profile-progress-track {
+    height: 1.1rem;
+  }
+
+  .profile-mobile-identity-panel .profile-checklist-item {
+    padding: 0.44rem 0.52rem;
+    font-size: 0.72rem;
+    line-height: 1.2;
+  }
+
+  .profile-mobile-console-nav .profile-side-nav-links {
+    display: none;
+  }
+
+  .profile-mobile-console-nav .profile-gba-tab-grid {
+    margin-top: 0;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.4rem;
+  }
+
+  .profile-mobile-console-nav .profile-gba-tab-btn {
+    min-height: 2.35rem;
+    padding: 0.46rem 0.38rem;
+    font-size: 0.62rem;
+  }
+
+  .profile-mobile-radar-panel,
+  .profile-mobile-captures-panel,
+  .profile-mobile-shortcuts-panel {
+    padding: 0.72rem;
+  }
+
+  .profile-mobile-radar-panel .profile-side-radar-row,
+  .profile-mobile-captures-panel .profile-side-capture-card {
+    border-radius: 0.78rem;
+  }
+
+  .profile-mobile-captures-panel .profile-side-capture-thumb {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .profile-mobile-editor-panel .profile-editor-actions {
+    gap: 0.5rem;
+  }
+
+  .profile-mobile-editor-panel .profile-editor-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .social-mobile-overview-panel .profile-metric-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.42rem;
+  }
+
+  .social-mobile-overview-panel .profile-metric-tile {
+    min-height: 4rem;
+    padding: 0.6rem;
+  }
+
+  .social-mobile-discover-panel {
+    order: 2;
+  }
+
+  .social-mobile-privacy-panel {
+    order: 3;
+  }
+
+  .social-mobile-incoming-panel {
+    display: none;
+  }
+
+  .social-mobile-discover-panel .social-panel-header,
+  .social-mobile-overview-panel .social-arcade-title,
+  .social-mobile-privacy-panel .social-arcade-title,
+  .social-mobile-selected-panel .social-arcade-title,
+  .social-mobile-report-panel .social-arcade-title,
+  .social-mobile-nav-panel .social-arcade-title {
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+  }
+
+  .social-mobile-discover-panel .social-discover-controls {
+    padding: 0.6rem;
+  }
+
+  .social-mobile-discover-panel .social-discover-controls > div {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .social-mobile-discover-panel .social-discover-controls input {
+    min-width: 0;
+  }
+
+  .social-mobile-discover-panel .social-discover-list {
+    max-height: none;
+    overflow: visible;
+    padding-right: 0;
+  }
+
+  .social-mobile-right > .social-arcade-top-grid {
+    display: contents;
+  }
+
+  .social-mobile-nav-panel {
+    order: 1;
+  }
+
+  .social-mobile-selected-panel {
+    order: 2;
+  }
+
+  .social-mobile-report-panel {
+    order: 3;
+  }
+
+  .social-mobile-nav-panel > .mt-2.grid {
+    display: none;
+  }
+
+  .social-mobile-nav-panel .social-gba-tab-grid {
+    margin-top: 0;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.4rem;
+  }
+
+  .social-mobile-nav-panel .social-gba-tab-btn {
+    min-height: 2.25rem;
+    padding: 0.44rem 0.34rem;
+    font-size: 0.62rem;
+  }
+
+  .social-mobile-selected-panel .social-arcade-selected-card {
+    padding: 0.72rem;
+  }
+
+  .social-mobile-selected-panel .social-arcade-selected-head {
+    gap: 0.62rem;
+    align-items: center;
+  }
+
+  .social-mobile-selected-panel .social-arcade-selected-avatar {
+    width: 4.6rem;
+    height: 4.6rem;
+    border-radius: 0.9rem;
+  }
+
+  .social-mobile-selected-panel .social-arcade-selected-actions {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .social-mobile-selected-panel .social-arcade-btn,
+  .social-mobile-report-panel .social-arcade-btn,
+  .social-mobile-privacy-panel .social-arcade-btn,
+  .social-mobile-discover-panel .social-arcade-btn {
+    min-height: 2.2rem;
+    justify-content: center;
+  }
+
+  .social-mobile-report-panel .social-arcade-report-notes {
+    min-height: 5.4rem;
+  }
+
+  .social-mobile-bottom-nav,
+  .profile-mobile-bottom-nav {
+    display: block;
+  }
+}
+
+@media (max-width: 420px) {
+  .profile-mobile-identity-panel .profile-hero-grid {
+    grid-template-columns: 4.9rem minmax(0, 1fr);
+  }
+
+  .profile-mobile-identity-panel .profile-avatar-column-editable {
+    max-width: 4.9rem;
+  }
+
+  .profile-mobile-identity-panel .profile-avatar-shell {
+    width: 4.3rem;
+    height: 4.3rem;
+  }
+
+  .profile-mobile-console-nav .profile-gba-tab-grid,
+  .social-mobile-nav-panel .social-gba-tab-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .social-mobile-selected-panel .social-arcade-selected-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

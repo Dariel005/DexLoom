@@ -62,12 +62,12 @@ export function CharacterPageTemplate({ data }: CharacterPageTemplateProps) {
   const signatureCount = entry.signaturePokemon.length;
 
   return (
-    <article className="space-y-4">
-      <section className="relative overflow-hidden rounded-2xl border border-black/20 bg-white/60 p-4">
+    <article className="character-page-template space-y-4">
+      <section className="character-page-hero relative overflow-hidden rounded-2xl border border-black/20 bg-white/60 p-4">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_85%_10%,rgba(255,255,255,0.55),transparent_40%),radial-gradient(circle_at_10%_90%,rgba(43,73,112,0.14),transparent_45%)]" />
-        <div className="relative grid gap-4 lg:grid-cols-[260px_1fr]">
+        <div className="character-page-hero-grid relative grid gap-4 lg:grid-cols-[260px_1fr]">
           <div className="space-y-2">
-            <div className="relative aspect-[3/4] overflow-hidden rounded-[1.1rem] border border-black/20 bg-[linear-gradient(165deg,rgba(255,255,255,0.45),rgba(155,188,221,0.3))] shadow-[inset_0_1px_0_rgba(255,255,255,0.7),0_14px_26px_rgba(0,0,0,0.14)]">
+            <div className="character-page-portrait relative aspect-[3/4] overflow-hidden rounded-[1.1rem] border border-black/20 bg-[linear-gradient(165deg,rgba(255,255,255,0.45),rgba(155,188,221,0.3))] shadow-[inset_0_1px_0_rgba(255,255,255,0.7),0_14px_26px_rgba(0,0,0,0.14)]">
               <div className="absolute inset-0 bg-[repeating-linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0.06)_1px,transparent_1px,transparent_7px)]" />
               <Image
                 src={entry.portraitSrc}
@@ -86,7 +86,7 @@ export function CharacterPageTemplate({ data }: CharacterPageTemplateProps) {
             </div>
           </div>
 
-          <div className="space-y-3">
+          <div className="character-page-summary space-y-3">
             <div>
               <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/65">
                 Character Dossier
@@ -99,7 +99,7 @@ export function CharacterPageTemplate({ data }: CharacterPageTemplateProps) {
               </p>
             </div>
 
-            <div className="grid gap-2 sm:grid-cols-3">
+            <div className="character-page-metrics grid gap-2 sm:grid-cols-3">
               <div className="rounded-lg border border-black/15 bg-white/70 px-3 py-2">
                 <p className="pixel-font text-[10px] uppercase tracking-[0.14em] text-black/65">
                   Appearances
@@ -124,14 +124,14 @@ export function CharacterPageTemplate({ data }: CharacterPageTemplateProps) {
               {entry.overview}
             </p>
 
-            <div className="rounded-xl border border-black/20 bg-gradient-to-r from-black/[0.05] via-white/70 to-black/[0.05] px-3 py-3">
+            <div className="character-page-quote rounded-xl border border-black/20 bg-gradient-to-r from-black/[0.05] via-white/70 to-black/[0.05] px-3 py-3">
               <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
                 Quote
               </p>
               <p className="mt-1 text-sm italic text-black/80">&quot;{entry.quote}&quot;</p>
             </div>
 
-            <div className="rounded-lg border border-black/15 bg-white/70 px-3 py-2">
+            <div className="character-page-signature rounded-lg border border-black/15 bg-white/70 px-3 py-2">
               <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
                 Signature Pokemon
               </p>
@@ -154,8 +154,8 @@ export function CharacterPageTemplate({ data }: CharacterPageTemplateProps) {
         </div>
       </section>
 
-      <section className="grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
-        <div className="rounded-2xl border border-black/20 bg-white/60 p-4">
+      <section className="character-page-dual grid gap-4 lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="character-page-appearances rounded-2xl border border-black/20 bg-white/60 p-4">
           <h2 className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/75">
             Major Appearances
           </h2>
@@ -167,7 +167,7 @@ export function CharacterPageTemplate({ data }: CharacterPageTemplateProps) {
             ))}
           </div>
         </div>
-        <div className="rounded-2xl border border-black/20 bg-white/60 p-4">
+        <div className="character-page-battle rounded-2xl border border-black/20 bg-white/60 p-4">
           <h2 className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/75">
             Battle Style
           </h2>
@@ -177,7 +177,7 @@ export function CharacterPageTemplate({ data }: CharacterPageTemplateProps) {
         </div>
       </section>
 
-      <section className="rounded-2xl border border-black/20 bg-white/60 p-4">
+      <section className="character-page-teams rounded-2xl border border-black/20 bg-white/60 p-4">
         <h2 className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/75">
           Teams By Game
         </h2>

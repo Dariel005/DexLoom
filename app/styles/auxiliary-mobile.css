@@ -1,0 +1,244 @@
+@media (max-width: 767px) {
+  .sources-mobile-page,
+  .credits-mobile-page {
+    padding:
+      max(0.42rem, env(safe-area-inset-top))
+      max(0.3rem, env(safe-area-inset-right))
+      calc(5.8rem + env(safe-area-inset-bottom))
+      max(0.3rem, env(safe-area-inset-left));
+  }
+
+  .sources-mobile-frame.pokedex-shell,
+  .credits-mobile-frame.pokedex-shell {
+    border-radius: 1.72rem;
+    padding: 0.42rem;
+    background:
+      linear-gradient(155deg, #ef6059 0%, #d33737 32%, #b41e25 100%);
+    box-shadow:
+      inset 2px 2px 0 rgba(255, 255, 255, 0.26),
+      inset -9px -12px 20px rgba(0, 0, 0, 0.24),
+      0 18px 34px rgba(0, 0, 0, 0.28);
+  }
+
+  .sources-mobile-frame > .relative,
+  .credits-mobile-frame > .relative {
+    gap: 0.58rem;
+  }
+
+  .sources-mobile-frame > .relative > header,
+  .credits-mobile-frame > .relative > header {
+    border-radius: 0.86rem;
+    margin: 0.14rem 0.14rem 0;
+    padding: 0.52rem 0.62rem;
+    background: rgba(0, 0, 0, 0.14);
+  }
+
+  .sources-mobile-frame > .relative > header > div,
+  .credits-mobile-frame > .relative > header > div {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 0.46rem;
+  }
+
+  .sources-mobile-frame .pokedex-home-shortcut,
+  .sources-mobile-frame .pokedex-header-actions-cluster,
+  .sources-mobile-frame .explorer-trainer-name,
+  .sources-mobile-frame .pokedex-header-guest-btn-register,
+  .credits-mobile-frame .pokedex-home-shortcut,
+  .credits-mobile-frame .pokedex-header-actions-cluster,
+  .credits-mobile-frame .explorer-trainer-name,
+  .credits-mobile-frame .pokedex-header-guest-btn-register {
+    display: none;
+  }
+
+  .sources-mobile-frame .pokedex-header-trainer-hub,
+  .credits-mobile-frame .pokedex-header-trainer-hub {
+    min-width: 0;
+    padding: 0.15rem;
+    border-radius: 0.92rem;
+  }
+
+  .sources-mobile-frame .pokedex-header-trainer-user,
+  .credits-mobile-frame .pokedex-header-trainer-user {
+    gap: 0;
+    padding: 0;
+  }
+
+  .sources-mobile-frame .explorer-trainer-avatar,
+  .credits-mobile-frame .explorer-trainer-avatar {
+    width: 1.95rem;
+    height: 1.95rem;
+  }
+
+  .sources-mobile-frame .retro-screen,
+  .sources-mobile-frame .metal-plate,
+  .credits-mobile-frame .retro-screen,
+  .credits-mobile-frame .metal-plate {
+    min-height: auto;
+    border-radius: 1.08rem;
+    padding: 0.52rem;
+    background:
+      radial-gradient(circle at 22% 10%, rgba(228, 255, 206, 0.44), transparent 28%),
+      linear-gradient(180deg, rgba(155, 223, 114, 0.96), rgba(104, 170, 82, 0.96));
+    box-shadow:
+      inset 0 1px 0 rgba(237, 255, 221, 0.48),
+      inset 0 -1px 0 rgba(34, 73, 26, 0.36),
+      0 10px 20px rgba(47, 88, 39, 0.12);
+  }
+
+  .sources-mobile-left,
+  .sources-mobile-right,
+  .credits-mobile-left,
+  .credits-mobile-right {
+    gap: 0.68rem;
+  }
+
+  .sources-mobile-hero,
+  .sources-mobile-section,
+  .credits-mobile-hero,
+  .credits-mobile-section {
+    border-radius: 0.98rem;
+    padding: 0.68rem !important;
+    background:
+      linear-gradient(180deg, rgba(251, 255, 247, 0.76), rgba(227, 240, 219, 0.62));
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.55),
+      inset 0 -1px 0 rgba(68, 92, 55, 0.08),
+      0 6px 18px rgba(41, 67, 32, 0.08);
+  }
+
+  .auth-mobile-page {
+    padding:
+      max(0.42rem, env(safe-area-inset-top))
+      max(0.3rem, env(safe-area-inset-right))
+      max(0.6rem, env(safe-area-inset-bottom))
+      max(0.3rem, env(safe-area-inset-left));
+  }
+
+  .auth-mobile-shell {
+    max-width: none;
+    border-radius: 1.72rem !important;
+    padding: 0.42rem !important;
+    border-color: #7d1110 !important;
+    background:
+      linear-gradient(155deg, #ef6059 0%, #d33737 32%, #b41e25 100%) !important;
+    box-shadow:
+      inset 2px 2px 0 rgba(255, 255, 255, 0.26),
+      inset -9px -12px 20px rgba(0, 0, 0, 0.24),
+      0 18px 34px rgba(0, 0, 0, 0.28) !important;
+  }
+
+  .auth-mobile-shell > div {
+    border-radius: 1.22rem !important;
+  }
+
+  .auth-mobile-shell header {
+    padding: 0.7rem 0.8rem !important;
+  }
+
+  .auth-mobile-shell .auth-title-live {
+    font-size: 1rem !important;
+    letter-spacing: 0.08em;
+  }
+
+  .auth-mobile-shell .auth-chip-live {
+    padding: 0.48rem 0.8rem !important;
+    border-radius: 0.88rem;
+  }
+
+  .auth-mobile-shell .auth-home-btn-live,
+  .auth-mobile-shell .auth-action-btn-live,
+  .auth-mobile-shell .auth-google-btn-live {
+    min-height: 2.4rem;
+    padding-inline: 0.9rem !important;
+    font-size: 9px !important;
+    letter-spacing: 0.08em !important;
+  }
+
+  .auth-mobile-shell .auth-mobile-panel {
+    border-radius: 1.02rem;
+    padding: 0.82rem !important;
+  }
+
+  .auth-mobile-shell .auth-mobile-help-card {
+    border-radius: 1.02rem;
+    padding: 0.82rem !important;
+  }
+
+  .auth-mobile-shell .md\:grid-cols-2,
+  .auth-mobile-shell .auth-mobile-access-grid,
+  .auth-mobile-shell .auth-mobile-verify-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0.72rem !important;
+  }
+
+  .auth-mobile-shell .auth-pokemon-frame-live {
+    width: 5.2rem !important;
+    height: 5.2rem !important;
+    padding: 0.42rem !important;
+  }
+
+  .auth-mobile-shell .auth-pokemon-frame-live img {
+    width: 4.25rem !important;
+    height: 4.25rem !important;
+  }
+
+  .auth-mobile-shell .auth-mobile-verify-grid > div:last-child > div {
+    width: 7.8rem !important;
+    height: 7.8rem !important;
+    padding: 0.8rem !important;
+  }
+
+  .auth-mobile-shell .auth-mobile-verify-grid > div:last-child img {
+    width: 6rem !important;
+    height: 6rem !important;
+  }
+
+  .auth-mobile-shell .leading-7 {
+    line-height: 1.5rem !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .sources-mobile-frame > .relative > header,
+  .credits-mobile-frame > .relative > header {
+    padding: 0.44rem 0.5rem;
+  }
+
+  .sources-mobile-frame > .relative > header .pixel-font,
+  .credits-mobile-frame > .relative > header .pixel-font {
+    font-size: 9px;
+    letter-spacing: 0.08em;
+  }
+
+  .sources-mobile-frame .explorer-trainer-avatar,
+  .credits-mobile-frame .explorer-trainer-avatar {
+    width: 1.7rem;
+    height: 1.7rem;
+  }
+
+  .sources-mobile-hero,
+  .sources-mobile-section,
+  .credits-mobile-hero,
+  .credits-mobile-section,
+  .auth-mobile-shell .auth-mobile-panel,
+  .auth-mobile-shell .auth-mobile-help-card {
+    padding: 0.56rem !important;
+  }
+
+  .auth-mobile-shell .auth-title-live {
+    font-size: 0.88rem !important;
+  }
+
+  .auth-mobile-shell .auth-pokemon-frame-live:last-child {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sources-mobile-frame.pokedex-shell,
+  .credits-mobile-frame.pokedex-shell,
+  .auth-mobile-shell {
+    transition: none !important;
+    animation: none !important;
+  }
+}

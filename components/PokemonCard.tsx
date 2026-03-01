@@ -73,10 +73,10 @@ function PokemonCardComponent({
             onSelect(pokemon.id);
           }
         }}
-        className="w-full flex-1 text-left"
+        className="pokemon-card-hit-area w-full flex-1 text-left"
       >
-        <div className="flex items-start justify-between gap-3">
-          <div>
+        <div className="pokemon-card-head flex items-start justify-between gap-3">
+          <div className="pokemon-card-meta">
             <p className="pokemon-card-index pixel-font text-[9px] uppercase tracking-[0.14em] text-black/55">
               #{pokemon.id.toString().padStart(4, "0")}
             </p>
@@ -107,7 +107,7 @@ function PokemonCardComponent({
             }
             title={canToggleFavorite ? undefined : "Sign in to use favorites"}
             className={cn(
-              "favorite-star-btn inline-flex h-9 w-9 items-center justify-center text-[16px] leading-none transition-all duration-200 active:scale-[0.96]",
+              "pokemon-card-favorite-btn favorite-star-btn inline-flex h-9 w-9 items-center justify-center text-[16px] leading-none transition-all duration-200 active:scale-[0.96]",
               !canToggleFavorite && "cursor-not-allowed opacity-55"
             )}
           >
@@ -117,7 +117,7 @@ function PokemonCardComponent({
           </button>
         </div>
 
-        <div className="mt-3 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2.5 sm:gap-3">
+        <div className="pokemon-card-content mt-3 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2.5 sm:gap-3">
           <div className="pokemon-card-sprite relative h-[114px] w-[114px] flex-shrink-0 sm:h-[130px] sm:w-[130px]">
             <Image
               src={artwork}
@@ -140,8 +140,8 @@ function PokemonCardComponent({
         </div>
       </div>
 
-      <div className="mt-3 flex items-center justify-between">
-        <span className="rounded-lg border border-black/20 bg-black/5 px-2 py-1 text-[11px]">
+      <div className="pokemon-card-footer mt-3 flex items-center justify-between">
+        <span className="pokemon-card-stat-chip rounded-lg border border-black/20 bg-black/5 px-2 py-1 text-[11px]">
           Atk {pokemon.attack}
         </span>
         <Link

@@ -134,14 +134,14 @@ export function GameCard({ game }: GameCardProps) {
           openEntry();
         }
       }}
-      className="group block h-full cursor-pointer rounded-2xl focus-visible:outline-none"
+      className="games-mobile-card group block h-full cursor-pointer rounded-2xl focus-visible:outline-none"
     >
       <div
-        className="pokemon-card-shell pokemon-card-idle flex h-full min-h-[300px] flex-col overflow-hidden rounded-2xl border p-4 transition group-focus-visible:ring-2 group-focus-visible:ring-black/45 group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-white"
+        className="games-mobile-card-shell pokemon-card-shell pokemon-card-idle flex h-full min-h-[300px] flex-col overflow-hidden rounded-2xl border p-4 transition group-focus-visible:ring-2 group-focus-visible:ring-black/45 group-focus-visible:ring-offset-2 group-focus-visible:ring-offset-white"
         style={{ background: platformTheme.cardBackground }}
       >
-        <div className="flex items-start justify-between gap-3">
-          <div className="min-w-0">
+        <div className="games-mobile-card-head flex items-start justify-between gap-3">
+          <div className="games-mobile-card-copy min-w-0">
             <p className="pokemon-card-index pixel-font text-[9px] uppercase tracking-[0.14em] text-black/56">
               #{game.order.toString().padStart(4, "0")}
             </p>
@@ -152,49 +152,55 @@ export function GameCard({ game }: GameCardProps) {
               {game.generationLabel} ({game.regionLabel})
             </p>
           </div>
-          <button
-            type="button"
-            onClick={(event) => {
-              event.preventDefault();
-              event.stopPropagation();
-              if (!canToggleFavorite) {
-                emitFavoriteAuthNotice("Sign in to add this game to favorites.");
-                return;
-              }
-              favorites.toggleFavorite(favoritePayload);
-            }}
-            onKeyDown={(event) => {
-              if (event.key === "Enter" || event.key === " ") {
+          <div className="games-mobile-card-favorite-wrap">
+            <button
+              type="button"
+              onClick={(event) => {
+                event.preventDefault();
                 event.stopPropagation();
+                if (!canToggleFavorite) {
+                  emitFavoriteAuthNotice("Sign in to add this game to favorites.");
+                  return;
+                }
+                favorites.toggleFavorite(favoritePayload);
+              }}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.stopPropagation();
+                }
+              }}
+              aria-disabled={!canToggleFavorite}
+              data-active={isFavorite}
+              aria-pressed={isFavorite}
+              aria-label={
+                canToggleFavorite
+                  ? isFavorite
+                    ? `Remove ${game.title} from favorites`
+                    : `Add ${game.title} to favorites`
+                  : `Sign in to add ${game.title} to favorites`
               }
-            }}
-            aria-disabled={!canToggleFavorite}
-            data-active={isFavorite}
-            aria-pressed={isFavorite}
-            aria-label={
-              canToggleFavorite
-                ? isFavorite
-                  ? `Remove ${game.title} from favorites`
-                  : `Add ${game.title} to favorites`
-                : `Sign in to add ${game.title} to favorites`
-            }
-            title={canToggleFavorite ? undefined : "Sign in to use favorites"}
-            className={cn(
-              "favorite-star-btn inline-flex h-9 w-9 min-h-[2.25rem] min-w-[2.25rem] flex-none shrink-0 items-center justify-center text-[16px] leading-none transition-all duration-200 active:scale-[0.96]",
-              !canToggleFavorite && "cursor-not-allowed opacity-55"
-            )}
-          >
-            <span className={cn("favorite-star-icon transition-transform", isFavorite && "scale-110")}>
-              {isFavorite ? "\u2605" : "\u2606"}
-            </span>
-          </button>
+              title={canToggleFavorite ? undefined : "Sign in to use favorites"}
+              className={cn(
+                "favorite-star-btn inline-flex h-9 w-9 min-h-[2.25rem] min-w-[2.25rem] flex-none shrink-0 items-center justify-center text-[16px] leading-none transition-all duration-200 active:scale-[0.96]",
+                !canToggleFavorite && "cursor-not-allowed opacity-55"
+              )}
+            >
+              <span
+                className={cn("favorite-star-icon transition-transform", isFavorite && "scale-110")}
+              >
+                {isFavorite ? "\u2605" : "\u2606"}
+              </span>
+            </button>
+          </div>
         </div>
 
-        <div className={`mt-2 h-1.5 w-full rounded-full border border-black/18 ${platformTheme.accentClass}`} />
+        <div
+          className={`games-mobile-card-accent mt-2 h-1.5 w-full rounded-full border border-black/18 ${platformTheme.accentClass}`}
+        />
 
-        <div className="mt-3 flex flex-col gap-2.5">
-          <div className="flex justify-center">
-            <div className="pokemon-card-sprite relative h-[134px] w-[134px] flex-shrink-0 sm:h-[152px] sm:w-[152px]">
+        <div className="games-mobile-card-content mt-3 flex flex-col gap-2.5">
+          <div className="games-mobile-card-art-shell flex justify-center">
+            <div className="games-mobile-card-art pokemon-card-sprite relative h-[134px] w-[134px] flex-shrink-0 sm:h-[152px] sm:w-[152px]">
               <Image
                 src={resolvedGameImageSrc}
                 alt={game.imageAlt}
@@ -205,7 +211,7 @@ export function GameCard({ game }: GameCardProps) {
               />
             </div>
           </div>
-          <div className="pokemon-card-type-stack flex min-w-0 flex-col items-center gap-1.5">
+          <div className="games-mobile-card-types pokemon-card-type-stack flex min-w-0 flex-col items-center gap-1.5">
             <TypeBadge
               type={platformTag}
               label={platformLabel}
@@ -219,11 +225,11 @@ export function GameCard({ game }: GameCardProps) {
           </div>
         </div>
 
-        <div className="mt-3 flex items-center justify-between gap-2">
-          <span className="rounded-lg border border-black/20 bg-black/5 px-2 py-1 text-[11px]">
+        <div className="games-mobile-card-footer mt-3 flex items-center justify-between gap-2">
+          <span className="games-mobile-card-release rounded-lg border border-black/20 bg-black/5 px-2 py-1 text-[11px]">
             {game.releaseWindow}
           </span>
-          <span className="pokemon-card-footer-btn pixel-font rounded-lg border border-black/25 bg-pokedex-red px-2.5 py-1.5 text-[9px] uppercase tracking-wide text-white transition group-hover:brightness-110">
+          <span className="games-mobile-card-entry pokemon-card-footer-btn pixel-font rounded-lg border border-black/25 bg-pokedex-red px-2.5 py-1.5 text-[9px] uppercase tracking-wide text-white transition group-hover:brightness-110">
             Entry
           </span>
         </div>

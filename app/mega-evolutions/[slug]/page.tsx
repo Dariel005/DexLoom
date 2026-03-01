@@ -5,6 +5,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { type ReactNode } from "react";
 import { FavoriteStarButton } from "@/components/FavoriteStarButton";
+import { MobileDexBottomNav } from "@/components/MobileDexBottomNav";
 import { PokedexFrame } from "@/components/PokedexFrame";
 import { StatChart } from "@/components/StatChart";
 import { TypeBadge } from "@/components/TypeBadge";
@@ -196,19 +197,25 @@ async function getMegaTypeEffectiveness(types: string[]): Promise<PokemonTypeEff
 function DetailSection({
   title,
   subtitle,
-  children
+  children,
+  className
 }: {
   title: string;
   subtitle?: string;
   children: ReactNode;
+  className?: string;
 }) {
   return (
-    <section className="mega-full-section rounded-2xl border border-black/25 bg-white/60 p-4">
-      <div className="mb-3">
-        <h2 className="pixel-font text-[11px] uppercase tracking-wide text-black/75">
+    <section className={`pokemon-full-data-section mega-full-section rounded-2xl border border-black/25 bg-white/60 p-4 ${className ?? ""}`}>
+      <div className="pokemon-full-data-section-head mb-3">
+        <h2 className="pokemon-full-data-section-title pixel-font text-[11px] uppercase tracking-wide text-black/75">
           {title}
         </h2>
-        {subtitle ? <p className="mt-1 text-sm text-black/60">{subtitle}</p> : null}
+        {subtitle ? (
+          <p className="pokemon-full-data-section-subtitle mt-1 text-sm text-black/60">
+            {subtitle}
+          </p>
+        ) : null}
       </div>
       {children}
     </section>
@@ -278,6 +285,15 @@ export default async function MegaEvolutionDetailPage({ params }: MegaEvolutionD
     megaAbilityDetail?.shortEffect ??
     megaAbilityDetail?.effect ??
     `${entry.ability} is the active ability for this mega form.`;
+  const megaFavorite = {
+    entityType: "mega" as const,
+    entityId: entry.slug,
+    title: entry.megaName,
+    href: `/mega-evolutions/${entry.slug}`,
+    imageUrl: entry.imageSrc,
+    subtitle: `${entry.debutGeneration} (${entry.region})`,
+    tags: ["mega", ...entry.types.map((type) => type.toLowerCase())]
+  };
 
   const detailSchema = {
     "@context": "https://schema.org",
@@ -289,58 +305,98 @@ export default async function MegaEvolutionDetailPage({ params }: MegaEvolutionD
   };
 
   const leftPanel = (
-    <article className="mega-full-column relative z-10 space-y-4">
-      <div className="flex flex-wrap gap-2">
+    <article className="pokemon-full-data-left mega-full-column mega-full-data-left relative z-10 space-y-4">
+      <div className="pokemon-full-data-toolbar mega-full-data-toolbar flex flex-wrap gap-2">
         <Link
           href="/mega-evolutions"
-          className="pixel-font inline-flex rounded-lg border border-black/30 bg-black/10 px-3 py-2 text-[10px] uppercase tracking-wide transition hover:bg-black/15"
+          className="pokemon-full-data-back mega-full-data-back pixel-font inline-flex rounded-lg border border-black/30 bg-black/10 px-3 py-2 text-[10px] uppercase tracking-wide transition hover:bg-black/15"
         >
-          Back to mega index
+          Back to index
         </Link>
       </div>
 
-      <DetailSection title="Mega Profile" subtitle={`${entry.debutGeneration} | ${entry.baseSpecies}`}>
-        <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
-            <p className="pixel-font text-[10px] uppercase tracking-wide text-black/65">
-              Mega Dex #{entry.dexNumber}
-            </p>
-            <h1 className="pixel-font mt-1 text-[15px] uppercase tracking-wide text-black/90">
-              {entry.megaName}
-            </h1>
-            <p className="mt-1 text-sm text-black/70">{entry.battleRole}</p>
-            <p className="mt-1 text-xs text-black/65">Region: {entry.region}</p>
+      <DetailSection
+        title="Data Terminal"
+        subtitle={`${entry.debutGeneration} | ${entry.baseSpecies}`}
+        className="pokemon-full-data-section-profile mega-full-data-section-profile"
+      >
+        <div className="pokemon-full-data-hero mega-full-data-hero">
+          <div className="pokemon-full-data-hero-visual mega-full-data-hero-visual">
+            <div className="pokemon-full-data-sprite-toggle mega-full-art-shell mega-full-data-art-shell rounded-2xl border border-black/20 bg-white/45 p-3">
+              <div className="pokemon-sprite-toggle-stage mega-full-data-art-stage relative mx-auto h-[320px] w-full max-w-[420px]">
+                <Image
+                  src={entry.imageSrc}
+                  alt={entry.imageAlt}
+                  fill
+                  sizes="(min-width: 1024px) 420px, 88vw"
+                  className="mega-full-art object-contain drop-shadow-[0_12px_26px_rgba(0,0,0,0.35)]"
+                  priority
+                />
+              </div>
+            </div>
           </div>
-          <div className="flex flex-wrap gap-1.5">
-            {entry.types.map((type) => (
-              <TypeBadge key={`mega-type-${type}`} type={type} />
-            ))}
+
+          <div className="pokemon-full-data-hero-summary mega-full-data-hero-summary">
+            <div className="pokemon-full-data-hero-copy mega-full-data-hero-copy">
+              <p className="pokemon-full-data-dex mega-full-data-dex pixel-font text-[10px] uppercase tracking-wide text-black/65">
+                Mega Dex #{entry.dexNumber}
+              </p>
+              <h1 className="pokemon-full-data-name mega-full-data-name pixel-font mt-1 text-[15px] uppercase tracking-wide text-black/90">
+                {entry.megaName}
+              </h1>
+              <p className="pokemon-full-data-genus mega-full-data-genus mt-1 text-sm text-black/70">
+                {entry.battleRole}
+              </p>
+              <p className="pokemon-full-data-alt-name mega-full-data-alt mt-1 text-xs text-black/65">
+                {entry.baseSpecies} | {entry.region}
+              </p>
+            </div>
+
+            <div className="pokemon-full-data-badges mega-full-data-badges flex flex-wrap gap-1.5">
+              <FavoriteStarButton favorite={megaFavorite} />
+              {entry.types.map((type) => (
+                <TypeBadge key={`mega-type-${type}`} type={type} />
+              ))}
+            </div>
           </div>
         </div>
 
-        <div className="mega-full-art-shell mt-4 rounded-2xl border border-black/20 bg-white/45 p-3">
-          <div className="relative mx-auto h-[320px] w-full max-w-[420px]">
-            <Image
-              src={entry.imageSrc}
-              alt={entry.imageAlt}
-              fill
-              sizes="(min-width: 1024px) 420px, 88vw"
-              className="mega-full-art object-contain drop-shadow-[0_12px_26px_rgba(0,0,0,0.35)]"
-              priority
-            />
-          </div>
+        <div className="pokemon-full-data-meta-grid mega-full-data-meta-grid mt-3 grid gap-2 text-sm sm:grid-cols-2">
+          <p className="pokemon-full-data-meta-card mega-full-data-meta-card rounded-lg border border-black/20 bg-white/55 px-3 py-2">
+            Base Species: <span className="font-semibold">{entry.baseSpecies}</span>
+          </p>
+          <p className="pokemon-full-data-meta-card mega-full-data-meta-card rounded-lg border border-black/20 bg-white/55 px-3 py-2">
+            Activation Item: <span className="font-semibold">{entry.activationItem}</span>
+          </p>
+          <p className="pokemon-full-data-meta-card mega-full-data-meta-card rounded-lg border border-black/20 bg-white/55 px-3 py-2">
+            Ability: <span className="font-semibold">{entry.ability}</span>
+          </p>
+          <p className="pokemon-full-data-meta-card mega-full-data-meta-card rounded-lg border border-black/20 bg-white/55 px-3 py-2">
+            BST: <span className="font-semibold">{entry.baseStatTotal}</span>
+          </p>
         </div>
       </DetailSection>
 
-      <DetailSection title="Battle Data" subtitle={`Base stat total: ${entry.baseStatTotal}`}>
+      <DetailSection
+        title="Battle Data"
+        subtitle={`Base stat total: ${entry.baseStatTotal}`}
+        className="pokemon-full-data-section-stats mega-full-data-section-stats"
+      >
         <StatChart stats={megaStats} />
       </DetailSection>
 
-      <DetailSection title="Type Weakness Calculator">
+      <DetailSection
+        title="Type Weakness Calculator"
+        className="pokemon-full-data-section-weakness mega-full-data-section-weakness"
+      >
         <PokemonTypeWeaknessGrid effectiveness={megaTypeEffectiveness} />
       </DetailSection>
 
-      <DetailSection title="3D Viewer" subtitle="Loads mega model when this form has a 3D asset.">
+      <DetailSection
+        title="3D Viewer"
+        subtitle="Loads mega model when this form has a 3D asset."
+        className="pokemon-full-data-section-model mega-full-data-section-model"
+      >
         <PokemonModelViewer
           pokemonId={entry.baseDexNumber}
           pokemonName={entry.megaName}
@@ -360,8 +416,11 @@ export default async function MegaEvolutionDetailPage({ params }: MegaEvolutionD
   );
 
   const rightPanel = (
-    <article className="mega-full-column space-y-4">
-      <DetailSection title="Mega Technical Infobox">
+    <article className="pokemon-full-data-right mega-full-column mega-full-data-right space-y-4">
+      <DetailSection
+        title="Mega Technical Infobox"
+        className="pokemon-full-data-section-tech mega-full-data-section-tech"
+      >
         <div className="grid gap-2 text-sm sm:grid-cols-2">
           <p className="rounded-lg border border-black/20 bg-white/55 px-3 py-2">
             Mega Name: <span className="font-semibold">{entry.megaName}</span>
@@ -391,7 +450,10 @@ export default async function MegaEvolutionDetailPage({ params }: MegaEvolutionD
       </DetailSection>
 
       {stoneIntel ? (
-        <DetailSection title="Mega Stone Acquisition">
+        <DetailSection
+          title="Mega Stone Acquisition"
+          className="pokemon-full-data-section-held-items mega-full-data-section-stone"
+        >
           <article className="space-y-2">
             <p className="rounded-lg border border-black/20 bg-white/55 px-3 py-2 text-sm text-black/76">
               {stoneIntel.description}
@@ -413,7 +475,10 @@ export default async function MegaEvolutionDetailPage({ params }: MegaEvolutionD
         </DetailSection>
       ) : null}
 
-      <DetailSection title="Ability Briefing">
+      <DetailSection
+        title="Ability Briefing"
+        className="pokemon-full-data-section-abilities mega-full-data-section-ability"
+      >
         <article className="rounded-xl border border-black/20 bg-white/55 p-3">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <p className="pixel-font text-[10px] uppercase tracking-wide text-black/80">
@@ -434,7 +499,10 @@ export default async function MegaEvolutionDetailPage({ params }: MegaEvolutionD
         </article>
       </DetailSection>
 
-      <DetailSection title="Stat Leadership">
+      <DetailSection
+        title="Stat Leadership"
+        className="pokemon-full-data-section-games mega-full-data-section-leadership"
+      >
         <div className="space-y-2">
           {topStats.map((stat, index) => (
             <div
@@ -453,12 +521,19 @@ export default async function MegaEvolutionDetailPage({ params }: MegaEvolutionD
         </div>
       </DetailSection>
 
-      <DetailSection title="Mega Tactical Profile" subtitle={statIdentity.title}>
+      <DetailSection
+        title="Mega Tactical Profile"
+        subtitle={statIdentity.title}
+        className="pokemon-full-data-section-lore mega-full-data-section-profiletext"
+      >
         <p className="text-sm leading-relaxed text-black/76">{entry.profileSummary}</p>
       </DetailSection>
 
       {counterpartMegas.length > 0 ? (
-        <DetailSection title="Alternate Mega Forms">
+        <DetailSection
+          title="Alternate Mega Forms"
+          className="pokemon-full-data-section-forms mega-full-data-section-counterparts"
+        >
           <div className="space-y-2">
             {counterpartMegas.map((counterpart) => (
               <Link
@@ -473,20 +548,9 @@ export default async function MegaEvolutionDetailPage({ params }: MegaEvolutionD
         </DetailSection>
       ) : null}
 
-      <DetailSection title="Navigation">
+      <DetailSection title="Navigation" className="mega-full-data-section-navigation">
         <div className="mt-2 flex flex-wrap gap-2">
-          <FavoriteStarButton
-            favorite={{
-              entityType: "mega",
-              entityId: entry.slug,
-              title: entry.megaName,
-              href: `/mega-evolutions/${entry.slug}`,
-              imageUrl: entry.imageSrc,
-              subtitle: `${entry.debutGeneration} (${entry.region})`,
-              tags: ["mega", ...entry.types.map((type) => type.toLowerCase())]
-            }}
-            showLabel
-          />
+          <FavoriteStarButton favorite={megaFavorite} showLabel />
           <Link
             href="/"
             className="gbc-nav-link rounded-md border border-black/25 bg-white/75 px-2.5 py-1 text-xs text-black/75"
@@ -516,16 +580,22 @@ export default async function MegaEvolutionDetailPage({ params }: MegaEvolutionD
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(detailSchema) }}
       />
-      <main className="pokemon-detail-page mega-full-immersive-page mx-auto min-h-screen w-full max-w-[2560px] px-2 py-5 sm:px-4 sm:py-8 lg:px-5">
+      <main className="pokemon-detail-page pokemon-full-data-page mega-full-immersive-page mega-full-data-page mx-auto min-h-screen w-full max-w-[2560px] px-2 py-5 sm:px-4 sm:py-8 lg:px-5">
         <div className="relative z-[1]">
           <PokedexFrame
-            title={`${entry.megaName} - Full Data Encyclopedia`}
+            title={`${entry.megaName} - Full Data`}
             status="success"
             leftPanel={leftPanel}
             rightPanel={rightPanel}
+            className="pokemon-full-data-frame mega-full-data-frame"
           />
         </div>
       </main>
+      <MobileDexBottomNav
+        activeKey="explore"
+        exploreHref="/mega-evolutions"
+        settingsHref="/mega-evolutions/stones"
+      />
     </>
   );
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { MobileDexBottomNav } from "@/components/MobileDexBottomNav";
 import { PokedexFrame } from "@/components/PokedexFrame";
 import { ReferencesBlock } from "@/components/wiki/ReferencesBlock";
 import { CHARACTER_WIKI_INDEX } from "@/lib/characters-encyclopedia";
@@ -18,8 +19,8 @@ export default function SourcesPage() {
   }));
 
   const leftPanel = (
-    <section className="space-y-4">
-      <section className="rounded-2xl border border-black/20 bg-white/60 p-4">
+    <section id="sources-top" className="sources-mobile-left space-y-4">
+      <section className="sources-mobile-hero rounded-2xl border border-black/20 bg-white/60 p-4">
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
           Sources
         </p>
@@ -33,6 +34,7 @@ export default function SourcesPage() {
       </section>
 
       <ReferencesBlock
+        className="sources-mobile-section"
         references={[
           {
             label: "PokeAPI",
@@ -58,6 +60,7 @@ export default function SourcesPage() {
       />
 
       <ReferencesBlock
+        className="sources-mobile-section"
         title="Character Portrait Credits"
         references={characterPortraitReferences}
       />
@@ -65,8 +68,8 @@ export default function SourcesPage() {
   );
 
   const rightPanel = (
-    <section className="space-y-4">
-      <section className="rounded-2xl border border-black/20 bg-white/60 p-4">
+    <section id="sources-links" className="sources-mobile-right space-y-4">
+      <section className="sources-mobile-section rounded-2xl border border-black/20 bg-white/60 p-4">
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
           Credits
         </p>
@@ -76,7 +79,7 @@ export default function SourcesPage() {
         </p>
       </section>
 
-      <section className="rounded-2xl border border-black/20 bg-white/60 p-4">
+      <section className="sources-mobile-section rounded-2xl border border-black/20 bg-white/60 p-4">
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
           Copyright Notice
         </p>
@@ -90,7 +93,7 @@ export default function SourcesPage() {
         </p>
       </section>
 
-      <section className="rounded-2xl border border-black/20 bg-white/60 p-4">
+      <section className="sources-mobile-section rounded-2xl border border-black/20 bg-white/60 p-4">
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
           Related
         </p>
@@ -124,12 +127,19 @@ export default function SourcesPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
-      <main className="pokemon-detail-page mx-auto min-h-screen w-full max-w-[2560px] px-2 py-5 sm:px-4 sm:py-8 lg:px-5">
+      <main className="sources-mobile-page pokemon-detail-page mx-auto min-h-screen w-full max-w-[2560px] px-2 py-5 sm:px-4 sm:py-8 lg:px-5">
         <PokedexFrame
           title="Sources & Credits"
           status="success"
           leftPanel={leftPanel}
           rightPanel={rightPanel}
+          className="sources-mobile-frame"
+        />
+        <MobileDexBottomNav
+          activeKey="explore"
+          exploreHref="/sources#sources-top"
+          settingsHref="/sources#sources-links"
+          className="sources-mobile-bottom-nav"
         />
       </main>
     </>

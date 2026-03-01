@@ -27,9 +27,9 @@ function MegaEvolutionGridComponent({
   const enableCardEntranceMotion = entries.length <= 36 && !useViewportCulling;
 
   return (
-    <div className="rounded-2xl border border-black/25 bg-black/[0.06] p-3">
+    <div className="mega-grid-panel rounded-2xl border border-black/25 bg-black/[0.06] p-3">
       {entries.length > 0 ? (
-        <div className="grid gap-3 sm:gap-3.5 [grid-template-columns:repeat(auto-fit,minmax(min(100%,236px),1fr))]">
+        <div className="mega-grid-lattice grid gap-3 sm:gap-3.5 [grid-template-columns:repeat(auto-fit,minmax(min(100%,236px),1fr))]">
           {entries.map((entry, index) => {
             const cardContent = (
               <MegaEvolutionCard

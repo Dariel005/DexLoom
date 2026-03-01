@@ -16,8 +16,8 @@ export function ExplorerEmptyState({
     className
 }: ExplorerEmptyStateProps) {
     return (
-        <div className={cn("flex min-h-[300px] items-center justify-center", className)}>
-            <p className="rounded-lg border border-dashed border-black/25 bg-white/75 px-4 py-3 text-sm text-black/65">
+        <div className={cn("explorer-empty-state flex min-h-[300px] items-center justify-center", className)}>
+            <p className="explorer-empty-state-copy rounded-lg border border-dashed border-black/25 bg-white/75 px-4 py-3 text-sm text-black/65">
                 {message}
             </p>
         </div>

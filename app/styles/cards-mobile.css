@@ -1,0 +1,553 @@
+@media (max-width: 767px) {
+  .cards-mobile-page {
+    padding:
+      max(0.42rem, env(safe-area-inset-top))
+      max(0.3rem, env(safe-area-inset-right))
+      calc(5.85rem + env(safe-area-inset-bottom))
+      max(0.3rem, env(safe-area-inset-left));
+  }
+
+  .cards-mobile-frame.pokedex-shell {
+    border-radius: 1.72rem;
+    padding: 0.42rem;
+    background:
+      linear-gradient(155deg, #ef6059 0%, #d33737 32%, #b41e25 100%);
+    box-shadow:
+      inset 2px 2px 0 rgba(255, 255, 255, 0.26),
+      inset -9px -12px 20px rgba(0, 0, 0, 0.24),
+      0 18px 34px rgba(0, 0, 0, 0.28);
+  }
+
+  .cards-mobile-frame > .relative {
+    gap: 0.58rem;
+  }
+
+  .cards-mobile-frame > .relative > header {
+    border-radius: 0.86rem;
+    margin: 0.14rem 0.14rem 0;
+    padding: 0.52rem 0.62rem;
+    background: rgba(0, 0, 0, 0.14);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  .cards-mobile-frame > .relative > header > div {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 0.46rem;
+  }
+
+  .cards-mobile-frame .pokedex-home-shortcut,
+  .cards-mobile-frame .explorer-trainer-name,
+  .cards-mobile-frame .pokedex-header-actions-cluster,
+  .cards-mobile-frame .pokedex-header-guest-btn-register {
+    display: none;
+  }
+
+  .cards-mobile-frame .pokedex-header-trainer-hub {
+    min-width: 0;
+    padding: 0.15rem;
+    border-radius: 0.92rem;
+  }
+
+  .cards-mobile-frame .pokedex-header-trainer-user {
+    gap: 0;
+    padding: 0;
+  }
+
+  .cards-mobile-frame .explorer-trainer-avatar {
+    width: 1.95rem;
+    height: 1.95rem;
+  }
+
+  .cards-mobile-frame .retro-screen {
+    min-height: auto;
+    border-radius: 1.08rem;
+    padding: 0.62rem 0.58rem calc(5.45rem + env(safe-area-inset-bottom));
+    background:
+      radial-gradient(circle at 22% 10%, rgba(228, 255, 206, 0.44), transparent 28%),
+      linear-gradient(180deg, rgba(155, 223, 114, 0.96), rgba(104, 170, 82, 0.96));
+    box-shadow:
+      inset 0 1px 0 rgba(237, 255, 221, 0.48),
+      inset 0 -1px 0 rgba(34, 73, 26, 0.36),
+      0 10px 20px rgba(47, 88, 39, 0.12);
+  }
+
+  .cards-mobile-frame .metal-plate {
+    display: none;
+  }
+
+  .cards-mobile-frame .scan-overlay {
+    opacity: 0.34;
+  }
+
+  .cards-explorer-left {
+    gap: 0.86rem;
+  }
+
+  .cards-filter-console {
+    border-radius: 1rem;
+    padding: 0.66rem;
+    background:
+      linear-gradient(180deg, rgba(218, 240, 255, 0.42), rgba(139, 194, 237, 0.22)),
+      repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.075) 0, rgba(255, 255, 255, 0.075) 1px, transparent 1px, transparent 5px),
+      linear-gradient(180deg, rgba(99, 157, 210, 0.72), rgba(86, 148, 207, 0.64));
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.4),
+      inset 0 -1px 0 rgba(53, 99, 146, 0.35),
+      0 10px 18px rgba(0, 0, 0, 0.08);
+  }
+
+  .cards-filter-console-head {
+    margin-bottom: 0.15rem;
+  }
+
+  .cards-filter-console-badge,
+  .cards-filter-console-copy,
+  .cards-filter-chip-row {
+    display: none;
+  }
+
+  .cards-filter-console-title,
+  .cards-catalog-title {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    color: rgba(20, 27, 33, 0.82);
+  }
+
+  .cards-filter-search-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.52rem;
+  }
+
+  .cards-filter-search-row .search-deck-field {
+    min-height: 2.8rem;
+    border-radius: 1.12rem;
+    border-color: rgba(87, 136, 173, 0.42);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(240, 246, 248, 0.88));
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.92),
+      inset 0 -1px 0 rgba(92, 130, 170, 0.2),
+      0 4px 12px rgba(32, 67, 109, 0.12);
+  }
+
+  .cards-filter-search-row .search-deck-input {
+    padding-block: 0.68rem;
+    font-size: 0.88rem;
+  }
+
+  .cards-mobile-filter-toggle {
+    min-width: 6rem;
+    min-height: 2.66rem;
+    border-radius: 0.82rem;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.72),
+      inset 0 -1px 0 rgba(112, 90, 44, 0.28),
+      0 2px 8px rgba(47, 67, 78, 0.14);
+  }
+
+  .cards-mobile-filter-toggle-active {
+    background:
+      linear-gradient(180deg, rgba(249, 242, 208, 0.96), rgba(222, 203, 146, 0.92));
+    border-color: rgba(116, 90, 37, 0.4);
+  }
+
+  .cards-mobile-quick-filter-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.42rem;
+  }
+
+  .cards-mobile-quick-filter {
+    display: inline-flex;
+    min-width: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 0.34rem;
+    min-height: 2rem;
+    border-radius: 0.72rem;
+    border: 1px solid rgba(80, 112, 95, 0.22);
+    padding: 0.4rem 0.45rem;
+    background:
+      linear-gradient(180deg, rgba(254, 255, 252, 0.96), rgba(228, 233, 224, 0.9));
+    color: rgba(22, 27, 22, 0.82);
+    font-size: 7px;
+    letter-spacing: 0.08em;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.78),
+      inset 0 -1px 0 rgba(117, 125, 119, 0.18),
+      0 2px 8px rgba(31, 56, 67, 0.08);
+  }
+
+  .cards-mobile-quick-filter-glyph {
+    display: inline-flex;
+    min-width: 1.02rem;
+    height: 0.94rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.38rem;
+    border: 1px solid rgba(0, 0, 0, 0.18);
+    background: linear-gradient(180deg, rgba(211, 220, 234, 0.96), rgba(181, 191, 205, 0.92));
+    color: rgba(65, 77, 94, 0.86);
+    font-size: 6px;
+    line-height: 1;
+  }
+
+  .cards-mobile-quick-filter-active {
+    border-color: rgba(214, 93, 139, 0.38);
+    background:
+      linear-gradient(180deg, rgba(255, 244, 250, 0.96), rgba(247, 213, 233, 0.9));
+    color: rgba(116, 31, 75, 0.9);
+  }
+
+  .cards-mobile-quick-filter-active .cards-mobile-quick-filter-glyph {
+    background: linear-gradient(180deg, rgba(255, 191, 227, 0.96), rgba(220, 111, 174, 0.92));
+    color: rgba(88, 17, 54, 0.92);
+  }
+
+  .cards-filter-drawer {
+    display: none;
+  }
+
+  .cards-filter-drawer-open {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .cards-sort-box,
+  .cards-supertype-box,
+  .cards-type-box {
+    border-radius: 0.82rem;
+    background: rgba(255, 255, 255, 0.76);
+  }
+
+  .cards-filter-drawer select,
+  .cards-filter-drawer button {
+    min-height: 2.3rem;
+    border-radius: 0.72rem;
+  }
+
+  .cards-catalog-panel {
+    border-radius: 1rem;
+    padding: 0.66rem;
+    background:
+      linear-gradient(180deg, rgba(249, 252, 245, 0.84), rgba(227, 236, 219, 0.72));
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.82),
+      0 8px 18px rgba(36, 71, 29, 0.08);
+  }
+
+  .cards-catalog-scroll {
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding-right: 0 !important;
+  }
+
+  .cards-catalog-grid {
+    gap: 0.52rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+  }
+
+  .cards-catalog-grid > * {
+    min-width: 0;
+  }
+
+  .cards-mobile-card {
+    min-height: 0 !important;
+    aspect-ratio: 0.72;
+    border-radius: 0.86rem;
+    padding: 0.42rem 0.36rem 0.46rem !important;
+    background:
+      linear-gradient(180deg, rgba(249, 251, 245, 0.98), rgba(229, 235, 224, 0.94));
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.86),
+      inset 0 -1px 0 rgba(101, 122, 92, 0.16),
+      0 4px 10px rgba(0, 0, 0, 0.08);
+  }
+
+  .cards-mobile-card-hit-area {
+    display: flex;
+    min-height: 0;
+    flex: 1 1 auto;
+    flex-direction: column;
+  }
+
+  .cards-mobile-card-head {
+    gap: 0.18rem;
+  }
+
+  .cards-mobile-card-copy {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  .cards-mobile-card .pokemon-card-index {
+    font-size: 6.3px;
+    line-height: 1;
+  }
+
+  .cards-mobile-card .pokemon-card-name,
+  .cards-mobile-card .pokemon-card-generation,
+  .cards-mobile-card-favorite-wrap,
+  .cards-mobile-card-types {
+    display: none !important;
+  }
+
+  .cards-mobile-card-content {
+    margin-top: 0.14rem;
+    display: block;
+    flex: 1 1 auto;
+  }
+
+  .cards-mobile-card-art-shell {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 0.72;
+    border-radius: 0.72rem;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.88), rgba(237, 242, 233, 0.68));
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.92),
+      inset 0 -1px 0 rgba(95, 105, 93, 0.16);
+  }
+
+  .cards-mobile-card-art-shell img {
+    padding: 0.34rem !important;
+    object-fit: contain;
+  }
+
+  .cards-mobile-card-meta-row {
+    display: flex;
+    min-height: 2rem;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.35rem;
+  }
+
+  .cards-mobile-card-name {
+    min-width: 0;
+    flex: 1 1 auto;
+    font-size: 7.4px;
+    line-height: 1.08;
+    letter-spacing: 0.04em;
+    color: rgba(20, 20, 20, 0.92);
+  }
+
+  .cards-mobile-card-rarity {
+    flex-shrink: 0;
+    font-size: 5.6px;
+    line-height: 1.08;
+    letter-spacing: 0.08em;
+    text-align: right;
+    color: rgba(54, 71, 88, 0.72);
+  }
+
+  .cards-pagination {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.58rem;
+  }
+
+  .cards-pagination-state {
+    display: none;
+  }
+
+  .cards-pagination-btn {
+    min-height: 2.4rem;
+    justify-content: center;
+    border-radius: 0.86rem;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(231, 236, 227, 0.88));
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.86),
+      inset 0 -1px 0 rgba(99, 105, 95, 0.18),
+      0 4px 10px rgba(0, 0, 0, 0.08);
+  }
+
+  .cards-mobile-terminal-frame {
+    border-radius: 1.72rem;
+  }
+
+  .cards-mobile-terminal-frame .home-mobile-terminal-title {
+    max-width: 9.5rem;
+    font-size: 7.6px;
+    line-height: 1.15;
+    text-align: center;
+  }
+
+  .cards-mobile-terminal-screen {
+    margin: 0.56rem;
+    border-radius: 1rem;
+    padding: 0.44rem;
+    background:
+      radial-gradient(circle at 18% 12%, rgba(228, 255, 206, 0.42), transparent 30%),
+      linear-gradient(180deg, rgba(191, 233, 168, 0.94), rgba(141, 200, 112, 0.94));
+  }
+
+  .cards-mobile-detail-toolbar {
+    margin-bottom: 0.38rem;
+  }
+
+  .cards-mobile-back {
+    display: inline-flex;
+    min-height: 2rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.76rem;
+    border: 1px solid rgba(0, 0, 0, 0.22);
+    padding: 0.42rem 0.8rem;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(228, 234, 224, 0.88));
+    color: rgba(27, 30, 24, 0.86);
+    font-size: 8px;
+    letter-spacing: 0.08em;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.86),
+      inset 0 -1px 0 rgba(100, 107, 94, 0.18),
+      0 4px 10px rgba(0, 0, 0, 0.08);
+  }
+
+  .cards-mobile-terminal-screen .cards-detail-panel {
+    min-height: 0;
+    border-radius: 0.92rem;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .cards-mobile-terminal-screen .cards-detail-panel-title,
+  .cards-mobile-terminal-screen .cards-detail-chip-row,
+  .cards-mobile-terminal-screen .cards-detail-hero-copy,
+  .cards-mobile-terminal-screen .cards-detail-fact-stack {
+    display: none;
+  }
+
+  .cards-mobile-terminal-screen .cards-detail-scroll {
+    max-height: calc(100svh - 15.5rem);
+    overflow-y: auto;
+    padding-right: 0.15rem;
+  }
+
+  .cards-mobile-terminal-screen .cards-detail-stack {
+    gap: 0.5rem;
+  }
+
+  .cards-mobile-terminal-screen .cards-detail-hero,
+  .cards-mobile-terminal-screen .cards-detail-stack section {
+    border-radius: 0.92rem;
+    padding: 0.58rem !important;
+    background:
+      linear-gradient(180deg, rgba(246, 251, 241, 0.88), rgba(225, 236, 216, 0.76));
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.82),
+      inset 0 -1px 0 rgba(99, 116, 89, 0.12);
+  }
+
+  .cards-mobile-terminal-screen .cards-detail-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 0.52rem;
+    margin-top: 0;
+  }
+
+  .cards-mobile-terminal-screen .cards-detail-art-card {
+    min-height: 19rem;
+    border-radius: 0.92rem;
+    background:
+      radial-gradient(circle at 50% 28%, rgba(189, 232, 167, 0.42), transparent 38%),
+      linear-gradient(180deg, rgba(226, 241, 214, 0.74), rgba(211, 229, 197, 0.58));
+  }
+
+  .cards-mobile-terminal-screen .tcg-showcase-image {
+    padding: 0.68rem !important;
+  }
+
+  .cards-mobile-terminal-screen .cards-detail-zoom-chip {
+    font-size: 8px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .cards-mobile-terminal-screen .cards-detail-snapshot-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.42rem;
+  }
+
+  .cards-mobile-terminal-screen .cards-detail-snapshot-grid > div,
+  .cards-mobile-terminal-screen .cards-detail-resistance-grid > div {
+    min-width: 0;
+    padding: 0.5rem 0.52rem;
+  }
+
+  .cards-mobile-terminal-screen .cards-detail-snapshot-grid p:last-child,
+  .cards-mobile-terminal-screen .cards-detail-resistance-grid p:last-child,
+  .cards-mobile-terminal-screen .cards-detail-resistance-grid span,
+  .cards-mobile-terminal-screen .cards-detail-stack .text-sm {
+    font-size: 0.78rem;
+    line-height: 1.25;
+  }
+
+  .cards-mobile-terminal-screen .cards-detail-resistance-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.42rem;
+  }
+
+  .cards-mobile-terminal-screen .cards-detail-stack table {
+    font-size: 0.72rem;
+  }
+
+  .cards-mobile-terminal-screen .cards-detail-stack th,
+  .cards-mobile-terminal-screen .cards-detail-stack td {
+    padding: 0.42rem 0.5rem;
+    vertical-align: top;
+  }
+
+  .cards-mobile-terminal-screen .cards-detail-stack ul.space-y-1\.5 {
+    gap: 0.4rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .cards-mobile-quick-filter-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .cards-catalog-grid {
+    gap: 0.44rem;
+  }
+
+  .cards-mobile-card {
+    aspect-ratio: 0.69;
+    padding: 0.38rem 0.32rem 0.42rem !important;
+  }
+
+  .cards-mobile-card-name {
+    font-size: 6.8px;
+  }
+
+  .cards-mobile-card-rarity {
+    font-size: 5.2px;
+  }
+
+  .cards-mobile-terminal-screen {
+    margin: 0.48rem;
+    padding: 0.36rem;
+  }
+
+  .cards-mobile-terminal-screen .cards-detail-art-card {
+    min-height: 17.2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cards-mobile-terminal-overlay,
+  .cards-mobile-quick-filter,
+  .cards-mobile-filter-toggle {
+    transition: none !important;
+  }
+}

@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import type { ChangeEvent, JSX } from "react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import dynamic from "next/dynamic";
+import { MobileDexBottomNav } from "@/components/MobileDexBottomNav";
 import { PokedexFrame } from "@/components/PokedexFrame";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { useDevicePerformanceTier } from "@/hooks/useDevicePerformanceTier";
@@ -61,6 +62,8 @@ const CharacterIndexSection = dynamic(
 
 export function CharactersDirectoryClient(): JSX.Element {
   const playUiTone = useUiTone();
+  const heroRef = useRef<HTMLElement | null>(null);
+  const indexRef = useRef<HTMLElement | null>(null);
   const favorites = useUserFavorites();
   const performanceTier = useDevicePerformanceTier();
   const directoryQuery = useQuery(charactersDirectoryQueryOptions());
@@ -80,6 +83,24 @@ export function CharactersDirectoryClient(): JSX.Element {
     playUiTone("switch");
     setSearchInput("");
   }, [playUiTone]);
+
+  const scrollToElement = useCallback((element: HTMLElement | null) => {
+    if (!element) {
+      return;
+    }
+
+    element.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
+
+  const handleMobileExplore = useCallback(() => {
+    playUiTone("switch");
+    scrollToElement(indexRef.current);
+  }, [playUiTone, scrollToElement]);
+
+  const handleMobileSettings = useCallback(() => {
+    playUiTone("switch");
+    scrollToElement(heroRef.current);
+  }, [playUiTone, scrollToElement]);
 
   useEffect(() => {
     if (!didMountSearchRef.current) {
@@ -187,12 +208,17 @@ export function CharactersDirectoryClient(): JSX.Element {
   const leftPanel = (
     <section
       className={cn(
-        "space-y-4",
+        "characters-mobile-left space-y-4",
         characterFxTier === "balanced" && "character-fx-balanced",
         characterFxTier === "lite" && "character-fx-lite"
       )}
     >
-      <section className="relative overflow-hidden rounded-2xl border border-black/20 bg-[linear-gradient(155deg,rgba(246,252,247,0.92),rgba(218,234,223,0.86))] p-4 shadow-[0_10px_22px_rgba(26,40,30,0.1)]">
+      <section
+        ref={heroRef}
+        className={cn(
+          "characters-mobile-hero relative overflow-hidden rounded-2xl border border-black/20 bg-[linear-gradient(155deg,rgba(246,252,247,0.92),rgba(218,234,223,0.86))] p-4 shadow-[0_10px_22px_rgba(26,40,30,0.1)]"
+        )}
+      >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.5),transparent_54%)]" />
         <div className="absolute -right-16 -top-16 h-44 w-44 rounded-full bg-[radial-gradient(circle,rgba(139,205,162,0.22),transparent_70%)]" />
         <div className="relative space-y-3.5">
@@ -257,7 +283,10 @@ export function CharactersDirectoryClient(): JSX.Element {
         </div>
       </section>
 
-      <section className="rounded-2xl border border-black/20 bg-white/60 p-3">
+      <section
+        ref={indexRef}
+        className="characters-mobile-index rounded-2xl border border-black/20 bg-white/60 p-3"
+      >
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
           Character Index
         </p>
@@ -272,11 +301,18 @@ export function CharactersDirectoryClient(): JSX.Element {
   );
 
   return (
-    <main className="pokemon-detail-page mx-auto min-h-screen w-full max-w-[2560px] px-2 py-5 sm:px-4 sm:py-8 lg:px-5">
+    <main className="characters-mobile-page pokemon-detail-page mx-auto min-h-screen w-full max-w-[2560px] px-2 py-5 sm:px-4 sm:py-8 lg:px-5">
       <PokedexFrame
         title="Pokemon Characters Encyclopedia"
         status={directoryQuery.isError ? "error" : directoryQuery.isLoading ? "loading" : "success"}
         leftPanel={leftPanel}
+        className="characters-mobile-frame"
+      />
+      <MobileDexBottomNav
+        activeKey="explore"
+        onExplore={handleMobileExplore}
+        onSettings={handleMobileSettings}
+        className="characters-mobile-bottom-nav"
       />
     </main>
   );

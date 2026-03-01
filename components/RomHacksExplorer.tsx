@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { type CSSProperties, useEffect, useMemo, useState } from "react";
+import { type CSSProperties, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { MobileDexBottomNav } from "@/components/MobileDexBottomNav";
 import { PokedexFrame } from "@/components/PokedexFrame";
 import { SectionModuleNav } from "@/components/SectionModuleNav";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
@@ -207,6 +208,8 @@ function rankRomHackEntry(searchable: SearchableRomHackEntry, query: string, tok
 }
 
 export function RomHacksExplorer() {
+  const controlsRef = useRef<HTMLElement | null>(null);
+  const indexRef = useRef<HTMLElement | null>(null);
   const [searchInput, setSearchInput] = useState("");
   const debouncedSearch = useDebouncedValue(searchInput, 160);
   const playableCount = ROM_HACKS_CATALOG.filter((entry) => entry.status === "Playable").length;
@@ -277,9 +280,28 @@ export function RomHacksExplorer() {
     setActivePage(1);
   }, [normalizedSearch]);
 
+  const scrollToElement = useCallback((element: HTMLElement | null) => {
+    if (!element) {
+      return;
+    }
+
+    element.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
+
+  const handleMobileExplore = useCallback(() => {
+    scrollToElement(indexRef.current);
+  }, [scrollToElement]);
+
+  const handleMobileSettings = useCallback(() => {
+    scrollToElement(controlsRef.current);
+  }, [scrollToElement]);
+
   const leftPanel = (
-    <section className="space-y-4">
-      <section className="rounded-2xl border border-black/20 bg-[radial-gradient(circle_at_10%_6%,rgba(255,255,255,0.58),transparent_38%),linear-gradient(158deg,rgba(255,255,255,0.82),rgba(222,238,227,0.74))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.84),0_10px_20px_rgba(0,0,0,0.08)]">
+    <section className="rom-hacks-mobile-left space-y-4">
+      <section
+        ref={controlsRef}
+        className="rom-hacks-mobile-hero rounded-2xl border border-black/20 bg-[radial-gradient(circle_at_10%_6%,rgba(255,255,255,0.58),transparent_38%),linear-gradient(158deg,rgba(255,255,255,0.82),rgba(222,238,227,0.74))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.84),0_10px_20px_rgba(0,0,0,0.08)]"
+      >
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/68">Community Projects</p>
         <h1 className="pixel-font mt-2 text-[14px] uppercase tracking-[0.12em] text-black/86">
           Pokemon ROM Hacks
@@ -307,7 +329,10 @@ export function RomHacksExplorer() {
         </p>
       </section>
 
-      <section className="rounded-2xl border border-black/20 bg-[linear-gradient(160deg,rgba(255,255,255,0.8),rgba(223,236,229,0.72))] p-4">
+      <section
+        ref={indexRef}
+        className="rom-hacks-mobile-index rounded-2xl border border-black/20 bg-[linear-gradient(160deg,rgba(255,255,255,0.8),rgba(223,236,229,0.72))] p-4"
+      >
         <div className="flex flex-wrap items-end justify-between gap-2">
           <div>
             <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">ROM Hack Index</p>
@@ -493,9 +518,24 @@ export function RomHacksExplorer() {
         </div>
       </section>
 
-      <SectionModuleNav />
+      <SectionModuleNav className="rom-hacks-mobile-nav" />
     </section>
   );
 
-  return <PokedexFrame title="Pokemon ROM Hacks" status="success" leftPanel={leftPanel} />;
+  return (
+    <div className="rom-hacks-mobile-page">
+      <PokedexFrame
+        title="Pokemon ROM Hacks"
+        status="success"
+        leftPanel={leftPanel}
+        className="rom-hacks-mobile-frame"
+      />
+      <MobileDexBottomNav
+        activeKey="explore"
+        onExplore={handleMobileExplore}
+        onSettings={handleMobileSettings}
+        className="rom-hacks-mobile-bottom-nav"
+      />
+    </div>
+  );
 }

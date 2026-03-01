@@ -1,0 +1,344 @@
+@media (max-width: 767px) {
+  .go-mobile-page,
+  .rom-hacks-mobile-page,
+  .mechanics-mobile-page,
+  .tools-mobile-page {
+    padding:
+      max(0.42rem, env(safe-area-inset-top))
+      max(0.3rem, env(safe-area-inset-right))
+      calc(5.8rem + env(safe-area-inset-bottom))
+      max(0.3rem, env(safe-area-inset-left));
+  }
+
+  .go-mobile-frame.pokedex-shell,
+  .rom-hacks-mobile-frame.pokedex-shell,
+  .mechanics-mobile-frame.pokedex-shell,
+  .tools-mobile-frame.pokedex-shell {
+    border-radius: 1.72rem;
+    padding: 0.42rem;
+    background:
+      linear-gradient(155deg, #ef6059 0%, #d33737 32%, #b41e25 100%);
+    box-shadow:
+      inset 2px 2px 0 rgba(255, 255, 255, 0.26),
+      inset -9px -12px 20px rgba(0, 0, 0, 0.24),
+      0 18px 34px rgba(0, 0, 0, 0.28);
+  }
+
+  .go-mobile-frame .pokedex-home-shortcut,
+  .go-mobile-frame .pokedex-header-actions-cluster,
+  .go-mobile-frame .explorer-trainer-name,
+  .go-mobile-frame .pokedex-header-guest-btn-register,
+  .rom-hacks-mobile-frame .pokedex-home-shortcut,
+  .rom-hacks-mobile-frame .pokedex-header-actions-cluster,
+  .rom-hacks-mobile-frame .explorer-trainer-name,
+  .rom-hacks-mobile-frame .pokedex-header-guest-btn-register,
+  .mechanics-mobile-frame .pokedex-home-shortcut,
+  .mechanics-mobile-frame .pokedex-header-actions-cluster,
+  .mechanics-mobile-frame .explorer-trainer-name,
+  .mechanics-mobile-frame .pokedex-header-guest-btn-register,
+  .tools-mobile-frame .pokedex-home-shortcut,
+  .tools-mobile-frame .pokedex-header-actions-cluster,
+  .tools-mobile-frame .explorer-trainer-name,
+  .tools-mobile-frame .pokedex-header-guest-btn-register {
+    display: none;
+  }
+
+  .go-mobile-frame > .relative,
+  .rom-hacks-mobile-frame > .relative,
+  .mechanics-mobile-frame > .relative,
+  .tools-mobile-frame > .relative {
+    gap: 0.58rem;
+  }
+
+  .go-mobile-frame > .relative > header,
+  .rom-hacks-mobile-frame > .relative > header,
+  .mechanics-mobile-frame > .relative > header,
+  .tools-mobile-frame > .relative > header {
+    border-radius: 0.86rem;
+    margin: 0.14rem 0.14rem 0;
+    padding: 0.52rem 0.62rem;
+    background: rgba(0, 0, 0, 0.14);
+  }
+
+  .go-mobile-frame > .relative > header > div,
+  .rom-hacks-mobile-frame > .relative > header > div,
+  .mechanics-mobile-frame > .relative > header > div,
+  .tools-mobile-frame > .relative > header > div {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 0.46rem;
+  }
+
+  .go-mobile-frame .pokedex-header-trainer-hub,
+  .rom-hacks-mobile-frame .pokedex-header-trainer-hub,
+  .mechanics-mobile-frame .pokedex-header-trainer-hub,
+  .tools-mobile-frame .pokedex-header-trainer-hub {
+    min-width: 0;
+    padding: 0.15rem;
+    border-radius: 0.92rem;
+  }
+
+  .go-mobile-frame .pokedex-header-trainer-user,
+  .rom-hacks-mobile-frame .pokedex-header-trainer-user,
+  .mechanics-mobile-frame .pokedex-header-trainer-user,
+  .tools-mobile-frame .pokedex-header-trainer-user {
+    gap: 0;
+    padding: 0;
+  }
+
+  .go-mobile-frame .explorer-trainer-avatar,
+  .rom-hacks-mobile-frame .explorer-trainer-avatar,
+  .mechanics-mobile-frame .explorer-trainer-avatar,
+  .tools-mobile-frame .explorer-trainer-avatar {
+    width: 1.95rem;
+    height: 1.95rem;
+  }
+
+  .go-mobile-frame .retro-screen,
+  .go-mobile-frame .metal-plate,
+  .rom-hacks-mobile-frame .retro-screen,
+  .rom-hacks-mobile-frame .metal-plate,
+  .mechanics-mobile-frame .retro-screen,
+  .mechanics-mobile-frame .metal-plate,
+  .tools-mobile-frame .retro-screen,
+  .tools-mobile-frame .metal-plate {
+    min-height: auto;
+    border-radius: 1.08rem;
+    padding: 0.52rem;
+    background:
+      radial-gradient(circle at 22% 10%, rgba(228, 255, 206, 0.44), transparent 28%),
+      linear-gradient(180deg, rgba(155, 223, 114, 0.96), rgba(104, 170, 82, 0.96));
+    box-shadow:
+      inset 0 1px 0 rgba(237, 255, 221, 0.48),
+      inset 0 -1px 0 rgba(34, 73, 26, 0.36),
+      0 10px 20px rgba(47, 88, 39, 0.12);
+  }
+
+  .go-mobile-left,
+  .go-mobile-right,
+  .rom-hacks-mobile-left,
+  .mechanics-mobile-left,
+  .mechanics-mobile-right,
+  .tools-mobile-left,
+  .tools-mobile-right {
+    gap: 0.68rem;
+  }
+
+  .go-mobile-controls,
+  .go-mobile-catalog,
+  .go-mobile-detail-shell,
+  .rom-hacks-mobile-hero,
+  .rom-hacks-mobile-index,
+  .mechanics-mobile-hero,
+  .mechanics-mobile-left > section,
+  .mechanics-mobile-right > section,
+  .tools-mobile-hero,
+  .tools-mobile-preview-board,
+  .tools-mobile-right .tools-rail-section,
+  .tools-mobile-workspace > section {
+    border-radius: 0.98rem;
+    padding: 0.68rem !important;
+    background:
+      linear-gradient(180deg, rgba(251, 255, 247, 0.76), rgba(227, 240, 219, 0.62));
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.55),
+      inset 0 -1px 0 rgba(68, 92, 55, 0.08),
+      0 6px 18px rgba(41, 67, 32, 0.08);
+  }
+
+  .go-mobile-controls .search-deck-field,
+  .rom-hacks-mobile-index .search-deck-field {
+    min-height: 2.72rem;
+    border-radius: 1.04rem;
+  }
+
+  .go-mobile-controls .go-control-field {
+    min-height: 2.5rem;
+    font-size: 0.76rem;
+  }
+
+  .go-mobile-catalog-list {
+    height: 42vh !important;
+    min-height: 15rem !important;
+    max-height: 28rem !important;
+  }
+
+  .go-mobile-catalog .go-mobile-card,
+  .go-mobile-catalog .go-mobile-item-card {
+    border-radius: 0.92rem;
+    padding: 0.56rem !important;
+  }
+
+  .go-mobile-catalog .go-mobile-card .relative.h-\[70px\].w-\[70px\] {
+    width: 3.35rem !important;
+    height: 3.35rem !important;
+  }
+
+  .go-mobile-catalog .go-mobile-card .pixel-font {
+    letter-spacing: 0.08em;
+  }
+
+  .go-mobile-detail-shell {
+    min-height: auto !important;
+  }
+
+  .go-mobile-detail-scroll {
+    max-height: none !important;
+    overflow: visible !important;
+    padding-right: 0 !important;
+  }
+
+  .go-mobile-hero-surface {
+    padding: 0.68rem !important;
+  }
+
+  .go-mobile-hero-surface .mt-4.grid,
+  .go-mobile-detail-shell .lg\:grid-cols-2,
+  .go-mobile-detail-shell .lg\:grid-cols-\[170px_1fr\] {
+    grid-template-columns: 1fr;
+  }
+
+  .go-mobile-detail-shell .go-featured-card {
+    padding: 0.6rem;
+  }
+
+  .go-mobile-detail-shell .go-featured-art {
+    width: 3.5rem !important;
+    height: 3.5rem !important;
+  }
+
+  .rom-hacks-mobile-index > .mt-3.rounded-2xl,
+  .rom-hacks-mobile-index > .mt-3.rounded-xl {
+    padding: 0.6rem;
+  }
+
+  .rom-hacks-mobile-index .grid {
+    gap: 0.65rem;
+  }
+
+  .rom-hacks-mobile-index article {
+    max-width: none !important;
+    padding: 0.72rem !important;
+    border-radius: 0.92rem;
+  }
+
+  .rom-hacks-mobile-index .aspect-\[4\/3\] {
+    aspect-ratio: 1 / 1;
+  }
+
+  .rom-hacks-mobile-nav {
+    padding: 0.56rem !important;
+  }
+
+  .rom-hacks-mobile-nav .explorer-nav-btn {
+    flex: 1 1 calc(50% - 0.3rem);
+    min-width: 0;
+    justify-content: center;
+    min-height: 2.35rem;
+    padding-inline: 0.7rem;
+  }
+
+  .mechanics-mobile-left .pixel-font,
+  .mechanics-mobile-right .pixel-font,
+  .tools-mobile-left .pixel-font,
+  .tools-mobile-right .pixel-font,
+  .rom-hacks-mobile-left .pixel-font,
+  .go-mobile-left .pixel-font,
+  .go-mobile-right .pixel-font {
+    letter-spacing: 0.08em;
+  }
+
+  .mechanics-mobile-right .mt-2.grid,
+  .tools-mobile-preview-board .mt-3.grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mechanics-mobile-right .mt-2.grid button,
+  .mechanics-mobile-right .mt-2.grid a {
+    min-height: 2.35rem;
+  }
+
+  .tools-mobile-workspace > section,
+  .tools-mobile-workspace > div {
+    margin-top: 0.68rem;
+  }
+
+  .tools-mobile-workspace > section:first-child,
+  .tools-mobile-workspace > div:first-child {
+    margin-top: 0;
+  }
+
+  .tools-mobile-preview-card {
+    padding: 0.68rem !important;
+  }
+
+  .tools-mobile-preview-card .tools-open-link {
+    min-height: 2.2rem;
+  }
+
+  .tools-mobile-right .explorer-nav-btn,
+  .tools-mobile-right .gbc-nav-link {
+    min-height: 2.3rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .go-mobile-frame > .relative > header,
+  .rom-hacks-mobile-frame > .relative > header,
+  .mechanics-mobile-frame > .relative > header,
+  .tools-mobile-frame > .relative > header {
+    padding: 0.44rem 0.5rem;
+  }
+
+  .go-mobile-frame > .relative > header .pixel-font,
+  .rom-hacks-mobile-frame > .relative > header .pixel-font,
+  .mechanics-mobile-frame > .relative > header .pixel-font,
+  .tools-mobile-frame > .relative > header .pixel-font {
+    font-size: 9px;
+    letter-spacing: 0.08em;
+  }
+
+  .go-mobile-frame .explorer-trainer-avatar,
+  .rom-hacks-mobile-frame .explorer-trainer-avatar,
+  .mechanics-mobile-frame .explorer-trainer-avatar,
+  .tools-mobile-frame .explorer-trainer-avatar {
+    width: 1.7rem;
+    height: 1.7rem;
+  }
+
+  .go-mobile-controls,
+  .go-mobile-catalog,
+  .go-mobile-detail-shell,
+  .rom-hacks-mobile-hero,
+  .rom-hacks-mobile-index,
+  .mechanics-mobile-hero,
+  .mechanics-mobile-left > section,
+  .mechanics-mobile-right > section,
+  .tools-mobile-hero,
+  .tools-mobile-preview-board,
+  .tools-mobile-right .tools-rail-section,
+  .tools-mobile-workspace > section {
+    padding: 0.56rem !important;
+  }
+
+  .go-mobile-catalog-list {
+    height: 39vh !important;
+    min-height: 14rem !important;
+  }
+
+  .rom-hacks-mobile-nav .explorer-nav-btn {
+    flex-basis: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .go-mobile-frame.pokedex-shell,
+  .rom-hacks-mobile-frame.pokedex-shell,
+  .mechanics-mobile-frame.pokedex-shell,
+  .tools-mobile-frame.pokedex-shell,
+  .go-mobile-card,
+  .go-mobile-item-card,
+  .tools-mobile-preview-card {
+    transition: none !important;
+    animation: none !important;
+  }
+}

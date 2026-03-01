@@ -10,6 +10,17 @@
 @import './styles/profile.css';
 @import './styles/favorites.css';
 @import './styles/role-badges.css';
+@import './styles/home-mobile.css';
+@import './styles/mega-mobile.css';
+@import './styles/pokemon-detail-mobile.css';
+@import './styles/account-mobile.css';
+@import './styles/cards-mobile.css';
+@import './styles/games-mobile.css';
+@import './styles/maps-mobile.css';
+@import './styles/encyclopedia-mobile.css';
+@import './styles/characters-mobile.css';
+@import './styles/systems-mobile.css';
+@import './styles/auxiliary-mobile.css';
 
 :root {
   --pokedex-red: #d9343a;

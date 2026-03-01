@@ -1,5 +1,6 @@
 "use client";
 
+import { AnimatePresence, m } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import {
@@ -12,7 +13,9 @@ import {
 } from "react";
 import { EncyclopediaDataTable } from "@/components/EncyclopediaDataTable";
 import { FavoriteStarButton } from "@/components/FavoriteStarButton";
+import { MobileDexBottomNav } from "@/components/MobileDexBottomNav";
 import { PokedexFrame } from "@/components/PokedexFrame";
+import { PokedexHeaderAccess } from "@/components/PokedexHeaderAccess";
 import { TypeBadge } from "@/components/TypeBadge";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { useUiTone } from "@/hooks/useUiTone";
@@ -257,6 +260,34 @@ function RuleCard({ value }: { value: string }) {
   );
 }
 
+function QuickFilterButton({
+  label,
+  shortCode,
+  active = false,
+  onClick,
+}: {
+  label: string;
+  shortCode: string;
+  active?: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        "cards-mobile-quick-filter pixel-font",
+        active && "cards-mobile-quick-filter-active",
+      )}
+    >
+      <span className="cards-mobile-quick-filter-glyph" aria-hidden>
+        {shortCode}
+      </span>
+      <span>{label}</span>
+    </button>
+  );
+}
+
 export function CardsExplorer() {
   const playUiTone = useUiTone();
   const [searchInput, setSearchInput] = useState("");
@@ -267,8 +298,12 @@ export function CardsExplorer() {
   const [page, setPage] = useState(1);
   const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
   const [isCardZoomOpen, setIsCardZoomOpen] = useState(false);
+  const [isMobileTerminalOpen, setIsMobileTerminalOpen] = useState(false);
+  const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState(false);
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
   const debouncedSearch = useDebouncedValue(searchInput, 120);
   const didMountSearchRef = useRef(false);
+  const detailAnchorRef = useRef<HTMLDivElement | null>(null);
 
   const catalogQuery = useQuery(pokemonCardIndexQueryOptions());
   const cardTypesQuery = useQuery(pokemonCardTypesQueryOptions());
@@ -326,6 +361,31 @@ export function CardsExplorer() {
     return Array.from(map.values()).sort((a, b) => a.localeCompare(b));
   }, [cardTypesQuery.data, cards]);
 
+  const popularTypeFilters = useMemo(() => {
+    const counts = new Map<string, { label: string; count: number }>();
+
+    for (const card of cards) {
+      for (const typeName of card.types) {
+        const key = normalize(typeName);
+        const current = counts.get(key);
+        if (current) {
+          current.count += 1;
+          continue;
+        }
+        counts.set(key, { label: typeName, count: 1 });
+      }
+    }
+
+    return Array.from(counts.values())
+      .sort((a, b) => {
+        if (a.count !== b.count) {
+          return b.count - a.count;
+        }
+        return a.label.localeCompare(b.label);
+      })
+      .slice(0, 3);
+  }, [cards]);
+
   const handleSearchInput = useCallback((value: string) => {
     setSearchInput(value);
   }, []);
@@ -376,6 +436,22 @@ export function CardsExplorer() {
       });
     },
     [playUiTone],
+  );
+
+  const handleQuickSupertypeToggle = useCallback(
+    (value: CardSupertypeFilter) => {
+      const next = supertypeFilter === value ? "all" : value;
+      handleSupertypeValue(next);
+    },
+    [handleSupertypeValue, supertypeFilter],
+  );
+
+  const handleQuickTypeToggle = useCallback(
+    (value: string) => {
+      const next = normalize(value);
+      handleTypeValue(typeFilter === next ? "all" : next);
+    },
+    [handleTypeValue, typeFilter],
   );
 
   const filteredCards = useMemo(() => {
@@ -493,6 +569,22 @@ export function CardsExplorer() {
         playUiTone(current === cardId ? "switch" : "select");
         return cardId;
       });
+
+      if (typeof window !== "undefined") {
+        if (window.innerWidth < 768) {
+          setIsMobileTerminalOpen(true);
+          return;
+        }
+
+        if (window.innerWidth < 1280) {
+          window.requestAnimationFrame(() => {
+            detailAnchorRef.current?.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          });
+        }
+      }
     },
     [playUiTone],
   );
@@ -544,6 +636,18 @@ export function CardsExplorer() {
     setIsCardZoomOpen(false);
   }, [playUiTone]);
 
+  const handleCloseMobileTerminal = useCallback(() => {
+    setIsMobileTerminalOpen(false);
+    playUiTone("switch");
+  }, [playUiTone]);
+
+  const handleToggleMobileFilters = useCallback(() => {
+    setIsMobileFiltersOpen((current) => {
+      playUiTone("switch");
+      return !current;
+    });
+  }, [playUiTone]);
+
   useEffect(() => {
     if (safePage !== page) {
       setPage(safePage);
@@ -570,6 +674,23 @@ export function CardsExplorer() {
     setIsCardZoomOpen(false);
   }, [selectedCardId]);
 
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    if (!isMobileTerminalOpen || !window.matchMedia("(max-width: 767px)").matches) {
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isMobileTerminalOpen]);
+
   const selectedCardIndex = useMemo(
     () => (selectedCardId ? (cardsById.get(selectedCardId) ?? null) : null),
     [cardsById, selectedCardId],
@@ -584,6 +705,30 @@ export function CardsExplorer() {
     }
     return null;
   }, [selectedCardQuery.data, selectedCardIndex]);
+
+  useEffect(() => {
+    if (!selectedCard) {
+      setIsMobileTerminalOpen(false);
+    }
+  }, [selectedCard]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const mediaQuery = window.matchMedia("(max-width: 767px)");
+    const syncViewport = () => {
+      setIsMobileViewport(mediaQuery.matches);
+    };
+
+    syncViewport();
+    mediaQuery.addEventListener("change", syncViewport);
+
+    return () => {
+      mediaQuery.removeEventListener("change", syncViewport);
+    };
+  }, []);
 
   useEffect(() => {
     if (!isCardZoomOpen) {
@@ -630,25 +775,25 @@ export function CardsExplorer() {
   ]);
 
   const leftPanel = (
-    <section className="space-y-4">
-      <div className="relative overflow-hidden rounded-2xl border border-black/20 bg-[radial-gradient(circle_at_9%_14%,rgba(255,255,255,0.44),transparent_28%),radial-gradient(circle_at_88%_0%,rgba(108,168,118,0.18),transparent_40%),linear-gradient(155deg,rgba(255,255,255,0.75),rgba(224,238,227,0.72))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.84),0_10px_18px_rgba(16,50,20,0.08)]">
+    <section className="cards-explorer-left space-y-4">
+      <div className="cards-filter-console relative overflow-hidden rounded-2xl border border-black/20 bg-[radial-gradient(circle_at_9%_14%,rgba(255,255,255,0.44),transparent_28%),radial-gradient(circle_at_88%_0%,rgba(108,168,118,0.18),transparent_40%),linear-gradient(155deg,rgba(255,255,255,0.75),rgba(224,238,227,0.72))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.84),0_10px_18px_rgba(16,50,20,0.08)]">
         <span className="pointer-events-none absolute inset-x-0 top-0 h-px bg-[linear-gradient(90deg,transparent,rgba(64,128,74,0.6),transparent)]" />
 
         <div className="relative">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/72">
+          <div className="cards-filter-console-head flex flex-wrap items-center justify-between gap-2">
+            <p className="cards-filter-console-title pixel-font text-[10px] uppercase tracking-[0.16em] text-black/72">
               Card Explorer
             </p>
-            <span className="pixel-font rounded-md border border-black/18 bg-white/65 px-2 py-1 text-[9px] uppercase tracking-[0.12em] text-black/58">
+            <span className="cards-filter-console-badge pixel-font rounded-md border border-black/18 bg-white/65 px-2 py-1 text-[9px] uppercase tracking-[0.12em] text-black/58">
               Deck Filters
             </span>
           </div>
 
-          <p className="mt-1 text-xs text-black/58">
+          <p className="cards-filter-console-copy mt-1 text-xs text-black/58">
             Refine the full card archive by release, class, and type.
           </p>
 
-          <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
+          <div className="cards-filter-search-row mt-3 flex flex-col gap-2 sm:flex-row sm:items-center">
             <label
               htmlFor="cards-search"
               className="search-deck-field w-full sm:flex-1"
@@ -684,7 +829,56 @@ export function CardsExplorer() {
               <span className="search-deck-gloss" aria-hidden />
             </label>
 
-            <div className="min-w-[168px] rounded-xl border border-black/20 bg-white/64 p-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.76)]">
+            <button
+              type="button"
+              onClick={handleToggleMobileFilters}
+              className={cn(
+                "cards-mobile-filter-toggle pixel-font rounded-lg border border-black/22 bg-white/80 px-4 py-2 text-[10px] uppercase tracking-[0.14em] text-black/74 md:hidden",
+                isMobileFiltersOpen && "cards-mobile-filter-toggle-active",
+              )}
+            >
+              Filters
+            </button>
+
+          </div>
+
+          <div className="cards-mobile-quick-filter-grid mt-3 md:hidden">
+            <QuickFilterButton
+              label="Pokemon"
+              shortCode="PK"
+              active={supertypeFilter === "pokemon"}
+              onClick={() => handleQuickSupertypeToggle("pokemon")}
+            />
+            <QuickFilterButton
+              label="Trainer"
+              shortCode="TR"
+              active={supertypeFilter === "trainer"}
+              onClick={() => handleQuickSupertypeToggle("trainer")}
+            />
+            <QuickFilterButton
+              label="Energy"
+              shortCode="EN"
+              active={supertypeFilter === "energy"}
+              onClick={() => handleQuickSupertypeToggle("energy")}
+            />
+            {popularTypeFilters.map((entry) => (
+              <QuickFilterButton
+                key={`cards-mobile-type-${entry.label}`}
+                label={entry.label}
+                shortCode={entry.label.slice(0, 2).toUpperCase()}
+                active={typeFilter === normalize(entry.label)}
+                onClick={() => handleQuickTypeToggle(entry.label)}
+              />
+            ))}
+          </div>
+
+          <div
+            className={cn(
+              "cards-filter-drawer mt-2 grid gap-2 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_auto]",
+              isMobileFiltersOpen && "cards-filter-drawer-open",
+            )}
+          >
+            <div className="cards-sort-box min-w-[168px] rounded-xl border border-black/20 bg-white/64 p-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.76)]">
               <p className="pixel-font px-1 text-[8px] uppercase tracking-[0.12em] text-black/55">
                 Sort
               </p>
@@ -701,10 +895,8 @@ export function CardsExplorer() {
                 <option value="hp-desc">Highest HP</option>
               </select>
             </div>
-          </div>
 
-          <div className="mt-2 grid gap-2 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_auto]">
-            <div className="rounded-xl border border-black/20 bg-white/64 p-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.76)]">
+            <div className="cards-supertype-box rounded-xl border border-black/20 bg-white/64 p-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.76)]">
               <p className="pixel-font px-1 text-[8px] uppercase tracking-[0.12em] text-black/55">
                 Supertype
               </p>
@@ -722,7 +914,7 @@ export function CardsExplorer() {
               </select>
             </div>
 
-            <div className="rounded-xl border border-black/20 bg-white/64 p-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.76)]">
+            <div className="cards-type-box rounded-xl border border-black/20 bg-white/64 p-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.76)]">
               <p className="pixel-font px-1 text-[8px] uppercase tracking-[0.12em] text-black/55">
                 Type
               </p>
@@ -749,7 +941,7 @@ export function CardsExplorer() {
             </button>
           </div>
 
-          <div className="mt-3 flex flex-wrap items-center gap-1.5 rounded-xl border border-black/15 bg-white/46 px-2 py-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]">
+          <div className="cards-filter-chip-row mt-3 flex flex-wrap items-center gap-1.5 rounded-xl border border-black/15 bg-white/46 px-2 py-1.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]">
             <InfoChip value={`Visible ${formatCount(filteredCards.length)}`} />
             <InfoChip value={`Total ${formatCount(cards.length)}`} />
             {isUsingLocalFallback ? (
@@ -774,8 +966,8 @@ export function CardsExplorer() {
         </div>
       ) : null}
 
-      <section className="rounded-2xl border border-black/20 bg-[linear-gradient(160deg,rgba(255,255,255,0.64),rgba(224,234,246,0.58))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.74)]">
-        <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
+      <section className="cards-catalog-panel rounded-2xl border border-black/20 bg-[linear-gradient(160deg,rgba(255,255,255,0.64),rgba(224,234,246,0.58))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.74)]">
+        <p className="cards-catalog-title pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
           Card Catalog
         </p>
 
@@ -801,8 +993,8 @@ export function CardsExplorer() {
         ) : null}
 
         {pagedCards.length > 0 ? (
-          <div className="pokemon-scrollbar mt-3 h-[58vh] min-h-[360px] max-h-[86vh] sm:h-[64vh] sm:min-h-[520px] sm:max-h-[88vh] lg:h-[72vh] lg:min-h-[760px] lg:max-h-[900px] overflow-y-scroll pr-1">
-            <div className="grid gap-3 sm:gap-3.5 [grid-template-columns:repeat(auto-fit,minmax(min(100%,236px),1fr))]">
+          <div className="cards-catalog-scroll pokemon-scrollbar mt-3 h-[58vh] min-h-[360px] max-h-[86vh] sm:h-[64vh] sm:min-h-[520px] sm:max-h-[88vh] lg:h-[72vh] lg:min-h-[760px] lg:max-h-[900px] overflow-y-scroll pr-1">
+            <div className="cards-catalog-grid grid gap-3 sm:gap-3.5 [grid-template-columns:repeat(auto-fit,minmax(min(100%,236px),1fr))]">
               {pagedCards.map((card) => {
                 const isSelected = card.id === selectedCardId;
                 const badgeTypes = resolveCatalogBadgeTypes(card);
@@ -811,7 +1003,7 @@ export function CardsExplorer() {
                   <article
                     data-selected={isSelected ? "true" : "false"}
                     className={cn(
-                      "pokemon-card-shell group relative flex h-full min-h-[252px] w-full flex-col overflow-hidden rounded-2xl border p-3 text-left transition sm:p-3.5",
+                      "pokemon-card-shell cards-mobile-card group relative flex h-full min-h-[252px] w-full flex-col overflow-hidden rounded-2xl border p-3 text-left transition sm:p-3.5",
                       isSelected
                         ? "pokemon-card-selected"
                         : "pokemon-card-idle",
@@ -829,10 +1021,10 @@ export function CardsExplorer() {
                       }}
                       aria-pressed={isSelected}
                       aria-label={`Select card ${card.displayName}`}
-                      className="w-full flex-1 text-left"
+                      className="cards-mobile-card-hit-area w-full flex-1 text-left"
                     >
-                      <div className="flex items-start justify-between gap-3">
-                        <div className="min-w-0">
+                      <div className="cards-mobile-card-head flex items-start justify-between gap-3">
+                        <div className="cards-mobile-card-copy min-w-0">
                           <p className="pokemon-card-index pixel-font text-[9px] uppercase tracking-[0.14em] text-black/55">
                             {formatCatalogDexLabel(card)}
                           </p>
@@ -844,7 +1036,7 @@ export function CardsExplorer() {
                           </p>
                         </div>
                         <div
-                          className="shrink-0"
+                          className="cards-mobile-card-favorite-wrap shrink-0"
                           onClick={(event) => event.stopPropagation()}
                           onKeyDown={(event) => event.stopPropagation()}
                         >
@@ -865,8 +1057,8 @@ export function CardsExplorer() {
                         </div>
                       </div>
 
-                      <div className="mt-3 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2.5 sm:gap-3">
-                        <div className="pokemon-card-sprite relative h-[114px] w-[114px] flex-shrink-0 sm:h-[130px] sm:w-[130px]">
+                      <div className="cards-mobile-card-content mt-3 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-2.5 sm:gap-3">
+                        <div className="cards-mobile-card-art-shell pokemon-card-sprite relative h-[114px] w-[114px] flex-shrink-0 sm:h-[130px] sm:w-[130px]">
                           {artwork ? (
                             <Image
                               src={artwork}
@@ -881,7 +1073,7 @@ export function CardsExplorer() {
                             </div>
                           )}
                         </div>
-                        <div className="pokemon-card-type-stack flex min-w-0 flex-col items-end gap-1.5">
+                        <div className="cards-mobile-card-types pokemon-card-type-stack flex min-w-0 flex-col items-end gap-1.5">
                           {badgeTypes.map((type) => (
                             <TypeBadge
                               key={`${card.id}-${type}`}
@@ -890,6 +1082,17 @@ export function CardsExplorer() {
                             />
                           ))}
                         </div>
+                      </div>
+
+                      <div className="cards-mobile-card-meta-row mt-3">
+                        <p className="cards-mobile-card-name pixel-font">
+                          {card.displayName}
+                        </p>
+                        {card.rarity ? (
+                          <span className="cards-mobile-card-rarity pixel-font">
+                            {card.rarity}
+                          </span>
+                        ) : null}
                       </div>
                     </div>
                   </article>
@@ -901,23 +1104,23 @@ export function CardsExplorer() {
           </div>
         ) : null}
 
-        <div className="mt-3 flex items-center justify-between gap-2">
+        <div className="cards-pagination mt-3 flex items-center justify-between gap-2">
           <button
             type="button"
             onClick={handlePreviousPage}
             disabled={safePage <= 1}
-            className="rounded-lg border border-black/20 bg-white/78 px-2.5 py-1 text-xs text-black/70 transition hover:bg-white disabled:opacity-50"
+            className="cards-pagination-btn rounded-lg border border-black/20 bg-white/78 px-2.5 py-1 text-xs text-black/70 transition hover:bg-white disabled:opacity-50"
           >
             Previous
           </button>
-          <span className="text-xs text-black/65">
+          <span className="cards-pagination-state text-xs text-black/65">
             Page {safePage} / {totalPages}
           </span>
           <button
             type="button"
             onClick={handleNextPage}
             disabled={safePage >= totalPages}
-            className="rounded-lg border border-black/20 bg-white/78 px-2.5 py-1 text-xs text-black/70 transition hover:bg-white disabled:opacity-50"
+            className="cards-pagination-btn rounded-lg border border-black/20 bg-white/78 px-2.5 py-1 text-xs text-black/70 transition hover:bg-white disabled:opacity-50"
           >
             Next
           </button>
@@ -926,36 +1129,35 @@ export function CardsExplorer() {
     </section>
   );
 
-  const rightPanel = (
-    <section className="space-y-4">
-      <div className="rounded-2xl border border-black/20 bg-[linear-gradient(165deg,rgba(255,255,255,0.64),rgba(226,236,247,0.58))] p-4 min-h-[420px] sm:min-h-[560px] lg:min-h-[760px] shadow-[inset_0_1px_0_rgba(255,255,255,0.74),0_10px_18px_rgba(0,0,0,0.07)]">
-        <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
+  const detailPanel = (
+      <div className="cards-detail-panel rounded-2xl border border-black/20 bg-[linear-gradient(165deg,rgba(255,255,255,0.64),rgba(226,236,247,0.58))] p-4 min-h-[420px] sm:min-h-[560px] lg:min-h-[760px] shadow-[inset_0_1px_0_rgba(255,255,255,0.74),0_10px_18px_rgba(0,0,0,0.07)]">
+        <p className="cards-detail-panel-title pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
           Card Details
         </p>
 
         {!selectedCard ? (
-          <p className="mt-3 rounded-lg border border-dashed border-black/25 bg-white/75 px-3 py-4 text-sm text-black/65">
+          <p className="cards-detail-empty mt-3 rounded-lg border border-dashed border-black/25 bg-white/75 px-3 py-4 text-sm text-black/65">
             Select a card to open full deck intelligence.
           </p>
         ) : (
-          <div className="pokemon-scrollbar mt-3 max-h-[70vh] sm:max-h-[75vh] lg:max-h-[79vh] overflow-y-auto pr-1">
-            <div className="space-y-4">
-              <section className="tcg-showcase-shell rounded-2xl border border-black/20 p-4">
+          <div className="cards-detail-scroll pokemon-scrollbar mt-3 max-h-[70vh] sm:max-h-[75vh] lg:max-h-[79vh] overflow-y-auto pr-1">
+            <div className="cards-detail-stack space-y-4">
+              <section className="tcg-showcase-shell cards-detail-hero rounded-2xl border border-black/20 p-4">
                 <div className="flex flex-wrap items-start justify-between gap-3">
-                  <div>
-                    <p className="pixel-font text-[10px] uppercase tracking-[0.14em] text-black/58">
+                  <div className="cards-detail-hero-copy">
+                    <p className="cards-detail-series pixel-font text-[10px] uppercase tracking-[0.14em] text-black/58">
                       {selectedCard.setSeries}
                     </p>
-                    <h1 className="pixel-font mt-1 text-[14px] uppercase tracking-[0.12em] text-black/86">
+                    <h1 className="cards-detail-name pixel-font mt-1 text-[14px] uppercase tracking-[0.12em] text-black/86">
                       {selectedCard.displayName}
                     </h1>
-                    <p className="mt-1 text-sm text-black/64">
+                    <p className="cards-detail-release mt-1 text-sm text-black/64">
                       {selectedCard.setName} | Released{" "}
                       {formatReleaseDate(selectedCard.setReleaseDate)}
                     </p>
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-1.5">
+                  <div className="cards-detail-chip-row flex flex-wrap items-center gap-1.5">
                     <FavoriteStarButton
                       favorite={{
                         entityType: "card",
@@ -985,8 +1187,8 @@ export function CardsExplorer() {
                   </div>
                 </div>
 
-                <div className="mt-4 grid gap-3 lg:[grid-template-columns:minmax(0,1fr)_minmax(280px,360px)]">
-                  <div className="tcg-showcase-card relative min-h-[320px] overflow-hidden rounded-2xl border border-black/25 bg-[linear-gradient(165deg,rgba(255,255,255,0.9),rgba(223,233,246,0.82))]">
+                <div className="cards-detail-hero-grid mt-4 grid gap-3 lg:[grid-template-columns:minmax(0,1fr)_minmax(280px,360px)]">
+                  <div className="tcg-showcase-card cards-detail-art-card relative min-h-[320px] overflow-hidden rounded-2xl border border-black/25 bg-[linear-gradient(165deg,rgba(255,255,255,0.9),rgba(223,233,246,0.82))]">
                     {selectedCard.imageLarge ? (
                       <>
                         <Image
@@ -1003,7 +1205,7 @@ export function CardsExplorer() {
                           className="no-gbc-btn absolute inset-0 z-[2] cursor-zoom-in border-0 bg-transparent p-0"
                           aria-label={`Zoom ${selectedCard.displayName} card artwork`}
                         />
-                        <span className="pointer-events-none absolute bottom-3 right-3 z-[3] rounded-md border border-black/30 bg-white/84 px-2 py-1 text-[11px] text-black/72 shadow-[0_2px_8px_rgba(0,0,0,0.16)]">
+                        <span className="cards-detail-zoom-chip pointer-events-none absolute bottom-3 right-3 z-[3] rounded-md border border-black/30 bg-white/84 px-2 py-1 text-[11px] text-black/72 shadow-[0_2px_8px_rgba(0,0,0,0.16)]">
                           Zoom
                         </span>
                       </>
@@ -1015,8 +1217,8 @@ export function CardsExplorer() {
                     <span className="tcg-showcase-foil pointer-events-none absolute inset-0" />
                   </div>
 
-                  <div className="space-y-3">
-                    <div className="grid gap-2 sm:grid-cols-2">
+                  <div className="cards-detail-fact-stack space-y-3">
+                    <div className="cards-detail-fact-grid grid gap-2 sm:grid-cols-2">
                       <InfoTile
                         label="Hit Points"
                         value={`HP ${selectedCard.hp ?? "N/A"}`}
@@ -1043,7 +1245,7 @@ export function CardsExplorer() {
                     </div>
 
                     {selectedCard.types.length > 0 ? (
-                      <div className="rounded-lg border border-black/18 bg-[linear-gradient(150deg,rgba(255,255,255,0.88),rgba(232,242,249,0.74))] px-3 py-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.82)]">
+                      <div className="cards-detail-type-signature rounded-lg border border-black/18 bg-[linear-gradient(150deg,rgba(255,255,255,0.88),rgba(232,242,249,0.74))] px-3 py-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.82)]">
                         <p className="pixel-font text-[9px] uppercase tracking-[0.12em] text-black/62">
                           Type Signature
                         </p>
@@ -1060,7 +1262,7 @@ export function CardsExplorer() {
                     ) : null}
 
                     {selectedCard.flavorText ? (
-                      <p className="rounded-lg border border-black/18 bg-[linear-gradient(145deg,rgba(255,255,255,0.9),rgba(235,244,249,0.78))] px-3 py-2 text-sm italic text-black/76 shadow-[inset_0_1px_0_rgba(255,255,255,0.86)]">
+                      <p className="cards-detail-flavor rounded-lg border border-black/18 bg-[linear-gradient(145deg,rgba(255,255,255,0.9),rgba(235,244,249,0.78))] px-3 py-2 text-sm italic text-black/76 shadow-[inset_0_1px_0_rgba(255,255,255,0.86)]">
                         &ldquo;{selectedCard.flavorText}&rdquo;
                       </p>
                     ) : null}
@@ -1073,7 +1275,7 @@ export function CardsExplorer() {
                 title="Card Snapshot"
                 subtitle="Core attributes and legal state."
               >
-                <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="cards-detail-snapshot-grid grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
                   <InfoTile
                     label="Artist"
                     value={selectedCard.artist ?? "Unknown"}
@@ -1200,7 +1402,7 @@ export function CardsExplorer() {
                 title="Battle Resistances"
                 subtitle="Weakness, resistance and retreat profile."
               >
-                <div className="grid gap-3 lg:grid-cols-3">
+                <div className="cards-detail-resistance-grid grid gap-3 lg:grid-cols-3">
                   <div className="rounded-xl border border-rose-300/65 bg-[linear-gradient(145deg,rgba(255,248,249,0.88),rgba(255,234,238,0.72))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.82)]">
                     <p className="pixel-font text-[9px] uppercase tracking-[0.12em] text-rose-900/78">
                       Weaknesses
@@ -1277,17 +1479,89 @@ export function CardsExplorer() {
           </div>
         )}
       </div>
+  );
+
+  const rightPanel = (
+    <section ref={detailAnchorRef} className="cards-explorer-right space-y-4">
+      {detailPanel}
     </section>
+  );
+
+  const mobileBottomNav = (
+    <MobileDexBottomNav
+      activeKey="explore"
+      className="cards-mobile-bottom-nav"
+      onExplore={() => {
+        handleCloseMobileTerminal();
+        if (typeof window !== "undefined") {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      }}
+      onSettings={() => {
+        handleCloseMobileTerminal();
+        setIsMobileFiltersOpen(true);
+        if (typeof window !== "undefined") {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      }}
+    />
+  );
+
+  const mobileDetailTerminal = (
+    <AnimatePresence>
+      {selectedCard && isMobileTerminalOpen ? (
+        <m.div
+          key={`cards-mobile-terminal-${selectedCard.id}`}
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 18 }}
+          transition={{ duration: 0.24, ease: "easeOut" }}
+          className="home-mobile-terminal-overlay cards-mobile-terminal-overlay md:hidden"
+        >
+          <div className="home-mobile-terminal-frame cards-mobile-terminal-frame">
+            <header className="home-mobile-terminal-topbar">
+              <div className="home-mobile-terminal-leds" aria-hidden>
+                <span className="pokedex-led pokedex-led-signal h-4 w-4 bg-emerald-300 shadow-[0_0_8px_rgba(52,211,153,0.64)]" />
+                <span className="pokedex-led pokedex-led-signal h-2.5 w-2.5 bg-amber-300 shadow-[0_0_8px_rgba(252,211,77,0.58)]" />
+                <span className="pokedex-led pokedex-led-signal h-2.5 w-2.5 bg-red-300 shadow-[0_0_8px_rgba(252,165,165,0.58)]" />
+              </div>
+              <p className="pixel-font home-mobile-terminal-title">
+                Card Details: {selectedCard.displayName}
+              </p>
+              <div className="home-mobile-terminal-avatar-slot">
+                <PokedexHeaderAccess tone="dark" className="home-mobile-terminal-access" />
+              </div>
+            </header>
+
+            <div className="home-mobile-terminal-screen cards-mobile-terminal-screen">
+              <div className="cards-mobile-detail-toolbar">
+                <button
+                  type="button"
+                  onClick={handleCloseMobileTerminal}
+                  className="cards-mobile-back pixel-font"
+                >
+                  Back to Index
+                </button>
+              </div>
+              {detailPanel}
+            </div>
+          </div>
+        </m.div>
+      ) : null}
+    </AnimatePresence>
   );
 
   return (
     <>
       <PokedexFrame
-        title="Pokemon Trading Card Encyclopedia"
+        title={isMobileViewport ? "DexLoom" : "Pokemon Trading Card Encyclopedia"}
         status={frameStatus}
         leftPanel={leftPanel}
         rightPanel={rightPanel}
+        className="cards-mobile-frame"
       />
+      {mobileDetailTerminal}
+      {mobileBottomNav}
 
       {isCardZoomOpen && selectedCard?.imageLarge ? (
         <div

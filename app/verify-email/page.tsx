@@ -93,8 +93,8 @@ export default async function VerifyEmailPage({ searchParams }: VerifyEmailPageP
   const copy = resolveCopy(state);
 
   return (
-    <main className="pokemon-detail-page auth-surface min-h-screen px-2 py-4 sm:px-4 sm:py-8">
-      <section className="auth-route-surface route-transition-surface auth-shell-live mx-auto w-full max-w-[980px] rounded-[2.2rem] border-[3px] border-[#2d4b87] bg-[linear-gradient(180deg,#fdfdfd_0%,#f4f6fb_100%)] p-3 shadow-[0_24px_46px_rgba(0,0,0,0.24)]">
+    <main className="auth-mobile-page pokemon-detail-page auth-surface min-h-screen px-2 py-4 sm:px-4 sm:py-8">
+      <section className="auth-mobile-shell auth-route-surface route-transition-surface auth-shell-live mx-auto w-full max-w-[980px] rounded-[2.2rem] border-[3px] border-[#2d4b87] bg-[linear-gradient(180deg,#fdfdfd_0%,#f4f6fb_100%)] p-3 shadow-[0_24px_46px_rgba(0,0,0,0.24)]">
         <div className="overflow-hidden rounded-[1.8rem] border-2 border-[#c8ced9] bg-white">
           <header className="border-b-2 border-[#b92f35] bg-[radial-gradient(circle_at_12%_14%,rgba(255,255,255,0.24),transparent_34%),linear-gradient(145deg,#e14749,#b72128)] px-4 py-5 sm:px-6 sm:py-6">
             <h1 className="auth-title-live pixel-font text-center text-[22px] uppercase tracking-[0.08em] text-[#fff4f3] drop-shadow-[0_2px_0_#8d1d23] sm:text-[30px]">
@@ -112,11 +112,11 @@ export default async function VerifyEmailPage({ searchParams }: VerifyEmailPageP
           </div>
 
           <div className="p-4 sm:p-6">
-            <div className="rounded-3xl border-2 border-[#a9262c] bg-[linear-gradient(160deg,#cb343a,#b5262d)] p-5 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] sm:p-7">
+            <div className="auth-mobile-panel rounded-3xl border-2 border-[#a9262c] bg-[linear-gradient(160deg,#cb343a,#b5262d)] p-5 text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] sm:p-7">
               <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-[#ffe870]">
                 {copy.eyebrow}
               </p>
-              <div className="mt-5 grid gap-5 lg:grid-cols-[1.2fr_0.8fr]">
+              <div className="auth-mobile-verify-grid mt-5 grid gap-5 lg:grid-cols-[1.2fr_0.8fr]">
                 <div>
                   <h2 className="pixel-font text-[14px] uppercase tracking-[0.08em] text-white sm:text-[17px]">
                     {copy.title}

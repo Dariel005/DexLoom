@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { MobileDexBottomNav } from "@/components/MobileDexBottomNav";
 import { PokedexFrame } from "@/components/PokedexFrame";
 
 export const metadata: Metadata = {
@@ -9,8 +10,8 @@ export const metadata: Metadata = {
 
 export default function CreditsPage() {
   const leftPanel = (
-    <section className="space-y-4">
-      <section className="rounded-2xl border border-black/20 bg-white/60 p-4">
+    <section id="credits-top" className="credits-mobile-left space-y-4">
+      <section className="credits-mobile-hero rounded-2xl border border-black/20 bg-white/60 p-4">
         <h1 className="pixel-font text-[12px] uppercase tracking-[0.14em] text-black/80">
           Credits
         </h1>
@@ -22,8 +23,8 @@ export default function CreditsPage() {
   );
 
   const rightPanel = (
-    <section className="space-y-4">
-      <section className="rounded-2xl border border-black/20 bg-white/60 p-4">
+    <section id="credits-links" className="credits-mobile-right space-y-4">
+      <section className="credits-mobile-section rounded-2xl border border-black/20 bg-white/60 p-4">
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
           Navigation
         </p>
@@ -46,8 +47,20 @@ export default function CreditsPage() {
   );
 
   return (
-    <main className="pokemon-detail-page mx-auto min-h-screen w-full max-w-[2560px] px-2 py-5 sm:px-4 sm:py-8 lg:px-5">
-      <PokedexFrame title="Credits" status="success" leftPanel={leftPanel} rightPanel={rightPanel} />
+    <main className="credits-mobile-page pokemon-detail-page mx-auto min-h-screen w-full max-w-[2560px] px-2 py-5 sm:px-4 sm:py-8 lg:px-5">
+      <PokedexFrame
+        title="Credits"
+        status="success"
+        leftPanel={leftPanel}
+        rightPanel={rightPanel}
+        className="credits-mobile-frame"
+      />
+      <MobileDexBottomNav
+        activeKey="explore"
+        exploreHref="/credits#credits-top"
+        settingsHref="/credits#credits-links"
+        className="credits-mobile-bottom-nav"
+      />
     </main>
   );
 }

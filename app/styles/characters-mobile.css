@@ -1,0 +1,269 @@
+@media (max-width: 767px) {
+  .characters-mobile-page,
+  .characters-detail-page {
+    padding:
+      max(0.42rem, env(safe-area-inset-top))
+      max(0.3rem, env(safe-area-inset-right))
+      calc(5.8rem + env(safe-area-inset-bottom))
+      max(0.3rem, env(safe-area-inset-left));
+  }
+
+  .characters-mobile-frame.pokedex-shell,
+  .characters-detail-frame.pokedex-shell {
+    border-radius: 1.72rem;
+    padding: 0.42rem;
+    background:
+      linear-gradient(155deg, #ef6059 0%, #d33737 32%, #b41e25 100%);
+    box-shadow:
+      inset 2px 2px 0 rgba(255, 255, 255, 0.26),
+      inset -9px -12px 20px rgba(0, 0, 0, 0.24),
+      0 18px 34px rgba(0, 0, 0, 0.28);
+  }
+
+  .characters-mobile-frame .pokedex-home-shortcut,
+  .characters-mobile-frame .pokedex-header-actions-cluster,
+  .characters-mobile-frame .explorer-trainer-name,
+  .characters-mobile-frame .pokedex-header-guest-btn-register,
+  .characters-detail-frame .pokedex-home-shortcut,
+  .characters-detail-frame .pokedex-header-actions-cluster,
+  .characters-detail-frame .explorer-trainer-name,
+  .characters-detail-frame .pokedex-header-guest-btn-register {
+    display: none;
+  }
+
+  .characters-mobile-frame > .relative,
+  .characters-detail-frame > .relative {
+    gap: 0.58rem;
+  }
+
+  .characters-mobile-frame > .relative > header,
+  .characters-detail-frame > .relative > header {
+    border-radius: 0.86rem;
+    margin: 0.14rem 0.14rem 0;
+    padding: 0.52rem 0.62rem;
+    background: rgba(0, 0, 0, 0.14);
+  }
+
+  .characters-mobile-frame > .relative > header > div,
+  .characters-detail-frame > .relative > header > div {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 0.46rem;
+  }
+
+  .characters-mobile-frame .pokedex-header-trainer-hub,
+  .characters-detail-frame .pokedex-header-trainer-hub {
+    min-width: 0;
+    padding: 0.15rem;
+    border-radius: 0.92rem;
+  }
+
+  .characters-mobile-frame .pokedex-header-trainer-user,
+  .characters-detail-frame .pokedex-header-trainer-user {
+    gap: 0;
+    padding: 0;
+  }
+
+  .characters-mobile-frame .explorer-trainer-avatar,
+  .characters-detail-frame .explorer-trainer-avatar {
+    width: 1.95rem;
+    height: 1.95rem;
+  }
+
+  .characters-mobile-frame .retro-screen,
+  .characters-detail-frame .retro-screen,
+  .characters-detail-frame .metal-plate {
+    min-height: auto;
+    border-radius: 1.08rem;
+    padding: 0.52rem;
+    background:
+      radial-gradient(circle at 22% 10%, rgba(228, 255, 206, 0.44), transparent 28%),
+      linear-gradient(180deg, rgba(155, 223, 114, 0.96), rgba(104, 170, 82, 0.96));
+    box-shadow:
+      inset 0 1px 0 rgba(237, 255, 221, 0.48),
+      inset 0 -1px 0 rgba(34, 73, 26, 0.36),
+      0 10px 20px rgba(47, 88, 39, 0.12);
+  }
+
+  .characters-mobile-left,
+  .characters-detail-sidebar,
+  .character-page-template {
+    gap: 0.68rem;
+  }
+
+  .characters-mobile-hero,
+  .characters-mobile-index,
+  .character-page-hero,
+  .character-page-appearances,
+  .character-page-battle,
+  .character-page-teams,
+  .character-page-template > section:last-child,
+  .characters-detail-sidebar > section {
+    border-radius: 0.98rem;
+    padding: 0.68rem !important;
+    background:
+      linear-gradient(180deg, rgba(251, 255, 247, 0.76), rgba(227, 240, 219, 0.62));
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.55),
+      inset 0 -1px 0 rgba(68, 92, 55, 0.08),
+      0 6px 18px rgba(41, 67, 32, 0.08);
+  }
+
+  .characters-mobile-hero .search-deck-field {
+    min-height: 2.72rem;
+    border-radius: 1.04rem;
+  }
+
+  .characters-mobile-hero .search-deck-input {
+    font-size: 0.9rem;
+  }
+
+  .characters-mobile-hero .grid.gap-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .character-scroll-list {
+    margin-top: 0.52rem !important;
+  }
+
+  .character-index-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 0.52rem !important;
+  }
+
+  .character-index-card {
+    min-height: 0 !important;
+    aspect-ratio: 0.84;
+    border-radius: 0.92rem;
+    padding: 0.5rem 0.42rem !important;
+  }
+
+  .character-index-card .pokemon-card-index {
+    font-size: 7px;
+  }
+
+  .character-index-card .pokemon-card-name {
+    margin-top: 0.12rem;
+    font-size: 8.4px;
+    line-height: 1.04;
+    white-space: normal;
+  }
+
+  .character-index-card .pokemon-card-generation {
+    display: none;
+  }
+
+  .character-index-card .favorite-star-btn {
+    width: 1.8rem;
+    height: 1.8rem;
+    min-width: 1.8rem;
+    min-height: 1.8rem;
+    font-size: 11px;
+  }
+
+  .character-index-card .pokemon-card-sprite {
+    width: 4.3rem !important;
+    height: 4.6rem !important;
+  }
+
+  .character-index-card .character-card-type-badge {
+    min-width: 4rem !important;
+    height: 1rem !important;
+    padding-inline: 0.3rem !important;
+    font-size: 5.8px !important;
+  }
+
+  .character-index-card .pokemon-card-footer-btn {
+    min-width: 3.9rem !important;
+    padding-inline: 0.42rem !important;
+    padding-block: 0.28rem !important;
+    font-size: 6.5px !important;
+  }
+
+  .character-page-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 0.62rem;
+  }
+
+  .character-page-portrait {
+    max-width: 10.8rem;
+    margin-inline: auto;
+  }
+
+  .character-page-metrics {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.42rem;
+  }
+
+  .character-page-quote,
+  .character-page-signature {
+    border-radius: 0.82rem;
+  }
+
+  .character-page-dual {
+    grid-template-columns: 1fr;
+  }
+
+  .character-page-teams .mt-3.grid {
+    grid-template-columns: 1fr;
+  }
+
+  .character-page-template p,
+  .character-page-template li,
+  .characters-detail-sidebar p,
+  .characters-detail-sidebar li {
+    font-size: 0.76rem;
+    line-height: 1.42;
+  }
+}
+
+@media (max-width: 420px) {
+  .characters-mobile-frame > .relative > header,
+  .characters-detail-frame > .relative > header {
+    padding: 0.44rem 0.5rem;
+  }
+
+  .characters-mobile-frame > .relative > header .pixel-font,
+  .characters-detail-frame > .relative > header .pixel-font {
+    font-size: 9px;
+    letter-spacing: 0.08em;
+  }
+
+  .characters-mobile-frame .explorer-trainer-avatar,
+  .characters-detail-frame .explorer-trainer-avatar {
+    width: 1.7rem;
+    height: 1.7rem;
+  }
+
+  .characters-mobile-hero,
+  .characters-mobile-index,
+  .character-page-hero,
+  .character-page-appearances,
+  .character-page-battle,
+  .character-page-teams,
+  .character-page-template > section:last-child,
+  .characters-detail-sidebar > section {
+    padding: 0.56rem !important;
+  }
+
+  .character-index-card {
+    aspect-ratio: 0.8;
+  }
+
+  .character-index-card .pokemon-card-sprite {
+    width: 3.9rem !important;
+    height: 4.2rem !important;
+  }
+
+  .character-index-card .pokemon-card-name {
+    font-size: 7.8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .character-index-card,
+  .characters-mobile-frame.pokedex-shell,
+  .characters-detail-frame.pokedex-shell {
+    transition: none !important;
+    animation: none !important;
+  }
+}

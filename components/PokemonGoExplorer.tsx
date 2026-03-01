@@ -13,6 +13,7 @@ import {
 } from "react";
 import { EncyclopediaDataTable } from "@/components/EncyclopediaDataTable";
 import { FavoriteStarButton } from "@/components/FavoriteStarButton";
+import { MobileDexBottomNav } from "@/components/MobileDexBottomNav";
 import { PokedexFrame } from "@/components/PokedexFrame";
 import { VirtualizedGrid } from "@/components/VirtualizedGrid";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
@@ -339,6 +340,9 @@ function FeaturedPokemonCard({
 
 export function PokemonGoExplorer() {
   const [catalogMode, setCatalogMode] = useState<CatalogMode>("modules");
+  const controlsRef = useRef<HTMLDivElement | null>(null);
+  const catalogRef = useRef<HTMLElement | null>(null);
+  const detailRef = useRef<HTMLDivElement | null>(null);
   const modulesQuery = useQuery(pokemonGoModulesQueryOptions());
   const itemsQuery = useQuery({
     ...pokemonGoItemsQueryOptions(),
@@ -406,6 +410,25 @@ export function PokemonGoExplorer() {
       oscillator.stop(now + config.duration + 0.012);
     },
     [soundEnabled, soundVolume]
+  );
+
+  const scrollToElement = useCallback((element: HTMLElement | null) => {
+    if (!element) {
+      return;
+    }
+
+    element.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
+
+  const scrollToElementIfMobile = useCallback(
+    (element: HTMLElement | null) => {
+      if (typeof window === "undefined" || window.innerWidth >= 768) {
+        return;
+      }
+
+      scrollToElement(element);
+    },
+    [scrollToElement]
   );
 
   const categoryOptions = useMemo(
@@ -494,8 +517,9 @@ export function PokemonGoExplorer() {
     (nextId: number) => {
       setSelectedActivityId(nextId);
       playTone("select");
+      scrollToElementIfMobile(detailRef.current);
     },
-    [playTone]
+    [playTone, scrollToElementIfMobile]
   );
 
   const handleCategoryChange = useCallback(
@@ -525,8 +549,9 @@ export function PokemonGoExplorer() {
     (nextId: number) => {
       setSelectedItemId(nextId);
       playTone("select");
+      scrollToElementIfMobile(detailRef.current);
     },
-    [playTone]
+    [playTone, scrollToElementIfMobile]
   );
 
   const handleItemCategoryChange = useCallback(
@@ -545,6 +570,16 @@ export function PokemonGoExplorer() {
     setCatalogMode(mode);
     playTone("filter");
   }, [playTone]);
+
+  const handleMobileExplore = useCallback(() => {
+    playTone("filter");
+    scrollToElement(catalogRef.current);
+  }, [playTone, scrollToElement]);
+
+  const handleMobileSettings = useCallback(() => {
+    playTone("filter");
+    scrollToElement(controlsRef.current);
+  }, [playTone, scrollToElement]);
 
   useEffect(() => {
     if (catalogMode === "modules" && debouncedSearch.length > 0) {
@@ -610,8 +645,11 @@ export function PokemonGoExplorer() {
   ]);
 
   const leftPanel = (
-    <section className="space-y-4">
-      <div className="rounded-2xl border border-black/20 bg-[linear-gradient(155deg,rgba(255,255,255,0.66),rgba(228,240,247,0.58))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]">
+    <section className="go-mobile-left space-y-4">
+      <div
+        ref={controlsRef}
+        className="go-mobile-controls rounded-2xl border border-black/20 bg-[linear-gradient(155deg,rgba(255,255,255,0.66),rgba(228,240,247,0.58))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]"
+      >
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
           Pokemon GO Explorer
         </p>
@@ -752,7 +790,10 @@ export function PokemonGoExplorer() {
         </div>
       </div>
 
-      <section className="rounded-2xl border border-black/20 bg-[linear-gradient(160deg,rgba(255,255,255,0.62),rgba(226,238,247,0.58))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.74)]">
+      <section
+        ref={catalogRef}
+        className="go-mobile-catalog rounded-2xl border border-black/20 bg-[linear-gradient(160deg,rgba(255,255,255,0.62),rgba(226,238,247,0.58))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.74)]"
+      >
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
           {catalogMode === "modules" ? "GO Modules" : "GO Items"}
         </p>
@@ -773,7 +814,7 @@ export function PokemonGoExplorer() {
             itemHeight={292}
             gap={12}
             overscanRows={3}
-            className="pokemon-scrollbar mt-3 h-[58vh] min-h-[360px] max-h-[86vh] sm:h-[64vh] sm:min-h-[520px] sm:max-h-[88vh] lg:h-[72vh] lg:min-h-[760px] lg:max-h-[900px] overflow-y-scroll pr-1"
+            className="go-mobile-catalog-list pokemon-scrollbar mt-3 h-[58vh] min-h-[360px] max-h-[86vh] sm:h-[64vh] sm:min-h-[520px] sm:max-h-[88vh] lg:h-[72vh] lg:min-h-[760px] lg:max-h-[900px] overflow-y-scroll pr-1"
             renderItem={(entry) => {
               const isSelected = entry.id === selectedActivityId;
 
@@ -783,7 +824,7 @@ export function PokemonGoExplorer() {
                     onClick={() => handleSelectActivity(entry.id)}
                     data-selected={isSelected ? "true" : "false"}
                     className={cn(
-                      "pokemon-card-shell go-module-card h-full w-full overflow-hidden rounded-xl border p-3 text-left transition",
+                      "pokemon-card-shell go-module-card go-mobile-card h-full w-full overflow-hidden rounded-xl border p-3 text-left transition",
                       isSelected ? "pokemon-card-selected pokedex-accent-glow" : "pokemon-card-idle hover:bg-white"
                     )}
                   >
@@ -848,7 +889,7 @@ export function PokemonGoExplorer() {
             itemHeight={224}
             gap={8}
             overscanRows={3}
-            className="pokemon-scrollbar mt-3 h-[58vh] min-h-[360px] max-h-[86vh] sm:h-[64vh] sm:min-h-[520px] sm:max-h-[88vh] lg:h-[72vh] lg:min-h-[760px] lg:max-h-[900px] overflow-y-scroll pr-1"
+            className="go-mobile-catalog-list pokemon-scrollbar mt-3 h-[58vh] min-h-[360px] max-h-[86vh] sm:h-[64vh] sm:min-h-[520px] sm:max-h-[88vh] lg:h-[72vh] lg:min-h-[760px] lg:max-h-[900px] overflow-y-scroll pr-1"
             renderItem={(item) => {
               const isSelected = item.id === selectedItemId;
               const itemCardStyle: CSSProperties = {
@@ -868,8 +909,8 @@ export function PokemonGoExplorer() {
                   onClick={() => handleSelectItem(item.id)}
                   data-selected={isSelected ? "true" : "false"}
                   style={itemCardStyle}
-                  className={cn(
-                    "item-grid-card go-module-card group relative h-full w-full overflow-hidden rounded-xl border bg-[linear-gradient(165deg,rgba(249,251,248,0.95),rgba(235,241,236,0.92))] p-3 text-left shadow-[0_6px_12px_rgba(0,0,0,0.08)] transition",
+                    className={cn(
+                    "item-grid-card go-module-card go-mobile-item-card group relative h-full w-full overflow-hidden rounded-xl border bg-[linear-gradient(165deg,rgba(249,251,248,0.95),rgba(235,241,236,0.92))] p-3 text-left shadow-[0_6px_12px_rgba(0,0,0,0.08)] transition",
                     isSelected
                       ? "item-grid-card-selected text-black/85"
                       : "border-black/15 hover:border-black/25 hover:shadow-[0_10px_16px_rgba(0,0,0,0.12)]"
@@ -926,8 +967,11 @@ export function PokemonGoExplorer() {
   );
 
   const rightPanel = (
-    <section className="space-y-4">
-      <div className="go-detail-shell rounded-2xl border border-black/20 bg-[linear-gradient(165deg,rgba(255,255,255,0.62),rgba(226,237,247,0.58))] p-4 min-h-[420px] sm:min-h-[560px] lg:min-h-[760px] shadow-[inset_0_1px_0_rgba(255,255,255,0.74),0_10px_18px_rgba(0,0,0,0.07)]">
+    <section className="go-mobile-right space-y-4">
+      <div
+        ref={detailRef}
+        className="go-detail-shell go-mobile-detail-shell rounded-2xl border border-black/20 bg-[linear-gradient(165deg,rgba(255,255,255,0.62),rgba(226,237,247,0.58))] p-4 min-h-[420px] sm:min-h-[560px] lg:min-h-[760px] shadow-[inset_0_1px_0_rgba(255,255,255,0.74),0_10px_18px_rgba(0,0,0,0.07)]"
+      >
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
           Pokemon GO Details
         </p>
@@ -938,7 +982,7 @@ export function PokemonGoExplorer() {
               Select an item to open full Pokemon GO item intelligence.
             </p>
           ) : (
-            <div className="pokemon-scrollbar mt-3 max-h-[70vh] sm:max-h-[75vh] lg:max-h-[79vh] overflow-y-auto pr-1">
+            <div className="go-mobile-detail-scroll pokemon-scrollbar mt-3 max-h-[70vh] sm:max-h-[75vh] lg:max-h-[79vh] overflow-y-auto pr-1">
               <section className="rounded-2xl border border-black/20 bg-[linear-gradient(150deg,rgba(255,255,255,0.9),rgba(235,244,249,0.82))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.82),0_8px_16px_rgba(0,0,0,0.07)]">
                 <div className="flex flex-wrap items-start justify-between gap-2">
                   <div>
@@ -1059,9 +1103,9 @@ export function PokemonGoExplorer() {
             Select a module to open Pokemon GO strategy details.
           </p>
         ) : (
-          <div className="pokemon-scrollbar mt-3 max-h-[70vh] sm:max-h-[75vh] lg:max-h-[79vh] overflow-y-auto pr-1">
-            <div className="space-y-4">
-              <section className="go-hero-surface rounded-2xl border border-black/20 bg-[radial-gradient(circle_at_16%_9%,rgba(255,255,255,0.45),transparent_34%),linear-gradient(150deg,rgba(248,251,248,0.94),rgba(226,237,247,0.84))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.84),0_10px_18px_rgba(0,0,0,0.08)]">
+            <div className="go-mobile-detail-scroll pokemon-scrollbar mt-3 max-h-[70vh] sm:max-h-[75vh] lg:max-h-[79vh] overflow-y-auto pr-1">
+              <div className="space-y-4">
+              <section className="go-hero-surface go-mobile-hero-surface rounded-2xl border border-black/20 bg-[radial-gradient(circle_at_16%_9%,rgba(255,255,255,0.45),transparent_34%),linear-gradient(150deg,rgba(248,251,248,0.94),rgba(226,237,247,0.84))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.84),0_10px_18px_rgba(0,0,0,0.08)]">
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div>
                     <p className="pixel-font text-[10px] uppercase tracking-[0.14em] text-black/62">
@@ -1225,12 +1269,19 @@ export function PokemonGoExplorer() {
   );
 
   return (
-    <div style={themeStyle}>
+    <div style={themeStyle} className="go-mobile-page">
       <PokedexFrame
         title="Pokemon GO Encyclopedia"
         status={frameStatus}
         leftPanel={leftPanel}
         rightPanel={rightPanel}
+        className="go-mobile-frame"
+      />
+      <MobileDexBottomNav
+        activeKey="explore"
+        onExplore={handleMobileExplore}
+        onSettings={handleMobileSettings}
+        className="go-mobile-bottom-nav"
       />
     </div>
   );

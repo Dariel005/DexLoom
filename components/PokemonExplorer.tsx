@@ -12,7 +12,9 @@ import {
   ProToolsPanelSkeleton,
   RegionDeckSkeleton
 } from "@/components/PokedexSkeletons";
+import { MobileDexBottomNav } from "@/components/MobileDexBottomNav";
 import { PokedexChassis } from "@/components/PokedexChassis";
+import { PokedexHeaderAccess } from "@/components/PokedexHeaderAccess";
 import { PokemonGrid } from "@/components/PokemonGrid";
 import { useFavoritePokemon } from "@/hooks/useFavoritePokemon";
 import { useGenerationPokemon } from "@/hooks/useGenerationPokemon";
@@ -223,6 +225,7 @@ export function PokemonExplorer() {
   const [activeGeneration, setActiveGeneration] =
     useState<GenerationKey>(DEFAULT_GENERATION_KEY);
   const [activeAuxPanel, setActiveAuxPanel] = useState<AuxPanel>(null);
+  const [isMobileTerminalOpen, setIsMobileTerminalOpen] = useState(false);
   const [isSelectionJoltActive, setIsSelectionJoltActive] = useState(false);
   const audioContextRef = useRef<AudioContext | null>(null);
   const detailAnchorRef = useRef<HTMLDivElement | null>(null);
@@ -604,6 +607,23 @@ export function PokemonExplorer() {
     return () => window.clearTimeout(timeout);
   }, [isSelectionJoltActive]);
 
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    if (!isMobileTerminalOpen || !window.matchMedia("(max-width: 767px)").matches) {
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isMobileTerminalOpen]);
+
   const handleGenerationChange = useCallback(
     (generation: GenerationKey) => {
       setActiveGeneration(generation);
@@ -622,6 +642,10 @@ export function PokemonExplorer() {
       playTone("select");
 
       if (typeof window !== "undefined" && window.innerWidth < 1280) {
+        if (window.innerWidth < 768) {
+          setIsMobileTerminalOpen(true);
+          return;
+        }
         window.requestAnimationFrame(() => {
           detailAnchorRef.current?.scrollIntoView({
             behavior: "smooth",
@@ -650,6 +674,10 @@ export function PokemonExplorer() {
   }, [fetchNextPage, playTone]);
 
   const handleCloseDrawer = useCallback(() => {
+    if (typeof window !== "undefined" && window.innerWidth < 768) {
+      setIsMobileTerminalOpen(false);
+      return;
+    }
     setSelectedPokemon(null);
   }, [setSelectedPokemon]);
 
@@ -662,8 +690,8 @@ export function PokemonExplorer() {
   );
 
   const explorerScreen = (
-    <div className="space-y-4">
-      <div className="rounded-2xl border border-black/20 bg-black/[0.06] p-3">
+    <div className="home-explorer-stack space-y-4">
+      <div className="home-explorer-console rounded-2xl border border-black/20 bg-black/[0.06] p-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <p className="pixel-font text-[10px] uppercase tracking-[0.18em] text-black/65">
             Screen A: Explorer
@@ -711,7 +739,7 @@ export function PokemonExplorer() {
             <span className="search-deck-gloss" aria-hidden />
           </label>
 
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="home-module-grid flex flex-wrap items-center gap-2">
             <RouteTransitionLink
               href="/tools"
               style={{ "--pulse-delay": "0s" } as CSSProperties}
@@ -960,10 +988,12 @@ export function PokemonExplorer() {
         ) : null}
       </div>
 
-      <RegionFilterBar
-        activeGeneration={activeGeneration}
-        onChange={handleGenerationChange}
-      />
+      <div className="home-region-strip">
+        <RegionFilterBar
+          activeGeneration={activeGeneration}
+          onChange={handleGenerationChange}
+        />
+      </div>
 
       <AnimatePresence initial={false}>
         {activeAuxPanel ? (
@@ -973,7 +1003,7 @@ export function PokemonExplorer() {
             animate={{ opacity: 1, y: 0, height: "auto" }}
             exit={{ opacity: 0, y: -8, height: 0 }}
             transition={{ duration: 0.24, ease: "easeOut" }}
-            className="overflow-hidden"
+            className="home-aux-panel overflow-hidden"
           >
             <div className="rounded-2xl border border-black/20 bg-black/[0.06] p-3">
               <div className="mb-3 flex items-center justify-between gap-2">
@@ -1062,7 +1092,7 @@ export function PokemonExplorer() {
   const detailScreen = (
       <div
         ref={detailAnchorRef}
-        className={cn("flex h-full min-h-0 flex-col gap-3", isSelectionJoltActive && "pokedex-jolt")}
+        className={cn("home-detail-screen flex h-full min-h-0 flex-col gap-3", isSelectionJoltActive && "pokedex-jolt")}
       >
         <div className="min-h-0 flex-1">
           <PokemonDrawer
@@ -1073,15 +1103,74 @@ export function PokemonExplorer() {
       </div>
   );
 
-  return (
-    <PokedexChassis
-      className="home-main-chassis"
-      title="DexLoom"
-      status={status}
-      explorerScreen={explorerScreen}
-      detailScreen={detailScreen}
-      themeStyle={pokedexThemeStyle}
+  const mobileBottomNav = (
+    <MobileDexBottomNav
+      activeKey="explore"
+      onExplore={() => {
+        handleCloseDrawer();
+        if (typeof window !== "undefined") {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      }}
+      onSettings={() => {
+        handleCloseDrawer();
+        handleToggleAuxPanel("sound");
+        if (typeof window !== "undefined") {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+      }}
     />
+  );
+
+  const mobileDetailTerminal = (
+    <AnimatePresence>
+      {selectedPokemonId && isMobileTerminalOpen ? (
+        <m.div
+          key={`mobile-terminal-${selectedPokemonId}`}
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 18 }}
+          transition={{ duration: 0.24, ease: "easeOut" }}
+          className="home-mobile-terminal-overlay md:hidden"
+        >
+          <div className="home-mobile-terminal-frame">
+            <header className="home-mobile-terminal-topbar">
+              <div className="home-mobile-terminal-leds" aria-hidden>
+                <span className="pokedex-led pokedex-led-signal h-4 w-4 bg-emerald-300 shadow-[0_0_8px_rgba(52,211,153,0.64)]" />
+                <span className="pokedex-led pokedex-led-signal h-2.5 w-2.5 bg-amber-300 shadow-[0_0_8px_rgba(252,211,77,0.58)]" />
+                <span className="pokedex-led pokedex-led-signal h-2.5 w-2.5 bg-red-300 shadow-[0_0_8px_rgba(252,165,165,0.58)]" />
+              </div>
+              <p className="pixel-font home-mobile-terminal-title">Data Terminal</p>
+              <div className="home-mobile-terminal-avatar-slot">
+                <PokedexHeaderAccess tone="dark" className="home-mobile-terminal-access" />
+              </div>
+            </header>
+
+            <div className="home-mobile-terminal-screen">
+              <PokemonDrawer
+                selectedPokemonId={selectedPokemonId}
+                onClose={handleCloseDrawer}
+              />
+            </div>
+          </div>
+        </m.div>
+      ) : null}
+    </AnimatePresence>
+  );
+
+  return (
+    <>
+      <PokedexChassis
+        className="home-main-chassis"
+        title="DexLoom"
+        status={status}
+        explorerScreen={explorerScreen}
+        detailScreen={detailScreen}
+        themeStyle={pokedexThemeStyle}
+      />
+      {mobileDetailTerminal}
+      {mobileBottomNav}
+    </>
   );
 }
 

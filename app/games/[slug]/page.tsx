@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { FavoriteStarButton } from "@/components/FavoriteStarButton";
+import { MobileDexBottomNav } from "@/components/MobileDexBottomNav";
 import { PokedexFrame } from "@/components/PokedexFrame";
 import { RouteTransitionLink } from "@/components/RouteTransitionLink";
 import { ReferencesBlock } from "@/components/wiki/ReferencesBlock";
@@ -129,8 +130,11 @@ export default function GameDetailPage({ params }: GameDetailPageProps) {
   });
 
   const leftPanel = (
-    <article className="space-y-4">
-      <section id="identity" className="scroll-mt-28 rounded-2xl border border-black/20 bg-white/60 p-4">
+    <article className="games-detail-left space-y-4">
+      <section
+        id="identity"
+        className="games-detail-section games-detail-hero-section scroll-mt-28 rounded-2xl border border-black/20 bg-white/60 p-4"
+      >
         <p className="pixel-font text-[10px] uppercase tracking-[0.14em] text-black/65">Game Entry</p>
         <h1 className="pixel-font mt-2 text-[14px] uppercase tracking-[0.12em] text-black/85">
           {game.title}
@@ -138,8 +142,8 @@ export default function GameDetailPage({ params }: GameDetailPageProps) {
         <p className="mt-1 text-sm text-black/70">
           {game.generationLabel} | {game.regionLabel}
         </p>
-        <div className="mt-3 grid gap-3 lg:grid-cols-[260px_1fr]">
-          <div className="relative aspect-[3/4] overflow-hidden rounded-xl border border-black/20 bg-white/75">
+        <div className="games-detail-hero-grid mt-3 grid gap-3 lg:grid-cols-[260px_1fr]">
+          <div className="games-detail-hero-art relative aspect-[3/4] overflow-hidden rounded-xl border border-black/20 bg-white/75">
             <Image
               src={resolvedGameImageSrc}
               alt={game.imageAlt}
@@ -148,7 +152,7 @@ export default function GameDetailPage({ params }: GameDetailPageProps) {
               className="object-contain p-2"
             />
           </div>
-          <div className="space-y-2">
+          <div className="games-detail-hero-facts space-y-2">
             <FactRow label="Official Title" value={game.identity.officialTitle} />
             <FactRow label="Category" value={game.identity.category} />
             <FactRow label="Classification" value={game.classification} />
@@ -160,7 +164,7 @@ export default function GameDetailPage({ params }: GameDetailPageProps) {
             <FactRow label="Mascots" value={game.identity.mascots.join(", ")} />
           </div>
         </div>
-        <div className="mt-2 rounded-lg border border-black/20 bg-white/70 px-3 py-2 text-sm text-black/75">
+        <div className="games-detail-alt-titles mt-2 rounded-lg border border-black/20 bg-white/70 px-3 py-2 text-sm text-black/75">
           <span className="pixel-font mr-1 text-[10px] uppercase tracking-[0.12em] text-black/66">
             Alternate Titles:
           </span>
@@ -168,7 +172,10 @@ export default function GameDetailPage({ params }: GameDetailPageProps) {
         </div>
       </section>
 
-      <section id="release-matrix" className="scroll-mt-28 rounded-2xl border border-black/20 bg-white/60 p-4">
+      <section
+        id="release-matrix"
+        className="games-detail-section scroll-mt-28 rounded-2xl border border-black/20 bg-white/60 p-4"
+      >
         <SectionHeader title="Release Matrix" />
         <div className="mt-2 space-y-2">
           {game.releaseMatrix.map((row, index) => (
@@ -190,7 +197,10 @@ export default function GameDetailPage({ params }: GameDetailPageProps) {
         </div>
       </section>
 
-      <section id="version-differences" className="scroll-mt-28 rounded-2xl border border-black/20 bg-white/60 p-4">
+      <section
+        id="version-differences"
+        className="games-detail-section scroll-mt-28 rounded-2xl border border-black/20 bg-white/60 p-4"
+      >
         <SectionHeader title="Version Differences" />
         <div className="mt-2 space-y-2">
           {game.versionDifferences.map((difference, index) => (
@@ -205,7 +215,10 @@ export default function GameDetailPage({ params }: GameDetailPageProps) {
         </div>
       </section>
 
-      <section id="core-mechanics" className="scroll-mt-28 rounded-2xl border border-black/20 bg-white/60 p-4">
+      <section
+        id="core-mechanics"
+        className="games-detail-section scroll-mt-28 rounded-2xl border border-black/20 bg-white/60 p-4"
+      >
         <SectionHeader title="Core Mechanics Introduced" />
         <ul className="mt-2 space-y-2 text-sm text-black/75">
           {game.mechanicsIntroduced.map((mechanic) => (
@@ -216,7 +229,10 @@ export default function GameDetailPage({ params }: GameDetailPageProps) {
         </ul>
       </section>
 
-      <section id="pokedex-data" className="scroll-mt-28 rounded-2xl border border-black/20 bg-white/60 p-4">
+      <section
+        id="pokedex-data"
+        className="games-detail-section scroll-mt-28 rounded-2xl border border-black/20 bg-white/60 p-4"
+      >
         <SectionHeader title="Pokedex Data" />
         <div className="mt-2 grid gap-2 md:grid-cols-2">
           <FactRow label="Regional Dex Size" value={game.pokedexProfile.regionalDexSize} />
@@ -242,7 +258,10 @@ export default function GameDetailPage({ params }: GameDetailPageProps) {
         </div>
       </section>
 
-      <section id="story-progression" className="scroll-mt-28 rounded-2xl border border-black/20 bg-white/60 p-4">
+      <section
+        id="story-progression"
+        className="games-detail-section scroll-mt-28 rounded-2xl border border-black/20 bg-white/60 p-4"
+      >
         <SectionHeader title="Story & Progression (No Spoilers)" />
         <p className="mt-2 rounded-lg border border-black/20 bg-white/70 px-3 py-2 text-sm text-black/75">
           {game.storySummaryNoSpoiler}
@@ -256,7 +275,10 @@ export default function GameDetailPage({ params }: GameDetailPageProps) {
         </ul>
       </section>
 
-      <section id="world-map" className="scroll-mt-28 rounded-2xl border border-black/20 bg-white/60 p-4">
+      <section
+        id="world-map"
+        className="games-detail-section scroll-mt-28 rounded-2xl border border-black/20 bg-white/60 p-4"
+      >
         <SectionHeader title="World & Map" />
         <FactRow label="Primary Region" value={game.worldProfile.primaryRegion} />
         <FactRow label="Route Structure" value={game.worldProfile.routeStructure} />
@@ -274,7 +296,10 @@ export default function GameDetailPage({ params }: GameDetailPageProps) {
         </div>
       </section>
 
-      <section id="content-modes" className="scroll-mt-28 rounded-2xl border border-black/20 bg-white/60 p-4">
+      <section
+        id="content-modes"
+        className="games-detail-section scroll-mt-28 rounded-2xl border border-black/20 bg-white/60 p-4"
+      >
         <SectionHeader title="Content & Modes" />
         <p className="mt-2 rounded-lg border border-black/20 bg-white/70 px-3 py-2 text-sm text-black/75">
           {game.contentModes.mainStory}
@@ -303,7 +328,10 @@ export default function GameDetailPage({ params }: GameDetailPageProps) {
         </div>
       </section>
 
-      <section id="postgame" className="scroll-mt-28 rounded-2xl border border-black/20 bg-white/60 p-4">
+      <section
+        id="postgame"
+        className="games-detail-section scroll-mt-28 rounded-2xl border border-black/20 bg-white/60 p-4"
+      >
         <SectionHeader title="Postgame" />
         <ul className="mt-2 space-y-2 text-sm text-black/75">
           {game.postgameProfile.map((entry) => (
@@ -314,7 +342,10 @@ export default function GameDetailPage({ params }: GameDetailPageProps) {
         </ul>
       </section>
 
-      <section id="connectivity" className="scroll-mt-28 rounded-2xl border border-black/20 bg-white/60 p-4">
+      <section
+        id="connectivity"
+        className="games-detail-section scroll-mt-28 rounded-2xl border border-black/20 bg-white/60 p-4"
+      >
         <SectionHeader title="Connectivity" />
         <div className="mt-2 space-y-2">
           <FactRow label="Pokemon HOME" value={game.connectivityProfile.pokemonHome} />
@@ -323,7 +354,10 @@ export default function GameDetailPage({ params }: GameDetailPageProps) {
         </div>
       </section>
 
-      <section id="technical-profile" className="scroll-mt-28 rounded-2xl border border-black/20 bg-white/60 p-4">
+      <section
+        id="technical-profile"
+        className="games-detail-section scroll-mt-28 rounded-2xl border border-black/20 bg-white/60 p-4"
+      >
         <SectionHeader title="Technical Profile" />
         <FactRow label="Render Target" value={game.technicalProfile.renderTarget} />
         <div className="mt-2 grid gap-2 md:grid-cols-2">
@@ -350,7 +384,10 @@ export default function GameDetailPage({ params }: GameDetailPageProps) {
         </div>
       </section>
 
-      <section id="dlc-updates" className="scroll-mt-28 rounded-2xl border border-black/20 bg-white/60 p-4">
+      <section
+        id="dlc-updates"
+        className="games-detail-section scroll-mt-28 rounded-2xl border border-black/20 bg-white/60 p-4"
+      >
         <SectionHeader title="DLC & Update History" />
         <ul className="mt-2 space-y-2 text-sm text-black/75">
           {game.dlcAndPatchHistory.map((entry) => (
@@ -361,7 +398,10 @@ export default function GameDetailPage({ params }: GameDetailPageProps) {
         </ul>
       </section>
 
-      <section id="reception-sales" className="scroll-mt-28 rounded-2xl border border-black/20 bg-white/60 p-4">
+      <section
+        id="reception-sales"
+        className="games-detail-section scroll-mt-28 rounded-2xl border border-black/20 bg-white/60 p-4"
+      >
         <SectionHeader title="Reception & Sales (As Of)" />
         <div className="mt-2 space-y-2">
           {game.receptionAndSales.map((metric) => (
@@ -374,7 +414,10 @@ export default function GameDetailPage({ params }: GameDetailPageProps) {
         </div>
       </section>
 
-      <section id="references-verification" className="scroll-mt-28 rounded-2xl border border-black/20 bg-white/60 p-4">
+      <section
+        id="references-verification"
+        className="games-detail-section scroll-mt-28 rounded-2xl border border-black/20 bg-white/60 p-4"
+      >
         <SectionHeader title="References & Verification" />
         <FactRow label="Last Verified On" value={game.lastVerifiedOn} />
         <FactRow label="Section Source Coverage" value={hasCompleteSectionMap ? "Complete" : "Incomplete"} />
@@ -385,13 +428,18 @@ export default function GameDetailPage({ params }: GameDetailPageProps) {
         </div>
       </section>
 
-      <ReferencesBlock title="Reference Registry" references={referencesForBlock} />
+      <div className="games-detail-references">
+        <ReferencesBlock title="Reference Registry" references={referencesForBlock} />
+      </div>
     </article>
   );
 
   const rightPanel = (
-    <section className="space-y-4">
-      <section className="rounded-2xl border border-black/20 bg-white/60 p-4">
+    <section className="games-detail-right space-y-4">
+      <section
+        id="game-navigation"
+        className="games-detail-sidebar-section rounded-2xl border border-black/20 bg-white/60 p-4"
+      >
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">Game Navigation</p>
         <div className="mt-2 flex flex-wrap gap-2">
           <FavoriteStarButton
@@ -421,7 +469,10 @@ export default function GameDetailPage({ params }: GameDetailPageProps) {
         </div>
       </section>
 
-      <section className="rounded-2xl border border-black/20 bg-white/60 p-4">
+      <section
+        id="game-snapshot"
+        className="games-detail-sidebar-section rounded-2xl border border-black/20 bg-white/60 p-4"
+      >
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">Snapshot</p>
         <div className="mt-2 space-y-2">
           <FactRow label="Generation" value={game.generationLabel} />
@@ -432,7 +483,10 @@ export default function GameDetailPage({ params }: GameDetailPageProps) {
         </div>
       </section>
 
-      <section className="rounded-2xl border border-black/20 bg-white/60 p-4">
+      <section
+        id="game-jump-nav"
+        className="games-detail-sidebar-section rounded-2xl border border-black/20 bg-white/60 p-4"
+      >
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">Jump Nav</p>
         <div className="mt-2 space-y-1.5">
           {SECTION_NAV.map((entry) => (
@@ -447,7 +501,10 @@ export default function GameDetailPage({ params }: GameDetailPageProps) {
         </div>
       </section>
 
-      <section className="rounded-2xl border border-black/20 bg-white/60 p-4">
+      <section
+        id="game-related"
+        className="games-detail-sidebar-section rounded-2xl border border-black/20 bg-white/60 p-4"
+      >
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">Related Games</p>
         <div className="mt-2 grid gap-2">
           {relatedEntries.length > 0 ? (
@@ -500,13 +557,20 @@ export default function GameDetailPage({ params }: GameDetailPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
-      <main className="pokemon-detail-page mx-auto min-h-screen w-full max-w-[2560px] px-2 py-5 sm:px-4 sm:py-8 lg:px-5">
+      <main className="games-detail-page pokemon-detail-page mx-auto min-h-screen w-full max-w-[2560px] px-2 py-5 sm:px-4 sm:py-8 lg:px-5">
         <PokedexFrame
           title={game.title}
           status="success"
           leftPanel={leftPanel}
           rightPanel={rightPanel}
           rightPanelSticky
+          className="games-detail-frame"
+        />
+        <MobileDexBottomNav
+          activeKey="explore"
+          exploreHref="/games"
+          settingsHref={`/games/${game.slug}#game-jump-nav`}
+          className="games-detail-bottom-nav"
         />
       </main>
     </>

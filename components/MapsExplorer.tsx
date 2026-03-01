@@ -14,6 +14,7 @@ import {
 } from "react";
 import { EncyclopediaDataTable } from "@/components/EncyclopediaDataTable";
 import { FavoriteStarButton } from "@/components/FavoriteStarButton";
+import { MobileDexBottomNav } from "@/components/MobileDexBottomNav";
 import { PokedexFrame } from "@/components/PokedexFrame";
 import { VirtualizedStack } from "@/components/VirtualizedStack";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
@@ -288,7 +289,10 @@ function InfoChip({
       : undefined;
 
   return (
-    <span style={neutralStyle} className={cn("rounded-md border px-2 py-1 text-xs", toneClass)}>
+    <span
+      style={neutralStyle}
+      className={cn("maps-mobile-info-chip rounded-md border px-2 py-1 text-xs", toneClass)}
+    >
       {value}
     </span>
   );
@@ -304,7 +308,7 @@ function DetailSection({
   children: ReactNode;
 }) {
   return (
-    <section className="rounded-2xl border border-black/20 bg-[linear-gradient(160deg,rgba(255,255,255,0.76),rgba(239,245,238,0.7))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.72),0_8px_16px_rgba(0,0,0,0.08)]">
+    <section className="maps-mobile-detail-section rounded-2xl border border-black/20 bg-[linear-gradient(160deg,rgba(255,255,255,0.76),rgba(239,245,238,0.7))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.72),0_8px_16px_rgba(0,0,0,0.08)]">
       <div className="mb-3 flex items-start gap-2">
         <span className="mt-1 h-2 w-2 rounded-full border border-black/35 bg-[var(--theme-accent)] shadow-[0_0_10px_var(--theme-accent-soft)]" />
         <div>
@@ -327,7 +331,7 @@ function StatCard({
   value: string;
 }) {
   return (
-    <div className="rounded-lg border border-black/20 bg-[linear-gradient(155deg,rgba(255,255,255,0.85),rgba(238,244,237,0.78))] px-3 py-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.75)]">
+    <div className="maps-mobile-stat-card rounded-lg border border-black/20 bg-[linear-gradient(155deg,rgba(255,255,255,0.85),rgba(238,244,237,0.78))] px-3 py-2 shadow-[inset_0_1px_0_rgba(255,255,255,0.75)]">
       <p className="pixel-font text-[9px] uppercase tracking-[0.12em] text-black/58">
         {label}
       </p>
@@ -347,9 +351,20 @@ export function MapsExplorer() {
   const [catalogDensity, setCatalogDensity] = useState<MapCatalogDensity>("detail");
   const [selectedRegionId, setSelectedRegionId] = useState<number | null>(null);
   const [selectedPointId, setSelectedPointId] = useState<string | null>(null);
+  const controlsRef = useRef<HTMLDivElement | null>(null);
+  const catalogRef = useRef<HTMLElement | null>(null);
+  const detailRef = useRef<HTMLDivElement | null>(null);
   const debouncedSearch = useDebouncedValue(searchInput, 220);
   const didMountSearchRef = useRef(false);
   const regionSearchIndex = useMemo(() => buildRegionSearchIndex(regionMaps), [regionMaps]);
+
+  const scrollToElement = useCallback((element: HTMLElement | null) => {
+    if (!element) {
+      return;
+    }
+
+    element.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
 
   const handleSearchChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setSearchInput(event.target.value);
@@ -394,9 +409,25 @@ export function MapsExplorer() {
         playUiTone(current === regionId ? "switch" : "select");
         return regionId;
       });
+
+      if (typeof window !== "undefined" && window.innerWidth < 768) {
+        window.requestAnimationFrame(() => {
+          scrollToElement(detailRef.current);
+        });
+      }
     },
-    [playUiTone]
+    [playUiTone, scrollToElement]
   );
+
+  const handleMobileExplore = useCallback(() => {
+    playUiTone("switch");
+    scrollToElement(catalogRef.current);
+  }, [playUiTone, scrollToElement]);
+
+  const handleMobileSettings = useCallback(() => {
+    playUiTone("switch");
+    scrollToElement(controlsRef.current);
+  }, [playUiTone, scrollToElement]);
 
   const handleSelectPoint = useCallback(
     (pointId: string) => {
@@ -580,8 +611,11 @@ export function MapsExplorer() {
   const catalogItemGap = isCompactDensity ? 6 : 8;
 
   const leftPanel = (
-    <section className="dex-reading-copy space-y-4">
-      <div className="rounded-2xl border border-black/20 bg-[linear-gradient(155deg,rgba(255,255,255,0.66),rgba(228,239,225,0.58))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.72),0_8px_16px_rgba(0,0,0,0.08)]">
+    <section className="maps-mobile-left dex-reading-copy space-y-4">
+      <div
+        ref={controlsRef}
+        className="maps-mobile-controls rounded-2xl border border-black/20 bg-[linear-gradient(155deg,rgba(255,255,255,0.66),rgba(228,239,225,0.58))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.72),0_8px_16px_rgba(0,0,0,0.08)]"
+      >
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
           Map Explorer
         </p>
@@ -688,7 +722,10 @@ export function MapsExplorer() {
         </div>
       </div>
 
-      <section className="rounded-2xl border border-black/20 bg-[linear-gradient(160deg,rgba(255,255,255,0.6),rgba(230,241,227,0.55))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]">
+      <section
+        ref={catalogRef}
+        className="maps-mobile-catalog rounded-2xl border border-black/20 bg-[linear-gradient(160deg,rgba(255,255,255,0.6),rgba(230,241,227,0.55))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.72)]"
+      >
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
           Region Catalog
         </p>
@@ -706,7 +743,7 @@ export function MapsExplorer() {
             itemHeight={catalogItemHeight}
             gap={catalogItemGap}
             overscan={6}
-            className="pokemon-scrollbar mt-3 h-[58vh] min-h-[360px] max-h-[86vh] sm:h-[64vh] sm:min-h-[520px] sm:max-h-[88vh] lg:h-[72vh] lg:min-h-[760px] lg:max-h-[900px] overflow-y-scroll pr-1"
+            className="maps-mobile-catalog-list pokemon-scrollbar mt-3 h-[58vh] min-h-[360px] max-h-[86vh] sm:h-[64vh] sm:min-h-[520px] sm:max-h-[88vh] lg:h-[72vh] lg:min-h-[760px] lg:max-h-[900px] overflow-y-scroll pr-1"
             renderItem={(region) => {
               const isSelected = region.id === selectedRegionId;
 
@@ -715,7 +752,7 @@ export function MapsExplorer() {
                   type="button"
                   onClick={() => handleSelectRegion(region.id)}
                   className={cn(
-                    "relative h-full w-full overflow-hidden rounded-lg border text-left transition",
+                    "maps-mobile-catalog-item relative h-full w-full overflow-hidden rounded-lg border text-left transition",
                     isCompactDensity ? "px-2.5 py-1.5" : "px-3 py-2",
                     isSelected
                       ? "border-[var(--theme-accent)] bg-[linear-gradient(145deg,var(--theme-accent-soft),rgba(255,255,255,0.5))] text-black/85 pokedex-accent-glow before:absolute before:inset-y-0 before:left-0 before:w-1 before:bg-[var(--theme-accent)]"
@@ -781,8 +818,11 @@ export function MapsExplorer() {
   );
 
   const rightPanel = (
-    <section className="dex-reading-copy space-y-4">
-      <div className="rounded-2xl border border-black/20 bg-[linear-gradient(165deg,rgba(255,255,255,0.6),rgba(228,239,227,0.52))] p-4 min-h-[420px] sm:min-h-[560px] lg:min-h-[760px] shadow-[inset_0_1px_0_rgba(255,255,255,0.72),0_10px_18px_rgba(0,0,0,0.07)]">
+    <section className="maps-mobile-right dex-reading-copy space-y-4">
+      <div
+        ref={detailRef}
+        className="maps-mobile-detail-shell rounded-2xl border border-black/20 bg-[linear-gradient(165deg,rgba(255,255,255,0.6),rgba(228,239,227,0.52))] p-4 min-h-[420px] sm:min-h-[560px] lg:min-h-[760px] shadow-[inset_0_1px_0_rgba(255,255,255,0.72),0_10px_18px_rgba(0,0,0,0.07)]"
+      >
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
           Region Map Details
         </p>
@@ -792,9 +832,9 @@ export function MapsExplorer() {
             Select a region to open map intelligence.
           </p>
         ) : (
-          <div className="pokemon-scrollbar mt-3 max-h-[70vh] sm:max-h-[75vh] lg:max-h-[79vh] overflow-y-auto pr-1">
+          <div className="maps-mobile-detail-scroll pokemon-scrollbar mt-3 max-h-[70vh] sm:max-h-[75vh] lg:max-h-[79vh] overflow-y-auto pr-1">
             <div className="space-y-4">
-              <div className="rounded-2xl border border-black/20 bg-[radial-gradient(circle_at_16%_10%,rgba(255,255,255,0.48),transparent_34%),linear-gradient(150deg,rgba(248,251,248,0.95),rgba(229,238,226,0.87))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.76),0_10px_18px_rgba(0,0,0,0.08)]">
+              <div className="maps-mobile-region-hero rounded-2xl border border-black/20 bg-[radial-gradient(circle_at_16%_10%,rgba(255,255,255,0.48),transparent_34%),linear-gradient(150deg,rgba(248,251,248,0.95),rgba(229,238,226,0.87))] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.76),0_10px_18px_rgba(0,0,0,0.08)]">
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div>
                     <p className="pixel-font text-[10px] uppercase tracking-[0.14em] text-black/60">
@@ -827,7 +867,7 @@ export function MapsExplorer() {
                   </div>
                 </div>
 
-                <div className="relative mt-4 h-[280px] overflow-hidden rounded-xl border border-black/20 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.45),transparent_36%),linear-gradient(165deg,rgba(244,248,243,0.92),rgba(223,233,221,0.88))] sm:h-[340px]">
+                <div className="maps-mobile-region-stage relative mt-4 h-[280px] overflow-hidden rounded-xl border border-black/20 bg-[radial-gradient(circle_at_20%_10%,rgba(255,255,255,0.45),transparent_36%),linear-gradient(165deg,rgba(244,248,243,0.92),rgba(223,233,221,0.88))] sm:h-[340px]">
                   <Image
                     src={selectedRegionMapImageSrc ?? selectedRegion.mapImageUrl}
                     alt={selectedRegion.mapImageAlt}
@@ -1148,15 +1188,20 @@ export function MapsExplorer() {
   );
 
   return (
-    <div style={mapThemeStyle}>
+    <div style={mapThemeStyle} className="maps-mobile-page">
       <PokedexFrame
         title="Pokemon Region Maps Encyclopedia"
         status={frameStatus}
-        className="maps-region-frame"
+        className="maps-region-frame maps-mobile-frame"
         leftPanel={leftPanel}
         rightPanel={rightPanel}
+      />
+      <MobileDexBottomNav
+        activeKey="explore"
+        onExplore={handleMobileExplore}
+        onSettings={handleMobileSettings}
+        className="maps-mobile-bottom-nav"
       />
     </div>
   );
 }
-

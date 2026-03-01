@@ -1,0 +1,423 @@
+@media (max-width: 767px) {
+  .games-mobile-page,
+  .games-detail-page {
+    padding:
+      max(0.42rem, env(safe-area-inset-top))
+      max(0.3rem, env(safe-area-inset-right))
+      calc(5.8rem + env(safe-area-inset-bottom))
+      max(0.3rem, env(safe-area-inset-left));
+  }
+
+  .games-mobile-frame.pokedex-shell,
+  .games-detail-frame.pokedex-shell {
+    border-radius: 1.72rem;
+    padding: 0.42rem;
+    background:
+      linear-gradient(155deg, #ef6059 0%, #d33737 32%, #b41e25 100%);
+    box-shadow:
+      inset 2px 2px 0 rgba(255, 255, 255, 0.26),
+      inset -9px -12px 20px rgba(0, 0, 0, 0.24),
+      0 18px 34px rgba(0, 0, 0, 0.28);
+  }
+
+  .games-mobile-frame .pokedex-home-shortcut,
+  .games-mobile-frame .pokedex-header-actions-cluster,
+  .games-mobile-frame .explorer-trainer-name,
+  .games-mobile-frame .pokedex-header-guest-btn-register,
+  .games-detail-frame .pokedex-home-shortcut,
+  .games-detail-frame .pokedex-header-actions-cluster,
+  .games-detail-frame .explorer-trainer-name,
+  .games-detail-frame .pokedex-header-guest-btn-register {
+    display: none;
+  }
+
+  .games-mobile-frame > .relative,
+  .games-detail-frame > .relative {
+    gap: 0.58rem;
+  }
+
+  .games-mobile-frame > .relative > header,
+  .games-detail-frame > .relative > header {
+    border-radius: 0.86rem;
+    margin: 0.14rem 0.14rem 0;
+    padding: 0.52rem 0.62rem;
+    background: rgba(0, 0, 0, 0.14);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.12),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  .games-mobile-frame > .relative > header > div,
+  .games-detail-frame > .relative > header > div {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 0.46rem;
+  }
+
+  .games-mobile-frame .pokedex-header-trainer-hub,
+  .games-detail-frame .pokedex-header-trainer-hub {
+    min-width: 0;
+    padding: 0.15rem;
+    border-radius: 0.92rem;
+  }
+
+  .games-mobile-frame .pokedex-header-trainer-user,
+  .games-detail-frame .pokedex-header-trainer-user {
+    gap: 0;
+    padding: 0;
+  }
+
+  .games-mobile-frame .explorer-trainer-avatar,
+  .games-detail-frame .explorer-trainer-avatar {
+    width: 1.95rem;
+    height: 1.95rem;
+  }
+
+  .games-mobile-frame .retro-screen,
+  .games-detail-frame .retro-screen,
+  .games-detail-frame .metal-plate {
+    min-height: auto;
+    border-radius: 1.08rem;
+    padding: 0.52rem;
+  }
+
+  .games-mobile-frame .retro-screen,
+  .games-detail-frame .retro-screen,
+  .games-detail-frame .metal-plate {
+    background:
+      radial-gradient(circle at 22% 10%, rgba(228, 255, 206, 0.44), transparent 28%),
+      linear-gradient(180deg, rgba(155, 223, 114, 0.96), rgba(104, 170, 82, 0.96));
+    box-shadow:
+      inset 0 1px 0 rgba(237, 255, 221, 0.48),
+      inset 0 -1px 0 rgba(34, 73, 26, 0.36),
+      0 10px 20px rgba(47, 88, 39, 0.12);
+  }
+
+  .games-mobile-frame .scan-overlay,
+  .games-detail-frame .scan-overlay {
+    opacity: 0.38;
+  }
+
+  .games-mobile-index,
+  .games-detail-left,
+  .games-detail-right {
+    gap: 0.68rem;
+  }
+
+  .games-mobile-hero,
+  .games-mobile-quicklinks,
+  .games-mobile-catalog-section,
+  .games-mobile-coverage,
+  .games-detail-left > section,
+  .games-detail-right > section,
+  .games-detail-references > section {
+    border-radius: 0.98rem;
+    padding: 0.68rem !important;
+    background:
+      linear-gradient(180deg, rgba(251, 255, 247, 0.72), rgba(227, 240, 219, 0.62));
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.55),
+      inset 0 -1px 0 rgba(68, 92, 55, 0.08),
+      0 6px 18px rgba(41, 67, 32, 0.08);
+  }
+
+  .games-mobile-hero h1,
+  .games-mobile-quicklinks p.pixel-font,
+  .games-mobile-catalog-section p.pixel-font,
+  .games-mobile-coverage p.pixel-font {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+  }
+
+  .games-mobile-info-chip {
+    border-radius: 0.72rem;
+    padding: 0.28rem 0.48rem;
+    font-size: 0.62rem;
+  }
+
+  .games-mobile-quicklink-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.44rem;
+  }
+
+  .games-mobile-quicklink {
+    min-height: 2.2rem;
+    justify-content: center;
+    border-radius: 0.82rem;
+    padding: 0.44rem 0.5rem;
+    text-align: center;
+    font-size: 0.64rem;
+  }
+
+  .games-mobile-section-head {
+    gap: 0.36rem;
+  }
+
+  .games-mobile-section-head > div p:last-child,
+  .games-mobile-coverage p:last-child {
+    font-size: 0.78rem;
+    line-height: 1.4;
+  }
+
+  .games-mobile-section-count {
+    font-size: 0.62rem;
+  }
+
+  .games-mobile-catalog-shell {
+    border-radius: 0.92rem;
+    padding: 0.44rem;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.06)),
+      rgba(28, 45, 22, 0.08);
+  }
+
+  .games-mobile-catalog-grid {
+    gap: 0.52rem !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .games-mobile-module-nav {
+    display: none;
+  }
+
+  .games-mobile-card-shell {
+    min-height: 0 !important;
+    display: flex;
+    flex-direction: column;
+    aspect-ratio: 0.88;
+    border-radius: 0.92rem;
+    padding: 0.54rem 0.46rem 0.46rem !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.6),
+      inset 0 -1px 0 rgba(77, 90, 72, 0.1),
+      0 8px 16px rgba(0, 0, 0, 0.08);
+  }
+
+  .games-mobile-card-head {
+    gap: 0.36rem;
+    align-items: flex-start;
+  }
+
+  .games-mobile-card-copy {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  .games-mobile-card-copy .pokemon-card-index {
+    font-size: 7px;
+    line-height: 1;
+  }
+
+  .games-mobile-card-copy .pokemon-card-name {
+    margin-top: 0.12rem;
+    min-height: 2.1em;
+    overflow: visible;
+    white-space: normal;
+    text-overflow: clip;
+    line-height: 1.04;
+    font-size: 8.2px;
+  }
+
+  .games-mobile-card-copy .pokemon-card-generation {
+    display: none;
+  }
+
+  .games-mobile-card-favorite-wrap .favorite-star-btn {
+    width: 1.8rem;
+    height: 1.8rem;
+    min-width: 1.8rem;
+    min-height: 1.8rem;
+    font-size: 11px;
+  }
+
+  .games-mobile-card-accent {
+    margin-top: 0.3rem;
+    height: 0.26rem !important;
+  }
+
+  .games-mobile-card-content {
+    margin-top: 0.34rem;
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.3rem;
+    flex: 1 1 auto;
+  }
+
+  .games-mobile-card-art-shell {
+    min-width: 0;
+    justify-content: center;
+  }
+
+  .games-mobile-card-art {
+    width: 4.2rem !important;
+    height: 4.2rem !important;
+  }
+
+  .games-mobile-card-types {
+    min-width: 0;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 0.24rem;
+  }
+
+  .games-mobile-card-types .type-badge {
+    min-width: 4.2rem !important;
+    height: 1rem !important;
+    padding-inline: 0.32rem !important;
+    font-size: 5.8px !important;
+  }
+
+  .games-mobile-card-footer {
+    margin-top: auto;
+    gap: 0.34rem;
+  }
+
+  .games-mobile-card-release {
+    padding: 0.26rem 0.42rem;
+    font-size: 0.56rem;
+  }
+
+  .games-mobile-card-entry {
+    min-width: 3.85rem !important;
+    padding-inline: 0.42rem !important;
+    padding-block: 0.28rem !important;
+    font-size: 6.5px !important;
+  }
+
+  .games-detail-left > section .rounded-xl,
+  .games-detail-right > section .rounded-xl,
+  .games-detail-references > section .rounded-xl {
+    border-radius: 0.84rem;
+    padding: 0.58rem !important;
+  }
+
+  .games-detail-left > section .rounded-lg,
+  .games-detail-right > section .rounded-lg,
+  .games-detail-references > section .rounded-lg {
+    border-radius: 0.76rem;
+    padding: 0.52rem 0.64rem !important;
+  }
+
+  .games-detail-left > section .pixel-font,
+  .games-detail-right > section .pixel-font,
+  .games-detail-references > section .pixel-font {
+    letter-spacing: 0.11em;
+  }
+
+  .games-detail-left > section h1 {
+    font-size: 0.96rem;
+    letter-spacing: 0.08em;
+  }
+
+  .games-detail-left > section p,
+  .games-detail-right > section p,
+  .games-detail-left > section li,
+  .games-detail-right > section li,
+  .games-detail-references > section li {
+    font-size: 0.76rem;
+    line-height: 1.42;
+  }
+
+  .games-detail-hero-grid {
+    grid-template-columns: 1fr;
+    gap: 0.52rem;
+  }
+
+  .games-detail-hero-art {
+    width: 100%;
+    max-width: 12rem;
+    margin-inline: auto;
+    border-radius: 0.9rem;
+  }
+
+  .games-detail-hero-facts {
+    gap: 0.38rem;
+  }
+
+  .games-detail-alt-titles {
+    margin-top: 0.46rem !important;
+  }
+
+  .games-detail-sidebar-section .favorite-star-btn {
+    min-height: 2rem;
+  }
+
+  .games-detail-sidebar-section a,
+  .games-detail-sidebar-section .gbc-nav-link {
+    border-radius: 0.76rem;
+    font-size: 0.68rem;
+  }
+}
+
+@media (min-width: 390px) and (max-width: 767px) {
+  .games-detail-hero-grid {
+    grid-template-columns: minmax(0, 0.88fr) minmax(0, 1.12fr);
+    align-items: center;
+  }
+
+  .games-detail-hero-art {
+    max-width: 10.5rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .games-mobile-frame > .relative > header,
+  .games-detail-frame > .relative > header {
+    padding: 0.44rem 0.5rem;
+  }
+
+  .games-mobile-frame > .relative > header .pixel-font,
+  .games-detail-frame > .relative > header .pixel-font {
+    font-size: 9px;
+    letter-spacing: 0.08em;
+  }
+
+  .games-mobile-frame .explorer-trainer-avatar,
+  .games-detail-frame .explorer-trainer-avatar {
+    width: 1.7rem;
+    height: 1.7rem;
+  }
+
+  .games-mobile-quicklink-row {
+    grid-template-columns: 1fr;
+  }
+
+  .games-mobile-card-shell {
+    aspect-ratio: 0.84;
+    padding: 0.48rem 0.4rem 0.42rem !important;
+  }
+
+  .games-mobile-card-art {
+    width: 3.7rem !important;
+    height: 3.7rem !important;
+  }
+
+  .games-mobile-card-types .type-badge {
+    min-width: 3.75rem !important;
+    font-size: 5.2px !important;
+  }
+
+  .games-detail-left > section,
+  .games-detail-right > section,
+  .games-detail-references > section {
+    padding: 0.56rem !important;
+  }
+
+  .games-detail-hero-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .games-detail-hero-art {
+    max-width: 9.4rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .games-mobile-card-shell,
+  .games-mobile-frame.pokedex-shell,
+  .games-detail-frame.pokedex-shell {
+    transition: none !important;
+    animation: none !important;
+  }
+}

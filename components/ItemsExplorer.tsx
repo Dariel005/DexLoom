@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { FavoriteStarButton } from "@/components/FavoriteStarButton";
 import { ExplorerEmptyState, ExplorerSearchBar } from "@/components/explorer";
+import { MobileDexBottomNav } from "@/components/MobileDexBottomNav";
 import { PokedexFrame } from "@/components/PokedexFrame";
 import { RouteTransitionLink } from "@/components/RouteTransitionLink";
 import { VirtualizedGrid } from "@/components/VirtualizedGrid";
@@ -103,7 +104,7 @@ function DetailSection({
   };
 
   return (
-    <section className="rounded-2xl border p-4" style={style}>
+    <section className="items-detail-section rounded-2xl border p-4" style={style}>
       <div className="mb-3">
         <h2
           className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/75"
@@ -120,6 +121,9 @@ function DetailSection({
 
 export function ItemsExplorer() {
   const audioContextRef = useRef<AudioContext | null>(null);
+  const controlsRef = useRef<HTMLDivElement | null>(null);
+  const catalogRef = useRef<HTMLElement | null>(null);
+  const detailRef = useRef<HTMLDivElement | null>(null);
   const [searchInput, setSearchInput] = useState("");
   const [activeKitKey, setActiveKitKey] = useState<string | null>(null);
   const [activeSection, setActiveSection] =
@@ -136,10 +140,25 @@ export function ItemsExplorer() {
   );
   const [detailHdBroken, setDetailHdBroken] = useState(false);
   const [detailDefaultBroken, setDetailDefaultBroken] = useState(false);
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
   const debouncedSearch = useDebouncedValue(searchInput, 220);
   const soundEnabled = useSoundStore((state) => state.enabled);
   const soundVolume = useSoundStore((state) => state.volume);
   const soundVolumePercent = Math.round(soundVolume * 100);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return;
+    }
+
+    const updateViewport = () => {
+      setIsMobileViewport(window.innerWidth < 768);
+    };
+
+    updateViewport();
+    window.addEventListener("resize", updateViewport);
+    return () => window.removeEventListener("resize", updateViewport);
+  }, []);
 
   const playTone = useCallback(
     (tone: ItemToneKey) => {
@@ -457,6 +476,38 @@ export function ItemsExplorer() {
     [playTone]
   );
 
+  const scrollToElement = useCallback((element: HTMLElement | null) => {
+    if (!element) {
+      return;
+    }
+
+    element.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, []);
+
+  const handleSelectItem = useCallback(
+    (itemId: number) => {
+      playTone("select");
+      setSelectedItemId(itemId);
+
+      if (typeof window !== "undefined" && window.innerWidth < 768) {
+        window.requestAnimationFrame(() => {
+          scrollToElement(detailRef.current);
+        });
+      }
+    },
+    [playTone, scrollToElement]
+  );
+
+  const handleMobileExplore = useCallback(() => {
+    playTone("toggle");
+    scrollToElement(catalogRef.current);
+  }, [playTone, scrollToElement]);
+
+  const handleMobileSettings = useCallback(() => {
+    playTone("toggle");
+    scrollToElement(controlsRef.current);
+  }, [playTone, scrollToElement]);
+
   const toggleCompareSelection = (itemId: number) => {
     playTone("compare");
     setCompareSelection((current) => {
@@ -473,7 +524,7 @@ export function ItemsExplorer() {
   };
 
   const leftPanel = (
-    <section className="flex h-full min-h-0 flex-col gap-4">
+    <section className="items-mobile-left flex h-full min-h-0 flex-col gap-4">
       <div className="flex flex-wrap items-center gap-2">
         <RouteTransitionLink
           href="/"
@@ -483,7 +534,10 @@ export function ItemsExplorer() {
         </RouteTransitionLink>
       </div>
 
-      <div className="rounded-2xl border border-black/20 bg-white/55 p-3">
+      <div
+        ref={controlsRef}
+        className="items-mobile-controls rounded-2xl border border-black/20 bg-white/55 p-3"
+      >
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
           Item Explorer
         </p>
@@ -531,31 +585,6 @@ export function ItemsExplorer() {
             }
           />
 
-          <button
-            type="button"
-            onClick={() => handleToggleAuxPanel("filters")}
-            className={cn(
-              "pixel-font self-end rounded-lg border px-2.5 py-2 text-[10px] uppercase tracking-[0.14em] transition sm:min-w-[92px] sm:self-auto",
-              activeAuxPanel === "filters"
-                ? "border-[var(--theme-accent)] bg-[var(--theme-accent-soft)] text-black/85 pokedex-accent-glow"
-                : "border-black/20 bg-white/65 text-black/70 hover:bg-white/85"
-            )}
-          >
-            Filters
-          </button>
-
-          <button
-            type="button"
-            onClick={() => handleToggleAuxPanel("sound")}
-            className={cn(
-              "pixel-font self-end rounded-lg border px-2.5 py-2 text-[10px] uppercase tracking-[0.14em] transition sm:min-w-[92px] sm:self-auto",
-              activeAuxPanel === "sound"
-                ? "border-[var(--theme-accent)] bg-[var(--theme-accent-soft)] text-black/85 pokedex-accent-glow"
-                : "border-black/20 bg-white/65 text-black/70 hover:bg-white/85"
-            )}
-          >
-            Audio
-          </button>
         </div>
 
         <div className="mt-2 grid gap-2 sm:grid-cols-2">
@@ -754,7 +783,10 @@ export function ItemsExplorer() {
         </AnimatePresence>
       </div>
 
-      <section className="flex min-h-[420px] flex-1 flex-col rounded-2xl border border-black/20 bg-white/55 p-3 sm:min-h-[620px] lg:min-h-[760px]">
+      <section
+        ref={catalogRef}
+        className="items-mobile-catalog flex min-h-[420px] flex-1 flex-col rounded-2xl border border-black/20 bg-white/55 p-3 sm:min-h-[620px] lg:min-h-[760px]"
+      >
         <p className="pixel-font text-[10px] uppercase tracking-[0.16em] text-black/70">
           {activeSectionMeta.label}
         </p>
@@ -767,7 +799,7 @@ export function ItemsExplorer() {
             <div
               className="grid gap-2"
               style={{
-                gridTemplateColumns: `repeat(auto-fill,minmax(${ITEM_CARD_MIN_WIDTH}px,1fr))`
+                gridTemplateColumns: `repeat(auto-fill,minmax(${isMobileViewport ? 136 : ITEM_CARD_MIN_WIDTH}px,1fr))`
               }}
             >
               {Array.from({ length: 12 }).map((_, index) => (
@@ -792,11 +824,11 @@ export function ItemsExplorer() {
             key={`items-grid-${activeSection}-${categoryFilter}-${debouncedSearch}-${safePage}`}
             items={pagedItems}
             itemKey={(item) => item.id}
-            minColumnWidth={ITEM_CARD_MIN_WIDTH}
-            itemHeight={ITEM_CARD_MIN_HEIGHT}
+            minColumnWidth={isMobileViewport ? 136 : ITEM_CARD_MIN_WIDTH}
+            itemHeight={isMobileViewport ? 208 : ITEM_CARD_MIN_HEIGHT}
             gap={8}
             overscanRows={3}
-            className={ITEM_GRID_SCROLL_VIEWPORT_CLASSNAME}
+            className={`items-mobile-grid-list ${ITEM_GRID_SCROLL_VIEWPORT_CLASSNAME}`}
             renderItem={(item) => {
               const isCompared = compareSelection.includes(item.id);
               const isSelected = selectedItemId === item.id;
@@ -823,10 +855,7 @@ export function ItemsExplorer() {
                 >
                   <button
                     type="button"
-                    onClick={() => {
-                      playTone("select");
-                      setSelectedItemId(item.id);
-                    }}
+                    onClick={() => handleSelectItem(item.id)}
                     className="no-gbc-btn relative z-[2] flex h-full w-full flex-col rounded-xl border border-black/12 bg-[linear-gradient(155deg,rgba(255,255,255,0.74),rgba(243,248,242,0.58))] px-2.5 py-2.5 text-left shadow-[inset_0_1px_0_rgba(255,255,255,0.82)] transition group-hover:border-black/20 group-hover:bg-[linear-gradient(155deg,rgba(255,255,255,0.8),rgba(238,246,236,0.66))]"
                   >
                     <div className="flex items-start justify-between gap-2">
@@ -838,7 +867,7 @@ export function ItemsExplorer() {
                       </span>
                     </div>
 
-                    <div className="relative mx-auto mt-2 h-[98px] w-[98px]">
+                    <div className="items-mobile-card-art relative mx-auto mt-2 h-[98px] w-[98px]">
                       {!brokenHdSpriteIds.has(item.id) ? (
                         <Image
                           src={item.spriteHdUrl}
@@ -866,10 +895,10 @@ export function ItemsExplorer() {
                       )}
                     </div>
 
-                    <p className="pixel-font mt-2 line-clamp-2 min-h-[2.45em] text-[11px] uppercase tracking-[0.12em] text-black/86">
+                    <p className="items-mobile-card-name pixel-font mt-2 line-clamp-2 min-h-[2.45em] text-[11px] uppercase tracking-[0.12em] text-black/86">
                       {item.displayName}
                     </p>
-                    <p className="mt-1 line-clamp-2 text-[11px] text-black/62">{item.category}</p>
+                    <p className="items-mobile-card-category mt-1 line-clamp-2 text-[11px] text-black/62">{item.category}</p>
 
                     <div className="mt-auto pt-2">
                       <span
@@ -945,10 +974,10 @@ export function ItemsExplorer() {
   );
 
   const rightPanel = (
-    <section className="space-y-4">
+    <section className="items-mobile-right space-y-4">
       {isCompareModeEnabled ? (
         <div
-          className="rounded-2xl border p-4 min-h-[220px]"
+          className="items-mobile-compare rounded-2xl border p-4 min-h-[220px]"
           style={{
             borderColor: activeSectionTheme.chip,
             background: `linear-gradient(165deg, ${activeSectionTheme.soft}, rgba(255,255,255,0.74))`
@@ -1024,7 +1053,8 @@ export function ItemsExplorer() {
       ) : null}
 
       <div
-        className="rounded-2xl border p-4 min-h-[420px] sm:min-h-[620px] lg:min-h-[760px]"
+        ref={detailRef}
+        className="items-mobile-detail-shell rounded-2xl border p-4 min-h-[420px] sm:min-h-[620px] lg:min-h-[760px]"
         style={{
           borderColor: selectedItemTheme.chip,
           background: `linear-gradient(165deg, ${selectedItemTheme.soft}, rgba(255,255,255,0.72))`
@@ -1054,9 +1084,9 @@ export function ItemsExplorer() {
         ) : null}
 
         {selectedItem ? (
-          <div className="mt-3 space-y-4">
+          <div className="items-mobile-detail-stack mt-3 space-y-4">
             <div
-              className="relative overflow-hidden rounded-2xl border p-4"
+              className="items-mobile-detail-hero relative overflow-hidden rounded-2xl border p-4"
               style={{
                 borderColor: selectedItemTheme.chip,
                 background: `linear-gradient(140deg, ${selectedItemTheme.from}, ${selectedItemTheme.to})`
@@ -1357,13 +1387,22 @@ export function ItemsExplorer() {
   );
 
   return (
-    <PokedexFrame
-      title="Pokemon Items Encyclopedia"
-      status={frameStatus}
-      leftPanel={leftPanel}
-      rightPanel={rightPanel}
-      rightPanelSticky
-    />
+    <div className="encyclopedia-mobile-page">
+      <PokedexFrame
+        title="Pokemon Items Encyclopedia"
+        status={frameStatus}
+        leftPanel={leftPanel}
+        rightPanel={rightPanel}
+        rightPanelSticky
+        className="encyclopedia-mobile-frame items-mobile-frame"
+      />
+      <MobileDexBottomNav
+        activeKey="explore"
+        onExplore={handleMobileExplore}
+        onSettings={handleMobileSettings}
+        className="encyclopedia-mobile-bottom-nav"
+      />
+    </div>
   );
 }
 
