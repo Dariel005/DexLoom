@@ -36,19 +36,35 @@ export const metadata: Metadata = {
     template: "%s | DexLoom"
   },
   description:
-    "DexLoom: interactive explorer with advanced filters, evolutions, and SEO-ready Pokemon entries.",
+    "DexLoom es una Pokedex interactiva con Pokemon, mega evolutions, cards, maps, games, trainer social y herramientas avanzadas en una sola interfaz.",
   openGraph: {
     title: "DexLoom",
     description:
-      "A high-performance interactive Pokedex with smooth animations and official data.",
+      "Explora Pokemon, mega evolutions, TCG cards, maps, games, favorites y trainer social en una experiencia retro-tech de alta fidelidad.",
     type: "website",
-    url: metadataBaseHref
+    url: metadataBaseHref,
+    siteName: "DexLoom",
+    locale: "es_ES",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "DexLoom preview with Pokedex modules, Pokemon cards and retro-tech interface"
+      }
+    ]
   },
   twitter: {
     card: "summary_large_image",
     title: "DexLoom",
     description:
-      "Browse stats, evolutions, and Pokemon details in a premium experience."
+      "Pokedex interactiva con Pokemon, cards, maps, mega evolutions, social y herramientas avanzadas.",
+    images: [
+      {
+        url: "/opengraph-image",
+        alt: "DexLoom retro-tech Pokedex preview"
+      }
+    ]
   }
 };
 
