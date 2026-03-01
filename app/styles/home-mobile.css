@@ -597,13 +597,17 @@
   }
 
   .home-mobile-terminal-screen .pokemon-drawer-evolution-scroll {
+    display: flex;
+    justify-content: center;
     padding-right: 0.1rem;
     padding-left: 0.02rem;
   }
 
   .home-mobile-terminal-screen .pokemon-drawer-evolution-list {
+    width: fit-content;
+    flex: 0 0 auto;
     margin-inline: auto;
-    min-width: 100%;
+    min-width: fit-content;
     justify-content: center;
     gap: 0.5rem;
   }
