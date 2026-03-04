@@ -1,0 +1,14 @@
+[
+  {
+    "id": "577a9058-6b76-4d4c-9513-fd8ece643a1e",
+    "reporterUserId": "2cba6b64-86db-4b6f-b70d-e7d977355c8f",
+    "targetUserId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "reason": "spam",
+    "notes": null,
+    "status": "resolved",
+    "reviewedAt": "2026-02-21T18:38:08.830Z",
+    "reviewedByUserId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "reviewNotes": null,
+    "createdAt": "2026-02-21T06:16:19.095Z"
+  }
+]

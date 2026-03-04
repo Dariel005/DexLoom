@@ -1,0 +1,57 @@
+[
+  {
+    "id": "e2cb3264-e0ab-4548-a776-5cfd52d76f53",
+    "userId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "kind": "incoming_friend_request",
+    "actorUserId": "2cba6b64-86db-4b6f-b70d-e7d977355c8f",
+    "title": "New friend request",
+    "body": "A trainer sent you a friend request.",
+    "href": "/social",
+    "readAt": null,
+    "createdAt": "2026-02-27T03:16:08.131Z"
+  },
+  {
+    "id": "f3cd26d1-8c21-45ca-a4b2-f32138cb8765",
+    "userId": "2cba6b64-86db-4b6f-b70d-e7d977355c8f",
+    "kind": "incoming_friend_request",
+    "actorUserId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "title": "New friend request",
+    "body": "A trainer sent you a friend request.",
+    "href": "/social",
+    "readAt": "2026-02-23T02:35:06.544Z",
+    "createdAt": "2026-02-21T18:38:29.032Z"
+  },
+  {
+    "id": "2f75eca5-a5b5-4a1a-b900-b61e21b0e579",
+    "userId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "kind": "friend_removed",
+    "actorUserId": "2cba6b64-86db-4b6f-b70d-e7d977355c8f",
+    "title": "Friendship removed",
+    "body": "A friendship connection was removed.",
+    "href": "/social",
+    "readAt": "2026-02-22T04:07:22.516Z",
+    "createdAt": "2026-02-21T17:40:30.378Z"
+  },
+  {
+    "id": "ea3585b6-041c-44d6-81bf-949f06a52d16",
+    "userId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "kind": "friend_request_accepted",
+    "actorUserId": "2cba6b64-86db-4b6f-b70d-e7d977355c8f",
+    "title": "Friend request accepted",
+    "body": "Your friend request was accepted.",
+    "href": "/social",
+    "readAt": "2026-02-22T04:07:22.516Z",
+    "createdAt": "2026-02-21T17:40:18.908Z"
+  },
+  {
+    "id": "7fbcfaf4-309d-44b8-a4ef-c6845710ad64",
+    "userId": "2cba6b64-86db-4b6f-b70d-e7d977355c8f",
+    "kind": "social_report_submitted",
+    "actorUserId": null,
+    "title": "Report submitted",
+    "body": "Thanks. Your report was sent for moderation.",
+    "href": "/social",
+    "readAt": "2026-02-23T02:35:05.404Z",
+    "createdAt": "2026-02-21T06:16:19.096Z"
+  }
+]

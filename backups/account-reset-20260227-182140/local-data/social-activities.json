@@ -1,0 +1,156 @@
+[
+  {
+    "id": "b2c6beba-6ce9-44de-aad9-0d37ced080e0",
+    "kind": "friend_request_sent",
+    "actorUserId": "2cba6b64-86db-4b6f-b70d-e7d977355c8f",
+    "targetUserId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "favoriteEntityType": null,
+    "favoriteEntityId": null,
+    "favoriteTitle": null,
+    "favoriteHref": null,
+    "createdAt": "2026-02-27T03:16:08.130Z"
+  },
+  {
+    "id": "7e24cec7-632a-461f-833d-4541e73d137a",
+    "kind": "favorite_added",
+    "actorUserId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "targetUserId": null,
+    "favoriteEntityType": "game",
+    "favoriteEntityId": "pokemon-gold-version",
+    "favoriteTitle": "Pokemon Gold Version",
+    "favoriteHref": "/games/pokemon-gold-version",
+    "createdAt": "2026-02-22T20:53:37.780Z"
+  },
+  {
+    "id": "7b84c52e-17cc-4767-bd3f-aab197c34055",
+    "kind": "favorite_added",
+    "actorUserId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "targetUserId": null,
+    "favoriteEntityType": "game",
+    "favoriteEntityId": "pokemon-crystal-version",
+    "favoriteTitle": "Pokemon Crystal Version",
+    "favoriteHref": "/games/pokemon-crystal-version",
+    "createdAt": "2026-02-22T20:53:37.779Z"
+  },
+  {
+    "id": "30915f52-3250-4b24-9601-0c9c35f62c07",
+    "kind": "favorite_added",
+    "actorUserId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "targetUserId": null,
+    "favoriteEntityType": "card",
+    "favoriteEntityId": "swsh10-TG01",
+    "favoriteTitle": "Abomasnow",
+    "favoriteHref": "/cards",
+    "createdAt": "2026-02-22T05:43:18.707Z"
+  },
+  {
+    "id": "29a649fd-f9f6-441d-b331-7b31b4a44097",
+    "kind": "favorite_added",
+    "actorUserId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "targetUserId": null,
+    "favoriteEntityType": "mega",
+    "favoriteEntityId": "venusaur-mega",
+    "favoriteTitle": "Mega Venusaur",
+    "favoriteHref": "/mega-evolutions/venusaur-mega",
+    "createdAt": "2026-02-22T05:16:30.430Z"
+  },
+  {
+    "id": "9f74659e-6b7d-4aa1-9c1d-4b57157c5fbe",
+    "kind": "favorite_added",
+    "actorUserId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "targetUserId": null,
+    "favoriteEntityType": "mega",
+    "favoriteEntityId": "abomasnow-mega",
+    "favoriteTitle": "Mega Abomasnow",
+    "favoriteHref": "/mega-evolutions/abomasnow-mega",
+    "createdAt": "2026-02-22T05:16:30.429Z"
+  },
+  {
+    "id": "23d8b75c-6b36-4717-89ea-745c1f81a560",
+    "kind": "friend_request_sent",
+    "actorUserId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "targetUserId": "2cba6b64-86db-4b6f-b70d-e7d977355c8f",
+    "favoriteEntityType": null,
+    "favoriteEntityId": null,
+    "favoriteTitle": null,
+    "favoriteHref": null,
+    "createdAt": "2026-02-21T18:38:29.031Z"
+  },
+  {
+    "id": "19a3bade-d331-4e70-9931-48320d10b84c",
+    "kind": "friend_removed",
+    "actorUserId": "2cba6b64-86db-4b6f-b70d-e7d977355c8f",
+    "targetUserId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "favoriteEntityType": null,
+    "favoriteEntityId": null,
+    "favoriteTitle": null,
+    "favoriteHref": null,
+    "createdAt": "2026-02-21T17:40:30.377Z"
+  },
+  {
+    "id": "94624a0a-ce1f-4c6b-9708-5b0367f85780",
+    "kind": "friend_request_accepted",
+    "actorUserId": "2cba6b64-86db-4b6f-b70d-e7d977355c8f",
+    "targetUserId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "favoriteEntityType": null,
+    "favoriteEntityId": null,
+    "favoriteTitle": null,
+    "favoriteHref": null,
+    "createdAt": "2026-02-21T17:40:18.907Z"
+  },
+  {
+    "id": "06ef3f5c-6118-4717-a3e2-bb38a350a0b4",
+    "kind": "favorite_added",
+    "actorUserId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "targetUserId": null,
+    "favoriteEntityType": "pokemon",
+    "favoriteEntityId": "2",
+    "favoriteTitle": "Ivysaur",
+    "favoriteHref": "/pokemon/2",
+    "createdAt": "2026-02-20T13:02:49.972Z"
+  },
+  {
+    "id": "b31350fc-4f61-4d90-9e7d-25466d9ffb92",
+    "kind": "favorite_added",
+    "actorUserId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "targetUserId": null,
+    "favoriteEntityType": "pokemon",
+    "favoriteEntityId": "388",
+    "favoriteTitle": "Pokemon #0388",
+    "favoriteHref": "/pokemon/388",
+    "createdAt": "2026-02-18T22:13:33.357Z"
+  },
+  {
+    "id": "b027074a-e0cd-4921-8d24-7f4052d7c8db",
+    "kind": "favorite_added",
+    "actorUserId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "targetUserId": null,
+    "favoriteEntityType": "pokemon",
+    "favoriteEntityId": "15",
+    "favoriteTitle": "Pokemon #0015",
+    "favoriteHref": "/pokemon/15",
+    "createdAt": "2026-02-18T22:13:33.354Z"
+  },
+  {
+    "id": "024ebf3f-665d-4e40-83f3-5c2230f028f0",
+    "kind": "favorite_added",
+    "actorUserId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "targetUserId": null,
+    "favoriteEntityType": "pokemon",
+    "favoriteEntityId": "4",
+    "favoriteTitle": "Pokemon #0004",
+    "favoriteHref": "/pokemon/4",
+    "createdAt": "2026-02-18T22:13:33.352Z"
+  },
+  {
+    "id": "b0efd794-7dfb-4109-b79e-d8da414378aa",
+    "kind": "favorite_added",
+    "actorUserId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "targetUserId": null,
+    "favoriteEntityType": "pokemon",
+    "favoriteEntityId": "3",
+    "favoriteTitle": "Venusaur",
+    "favoriteHref": "/pokemon/3",
+    "createdAt": "2026-02-18T21:58:14.552Z"
+  }
+]

@@ -1,0 +1,232 @@
+[
+  {
+    "id": "pokemon:1",
+    "userId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "entityType": "pokemon",
+    "entityId": "1",
+    "title": "Pokemon #0001",
+    "href": "/pokemon/1",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
+    "subtitle": "Pokemon entry",
+    "tags": [
+      "pokemon"
+    ],
+    "createdAt": "2026-02-18T04:11:46.413Z"
+  },
+  {
+    "id": "pokemon:448",
+    "userId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "entityType": "pokemon",
+    "entityId": "448",
+    "title": "Pokemon #0448",
+    "href": "/pokemon/448",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/448.png",
+    "subtitle": "Pokemon entry",
+    "tags": [
+      "pokemon"
+    ],
+    "createdAt": "2026-02-18T04:11:46.414Z"
+  },
+  {
+    "id": "pokemon:25",
+    "userId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "entityType": "pokemon",
+    "entityId": "25",
+    "title": "Pokemon #0025",
+    "href": "/pokemon/25",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png",
+    "subtitle": "Pokemon entry",
+    "tags": [
+      "pokemon"
+    ],
+    "createdAt": "2026-02-18T04:11:46.415Z"
+  },
+  {
+    "id": "item:1",
+    "userId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "entityType": "item",
+    "entityId": "1",
+    "title": "Master Ball",
+    "href": "/items/1",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/dream-world/master-ball.png",
+    "subtitle": "Standard Balls",
+    "tags": [
+      "item",
+      "pokeballs",
+      "standard-balls"
+    ],
+    "createdAt": "2026-02-18T04:11:46.416Z"
+  },
+  {
+    "id": "item:3",
+    "userId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "entityType": "item",
+    "entityId": "3",
+    "title": "Great Ball",
+    "href": "/items/3",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/dream-world/great-ball.png",
+    "subtitle": "Standard Balls",
+    "tags": [
+      "item",
+      "pokeballs",
+      "standard-balls"
+    ],
+    "createdAt": "2026-02-18T04:11:46.418Z"
+  },
+  {
+    "id": "character:red",
+    "userId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "entityType": "character",
+    "entityId": "red",
+    "title": "Red",
+    "href": "/characters/red",
+    "imageUrl": "/images/characters/official/red-frlg.png",
+    "subtitle": "Silent protagonist and late-game boss trainer",
+    "tags": [
+      "character",
+      "protagonist",
+      "boss-trainer",
+      "kanto"
+    ],
+    "createdAt": "2026-02-18T04:11:46.419Z"
+  },
+  {
+    "id": "character:blue",
+    "userId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "entityType": "character",
+    "entityId": "blue",
+    "title": "Blue",
+    "href": "/characters/blue",
+    "imageUrl": "/images/characters/official/blue-frlg.png",
+    "subtitle": "Primary rival and former Kanto Champion",
+    "tags": [
+      "character",
+      "rival",
+      "champion",
+      "kanto"
+    ],
+    "createdAt": "2026-02-18T04:11:46.420Z"
+  },
+  {
+    "id": "mechanics_topic:type-effectiveness",
+    "userId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "entityType": "mechanics_topic",
+    "entityId": "type-effectiveness",
+    "title": "Type Effectiveness",
+    "href": "/mechanics#type-effectiveness",
+    "imageUrl": null,
+    "subtitle": "Damage multipliers, immunities, resistance stacking, and role compression for both singles and doubles.",
+    "tags": [
+      "mechanics",
+      "types",
+      "battle",
+      "coverage"
+    ],
+    "createdAt": "2026-02-18T04:11:46.421Z"
+  },
+  {
+    "id": "pokemon:4",
+    "userId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "entityType": "pokemon",
+    "entityId": "4",
+    "title": "Pokemon #0004",
+    "href": "/pokemon/4",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png",
+    "subtitle": "Pokemon entry",
+    "tags": [
+      "pokemon"
+    ],
+    "createdAt": "2026-02-18T22:13:33.343Z"
+  },
+  {
+    "id": "pokemon:15",
+    "userId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "entityType": "pokemon",
+    "entityId": "15",
+    "title": "Pokemon #0015",
+    "href": "/pokemon/15",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/15.png",
+    "subtitle": "Pokemon entry",
+    "tags": [
+      "pokemon"
+    ],
+    "createdAt": "2026-02-18T22:13:33.347Z"
+  },
+  {
+    "id": "pokemon:388",
+    "userId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "entityType": "pokemon",
+    "entityId": "388",
+    "title": "Pokemon #0388",
+    "href": "/pokemon/388",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/388.png",
+    "subtitle": "Pokemon entry",
+    "tags": [
+      "pokemon"
+    ],
+    "createdAt": "2026-02-18T22:13:33.349Z"
+  },
+  {
+    "id": "mega:abomasnow-mega",
+    "userId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "entityType": "mega",
+    "entityId": "abomasnow-mega",
+    "title": "Mega Abomasnow",
+    "href": "/mega-evolutions/abomasnow-mega",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10060.png",
+    "subtitle": "Gen VI (Sinnoh)",
+    "tags": [
+      "mega",
+      "grass",
+      "ice"
+    ],
+    "createdAt": "2026-02-22T05:16:30.426Z"
+  },
+  {
+    "id": "mega:venusaur-mega",
+    "userId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "entityType": "mega",
+    "entityId": "venusaur-mega",
+    "title": "Mega Venusaur",
+    "href": "/mega-evolutions/venusaur-mega",
+    "imageUrl": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10033.png",
+    "subtitle": "Gen VI (Kanto)",
+    "tags": [
+      "mega",
+      "grass",
+      "poison"
+    ],
+    "createdAt": "2026-02-22T05:16:30.427Z"
+  },
+  {
+    "id": "game:pokemon-crystal-version",
+    "userId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "entityType": "game",
+    "entityId": "pokemon-crystal-version",
+    "title": "Pokemon Crystal Version",
+    "href": "/games/pokemon-crystal-version",
+    "imageUrl": "https://assets-prd.ignimgs.com/2021/12/14/pokemoncrystal-1639519080473.jpg",
+    "subtitle": "Generation II (Johto)",
+    "tags": [
+      "game",
+      "gen2",
+      "game-boy-color"
+    ],
+    "createdAt": "2026-02-22T20:53:37.774Z"
+  },
+  {
+    "id": "game:pokemon-gold-version",
+    "userId": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "entityType": "game",
+    "entityId": "pokemon-gold-version",
+    "title": "Pokemon Gold Version",
+    "href": "/games/pokemon-gold-version",
+    "imageUrl": "https://assets-prd.ignimgs.com/2021/12/14/pokemongold-1639518454781.jpg",
+    "subtitle": "Generation II (Johto)",
+    "tags": [
+      "game",
+      "gen2"
+    ],
+    "createdAt": "2026-02-22T20:53:37.776Z"
+  }
+]

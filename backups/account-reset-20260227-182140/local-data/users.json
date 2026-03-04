@@ -1,0 +1,22 @@
+[
+  {
+    "id": "25593136-5a20-4d39-ba9e-261f1f3bb4c9",
+    "email": "darielespinopolanco@gmail.com",
+    "name": "Darii",
+    "image": "/images/avatars/25593136-5a20-4d39-ba9e-261f1f3bb4c9-1771595406895-833ead29.webp",
+    "provider": "credentials",
+    "passwordHash": "scrypt:48cca6e8ac59f9747054b84821e9d85d:6258af74b6cb1c655907ae849ba65e8d9da2c7185ac12ba77c0792bb6b7ea51a2699156991605e0120ec279c7c79ad3f55517b70eb75cffb099177479291fe1c",
+    "createdAt": "2026-02-14T03:21:46.465Z",
+    "updatedAt": "2026-02-20T13:50:07.038Z"
+  },
+  {
+    "id": "2cba6b64-86db-4b6f-b70d-e7d977355c8f",
+    "email": "darielespino@gmail.com",
+    "name": "Dariberto",
+    "image": "/images/avatars/2cba6b64-86db-4b6f-b70d-e7d977355c8f-1771648731652-55a2fda8.webp",
+    "provider": "credentials",
+    "passwordHash": "scrypt:95050cac17eb24d0bc56134302acd730:e433f01054b113f9d63449a88aac6d3ab01586c3dccedae260ff42130d66751054db97ffc570bec2673b39c228b0b69af0ec1088079ed61cac20fd07561dd41a",
+    "createdAt": "2026-02-18T01:21:11.575Z",
+    "updatedAt": "2026-02-21T04:38:51.674Z"
+  }
+]
