@@ -197,7 +197,7 @@ function PokemonDrawerComponent({ selectedPokemonId, onClose }: PokemonDrawerPro
                   </p>
                   {data.evolutionChain.stages.length > 0 ? (
                     <div className="pokemon-drawer-evolution-scroll pokemon-scrollbar mt-2 overflow-x-auto pb-2">
-                      <ol className="pokemon-drawer-evolution-list flex w-max items-center gap-3 pt-1">
+                      <ol className="pokemon-drawer-evolution-list flex w-max items-center gap-3 pt-1 sm:mx-auto">
                         {data.evolutionChain.stages.map((stage, index) => (
                           <li key={`${stage.id}-${index}`} className="pokemon-drawer-evolution-stage flex items-center gap-3">
                             <Link

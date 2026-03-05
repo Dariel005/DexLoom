@@ -239,7 +239,7 @@ function MegaEvolutionDrawerComponent({ selectedEntry, onClose }: MegaEvolutionD
               </p>
               {evolutionStages.length > 0 ? (
                 <div className="pokemon-drawer-evolution-scroll pokemon-scrollbar mt-2 overflow-x-auto pb-2">
-                  <ol className="pokemon-drawer-evolution-list flex w-max items-center gap-3 pt-1">
+                  <ol className="pokemon-drawer-evolution-list flex w-max items-center gap-3 pt-1 sm:mx-auto">
                     {evolutionStages.map((stage, index) => (
                       <li
                         key={`${selectedEntry.slug}-stage-${stage.id}-${index}`}

@@ -1,4 +1,4 @@
-import { type ReactNode } from "react";
+import { Children, type ReactNode } from "react";
 import { MobileDexBottomNav } from "@/components/MobileDexBottomNav";
 import { PokedexFrame } from "@/components/PokedexFrame";
 import { cn } from "@/lib/utils";
@@ -51,6 +51,7 @@ export function ToolsPageShell({
   heroVariant = "default"
 }: ToolsPageShellProps) {
   const isCompactHero = heroVariant === "compact";
+  const hasRightContent = Children.count(rightContent) > 0;
   const leftPanel = (
     <section className="tools-mobile-left space-y-4">
       <section
@@ -119,8 +120,8 @@ export function ToolsPageShell({
           title={frameTitle}
           status="success"
           leftPanel={leftPanel}
-          rightPanel={<div className="tools-mobile-right space-y-4">{rightContent}</div>}
-          rightPanelSticky
+          rightPanel={hasRightContent ? <div className="tools-mobile-right space-y-4">{rightContent}</div> : null}
+          rightPanelSticky={hasRightContent}
           className="tools-mobile-frame"
         />
         <MobileDexBottomNav
